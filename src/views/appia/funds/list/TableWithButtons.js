@@ -191,13 +191,13 @@ const DataTableWithButtons = () => {
     if (value.length) {
       updatedData = store.allData.filter(item => {
         const startsWith =
-          item.user_details.user_name.toLowerCase().startsWith(value.toLowerCase()) ||
+                    item.user_details.user_name.toLowerCase().startsWith(value.toLowerCase()) ||
           item.user_details.email.toLowerCase().startsWith(value.toLowerCase()) ||
           item.purpose.toLowerCase().startsWith(value.toLowerCase()) ||
           item.description.toLowerCase().startsWith(value.toLowerCase()) ||
           item.status.toLowerCase().startsWith(value.toLowerCase()) ||
           item.posted_date.toLowerCase().startsWith(value.toLowerCase()) 
-          // status[item.status].title.toLowerCase().startsWith(value.toLowerCase())
+// status[item.status].title.toLowerCase().startsWith(value.toLowerCase())
 
         const includes =
           item.user_details.user_name.toLowerCase().startsWith(value.toLowerCase()) ||
@@ -223,6 +223,7 @@ const DataTableWithButtons = () => {
   const handlePagination = page => {
     setCurrentPage(page.selected)
   }
+  console.log("fillls", filtered)
 
   // ** Custom Pagination
   const CustomPagination = () => (

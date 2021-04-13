@@ -8,7 +8,7 @@ import Sidebar from './Sidebar'
 import { columns } from './columns'
 
 // ** Store & Actions
-import { getAllData, getData, getFilteredData } from '../store/action'
+import { getAllData, getFilteredData } from '../store/action'
 import { useDispatch, useSelector } from 'react-redux'
 
 // ** Third Party Components
@@ -66,7 +66,7 @@ const CustomHeader = ({ toggleSidebar, handlePerPage, rowsPerPage, handleFilter,
               onChange={e => handleFilter(e.target.value)}
             />
           </div>
-          <Button.Ripple color='primary' onClick={toggleSidebar}>
+          <Button.Ripple color='primary' disabled onClick={toggleSidebar}>
             Add New User
           </Button.Ripple>
         </Col>
@@ -178,9 +178,13 @@ const UsersList = () => {
     )
   }
 
+  const filteredData = store.allData.filter(
+    item => (item.email.toLowerCase() || item.first_name.toLowerCase() || item.last_name.toLowerCase())
+  )
+
   // ** Custom Pagination
   const CustomPagination = () => {
-    const count = Number((store.total / rowsPerPage).toFixed(0))
+    const count = Math.ceil(filteredData.length / rowsPerPage)
 
     return (
       <ReactPaginate
@@ -226,7 +230,7 @@ const UsersList = () => {
   return (
     <Fragment>
       <Card>
-        <CardHeader>
+        <CardHeader>       
           <CardTitle tag='h4'>Search Filter</CardTitle>
         </CardHeader>
         <CardBody>
@@ -284,7 +288,6 @@ const UsersList = () => {
                 className='react-select'
                 classNamePrefix='select'
                 options={statusOptions}
-                W
                 value={currentStatus}
                 onChange={data => {
                   setCurrentStatus(data)
@@ -329,7 +332,7 @@ const UsersList = () => {
         />
       </Card>
 
-      <Sidebar open={sidebarOpen} toggleSidebar={toggleSidebar} />
+      {/* <Sidebar open={sidebarOpen} toggleSidebar={toggleSidebar} /> */}
     </Fragment>
   )
 }

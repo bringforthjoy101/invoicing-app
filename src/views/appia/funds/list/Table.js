@@ -181,6 +181,7 @@ const UsersList = () => {
   // ** Custom Pagination
   const CustomPagination = () => {
     const count = Number((store.total / rowsPerPage).toFixed(0))
+    console.log("contttt", count)
 
     return (
       <ReactPaginate

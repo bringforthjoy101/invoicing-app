@@ -85,7 +85,7 @@ const AdminsList = () => {
   const [currentPage, setCurrentPage] = useState(1)
   const [rowsPerPage, setRowsPerPage] = useState(10)
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const [currentRole, setCurrentRole] = useState({ value: '', label: 'Select Role' })
+  const [currentRole, setCurrentRole] = useState({ value: '', label: 'Select Role', number: 0})
   const [currentPlan, setCurrentPlan] = useState({ value: '', label: 'Select Plan' })
   const [currentStatus, setCurrentStatus] = useState({ value: '', label: 'Select Status', number: 0 })
 
@@ -106,15 +106,15 @@ const AdminsList = () => {
       })
     )
   }, [dispatch])
-
+  
   // ** User filter options
   const roleOptions = [
-    { value: '', label: 'Select Role' },
-    { value: 'Admin', label: 'Admin' },
-    { value: 'author', label: 'Author' },
-    { value: 'editor', label: 'Editor' },
-    { value: 'maintainer', label: 'Maintainer' },
-    { value: 'subscriber', label: 'Subscriber' }
+    { value: '', label: 'Select Role', number: 0 },
+    { value: 'Admin', label: 'Admin', number: 1 },
+    { value: 'author', label: 'Author', number: 2 },
+    { value: 'editor', label: 'Editor', number: 3 },
+    { value: 'maintainer', label: 'Maintainer', number: 4 },
+    { value: 'subscriber', label: 'Subscriber', number: 5 }
   ]
 
   const planOptions = [
@@ -178,9 +178,13 @@ const AdminsList = () => {
     )
   }
 
-  // ** Custom Pagination
+  const filteredData = store.allData.filter(
+    item => (item.email.toLowerCase() || item.first_name.toLowerCase() || item.last_name.toLowerCase())
+  )
+
+    // ** Custom Pagination
   const CustomPagination = () => {
-    const count = Number((store.total / rowsPerPage).toFixed(0))
+    const count = Math.ceil(filteredData.length / rowsPerPage)
 
     return (
       <ReactPaginate
@@ -200,6 +204,7 @@ const AdminsList = () => {
       />
     )
   }
+
 
   // ** Table data to render
   const dataToRender = () => {
@@ -233,25 +238,26 @@ const AdminsList = () => {
           <Row>
             <Col md='4'>
               <Select
-                isClearable={false}
-                theme={selectThemeColors}
-                className='react-select'
-                classNamePrefix='select'
-                options={roleOptions}
-                value={currentRole}
-                onChange={data => {
-                  setCurrentRole(data)
-                  dispatch(
-                    getFilteredData(store.allData, {
-                      page: currentPage,
-                      perPage: rowsPerPage,
-                      role: data.value,
-                      currentPlan: currentPlan.value,
-                      status: currentStatus.value,
-                      q: searchTerm
-                    })
-                  )
-                }}
+                 theme={selectThemeColors}
+                 isClearable={false}
+                 className='react-select'
+                 classNamePrefix='select'
+                 options={roleOptions}
+                 W
+                 value={currentRole}
+                 onChange={data => {
+                   setCurrentRole(data)
+                   dispatch(
+                     getFilteredData(store.allData, {
+                       page: currentPage,
+                       perPage: rowsPerPage,
+                       role: data.value,
+                       currentPlan: currentPlan.value,
+                       status: currentStatus.value,
+                       q: searchTerm
+                     })
+                   )
+                 }}
               />
             </Col>
             <Col className='my-md-0 my-1' md='4'>
