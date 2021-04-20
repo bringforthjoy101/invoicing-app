@@ -54,18 +54,7 @@ const CustomHeader = ({ toggleSidebar, handlePerPage, rowsPerPage, handleFilter,
           xl='6'
           className='d-flex align-items-sm-center justify-content-lg-end justify-content-start flex-lg-nowrap flex-wrap flex-sm-row flex-column pr-lg-1 p-0 mt-lg-0 mt-1'
         >
-          <div className='d-flex align-items-center mb-sm-0 mb-1 mr-1'>
-            <Label className='mb-0' for='search-invoice'>
-              Search:
-            </Label>
-            <Input
-              id='search-invoice'
-              className='ml-50 w-100'
-              type='text'
-              value={searchTerm}
-              onChange={e => handleFilter(e.target.value)}
-            />
-          </div>
+          
           <Button.Ripple color='primary' onClick={toggleSidebar}>
             Add New Admin
           </Button.Ripple>
@@ -259,29 +248,6 @@ const AdminsList = () => {
                  }}
               />
             </Col>
-            <Col className='my-md-0 my-1' md='4'>
-              <Select
-                theme={selectThemeColors}
-                isClearable={false}
-                className='react-select'
-                classNamePrefix='select'
-                options={planOptions}
-                value={currentPlan}
-                onChange={data => {
-                  setCurrentPlan(data)
-                  dispatch(
-                    getFilteredData(store.allData, {
-                      page: currentPage,
-                      perPage: rowsPerPage,
-                      role: currentRole.value,
-                      currentPlan: data.value,
-                      status: currentStatus.value,
-                      q: searchTerm
-                    })
-                  )
-                }}
-              />
-            </Col>
             <Col md='4'>
               <Select
                 theme={selectThemeColors}
@@ -306,6 +272,20 @@ const AdminsList = () => {
                 }}
               />
             </Col>
+            <div className='d-flex align-items-center mb-sm-0 mb-1 mr-1 ml-5'>
+            <Label className='mb-0' for='search-invoice'>
+              Search:
+            </Label>
+            <Col md='12'>
+              <Input
+                id='search-invoice'
+                className='ml-50 w-100'
+                type='text'
+                value={searchTerm}
+                onChange={e => handleFilter(e.target.value)}
+              />
+            </Col>
+          </div>
           </Row>
         </CardBody>
       </Card>
