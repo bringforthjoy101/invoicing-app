@@ -32,7 +32,7 @@ export const getFilteredData = (admins, params) => {
     const filteredData = admins.filter(
       admin =>
         (admin.email.toLowerCase().includes(queryLowered) || admin.first_name.toLowerCase().includes(queryLowered) || admin.last_name.toLowerCase().includes(queryLowered)) &&
-        admin.role === (role || admin.role) &&
+        admin.role_name === (role || admin.role_name) &&
         admin.currentPlan === (currentPlan || admin.currentPlan) &&
         admin.status === (status || admin.status)
     )
@@ -48,20 +48,19 @@ export const getFilteredData = (admins, params) => {
 }
 
 // ** Get data on page or row change
-export const getData = params => {
-  return async dispatch => {
-    await axios.get('/api/users/list/data', params).then(response => {
-      dispatch({
-        type: 'GET_DATA',
-        data: response.data.users,
-        totalPages: response.data.total,
-        params
-      })
-    })
-  }
-}
+// export const getData = params => {
+//   return async dispatch => {
+//     await axios.get('/api/users/list/data', params).then(response => {
+//       dispatch({
+//         type: 'GET_DATA',
+//         data: response.data.users,
+//         totalPages: response.data.total,
+//         params
+//       })
+//     })
+//   }
+// }
 
-// ** Get User
 
 export const getAdmin = (admins, id) => {
   console.log({admins, id})
@@ -74,19 +73,6 @@ export const getAdmin = (admins, id) => {
   }
 }
 
-export const getUser = id => {
-  return async dispatch => {
-    await axios
-      .get('/api/users/user', { id })
-      .then(response => {
-        dispatch({
-          type: 'GET_USER',
-          selectedUser: response.data.user
-        })
-      })
-      .catch(err => console.log(err))
-  }
-}
 
 export const getAdminActivity = () => {
   return async dispatch => {

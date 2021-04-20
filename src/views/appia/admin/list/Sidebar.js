@@ -118,10 +118,9 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
               onChange={e => setUserData({...userData, role: e.target.value})}
               required
             >
-              <option value='5'>Subscriber</option>
-              <option value='4'>Editor</option>
-              <option value='3'>Maintainer</option>
-              <option value='2'>Author</option>
+              <option value='4'>Control Admin</option>
+              <option value='3'>Super Admin</option>
+              <option value='2'>Customer Support</option>
               <option value='1'>Admin</option>
             </AvInput>
           </FormGroup>

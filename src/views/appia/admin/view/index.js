@@ -32,6 +32,9 @@ const UserView = props => {
     dispatch(getAdminActivity())
   }, [dispatch])
 
+  console.log("store", store.allData)
+
+
   return store.selectedAdmin !== null && store.selectedAdmin !== undefined ? (
     <div className='app-user-view'>
       <Row>

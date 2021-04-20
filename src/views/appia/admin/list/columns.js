@@ -28,21 +28,17 @@ const renderClient = row => {
 // ** Renders Role Columns
 const renderRole = row => {
   const roleObj = {
-    subscriber: {
+    customerSupport: {
       class: 'text-primary',
       icon: User
     },
-    maintainer: {
+    superAdmin: {
       class: 'text-success',
       icon: Database
     },
-    editor: {
+    controlAdmin: {
       class: 'text-info',
       icon: Edit
-    },
-    author: {
-      class: 'text-warning',
-      icon: Settings
     },
     admin: {
       class: 'text-danger',

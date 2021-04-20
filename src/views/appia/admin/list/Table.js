@@ -111,10 +111,9 @@ const AdminsList = () => {
   const roleOptions = [
     { value: '', label: 'Select Role', number: 0 },
     { value: 'Admin', label: 'Admin', number: 1 },
-    { value: 'author', label: 'Author', number: 2 },
-    { value: 'editor', label: 'Editor', number: 3 },
-    { value: 'maintainer', label: 'Maintainer', number: 4 },
-    { value: 'subscriber', label: 'Subscriber', number: 5 }
+    { value: 'Customer Support', label: 'Customer Support', number: 2 },
+    { value: 'Super Admin', label: 'Super Admin', number: 3 },
+    { value: 'Control Admin', label: 'Control Admin', number: 4 }
   ]
 
   const planOptions = [

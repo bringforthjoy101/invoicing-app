@@ -8,7 +8,7 @@ import AccountTab from './Account'
 import InfoTab from './Information'
 
 // ** Store & Actions
-import { getUser } from '../store/action'
+import { getAdmin, getUser } from '../store/action'
 import { useSelector, useDispatch } from 'react-redux'
 
 // ** Third Party Components
@@ -18,7 +18,7 @@ import { Card, CardBody, Row, Col, Nav, NavItem, NavLink, TabContent, TabPane, A
 // ** Styles
 import '@styles/react/apps/app-users.scss'
 
-const UserEdit = () => {
+const AdminEdit = () => {
   // ** States & Vars
   const [activeTab, setActiveTab] = useState('1'),
     store = useSelector(state => state.users),
@@ -30,8 +30,9 @@ const UserEdit = () => {
 
   // ** Function to get user on mount
   useEffect(() => {
-    dispatch(getUser(parseInt(id)))
+    dispatch(getAdmin(parseInt(id)))
   }, [dispatch])
+
 
   return store.selectedUser !== null && store.selectedUser !== undefined ? (
     <Row className='app-user-edit'>
@@ -82,4 +83,4 @@ const UserEdit = () => {
     </Alert>
   )
 }
-export default UserEdit
+export default AdminEdit
