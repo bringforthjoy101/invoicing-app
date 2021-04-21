@@ -5,7 +5,6 @@ import { paginateArray, sortCompare, apiRequest, swal } from '@utils'
 export const getAllData = () => {
   return async dispatch => {
       const response = await apiRequest({url:'/admin/get_admins', method:'GET'}, dispatch)
-        console.log({response})
         if (response) {
           if (response.data.data && response.data.success) {
             await dispatch({
@@ -25,7 +24,7 @@ export const getAllData = () => {
 // ** Get filtered data on page or row change
 export const getFilteredData = (admins, params) => {
   return async dispatch => {
-    const { q = '', perPage = 10, page = 1, role = null, currentPlan = null, status = null } = params
+    const { q = '', perPage = 10, page = 1, role = null, status = null } = params
 
     /* eslint-disable  */
     const queryLowered = q.toLowerCase()
@@ -33,7 +32,6 @@ export const getFilteredData = (admins, params) => {
       admin =>
         (admin.email.toLowerCase().includes(queryLowered) || admin.first_name.toLowerCase().includes(queryLowered) || admin.last_name.toLowerCase().includes(queryLowered)) &&
         admin.role_name === (role || admin.role_name) &&
-        admin.currentPlan === (currentPlan || admin.currentPlan) &&
         admin.status === (status || admin.status)
     )
     /* eslint-enable  */
@@ -47,29 +45,21 @@ export const getFilteredData = (admins, params) => {
   }
 }
 
-// ** Get data on page or row change
-// export const getData = params => {
-//   return async dispatch => {
-//     await axios.get('/api/users/list/data', params).then(response => {
-//       dispatch({
-//         type: 'GET_DATA',
-//         data: response.data.users,
-//         totalPages: response.data.total,
-//         params
-//       })
-//     })
-//   }
-// }
-
-
 export const getAdmin = (admins, id) => {
-  console.log({admins, id})
   return async dispatch => {
     const admin = admins.find(i => i.admin_id === id)
     dispatch({
       type: 'GET_ADMIN',
       selectedAdmin: admin
     })
+    console.log("admmmm", admin)
+  }
+}
+
+export const setLoading = (payload) => {
+  return {
+    type: 'LOADING',
+    payload
   }
 }
 
@@ -77,7 +67,6 @@ export const getAdmin = (admins, id) => {
 export const getAdminActivity = () => {
   return async dispatch => {
     const response = await apiRequest({url:'/admin/activities', method:'GET'}, dispatch)
-      console.log({response})
       if (response) {
         if (response.data.data && response.data.success) {
           await dispatch({
@@ -94,15 +83,42 @@ export const getAdminActivity = () => {
   }
 }
 
-export const activateOrDeactivateAdmin = (admins, id, action) => {
+export const activateAdmin = (admins, admin_id) => {
   console.log({admins})
   return async dispatch => {
-    const response = await apiRequest({url:`/admin/${action}/${id}`, method:'POST'}, dispatch)
+    const response = await apiRequest({url:`/admin/activate/Uq5Bukv3mq`, method:'GET'}, dispatch)
       console.log({response})
       if (response) {
         if (response.data.success) {
+          dispatch({
+            type: 'GET_ADMIN'
+          })
           swal('Good!', `${response.data.message}.`, 'success')
           // dispatch(getAdmin(admins, id))
+        } else {
+          swal('Oops!', `${response.data.message}.`, 'error')
+        }
+      } else {
+        swal('Oops!', 'Something went wrong with your network.', 'error')
+      }
+      
+  }
+}
+
+// deactivate admin account
+export const deactivateAdmin = (admins, admin_id) => {
+  console.log({admins})
+  return async dispatch => {
+    const response = await apiRequest({url:`/admin/deactivate/Uq5Bukv3mq`, method:'GET'}, dispatch)
+      console.log({response})
+      if (response) {
+        if (response.data.success) {
+          dispatch({
+            type: 'GET_ADMIN'
+          })
+          swal('Good!', `${response.data.message}.`, 'success')
+          // dispatch(getAdmin(admins, id))
+          console.log("ressssssssssssssssss", response)
         } else {
           swal('Oops!', `${response.data.message}.`, 'error')
         }

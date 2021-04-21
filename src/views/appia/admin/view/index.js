@@ -31,10 +31,7 @@ const UserView = props => {
     dispatch(getAdmin(store.allData, id))
     dispatch(getAdminActivity())
   }, [dispatch])
-
-  console.log("store", store.allData)
-
-
+  console.log("storreee", store.selectedAdmin)
   return store.selectedAdmin !== null && store.selectedAdmin !== undefined ? (
     <div className='app-user-view'>
       <Row>
@@ -53,11 +50,6 @@ const UserView = props => {
           <PermissionsTable />
         </Col>
       </Row>
-      {/* <Row>
-        <Col sm='12'>
-          <InvoiceList />
-        </Col>
-      </Row> */}
     </div>
   ) : (
     <Alert color='danger'>

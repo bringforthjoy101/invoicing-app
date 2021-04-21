@@ -75,7 +75,6 @@ const AdminsList = () => {
   const [rowsPerPage, setRowsPerPage] = useState(10)
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [currentRole, setCurrentRole] = useState({ value: '', label: 'Select Role', number: 0})
-  const [currentPlan, setCurrentPlan] = useState({ value: '', label: 'Select Plan' })
   const [currentStatus, setCurrentStatus] = useState({ value: '', label: 'Select Status', number: 0 })
 
   // ** Function to toggle sidebar
@@ -89,7 +88,6 @@ const AdminsList = () => {
         page: currentPage,
         perPage: rowsPerPage,
         role: currentRole.value,
-        currentPlan: currentPlan.value,
         status: currentStatus.value,
         q: searchTerm
       })
@@ -105,19 +103,11 @@ const AdminsList = () => {
     { value: 'Control Admin', label: 'Control Admin', number: 4 }
   ]
 
-  const planOptions = [
-    { value: '', label: 'Select Plan' },
-    { value: 'basic', label: 'Basic' },
-    { value: 'company', label: 'Company' },
-    { value: 'enterprise', label: 'Enterprise' },
-    { value: 'team', label: 'Team' }
-  ]
-
   const statusOptions = [
     { value: '', label: 'Select Status', number: 0 },
-    { value: 'pending', label: 'Pending', number: 1 },
+    { value: 'Pending', label: 'Pending', number: 1 },
     { value: 'Active', label: 'Active', number: 2 },
-    { value: 'inactive', label: 'Inactive', number: 3 }
+    { value: 'Inactive', label: 'Inactive', number: 3 }
   ]
 
   // ** Function in get data on page change
@@ -127,7 +117,6 @@ const AdminsList = () => {
         page: page.selected + 1,
         perPage: rowsPerPage,
         role: currentRole.value,
-        currentPlan: currentPlan.value,
         status: currentStatus.value,
         q: searchTerm
       })
@@ -143,7 +132,6 @@ const AdminsList = () => {
         page: currentPage,
         perPage: value,
         role: currentRole.value,
-        currentPlan: currentPlan.value,
         status: currentStatus.value,
         q: searchTerm
       })
@@ -159,7 +147,6 @@ const AdminsList = () => {
         page: currentPage,
         perPage: rowsPerPage,
         role: currentRole.value,
-        currentPlan: currentPlan.value,
         status: currentStatus.value,
         q: val
       })
@@ -198,7 +185,6 @@ const AdminsList = () => {
   const dataToRender = () => {
     const filters = {
       role: currentRole.value,
-      currentPlan: currentPlan.value,
       status: currentStatus.value,
       q: searchTerm
     }
@@ -231,7 +217,6 @@ const AdminsList = () => {
                  className='react-select'
                  classNamePrefix='select'
                  options={roleOptions}
-                 W
                  value={currentRole}
                  onChange={data => {
                    setCurrentRole(data)
@@ -240,7 +225,6 @@ const AdminsList = () => {
                        page: currentPage,
                        perPage: rowsPerPage,
                        role: data.value,
-                       currentPlan: currentPlan.value,
                        status: currentStatus.value,
                        q: searchTerm
                      })
@@ -255,7 +239,6 @@ const AdminsList = () => {
                 className='react-select'
                 classNamePrefix='select'
                 options={statusOptions}
-                W
                 value={currentStatus}
                 onChange={data => {
                   setCurrentStatus(data)
@@ -264,7 +247,6 @@ const AdminsList = () => {
                       page: currentPage,
                       perPage: rowsPerPage,
                       role: currentRole.value,
-                      currentPlan: currentPlan.value,
                       status: data.value,
                       q: searchTerm
                     })
@@ -272,11 +254,10 @@ const AdminsList = () => {
                 }}
               />
             </Col>
-            <div className='d-flex align-items-center mb-sm-0 mb-1 mr-1 ml-5'>
-            <Label className='mb-0' for='search-invoice'>
+            <Col md="4" className="d-flex">
+            <Label className='mb-0 mt-1' for='search-invoice'>
               Search:
             </Label>
-            <Col md='12'>
               <Input
                 id='search-invoice'
                 className='ml-50 w-100'
@@ -284,8 +265,7 @@ const AdminsList = () => {
                 value={searchTerm}
                 onChange={e => handleFilter(e.target.value)}
               />
-            </Col>
-          </div>
+          </Col>
           </Row>
         </CardBody>
       </Card>

@@ -10,6 +10,7 @@ import { DollarSign, TrendingUp, User, Check, Star, Flag, Phone } from 'react-fe
 
 const UserInfoCard = ({ selectedAdmin }) => {
   // ** render user img
+  console.log("selectttt", selectedAdmin)
   const renderUserImg = () => {
     if (selectedAdmin !== null && selectedAdmin.avatar) {
       return <img src={selectedAdmin.avatar} alt='user-avatar' className='img-fluid rounded' height='104' width='104' />
@@ -53,14 +54,14 @@ const UserInfoCard = ({ selectedAdmin }) => {
                       {selectedAdmin !== null ? selectedAdmin.email : 'appia.admin@appiawave.com'}
                     </CardText>
                   </div>
-                  <div className='d-flex flex-wrap align-items-center'>
+                  {/* <div className='d-flex flex-wrap align-items-center'>
                     <Button.Ripple tag={Link} to={`/apps/user/edit/${selectedAdmin.id}`} color='primary'>
                       Edit
                     </Button.Ripple>
                     <Button.Ripple className='ml-1' color='danger' outline>
                       Delete
                     </Button.Ripple>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>

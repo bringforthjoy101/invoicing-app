@@ -68,7 +68,6 @@ const Router = () => {
   const FinalRoute = props => {
     const route = props.route
     let action, resource
-    console.log(route)
     // ** Assign vars based on route meta
     if (route.meta) {
       action = route.meta.action ? route.meta.action : null

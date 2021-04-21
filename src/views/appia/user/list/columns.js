@@ -22,7 +22,7 @@ const renderClient = row => {
   if (row.avatar) {
     return <Avatar className='mr-1' img={row.avatar} width='32' height='32' />
   } else {
-    return <Avatar color={color || 'primary'} className='mr-1' content={`${row.email}` || 'John Doe'} initials />
+    return <Avatar color={color || 'primary'} className='mr-1' content={`${row.names}` || 'John Doe'} initials />
   }
 }
 
@@ -56,7 +56,7 @@ const renderRole = row => {
 
   return (
     <span className='text-truncate text-capitalize align-middle'>
-      <Icon size={18} className={`${roleObj[row.role] ? roleObj[row.role].class : ''} mr-50`} />
+      <Icon size={18} className={`${roleObj[row.role] ? roleObj[row.role].class : 'text-primary'} mr-50`} />
       {row.role_name || 'User'}
     </span>
   )
@@ -68,6 +68,7 @@ const statusObj = {
   inactive: 'light-secondary'
 }
 const {users} = store.getState()
+console.log({users})
 export const columns = [
   {
     name: 'User',
@@ -81,9 +82,9 @@ export const columns = [
           <Link
             to={`/appia/user/view/${row.user_id}`}
             className='user-name text-truncate mb-0'
-            onClick={() => store.dispatch(getUser(row.user_id))}
+            onClick={() => store.dispatch(getUser(store.getState().appiaAdmins.allData, row.user_id))}
           >
-            <span className='font-weight-bold'>{row.user_id}</span>
+            <span className='font-weight-bold'>{row.names}</span>
           </Link>
           <small className='text-truncate text-muted mb-0'>{row.email}</small>
         </div>
@@ -109,7 +110,7 @@ export const columns = [
     minWidth: '138px',
     selector: 'savings_naira_wallet',
     sortable: true,
-    cell: row => <span className='text-capitalize'>{row.savings_naira_wallet.toLocaleString('en-US', { style: 'currency', currency: 'NGN' })}</span>
+    cell: row => <span className='text-capitalize'>{row.naira_wallet.toLocaleString('en-US', { style: 'currency', currency: 'NGN' })}</span>
   },
   {
     name: 'Status',

@@ -5,7 +5,8 @@ const initialState = {
   total: 1,
   params: {},
   selectedAdmin: null,
-  adminActivities: []
+  adminActivities: [],
+  loading: true
 }
 
 const admins = (state = initialState, action) => {
@@ -23,6 +24,9 @@ const admins = (state = initialState, action) => {
       return { ...state, selectedAdmin: action.selectedAdmin }
     case 'GET_ALL_ADMIN_ACTIVITY':
       return {...state, adminActivities: action.data}
+     case 'LOADING': {
+        return {...state, loading: action.payload}
+      }
     default:
       return { ...state }
   }

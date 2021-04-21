@@ -127,9 +127,9 @@ const UsersList = () => {
 
   const statusOptions = [
     { value: '', label: 'Select Status', number: 0 },
-    { value: 'pending', label: 'Pending', number: 1 },
+    { value: 'Pending', label: 'Pending', number: 1 },
     { value: 'Active', label: 'Active', number: 2 },
-    { value: 'inactive', label: 'Inactive', number: 3 }
+    { value: 'Inactive', label: 'Inactive', number: 3 }
   ]
 
   // ** Function in get data on page change

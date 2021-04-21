@@ -62,8 +62,6 @@ const statusObj = {
   inactive: 'light-secondary'
 }
 
-console.log(store.getState().appiaAdmins.allData)
-
 export const columns = [
   {
     name: 'Admin',
