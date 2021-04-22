@@ -59,34 +59,18 @@ export const getData = params => {
   }
 }
 
-// ** Get User
-// export const getUser = (users, id) => {
-//   console.log({users})
-//   return async dispatch => {
-//     const user = users.find(i => i.user_id === id)
-//     dispatch({
-//       type: 'GET_USER',
-//       selectedUser: user
-//     })
-//   }
-// }
-
-export const getUser = (id) => {
+//  Get User
+export const getUser = (users, id) => {
+  console.log({users})
   return async dispatch => {
-
-    const response = await apiRequest({url:`/admin/users/details/${id}`, method:'GET'}, dispatch)
-    console.log("hello", {response})
-    if (response && response.data.success) {
-        await dispatch({
-          type: 'GET_USER',
-          selectedUser: response.data
-        })
-    } else {
-      console.log(response)
-      swal('Oops!', 'Somthing went wrong with your network.', 'error')
-    }
+    const user = users.find(i => i.user_id === id)
+    dispatch({
+      type: 'GET_USER',
+      selectedUser: user
+    })
   }
 }
+
 
 // Get data
 
@@ -175,15 +159,15 @@ export const deductFunds = ({user_id, reason, amount}) => {
 }
 
 // ACtivate  User account
-export const activateAdmin = (users, id) => {
+export const activateUser = (users, id) => {
   const user = users.find(i => i.user_id === id)
   return async dispatch => {
     const response = await apiRequest({url:`/admin/users/activate/${user.user_id}`, method:'GET'}, dispatch)
       if (response) {
         if (response.data.success) {
           dispatch({
-            type: 'GET_ADMIN',
-            selectedAdmin: user
+            type: 'GET_USER',
+            selectedUser: user
           })
           swal('Good!', `${response.data.message}.`, 'success')
         } else {
@@ -197,15 +181,15 @@ export const activateAdmin = (users, id) => {
 }
 
 // deactivate User account
-export const deactivateAdmin = (users, id) => {
+export const deactivateUser = (users, id) => {
     const user = users.find(i => i.user_id === id)
     return async dispatch => {
     const response = await apiRequest({url:`/admin/users/deactivate/${user.user_id}`, method:'GET'}, dispatch)
       if (response) {
         if (response.data.success) {
           dispatch({
-            type: 'GET_ADMIN',
-            selectedAdmin: user
+            type: 'GET_USER',
+            selectedUser: user
           })
           swal('Good!', `${response.data.message}.`, 'success')
           // dispatch(getAdmin(admins, id))

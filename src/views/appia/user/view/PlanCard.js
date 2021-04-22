@@ -1,7 +1,10 @@
 // ** Reactstrap
 import { Card, CardHeader, CardBody, Badge, UncontrolledTooltip, Button } from 'reactstrap'
 
+import { activateUser, deactivateUser } from '../store/action'
 import {AddFunds, DeductFunds} from './AddFunds'
+import { store } from '@store/storeConfig/store'
+
 
 const PlanCard = ({ selectedUser }) => {
   console.log({selectedUser})
@@ -17,14 +20,18 @@ const PlanCard = ({ selectedUser }) => {
         </UncontrolledTooltip>
       </CardHeader>
       <CardBody>
-        <Badge className='text-capitalize' color='light-primary'>
-          {selectedUser !== null ? selectedUser.currentPlan : 'Basic'}
-        </Badge>
-        <Button.Ripple className='text-center mb-1' color='success' outline block>
-          Activate User
-        </Button.Ripple>
-        <AddFunds userId={selectedUser.user_details.user_id} />
-        <DeductFunds userId={selectedUser.user_details.user_id} />
+        {selectedUser.status === "Active" ? <Button.Ripple className='text-center mb-1' color= 'danger' outline  block onClick={() => { store.dispatch(deactivateUser(store.getState().appiaUsers.allData, selectedUser.user_id)) }}> Deactivate User</Button.Ripple> : <Button.Ripple 
+         className='text-center mb-1' 
+         color='success' 
+         outline
+         block
+         onClick={() => { store.dispatch(activateUser(store.getState().appiaUsers.allData, selectedUser.user_id)) }}
+       >
+         Activate Admin
+       </Button.Ripple>
+        }
+        <AddFunds userId={selectedUser.user_id} />
+        <DeductFunds userId={selectedUser.user_id} />
       </CardBody>
     </Card>
   )

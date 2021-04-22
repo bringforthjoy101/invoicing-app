@@ -27,7 +27,7 @@ const UserView = props => {
 
   // ** Get suer on mount
   useEffect(() => {
-    dispatch(getUser(id))
+    dispatch(getUser(store.allData, id))
     dispatch(getUserAllTransactions(id))
   }, [dispatch])
 

@@ -11,7 +11,7 @@ import { Pocket, DollarSign, TrendingUp, User, Check, Star, Flag, Phone } from '
 const UserInfoCard = ({ selectedUser }) => {
   // ** render user img
   const renderUserImg = () => {
-    if (selectedUser.user_details !== null && selectedUser.user_details.avatar) {
+    if (selectedUser !== null && selectedUser.avatar) {
       return <img src={selectedUser.avatar} alt='user-avatar' className='img-fluid rounded' height='104' width='104' />
     } else {
       const stateNum = Math.floor(Math.random() * 6),
@@ -22,7 +22,7 @@ const UserInfoCard = ({ selectedUser }) => {
           initials
           color={color}
           className='rounded'
-          content={selectedUser.user_details.names}
+          content={selectedUser.names}
           contentStyles={{
             borderRadius: 0,
             fontSize: 'calc(36px)',
@@ -48,19 +48,19 @@ const UserInfoCard = ({ selectedUser }) => {
                 {renderUserImg()}
                 <div className='d-flex flex-column ml-1'>
                   <div className='user-info mb-1'>
-                    <h4 className='mb-0'>{selectedUser !== null ? selectedUser.user_details.names : 'Eleanor Aguilar'}</h4>
+                    <h4 className='mb-0'>{selectedUser !== null ? selectedUser.names : 'Eleanor Aguilar'}</h4>
                     <CardText tag='span'>
-                      {selectedUser !== null ? selectedUser.user_details.email : 'eleanor.aguilar@gmail.com'}
+                      {selectedUser !== null ? selectedUser.email : 'eleanor.aguilar@gmail.com'}
                     </CardText>
                   </div>
-                  <div className='d-flex flex-wrap align-items-center'>
-                    <Button.Ripple tag={Link} to={`/appia/user/edit/${selectedUser.user_details.user_id}`} color='primary'>
+                  {/* <div className='d-flex flex-wrap align-items-center'>
+                    <Button.Ripple tag={Link} to={`/appia/user/edit/${selectedUser.user_id}`} color='primary'>
                       Edit
                     </Button.Ripple>
                     <Button.Ripple className='ml-1' color='danger' outline>
                       Delete
                     </Button.Ripple>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>
@@ -70,7 +70,7 @@ const UserInfoCard = ({ selectedUser }) => {
                   <Pocket className='text-primary' />
                 </div>
                 <div className='ml-1'>
-                  <h5 className='mb-0'>{selectedUser.user_details.naira_wallet.toLocaleString('en-US', { style: 'currency', currency: 'NGN' })}</h5>
+                  <h5 className='mb-0'>{selectedUser.naira_wallet.toLocaleString('en-US', { style: 'currency', currency: 'NGN' })}</h5>
                   <small>Naira Wallet</small>
                 </div>
               </div>
@@ -79,7 +79,7 @@ const UserInfoCard = ({ selectedUser }) => {
                   <Pocket className='text-success' />
                 </div>
                 <div className='ml-1'>
-                  <h5 className='mb-0'>{selectedUser.user_details.commission_wallet.toLocaleString('en-US', { style: 'currency', currency: 'NGN' })}</h5>
+                  <h5 className='mb-0'>{selectedUser.commission_wallet.toLocaleString('en-US', { style: 'currency', currency: 'NGN' })}</h5>
                   <small>Commision Wallet</small>
                 </div>
               </div>
@@ -95,7 +95,7 @@ const UserInfoCard = ({ selectedUser }) => {
                   </CardText>
                 </div>
                 <CardText className='mb-0'>
-                  {selectedUser !== null ? selectedUser.user_details.user_id : 'eleanor.aguilar'}
+                  {selectedUser !== null ? selectedUser.user_id : 'eleanor.aguilar'}
                 </CardText>
               </div>
               <div className='d-flex flex-wrap align-items-center my-50'>

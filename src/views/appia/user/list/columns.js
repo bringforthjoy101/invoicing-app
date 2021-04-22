@@ -138,7 +138,7 @@ export const columns = [
             tag={Link}
             to={`/appia/user/view/${row.user_id}`}
             className='w-100'
-            onClick={() => store.dispatch(getUser(row.user_id))}
+            onClick={() => store.dispatch(getUser(store.getState().appiaAdmins.allData, row.user_id))}
           >
             <FileText size={14} className='mr-50' />
             <span className='align-middle'>Details</span>

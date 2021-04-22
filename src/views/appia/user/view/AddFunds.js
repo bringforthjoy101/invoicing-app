@@ -133,7 +133,7 @@ export const DeductFunds = ({userId}) => {
                       <ModalFooter>
                           <Button.Ripple color='primary' type='submit' disabled={isSubmitting}>
                             {isSubmitting && <Spinner color='white' size='sm' />}
-                            <span className='ml-50'>Decuct Funds</span>
+                            <span className='ml-50'>Deduct Funds</span>
                           </Button.Ripple>
                       </ModalFooter>
                   </Form>
