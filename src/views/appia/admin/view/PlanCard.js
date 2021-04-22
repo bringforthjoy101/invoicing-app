@@ -14,11 +14,11 @@ const PlanCard = ({ selectedAdmin }) => {
         <Badge className='text-capitalize' color='light-primary'>
           {selectedAdmin !== null ? selectedAdmin.currentPlan : 'Basic'}
         </Badge>
-        {selectedAdmin.status === "Active" ? <Button.Ripple className='text-center' color= 'danger'  block onClick={() => { store.dispatch(deactivateAdmin(store.getState().appiaAdmins.allData, selectedAdmin.id)) }}> Deactivate Admin</Button.Ripple> : <Button.Ripple 
+        {selectedAdmin.status === "Active" ? <Button.Ripple className='text-center' color= 'danger'  block onClick={() => { store.dispatch(deactivateAdmin(store.getState().appiaAdmins.allData, selectedAdmin.admin_id)) }}> Deactivate Admin</Button.Ripple> : <Button.Ripple 
          className='text-center' 
          color='success'
          block
-         onClick={() => { store.dispatch(activateAdmin(store.getState().appiaAdmins.allData, selectedAdmin.id)) }}
+         onClick={() => { store.dispatch(activateAdmin(store.getState().appiaAdmins.allData, selectedAdmin.admin_id)) }}
        >
          Activate Admin
        </Button.Ripple>

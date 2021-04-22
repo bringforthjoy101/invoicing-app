@@ -10,7 +10,7 @@ import { DollarSign, TrendingUp, User, Check, Star, Flag, Phone } from 'react-fe
 
 const UserInfoCard = ({ selectedAdmin }) => {
   // ** render user img
-  console.log("selectttt", selectedAdmin)
+  
   const renderUserImg = () => {
     if (selectedAdmin !== null && selectedAdmin.avatar) {
       return <img src={selectedAdmin.avatar} alt='user-avatar' className='img-fluid rounded' height='104' width='104' />

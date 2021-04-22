@@ -52,7 +52,6 @@ export const getAdmin = (admins, id) => {
       type: 'GET_ADMIN',
       selectedAdmin: admin
     })
-    console.log("admmmm", admin)
   }
 }
 
@@ -83,18 +82,17 @@ export const getAdminActivity = () => {
   }
 }
 
-export const activateAdmin = (admins, admin_id) => {
-  console.log({admins})
+export const activateAdmin = (admins, id) => {
+  const admin = admins.find(i => i.admin_id === id)
   return async dispatch => {
-    const response = await apiRequest({url:`/admin/activate/Uq5Bukv3mq`, method:'GET'}, dispatch)
-      console.log({response})
+    const response = await apiRequest({url:`/admin/activate/${admin.admin_id}`, method:'GET'}, dispatch)
       if (response) {
         if (response.data.success) {
           dispatch({
-            type: 'GET_ADMIN'
+            type: 'GET_ADMIN',
+            selectedAdmin: admin
           })
           swal('Good!', `${response.data.message}.`, 'success')
-          // dispatch(getAdmin(admins, id))
         } else {
           swal('Oops!', `${response.data.message}.`, 'error')
         }
@@ -106,19 +104,18 @@ export const activateAdmin = (admins, admin_id) => {
 }
 
 // deactivate admin account
-export const deactivateAdmin = (admins, admin_id) => {
-  console.log({admins})
-  return async dispatch => {
-    const response = await apiRequest({url:`/admin/deactivate/Uq5Bukv3mq`, method:'GET'}, dispatch)
-      console.log({response})
+export const deactivateAdmin = (admins, id) => {
+    const admin = admins.find(i => i.admin_id === id)
+    return async dispatch => {
+    const response = await apiRequest({url:`/admin/deactivate/${admin.admin_id}`, method:'GET'}, dispatch)
       if (response) {
         if (response.data.success) {
           dispatch({
-            type: 'GET_ADMIN'
+            type: 'GET_ADMIN',
+            selectedAdmin: admin
           })
           swal('Good!', `${response.data.message}.`, 'success')
           // dispatch(getAdmin(admins, id))
-          console.log("ressssssssssssssssss", response)
         } else {
           swal('Oops!', `${response.data.message}.`, 'error')
         }
