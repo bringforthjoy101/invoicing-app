@@ -11,9 +11,6 @@ const PlanCard = ({ selectedAdmin }) => {
         <h5 className='mb-0'>Actions</h5>
       </CardHeader>
       <CardBody>
-        <Badge className='text-capitalize' color='light-primary'>
-          {selectedAdmin !== null ? selectedAdmin.currentPlan : 'Basic'}
-        </Badge>
         {selectedAdmin.status === "Active" ? <Button.Ripple className='text-center' color= 'danger'  block onClick={() => { store.dispatch(deactivateAdmin(store.getState().appiaAdmins.allData, selectedAdmin.admin_id)) }}> Deactivate Admin</Button.Ripple> : <Button.Ripple 
          className='text-center' 
          color='success'

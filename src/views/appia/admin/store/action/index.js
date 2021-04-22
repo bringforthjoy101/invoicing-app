@@ -4,20 +4,20 @@ import { paginateArray, sortCompare, apiRequest, swal } from '@utils'
 // ** Get all Data
 export const getAllData = () => {
   return async dispatch => {
-      const response = await apiRequest({url:'/admin/get_admins', method:'GET'}, dispatch)
-        if (response) {
-          if (response.data.data && response.data.success) {
-            await dispatch({
-              type: 'GET_ALL_ADMIN_DATA',
-              data: response.data.data
-            })
-          } else {
-            console.log(response.error)
-          }
-        } else {
-          swal('Oops!', 'Somthing went wrong with your network.', 'error')
-        }
-        
+    const response = await apiRequest({ url: '/admin/get_admins', method: 'GET' }, dispatch)
+    if (response) {
+      if (response.data.data && response.data.success) {
+        await dispatch({
+          type: 'GET_ALL_ADMIN_DATA',
+          data: response.data.data
+        })
+      } else {
+        console.log(response.error)
+      }
+    } else {
+      swal('Oops!', 'Somthing went wrong with your network.', 'error')
+    }
+
   }
 }
 
@@ -65,63 +65,91 @@ export const setLoading = (payload) => {
 
 export const getAdminActivity = () => {
   return async dispatch => {
-    const response = await apiRequest({url:'/admin/activities', method:'GET'}, dispatch)
-      if (response) {
-        if (response.data.data && response.data.success) {
-          await dispatch({
-            type: 'GET_ALL_ADMIN_ACTIVITY',
-            data: response.data.data
-          })
-        } else {
-          console.log(response.error)
-        }
+    const response = await apiRequest({ url: '/admin/activities', method: 'GET' }, dispatch)
+    if (response) {
+      if (response.data.data && response.data.success) {
+        await dispatch({
+          type: 'GET_ALL_ADMIN_ACTIVITY',
+          data: response.data.data
+        })
       } else {
-        swal('Oops!', 'Something went wrong with your network.', 'error')
+        console.log(response.error)
       }
-      
+    } else {
+      swal('Oops!', 'Something went wrong with your network.', 'error')
+    }
+
   }
 }
 
 export const activateAdmin = (admins, id) => {
   const admin = admins.find(i => i.admin_id === id)
   return async dispatch => {
-    const response = await apiRequest({url:`/admin/activate/${admin.admin_id}`, method:'GET'}, dispatch)
-      if (response) {
-        if (response.data.success) {
-          dispatch({
-            type: 'GET_ADMIN',
-            selectedAdmin: admin
-          })
-          swal('Good!', `${response.data.message}.`, 'success')
-        } else {
-          swal('Oops!', `${response.data.message}.`, 'error')
-        }
+    const response = await apiRequest({ url: `/admin/activate/${admin.admin_id}`, method: 'GET' }, dispatch)
+
+    if (response) {
+      if (response.data.success) {
+        dispatch({
+          type: 'GET_ADMIN',
+          selectedAdmin: admin
+        })
+        swal('Good!', `${response.data.message}.`, 'success')
+        await dispatch(getAllData())
       } else {
-        swal('Oops!', 'Something went wrong with your network.', 'error')
+        swal('Oops!', `${response.data.message}.`, 'error')
       }
-      
+    } else {
+      swal('Oops!', 'Something went wrong with your network.', 'error')
+    }
+
+  }
+}
+
+export const activateOrDeactivateAdmin = (admins, id, action) => {
+  console.log({
+    admins
+  })
+  return async dispatch => {
+    const response = await apiRequest({
+      url: `/admin/${action}/${id}`,
+      method: 'GET'
+    }, dispatch)
+    console.log({
+      response
+    })
+    if (response) {
+      if (response.data.success) {
+        swal('Good!', `${response.data.message}.`, 'success')
+        // dispatch(getAdmin())
+      } else {
+        swal('Oops!', `${response.data.message}.`, 'error')
+      }
+    } else {
+      swal('Oops!', 'Something went wrong with your network.', 'error')
+    }
   }
 }
 
 // deactivate admin account
 export const deactivateAdmin = (admins, id) => {
-    const admin = admins.find(i => i.admin_id === id)
-    return async dispatch => {
-    const response = await apiRequest({url:`/admin/deactivate/${admin.admin_id}`, method:'GET'}, dispatch)
-      if (response) {
-        if (response.data.success) {
-          dispatch({
-            type: 'GET_ADMIN',
-            selectedAdmin: admin
-          })
-          swal('Good!', `${response.data.message}.`, 'success')
-          // dispatch(getAdmin(admins, id))
-        } else {
-          swal('Oops!', `${response.data.message}.`, 'error')
-        }
+  console.log({ admins, id })
+  const admin = admins.find(i => i.admin_id === id)
+  return async dispatch => {
+    const response = await apiRequest({ url: `/admin/deactivate/${admin.admin_id}`, method: 'GET' }, dispatch)
+    if (response) {
+      if (response.data.success) {
+        dispatch({
+          type: 'GET_ADMIN',
+          selectedAdmin: admin
+        })
+        swal('Good!', `${response.data.message}.`, 'success')
+        await dispatch(getAllData())
       } else {
-        swal('Oops!', 'Something went wrong with your network.', 'error')
+        swal('Oops!', `${response.data.message}.`, 'error')
       }
-      
+    } else {
+      swal('Oops!', 'Something went wrong with your network.', 'error')
+    }
+
   }
 }

@@ -75,7 +75,7 @@ export const getUser = (id) => {
   return async dispatch => {
 
     const response = await apiRequest({url:`/admin/users/details/${id}`, method:'GET'}, dispatch)
-    console.log({response})
+    console.log("hello", {response})
     if (response && response.data.success) {
         await dispatch({
           type: 'GET_USER',
@@ -171,5 +171,50 @@ export const deductFunds = ({user_id, reason, amount}) => {
       console.log(response)
       swal('Oops!', 'Somthing went wrong with your network.', 'error')
     }
+  }
+}
+
+// ACtivate  User account
+export const activateAdmin = (users, id) => {
+  const user = users.find(i => i.user_id === id)
+  return async dispatch => {
+    const response = await apiRequest({url:`/admin/users/activate/${user.user_id}`, method:'GET'}, dispatch)
+      if (response) {
+        if (response.data.success) {
+          dispatch({
+            type: 'GET_ADMIN',
+            selectedAdmin: user
+          })
+          swal('Good!', `${response.data.message}.`, 'success')
+        } else {
+          swal('Oops!', `${response.data.message}.`, 'error')
+        }
+      } else {
+        swal('Oops!', 'Something went wrong with your network.', 'error')
+      }
+      
+  }
+}
+
+// deactivate User account
+export const deactivateAdmin = (users, id) => {
+    const user = users.find(i => i.user_id === id)
+    return async dispatch => {
+    const response = await apiRequest({url:`/admin/users/deactivate/${user.user_id}`, method:'GET'}, dispatch)
+      if (response) {
+        if (response.data.success) {
+          dispatch({
+            type: 'GET_ADMIN',
+            selectedAdmin: user
+          })
+          swal('Good!', `${response.data.message}.`, 'success')
+          // dispatch(getAdmin(admins, id))
+        } else {
+          swal('Oops!', `${response.data.message}.`, 'error')
+        }
+      } else {
+        swal('Oops!', 'Something went wrong with your network.', 'error')
+      }
+      
   }
 }
