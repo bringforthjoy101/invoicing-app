@@ -63,9 +63,9 @@ const renderRole = row => {
 }
 
 const statusObj = {
-  pending: 'light-warning',
-  active: 'light-success',
-  inactive: 'light-secondary'
+  Pending: 'light-warning',
+  Active: 'light-success',
+  Inactive: 'light-danger'
 }
 const {users} = store.getState()
 console.log({users})
@@ -118,8 +118,8 @@ export const columns = [
     selector: 'status',
     sortable: true,
     cell: row => (
-      <Badge className='text-capitalize' color={statusObj[row.status] || 'light-success'} pill>
-        {row.status || 'Active'}
+      <Badge className='text-capitalize' color={statusObj[row.status]} pill>
+        {row.status}
       </Badge>
     )
   },

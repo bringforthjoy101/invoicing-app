@@ -57,9 +57,9 @@ const renderRole = row => {
 }
 
 const statusObj = {
-  pending: 'light-warning',
+  Pending: 'light-warning',
   Active: 'light-success',
-  inactive: 'light-secondary'
+  Inactive: 'light-danger'
 }
 
 export const columns = [
@@ -98,13 +98,6 @@ export const columns = [
     sortable: true,
     cell: row => renderRole(row)
   },
-  // {
-  //   name: 'Plan',
-  //   minWidth: '138px',
-  //   selector: 'currentPlan',
-  //   sortable: true,
-  //   cell: row => <span className='text-capitalize'>{row.currentPlan}</span>
-  // },
   {
     name: 'Status',
     minWidth: '138px',
