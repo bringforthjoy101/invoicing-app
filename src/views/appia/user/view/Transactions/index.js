@@ -76,7 +76,6 @@ const CustomHeader = ({ handleFilter, value, handleStatusValue, statusValue, han
 const TransactionList = () => {
   const dispatch = useDispatch()
   const store = useSelector(state => state.appiaUsers)
-  console.log({store})
 
   const [value, setValue] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
@@ -177,8 +176,6 @@ const TransactionList = () => {
     const isFiltered = Object.keys(filters).some(function (k) {
       return filters[k].length > 0
     })
-    console.log({isFiltered})
-    console.log({store:store.selectedUserTransactions})
     if (store.selectedUserAllTransactions.length > 0 && !isFiltered) {
       return store.selectedUserAllTransactions
     } else if (store.selectedUserTransactions.length === 0 && isFiltered) {
