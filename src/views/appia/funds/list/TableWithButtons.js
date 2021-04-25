@@ -1,5 +1,5 @@
 // ** React Imports
-import { Fragment, useState, useEffect, forwardRef } from 'react'
+import React, { Fragment, useState, useEffect, forwardRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import moment from 'moment'
 
@@ -17,18 +17,18 @@ import { store } from '@store/storeConfig/store'
 // ** Third Party Components
 import ReactPaginate from 'react-paginate'
 import DataTable from 'react-data-table-component'
-import { 
-  ChevronDown, 
-  Share, 
-  Printer, 
-  File, 
-  Grid, 
-  Copy, 
-  Plus, 
-  MoreVertical, 
-  Edit, 
-  FileText, 
-  Archive, 
+import {
+  ChevronDown,
+  Share,
+  Printer,
+  File,
+  Grid,
+  Copy,
+  Plus,
+  MoreVertical,
+  Edit,
+  FileText,
+  Archive,
   Trash, X, Check, Bookmark
 } from 'react-feather'
 
@@ -48,7 +48,10 @@ import {
   Col,
   Badge
 } from 'reactstrap'
-
+import { useReactToPrint } from 'react-to-print'
+import Pdf from 'react-to-pdf'
+import jsPDF from 'jspdf'
+import 'jspdf-autotable'
 
 const states = ['success', 'danger', 'warning', 'info', 'dark', 'primary', 'secondary']
 
@@ -140,7 +143,7 @@ const columns = [
               <Check size={30} className='text-success' onClick={() => store.dispatch(reviewFunds(row.log_id, 'approve'))} />
               <X size={30} className='text-danger' onClick={() => store.dispatch(reviewFunds(row.log_id, 'disapprove'))} />
             </div>
-          ) : <Bookmark size={30} className='text-info' onClick={() => alert('Reviewed')} /> }
+          ) : <Bookmark size={30} className='text-info' onClick={() => alert('Reviewed')} />}
         </div>
       )
     }
@@ -156,6 +159,7 @@ const BootstrapCheckbox = forwardRef(({ onClick, ...rest }, ref) => (
 ))
 
 const DataTableWithButtons = () => {
+  const ref = React.createRef()
   // ** Store Vars
   const dispatch = useDispatch()
   const store = useSelector(state => state.appiaFunds)
@@ -191,13 +195,13 @@ const DataTableWithButtons = () => {
     if (value.length) {
       updatedData = store.allData.filter(item => {
         const startsWith =
-                    item.user_details.user_name.toLowerCase().startsWith(value.toLowerCase()) ||
+          item.user_details.user_name.toLowerCase().startsWith(value.toLowerCase()) ||
           item.user_details.email.toLowerCase().startsWith(value.toLowerCase()) ||
           item.purpose.toLowerCase().startsWith(value.toLowerCase()) ||
           item.description.toLowerCase().startsWith(value.toLowerCase()) ||
           item.status.toLowerCase().startsWith(value.toLowerCase()) ||
-          item.posted_date.toLowerCase().startsWith(value.toLowerCase()) 
-// status[item.status].title.toLowerCase().startsWith(value.toLowerCase())
+          item.posted_date.toLowerCase().startsWith(value.toLowerCase())
+        // status[item.status].title.toLowerCase().startsWith(value.toLowerCase())
 
         const includes =
           item.user_details.user_name.toLowerCase().startsWith(value.toLowerCase()) ||
@@ -205,8 +209,8 @@ const DataTableWithButtons = () => {
           item.purpose.toLowerCase().startsWith(value.toLowerCase()) ||
           item.description.toLowerCase().startsWith(value.toLowerCase()) ||
           item.status.toLowerCase().startsWith(value.toLowerCase()) ||
-          item.posted_date.toLowerCase().startsWith(value.toLowerCase()) 
-          // status[item.status].title.toLowerCase().includes(value.toLowerCase())
+          item.posted_date.toLowerCase().startsWith(value.toLowerCase())
+        // status[item.status].title.toLowerCase().includes(value.toLowerCase())
 
         if (startsWith) {
           return startsWith
@@ -223,7 +227,6 @@ const DataTableWithButtons = () => {
   const handlePagination = page => {
     setCurrentPage(page.selected)
   }
-  console.log("fillls", filtered)
 
   // ** Custom Pagination
   const CustomPagination = () => (
@@ -295,6 +298,24 @@ const DataTableWithButtons = () => {
     link.click()
   }
 
+  // download PDF
+  const downloadPDF = () => {
+    const doc = new jsPDF({
+      orientation: "landscape"
+    })
+
+    doc.autoTable({
+      head: [['User', 'Purpose', 'Description', 'Status', 'Date', 'Posted by']]
+    })
+    store.allData.map(arr => {
+      doc.autoTable({
+        body: [[(arr.user_details.user_name), (arr.purpose), (arr.description), (arr.status), (arr.posted_date), (arr.posted_by)]]
+      })
+    })
+    doc.save("export.pdf")
+  }
+
+
   return (
     <Fragment>
       <Card>
@@ -319,8 +340,8 @@ const DataTableWithButtons = () => {
                   <Grid size={15} />
                   <span className='align-middle ml-50'>Excel</span>
                 </DropdownItem>
-                <DropdownItem className='w-100'>
-                  <File size={15} />
+                <DropdownItem className='w-100' onClick={() => downloadPDF()}>
+                  <FileText size={15} />
                   <span className='align-middle ml-50'>PDF</span>
                 </DropdownItem>
                 <DropdownItem className='w-100'>

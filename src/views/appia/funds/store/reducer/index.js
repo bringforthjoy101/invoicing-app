@@ -3,13 +3,16 @@ const initialState = {
   allData: [],
   data: [],
   total: 1,
-  params: {}
+  params: {},
+  selectedFund: null
 }
 
 const users = (state = initialState, action) => {
   switch (action.type) {
     case 'GET_ALL_FUND_DATA':
       return { ...state, allData: action.data }
+      case 'GET_FUND':
+        return { ...state, selectedFund: action.selectedFund }
     case 'GET_DATA':
       return {
         ...state,

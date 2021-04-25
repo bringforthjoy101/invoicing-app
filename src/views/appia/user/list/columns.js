@@ -108,7 +108,7 @@ export const columns = [
   {
     name: 'Savings',
     minWidth: '138px',
-    selector: 'savings_naira_wallet',
+    selector: 'naira_wallet',
     sortable: true,
     cell: row => <span className='text-capitalize'>{row.naira_wallet.toLocaleString('en-US', { style: 'currency', currency: 'NGN' })}</span>
   },
