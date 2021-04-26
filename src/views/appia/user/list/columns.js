@@ -68,7 +68,6 @@ const statusObj = {
   Inactive: 'light-danger'
 }
 const {users} = store.getState()
-console.log({users})
 export const columns = [
   {
     name: 'User',

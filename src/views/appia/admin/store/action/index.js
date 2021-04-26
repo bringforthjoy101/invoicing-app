@@ -88,12 +88,11 @@ export const activateAdmin = (admins, id) => {
   const admin = admins.find(i => i.admin_id === id)
   return async dispatch => {
     const response = await apiRequest({ url: `/admin/activate/${admin.admin_id}`, method: 'GET' }, dispatch)
-    console.log({response})
     if (response) {
       if (response.data.success) {
         dispatch({
           type: 'GET_ADMIN',
-          selectedAdmin: admin
+          selectedAdmin: {...admin, status: "Active"}
         })
         swal('Good!', `${response.data.message}.`, 'success')
         await dispatch(getAllData())
@@ -113,12 +112,11 @@ export const deactivateAdmin = (admins, id) => {
   const admin = admins.find(i => i.admin_id === id)
   return async dispatch => {
     const response = await apiRequest({ url: `/admin/deactivate/${admin.admin_id}`, method: 'GET' }, dispatch)
-    console.log({response})
     if (response) {
       if (response.data.success) {
         dispatch({
           type: 'GET_ADMIN',
-          selectedAdmin: admin
+          selectedAdmin: {...admin, status: "Inactive"}
         })
         swal('Good!', `${response.data.message}.`, 'success')
         await dispatch(getAllData())

@@ -22,6 +22,7 @@ const PlanCard = ({ selectedAdmin }) => {
       </CardHeader>
       <CardBody>
         {selectedAdmin.status === "Active" ? <Button.Ripple className='text-center mb-1' color= 'danger'  block onClick={() => { store.dispatch(deactivateAdmin(store.getState().appiaAdmins.allData, selectedAdmin.admin_id)) }}> Deactivate Admin</Button.Ripple> : <Button.Ripple 
+
          className='text-center mb-1' 
          color='success'
          block

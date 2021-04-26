@@ -7,7 +7,6 @@ export const apiUrl = process.env.REACT_APP_API_ENDPOINT
 export const getAllData = () => {
   return async dispatch => {
     const response = await apiRequest({url:'/admin/users', method:'GET'}, dispatch)
-    console.log({response})
     if (response && response.data.data && response.data.success) {
         await dispatch({
           type: 'GET_ALL_DATA',
@@ -134,7 +133,6 @@ export const addFunds = ({user_id, reason, amount}) => {
     const body = JSON.stringify({user_id, reason, amount})
     console.log({body})
     const response = await apiRequest({url:`/admin/users/add`, method:'POST', body}, dispatch)
-    // console.log({response})
     if (response && response.data.success) {
       swal('Good!', `Funds of ${amount} was successfully added and is pending aproval!.`, 'success')
     } else {
@@ -167,7 +165,8 @@ export const activateUser = (users, id) => {
         if (response.data.success) {
           dispatch({
             type: 'GET_USER',
-            selectedUser: user
+
+            selectedUser:{...user, status: "Active"}
           })
           swal('Good!', `${response.data.message}.`, 'success')
         } else {
@@ -189,7 +188,7 @@ export const deactivateUser = (users, id) => {
         if (response.data.success) {
           dispatch({
             type: 'GET_USER',
-            selectedUser: user
+            selectedUser:{...user, status: "Inactive"}
           })
           swal('Good!', `${response.data.message}.`, 'success')
           // dispatch(getAdmin(admins, id))
