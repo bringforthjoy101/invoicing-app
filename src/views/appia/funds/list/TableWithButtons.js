@@ -1,5 +1,5 @@
 // ** React Imports
-import React, { Fragment, useState, useEffect, forwardRef } from 'react'
+import React, { Fragment, useState, useEffect, forwardRef, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import moment from 'moment'
 
@@ -48,8 +48,6 @@ import {
   Col,
   Badge
 } from 'reactstrap'
-import { useReactToPrint } from 'react-to-print'
-import Pdf from 'react-to-pdf'
 import jsPDF from 'jspdf'
 import 'jspdf-autotable'
 
@@ -159,7 +157,6 @@ const BootstrapCheckbox = forwardRef(({ onClick, ...rest }, ref) => (
 ))
 
 const DataTableWithButtons = () => {
-  const ref = React.createRef()
   // ** Store Vars
   const dispatch = useDispatch()
   const store = useSelector(state => state.appiaFunds)
@@ -254,6 +251,14 @@ const DataTableWithButtons = () => {
     />
   )
 
+  const printOrder = () => {
+    const orderHtml = document.getElementById('printme')
+    const oldPage = document.body.innerHTML
+    document.body.innerHTML = oldPage
+    window.print()
+    document.body.innerHTML = oldPage
+}
+
   // ** Converts table to CSV
   function convertArrayOfObjectsToCSV(array) {
     let result
@@ -261,6 +266,7 @@ const DataTableWithButtons = () => {
     const columnDelimiter = ','
     const lineDelimiter = '\n'
     const keys = Object.keys(store.allData[0])
+    console.log("keyss", keys)
 
     result = ''
     result += keys.join(columnDelimiter)
@@ -276,6 +282,7 @@ const DataTableWithButtons = () => {
         ctr++
       })
       result += lineDelimiter
+      console.log('esults', result)
     })
 
     return result
@@ -305,10 +312,12 @@ const DataTableWithButtons = () => {
     })
 
     doc.autoTable({
-      head: [['User', 'Purpose', 'Description', 'Status', 'Date', 'Posted by']]
+        styles: { halign: 'center'},
+        head: [['User', 'Purpose', 'Description', 'Status', 'Date', 'Posted by']]
     })
     store.allData.map(arr => {
       doc.autoTable({
+        styles: { halign: 'left' },
         body: [[(arr.user_details.user_name), (arr.purpose), (arr.description), (arr.status), (arr.posted_date), (arr.posted_by)]]
       })
     })
@@ -328,7 +337,7 @@ const DataTableWithButtons = () => {
                 <span className='align-middle ml-50'>Export</span>
               </DropdownToggle>
               <DropdownMenu right>
-                <DropdownItem className='w-100'>
+                <DropdownItem className='w-100' onClick={() => printOrder(filteredData)}>
                   <Printer size={15} />
                   <span className='align-middle ml-50'>Print</span>
                 </DropdownItem>
@@ -336,17 +345,9 @@ const DataTableWithButtons = () => {
                   <FileText size={15} />
                   <span className='align-middle ml-50'>CSV</span>
                 </DropdownItem>
-                <DropdownItem className='w-100'>
-                  <Grid size={15} />
-                  <span className='align-middle ml-50'>Excel</span>
-                </DropdownItem>
                 <DropdownItem className='w-100' onClick={() => downloadPDF()}>
                   <FileText size={15} />
                   <span className='align-middle ml-50'>PDF</span>
-                </DropdownItem>
-                <DropdownItem className='w-100'>
-                  <Copy size={15} />
-                  <span className='align-middle ml-50'>Copy</span>
                 </DropdownItem>
               </DropdownMenu>
             </UncontrolledButtonDropdown>
@@ -372,6 +373,7 @@ const DataTableWithButtons = () => {
           </Col>
         </Row>
         <DataTable
+          printableId= "printme"
           noHeader
           pagination
           selectableRows

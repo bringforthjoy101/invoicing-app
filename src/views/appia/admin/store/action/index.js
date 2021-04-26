@@ -5,6 +5,7 @@ import { paginateArray, sortCompare, apiRequest, swal } from '@utils'
 export const getAllData = () => {
   return async dispatch => {
     const response = await apiRequest({ url: '/admin/get_admins', method: 'GET' }, dispatch)
+    console.log({response})
     if (response) {
       if (response.data.data && response.data.success) {
         await dispatch({
@@ -87,31 +88,7 @@ export const activateAdmin = (admins, id) => {
   const admin = admins.find(i => i.admin_id === id)
   return async dispatch => {
     const response = await apiRequest({ url: `/admin/activate/${admin.admin_id}`, method: 'GET' }, dispatch)
-
-    if (response) {
-      if (response.data.success) {
-        dispatch({
-          type: 'GET_ADMIN',
-          selectedAdmin: admin
-        })
-        swal('Good!', `${response.data.message}.`, 'success')
-        await dispatch(getAllData())
-      } else {
-        swal('Oops!', `${response.data.message}.`, 'error')
-      }
-    } else {
-      swal('Oops!', 'Something went wrong with your network.', 'error')
-    }
-
-  }
-}
-
-// deactivate admin account
-export const EditRole = () => {
-  // console.log({ admins, id })
-  // const admin = admins.find(i => i.admin_id === id)
-  return async dispatch => {
-    const response = await apiRequest({ url: `/admin/deactivate/${admin.admin_id}`, method: 'GET' }, dispatch)
+    console.log({response})
     if (response) {
       if (response.data.success) {
         dispatch({
@@ -136,6 +113,7 @@ export const deactivateAdmin = (admins, id) => {
   const admin = admins.find(i => i.admin_id === id)
   return async dispatch => {
     const response = await apiRequest({ url: `/admin/deactivate/${admin.admin_id}`, method: 'GET' }, dispatch)
+    console.log({response})
     if (response) {
       if (response.data.success) {
         dispatch({
@@ -153,3 +131,48 @@ export const deactivateAdmin = (admins, id) => {
 
   }
 }
+
+// Get all roles
+export const getAllRoles = (admins) => {
+  return async dispatch => {
+    const response = await apiRequest({ url: '/admin/admin_role', method: 'GET' }, dispatch)
+    console.log({response})
+    if (response) {
+      if (response.data.data && response.data.success) {
+        await dispatch({
+          type: 'GET_ALL_ROLES',
+          data: response.data.data
+        })
+      } else {
+        console.log(response.error)
+      }
+    } else {
+      swal('Oops!', 'Somthing went wrong with your network.', 'error')
+    }
+
+  }
+}
+
+
+// Edit admin role
+export const editRole = () => {
+  return async dispatch => {
+    const response = await apiRequest({ url: `/admin/change_role/`, method:'POST'}, dispatch)
+    console.log({response})
+    if (response) {
+      if (response.data.success) {
+        dispatch({
+          type: 'GET_ADMIN'
+        })
+        swal('Good!', `${response.data.message}.`, 'success')
+        await dispatch(getAllRoles())
+      } else {
+        swal('Oops!', `${response.data.message}.`, 'error')
+      }
+    } else {
+      swal('Oops!', 'Something went wrong with your network.', 'error')
+    }
+
+  }
+}
+

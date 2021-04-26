@@ -30,9 +30,6 @@ const PlanCard = ({ selectedAdmin }) => {
          Activate Admin
        </Button.Ripple>
         }
-        {/* <Button.Ripple className="text-center mt-1" color="success" block onClick={openButton} >
-          Edit Role
-        </Button.Ripple> */}
         <EditRole open={openButton} openButton={openButton} />
       </CardBody>
     </Card>
