@@ -7,8 +7,7 @@ import { store } from '@store/storeConfig/store'
 
 
 const PlanCard = ({ selectedUser, userData }) => {
-  console.log({selectedUser})
-  console.log({userData})
+
   return (
     <Card className='plan-card border-primary'>
       <CardHeader className='d-flex justify-content-between align-items-center pt-75 pb-1'>

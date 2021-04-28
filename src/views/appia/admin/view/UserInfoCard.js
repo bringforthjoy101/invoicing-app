@@ -48,7 +48,7 @@ const UserInfoCard = ({ selectedAdmin }) => {
               <div className='d-flex justify-content-start'>
                 {renderUserImg()}
                 <div className='d-flex flex-column ml-1'>
-                  <div className='user-info mb-1'>
+                  <div className='user-info mt-2'>
                     <h4 className='mb-0'>{selectedAdmin !== null ? `${selectedAdmin.first_name} ${selectedAdmin.last_name}` : 'Appia Admin'}</h4>
                     <CardText tag='span'>
                       {selectedAdmin !== null ? selectedAdmin.email : 'appia.admin@appiawave.com'}

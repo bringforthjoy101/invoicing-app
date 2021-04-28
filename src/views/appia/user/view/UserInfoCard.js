@@ -47,7 +47,7 @@ const UserInfoCard = ({ selectedUser }) => {
               <div className='d-flex justify-content-start'>
                 {renderUserImg()}
                 <div className='d-flex flex-column ml-1'>
-                  <div className='user-info mb-1'>
+                  <div className='user-info mt-2'>
                     <h4 className='mb-0'>{selectedUser !== null ? selectedUser.names : 'Eleanor Aguilar'}</h4>
                     <CardText tag='span'>
                       {selectedUser !== null ? selectedUser.email : 'eleanor.aguilar@gmail.com'}

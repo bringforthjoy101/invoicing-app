@@ -53,14 +53,6 @@ const UserView = props => {
           <PlanCard selectedUser={store.selectedUser} userData={userData} />
         </Col>
       </Row>
-      {/* <Row>
-        <Col md='6'>
-          <UserTimeline />
-        </Col>
-        <Col md='6'>
-          <PermissionsTable />
-        </Col>
-      </Row> */}
       <Row>
         <Col sm='12'>
           <TransactionList />

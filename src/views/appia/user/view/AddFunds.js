@@ -20,7 +20,6 @@ export const AddFunds = ({userId, userData}) => {
   const dispatch = useDispatch()
   const [formModal, setFormModal] = useState(false)
 
-  console.log("userrr", userData.role_name)
 
   return (
     <div>
