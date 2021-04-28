@@ -1,4 +1,4 @@
-import { Circle, Layers, Mail, User, List } from 'react-feather'
+import { Circle, ThumbsUp, Mail, User, List } from 'react-feather'
 
 export default [
   {
@@ -38,14 +38,14 @@ export default [
   },
   {
     id: 'features',
-    title: 'Features',
-    icon: <Layers size={20} />,
+    title: 'Reviews and Ratings',
+    icon: <ThumbsUp size={20} />,
     navLink: '/appia/features/'
   },
   {
     id: 'contact',
     title: 'Contact',
     icon: <Mail size={20} />,
-    navLink: '/appia/contact/'
+    navLink: '/appia/contact/list'
   }
 ]
