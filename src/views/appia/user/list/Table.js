@@ -24,7 +24,7 @@ import '@styles/react/libs/react-select/_react-select.scss'
 import '@styles/react/libs/tables/react-dataTable-component.scss'
 
 // ** Table Header
-const CustomHeader = ({ toggleSidebar, handlePerPage, rowsPerPage, handleFilter, searchTerm }) => {
+const CustomHeader = ({handlePerPage, rowsPerPage}) => {
   return (
     <div className='invoice-list-table-header w-100 mr-1 ml-50 mt-2 mb-75'>
       <Row>
@@ -49,26 +49,6 @@ const CustomHeader = ({ toggleSidebar, handlePerPage, rowsPerPage, handleFilter,
             </CustomInput>
             <Label for='rows-per-page'>Entries</Label>
           </div>
-        </Col>
-        <Col
-          xl='6'
-          className='d-flex align-items-sm-center justify-content-lg-end justify-content-start flex-lg-nowrap flex-wrap flex-sm-row flex-column pr-lg-1 p-0 mt-lg-0 mt-1'
-        >
-          <div className='d-flex align-items-center mb-sm-0 mb-1 mr-1'>
-            <Label className='mb-0' for='search-invoice'>
-              Search:
-            </Label>
-            <Input
-              id='search-invoice'
-              className='ml-50 w-100'
-              type='text'
-              value={searchTerm}
-              onChange={e => handleFilter(e.target.value)}
-            />
-          </div>
-          <Button.Ripple color='primary' disabled onClick={toggleSidebar}>
-            Add New User
-          </Button.Ripple>
         </Col>
       </Row>
     </div>
@@ -171,7 +151,6 @@ const UsersList = () => {
         page: currentPage,
         perPage: rowsPerPage,
         role: currentRole.value,
-        currentPlan: currentPlan.value,
         status: currentStatus.value,
         q: val
       })
@@ -258,29 +237,6 @@ const UsersList = () => {
                 }}
               />
             </Col>
-            <Col className='my-md-0 my-1' md='4'>
-              <Select
-                theme={selectThemeColors}
-                isClearable={false}
-                className='react-select'
-                classNamePrefix='select'
-                options={planOptions}
-                value={currentPlan}
-                onChange={data => {
-                  setCurrentPlan(data)
-                  dispatch(
-                    getFilteredData(store.allData, {
-                      page: currentPage,
-                      perPage: rowsPerPage,
-                      role: currentRole.value,
-                      currentPlan: data.value,
-                      status: currentStatus.value,
-                      q: searchTerm
-                    })
-                  )
-                }}
-              />
-            </Col>
             <Col md='4'>
               <Select
                 theme={selectThemeColors}
@@ -303,6 +259,20 @@ const UsersList = () => {
                   )
                 }}
               />
+            </Col>
+            <Col md="4">
+            <div className='d-flex align-items-center mb-sm-0 mb-1 mr-1'>
+            <Label className='mb-0' for='search-invoice'>
+              Search:
+            </Label>
+            <Input
+              id='search-invoice'
+              className='ml-50 w-100'
+              type='text'
+              value={searchTerm}
+              onChange={e => handleFilter(e.target.value)}
+            />
+          </div>
             </Col>
           </Row>
         </CardBody>

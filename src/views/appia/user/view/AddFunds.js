@@ -16,17 +16,17 @@ const AddFundsSchema = Yup.object().shape({
       .required('Reason is required')
   })
 
-export const AddFunds = ({userId}) => {
+export const AddFunds = ({userId, userData}) => {
   const dispatch = useDispatch()
   const [formModal, setFormModal] = useState(false)
 
-  // const handle
+  console.log("userrr", userData.role_name)
 
   return (
     <div>
-      <Button.Ripple className='text-center mb-1' color='primary' outline block onClick={() => setFormModal(!formModal)}>
+      {userData.role_name === "Super Admin" ? <Button.Ripple className='text-center mb-1' color='primary' outline block onClick={() => setFormModal(!formModal)}>
         Add Funds
-      </Button.Ripple>
+      </Button.Ripple> : ""}
       <Modal isOpen={formModal} toggle={() => setFormModal(!formModal)} className='modal-dialog-centered'>
         <ModalHeader toggle={() => setFormModal(!formModal)}>Add Funds</ModalHeader>
           <Formik
@@ -81,15 +81,15 @@ export const AddFunds = ({userId}) => {
   )
 }
 
-export const DeductFunds = ({userId}) => {
+export const DeductFunds = ({userId, userData}) => {
   const dispatch = useDispatch()
   const [formModal, setFormModal] = useState(false)
 
   return (
     <div>
-      <Button.Ripple className='text-center mb-1' color='danger' outline block onClick={() => setFormModal(!formModal)}>
+     {userData.role_name === "Super Admin" ?  <Button.Ripple className='text-center mb-1' color='danger' outline block onClick={() => setFormModal(!formModal)}>
         Deduct Funds
-      </Button.Ripple>
+      </Button.Ripple> : ""}
       <Modal isOpen={formModal} toggle={() => setFormModal(!formModal)} className='modal-dialog-centered'>
         <ModalHeader toggle={() => setFormModal(!formModal)}>Deduct Funds</ModalHeader>
           <Formik

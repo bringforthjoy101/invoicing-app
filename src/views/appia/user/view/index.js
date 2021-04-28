@@ -1,5 +1,5 @@
 // ** React Imports
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 
 // ** Store & Actions
@@ -14,6 +14,7 @@ import PlanCard from './PlanCard'
 import UserInfoCard from './UserInfoCard'
 import UserTimeline from './UserTimeline'
 import TransactionList from './Transactions'
+import { isUserLoggedIn } from '@utils'
 import PermissionsTable from './PermissionsTable'
 
 // ** Styles
@@ -25,11 +26,22 @@ const UserView = props => {
     dispatch = useDispatch(),
     { id } = useParams()
 
+  const [userData, setUserData] = useState(null)
+
+
+    console.log("userrrrrrrrrrrrrrr", userData)
+
   // ** Get suer on mount
   useEffect(() => {
     dispatch(getUser(store.allData, id))
     dispatch(getUserAllTransactions(id))
   }, [dispatch])
+
+  useEffect(() => {
+    if (isUserLoggedIn() !== null) {
+      setUserData(JSON.parse(localStorage.getItem('userData')))
+    }
+  }, [])
 
   return store.selectedUser !== null && store.selectedUser !== undefined ? (
     <div className='app-user-view'>
@@ -38,7 +50,7 @@ const UserView = props => {
           <UserInfoCard selectedUser={store.selectedUser} />
         </Col>
         <Col xl='3' lg='4' md='5'>
-          <PlanCard selectedUser={store.selectedUser} />
+          <PlanCard selectedUser={store.selectedUser} userData={userData} />
         </Col>
       </Row>
       {/* <Row>

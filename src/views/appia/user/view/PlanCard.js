@@ -6,8 +6,9 @@ import {AddFunds, DeductFunds} from './AddFunds'
 import { store } from '@store/storeConfig/store'
 
 
-const PlanCard = ({ selectedUser }) => {
+const PlanCard = ({ selectedUser, userData }) => {
   console.log({selectedUser})
+  console.log({userData})
   return (
     <Card className='plan-card border-primary'>
       <CardHeader className='d-flex justify-content-between align-items-center pt-75 pb-1'>
@@ -30,8 +31,8 @@ const PlanCard = ({ selectedUser }) => {
          Activate User
        </Button.Ripple>
         }
-        <AddFunds userId={selectedUser.user_id} />
-        <DeductFunds userId={selectedUser.user_id} />
+        <AddFunds userId={selectedUser.user_id} userData={userData} />
+        <DeductFunds userId={selectedUser.user_id} userData={userData} />
       </CardBody>
     </Card>
   )
