@@ -89,6 +89,34 @@ const AppiaRoutes = [
     meta: {
       navLink: '/appia/contacts/view'
     }
+  },
+  {
+    path: '/appia/reviews/list',
+    component: lazy(() => import('../../views/appia/reviews/list'))
+  },
+  {
+    path: '/appia/reviews/edit',
+    exact: true,
+    component: () => <Redirect to='/appia/reviews/edit/1' />
+  },
+  {
+    path: '/appia/reviews/edit/:id',
+    component: lazy(() => import('../../views/appia/reviews/edit')),
+    meta: {
+      navLink: '/appia/contacts/edit'
+    }
+  },
+  {
+    path: '/appia/reviews/view',
+    exact: true,
+    component: () => <Redirect to='/appia/reviews/view/1' />
+  },
+  {
+    path: '/appia/reviess/view/:id',
+    component: lazy(() => import('../../views/appia/reviews/view')),
+    meta: {
+      navLink: '/appia/reviews/view'
+    }
   }
 ]
 

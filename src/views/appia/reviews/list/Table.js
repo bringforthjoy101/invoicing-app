@@ -23,16 +23,70 @@ import { Card, CardHeader, CardTitle, CardBody, Input, Row, Col, Label, CustomIn
 import '@styles/react/libs/react-select/_react-select.scss'
 import '@styles/react/libs/tables/react-dataTable-component.scss'
 
-const UsersList = () => {
+// ** Table Header
+const CustomHeader = ({ toggleSidebar, handlePerPage, rowsPerPage, handleFilter, searchTerm }) => {
+  return (
+    <div className='invoice-list-table-header w-100 mr-1 ml-50 mt-2 mb-75'>
+      <Row>
+        <Col xl='6' className='d-flex align-items-center p-0'>
+          <div className='d-flex align-items-center w-100'>
+            <Label for='rows-per-page'>Show</Label>
+            <CustomInput
+              className='form-control mx-50'
+              type='select'
+              id='rows-per-page'
+              value={rowsPerPage}
+              onChange={handlePerPage}
+              style={{
+                width: '5rem',
+                padding: '0 0.8rem',
+                backgroundPosition: 'calc(100% - 3px) 11px, calc(100% - 20px) 13px, 100% 0'
+              }}
+            >
+              <option value='10'>10</option>
+              <option value='25'>25</option>
+              <option value='50'>50</option>
+            </CustomInput>
+            <Label for='rows-per-page'>Entries</Label>
+          </div>
+        </Col>
+        <Col
+          xl='6'
+          className='d-flex align-items-sm-center justify-content-lg-end justify-content-start flex-lg-nowrap flex-wrap flex-sm-row flex-column pr-lg-1 p-0 mt-lg-0 mt-1'
+        >
+          <div className='d-flex align-items-center mb-sm-0 mb-1 mr-1'>
+            <Label className='mb-0' for='search-invoice'>
+              Search:
+            </Label>
+            <Input
+              id='search-invoice'
+              className='ml-50 w-100'
+              type='text'
+              value={searchTerm}
+              onChange={e => handleFilter(e.target.value)}
+            />
+          </div>
+        </Col>
+      </Row>
+    </div>
+  )
+}
+
+const AdminsList = () => {
   // ** Store Vars
   const dispatch = useDispatch()
-  const store = useSelector(state => state.appiaUsers)
+  const store = useSelector(state => state.appiaAdmins)
 
   // ** States
   const [searchTerm, setSearchTerm] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
   const [rowsPerPage, setRowsPerPage] = useState(10)
+  const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [currentRole, setCurrentRole] = useState({ value: '', label: 'Select Role', number: 0})
   const [currentStatus, setCurrentStatus] = useState({ value: '', label: 'Select Status', number: 0 })
+
+  // ** Function to toggle sidebar
+  const toggleSidebar = () => setSidebarOpen(!sidebarOpen)
 
   // ** Get data on mount
   useEffect(() => {
@@ -41,28 +95,20 @@ const UsersList = () => {
       getFilteredData(store.allData, {
         page: currentPage,
         perPage: rowsPerPage,
+        role: currentRole.value,
         status: currentStatus.value,
         q: searchTerm
       })
     )
   }, [dispatch])
-
+  
   // ** User filter options
   const roleOptions = [
-    { value: '', label: 'Select Role' },
-    { value: 'admin', label: 'Admin' },
-    { value: 'author', label: 'Author' },
-    { value: 'editor', label: 'Editor' },
-    { value: 'maintainer', label: 'Maintainer' },
-    { value: 'subscriber', label: 'Subscriber' }
-  ]
-
-  const planOptions = [
-    { value: '', label: 'Select Plan' },
-    { value: 'basic', label: 'Basic' },
-    { value: 'company', label: 'Company' },
-    { value: 'enterprise', label: 'Enterprise' },
-    { value: 'team', label: 'Team' }
+    { value: '', label: 'Select Role', number: 0 },
+    { value: 'Admin', label: 'Admin', number: 1 },
+    { value: 'Customer Support', label: 'Customer Support', number: 2 },
+    { value: 'Super Admin', label: 'Super Admin', number: 3 },
+    { value: 'Control Admin', label: 'Control Admin', number: 4 }
   ]
 
   const statusOptions = [
@@ -79,7 +125,6 @@ const UsersList = () => {
         page: page.selected + 1,
         perPage: rowsPerPage,
         role: currentRole.value,
-        currentPlan: currentPlan.value,
         status: currentStatus.value,
         q: searchTerm
       })
@@ -94,6 +139,7 @@ const UsersList = () => {
       getFilteredData(store.allData, {
         page: currentPage,
         perPage: value,
+        role: currentRole.value,
         status: currentStatus.value,
         q: searchTerm
       })
@@ -108,6 +154,7 @@ const UsersList = () => {
       getFilteredData(store.allData, {
         page: currentPage,
         perPage: rowsPerPage,
+        role: currentRole.value,
         status: currentStatus.value,
         q: val
       })
@@ -118,7 +165,7 @@ const UsersList = () => {
     item => (item.email.toLowerCase() || item.first_name.toLowerCase() || item.last_name.toLowerCase())
   )
 
-  // ** Custom Pagination
+    // ** Custom Pagination
   const CustomPagination = () => {
     const count = Math.ceil(filteredData.length / rowsPerPage)
 
@@ -141,9 +188,11 @@ const UsersList = () => {
     )
   }
 
+
   // ** Table data to render
   const dataToRender = () => {
     const filters = {
+      role: currentRole.value,
       status: currentStatus.value,
       q: searchTerm
     }
@@ -164,72 +213,6 @@ const UsersList = () => {
   return (
     <Fragment>
       <Card>
-        <CardHeader>
-          <CardTitle tag='h4'>Search Filter</CardTitle>
-        </CardHeader>
-        <CardBody>
-          <Row>
-            <Col md="4">
-              <div className='d-flex align-items-center w-100'>
-                <Label for='rows-per-page'>Show</Label>
-                <CustomInput
-                  className='form-control mx-50'
-                  type='select'
-                  id='rows-per-page'
-                  value={rowsPerPage}
-                  onChange={handlePerPage}
-                  style={{
-                    width: '25rem',
-                    padding: '0 0.8rem',
-                    backgroundPosition: 'calc(100% - 3px) 11px, calc(100% - 20px) 13px, 100% 0'
-                  }}
-                >
-                  <option value='10'>10</option>
-                  <option value='25'>25</option>
-                  <option value='50'>50</option>
-                </CustomInput>
-                <Label for='rows-per-page'>Entries</Label>
-              </div>
-            </Col>
-            <Col md='4'>
-              <Select
-                theme={selectThemeColors}
-                isClearable={false}
-                className='react-select'
-                classNamePrefix='select'
-                options={statusOptions}
-                value={currentStatus}
-                onChange={data => {
-                  setCurrentStatus(data)
-                  dispatch(
-                    getFilteredData(store.allData, {
-                      page: currentPage,
-                      perPage: rowsPerPage,
-                      status: data.value,
-                      q: searchTerm
-                    })
-                  )
-                }}
-              />
-            </Col>
-            <Col md="4">
-              <div className='d-flex align-items-center mb-sm-0 mb-1 mr-1'>
-                <Label className='mb-0' for='search-invoice'>
-                  Search:
-            </Label>
-                <Input
-                  id='search-invoice'
-                  className='ml-50 w-100'
-                  type='text'
-                  value={searchTerm}
-                  onChange={e => handleFilter(e.target.value)}
-                />
-              </div>
-            </Col>
-          </Row>
-        </CardBody>
-      </Card>
-      <Card>
         <DataTable
           noHeader
           pagination
@@ -241,10 +224,21 @@ const UsersList = () => {
           className='react-dataTable'
           paginationComponent={CustomPagination}
           data={dataToRender()}
+          subHeaderComponent={
+            <CustomHeader
+              toggleSidebar={toggleSidebar}
+              handlePerPage={handlePerPage}
+              rowsPerPage={rowsPerPage}
+              searchTerm={searchTerm}
+              handleFilter={handleFilter}
+            />
+          }
         />
       </Card>
+
+      <Sidebar open={sidebarOpen} toggleSidebar={toggleSidebar} />
     </Fragment>
   )
 }
 
-export default UsersList
+export default AdminsList

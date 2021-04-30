@@ -40,7 +40,7 @@ export default [
     id: 'features',
     title: 'Reviews and Ratings',
     icon: <ThumbsUp size={20} />,
-    navLink: '/appia/features/'
+    navLink: '/appia/reviews/list'
   },
   {
     id: 'contact',

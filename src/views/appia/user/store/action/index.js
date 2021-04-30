@@ -23,7 +23,6 @@ export const getAllData = () => {
 export const getFilteredData = (users, params) => {
   return async dispatch => {
     const { q = '', perPage = 10, page = 1, role = null, currentPlan = null, status = null } = params
-    console.log({users}, typeof users)
     /* eslint-disable  */
     const queryLowered = q.toLowerCase()
     const filteredData = users.filter(

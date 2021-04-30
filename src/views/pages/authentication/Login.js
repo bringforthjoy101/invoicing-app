@@ -73,7 +73,6 @@ const Login = props => {
       useJwt
         .login({ email, password })
         .then(res => {
-          console.log({res})
           if (res.data.success) {
             const data = { 
               ...res.data.data, 
@@ -83,7 +82,6 @@ const Login = props => {
               avatar: "/demo/Appia-react-admin-dashboard-template/demo-1/static/media/avatar-s-11.1d46cc62.jpg",
               extras: {eCommerceCartItemsCount: 5}
             }
-            console.log({data})
             dispatch(handleLogin(data))
             ability.update(data.ability)
             history.push(getHomeRouteForLoggedInUser(data.role_name))

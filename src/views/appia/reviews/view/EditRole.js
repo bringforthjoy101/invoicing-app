@@ -1,47 +1,26 @@
 import { useState } from 'react'
-import { swal, apiRequest } from '@utils'
 import { Button, Spinner, Modal, ModalHeader, ModalBody, ModalFooter, Label, FormGroup, Input } from 'reactstrap'
 import { Formik, Field, Form, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 import { useDispatch, useSelector } from 'react-redux'
 import { AvForm, AvInput } from 'availity-reactstrap-validation-safe'
-import { getAllData } from '../store/action'
+import { editRole } from '../store/action'
 import { store } from '@store/storeConfig/store'
 
 
-export const EditRole = ({ selectedAdmin }) => {
+export const EditRole = ({selectedAdmin}) => {
   const dispatch = useDispatch()
   const [userData, setUserData] = useState({
     role: ''
   })
   const [formModal, setFormModal] = useState(false)
+  console.log("selecgeddddd", selectedAdmin)
 
-  const onSubmit = async (event, errors, admin_id) => {
+  const onSubmit = async (event) => {
     event.preventDefault()
-    if (errors && !errors.length) {
-      console.log("admiiii", admin_id)
-      // const body = JSON.stringify(userData)
-      const body = {admin_id, new_role_id}
-      console.log("bddd", body)
-      console.log("adminnn", admin_id)
-      try {
-        const response = await apiRequest({ url: `/admin/change_role/`, method: 'POST', body}, dispatch)
-        console.log({response})
-        if (response) {
-          if (response.data.success) {
-            swal('Good!', `${response.data.message}.`, 'success')
-            await dispatch(getAllData())
-            setFormModal(!formModal)
-          } else {
-            swal('Oops!', `${response.data.message}.`, 'error')
-          }
-        } else {
-          swal('Oops!', 'Something went wrong with your network.', 'error')
-        }
-      } catch (error) {
-        console.log({error})
-      }
-   }
+    dispatch(editRole(userData, store.getState().appiaAdmins.allData, selectedAdmin))
+    console.log(dispatch(editRole(userData, store.getState().appiaAdmins.allData, selectedAdmin)))
+    setFormModal(!formModal)
   }
 
   return (
@@ -64,7 +43,6 @@ export const EditRole = ({ selectedAdmin }) => {
                 required
               >
                 {/* <option value='0'>Select Role</option> */}
-                <option value='0'>Select Role</option>
                 <option value='1'>Admin</option>
                 <option value='2'>Customer Support</option>
                 <option value='3'>Super Admin</option>

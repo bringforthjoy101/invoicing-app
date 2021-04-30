@@ -38,7 +38,7 @@ const CustomHeader = ({ toggleSidebar, handlePerPage, rowsPerPage, handleFilter,
               value={rowsPerPage}
               onChange={handlePerPage}
               style={{
-                width: '5rem',
+                width: '10rem',
                 padding: '0 0.8rem',
                 backgroundPosition: 'calc(100% - 3px) 11px, calc(100% - 20px) 13px, 100% 0'
               }}
