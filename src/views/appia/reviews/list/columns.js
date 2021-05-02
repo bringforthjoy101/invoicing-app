@@ -92,14 +92,14 @@ export const columns = [
     cell: row => row.email
   },
   {
-    name: 'Role',
+    name: 'Feature',
     minWidth: '172px',
     selector: 'role',
     sortable: true,
     cell: row => renderRole(row)
   },
   {
-    name: 'Status',
+    name: 'RATING',
     minWidth: '138px',
     selector: 'status',
     sortable: true,

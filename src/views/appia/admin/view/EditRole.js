@@ -20,8 +20,8 @@ export const EditRole = ({ selectedAdmin }) => {
     event.preventDefault()
     if (errors && !errors.length) {
       console.log("admiiii", admin_id)
-      // const body = JSON.stringify(userData)
-      const body = {admin_id, new_role_id}
+      const body = JSON.stringify(userData)
+      // const body = {admin_id, new_role_id}
       console.log("bddd", body)
       console.log("adminnn", admin_id)
       try {
