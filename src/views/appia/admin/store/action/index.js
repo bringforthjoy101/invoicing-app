@@ -150,3 +150,24 @@ export const getAllRoles = (admins) => {
   }
 }
 
+// Get all roles
+export const changeAdminRole = (admin_id, new_role_id) => {
+  console.log(admin_id, new_role_id)
+  return async dispatch => {
+    const body = JSON.stringify({admin_id, new_role_id})
+    const response = await apiRequest({ url: '/admin/change_role/', method: 'POST', body }, dispatch)
+    console.log({response})
+    if (response) {
+      if (response.data.success) {
+        swal('Good!', `${response.data.message}.`, 'success')
+      } else {
+        swal('Oops!', `${response.data.message}.`, 'error')
+      }
+    } else {
+      // console.log(response.error)
+      swal('Oops!', 'Somthing went wrong with your network.', 'error')
+    }
+
+  }
+}
+

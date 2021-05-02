@@ -4,13 +4,15 @@ import { Button, Spinner, Modal, ModalHeader, ModalBody, ModalFooter, Label, For
 import { Formik, Field, Form, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 import { useDispatch, useSelector } from 'react-redux'
+import { useParams } from 'react-router-dom'
 import { AvForm, AvInput } from 'availity-reactstrap-validation-safe'
-import { getAllData } from '../store/action'
+import { getAllData, changeAdminRole } from '../store/action'
 import { store } from '@store/storeConfig/store'
 
 
 export const EditRole = ({ selectedAdmin }) => {
   const dispatch = useDispatch()
+  const { id } = useParams()
   const [userData, setUserData] = useState({
     role: ''
   })
@@ -19,28 +21,30 @@ export const EditRole = ({ selectedAdmin }) => {
   const onSubmit = async (event, errors, admin_id) => {
     event.preventDefault()
     if (errors && !errors.length) {
-      console.log("admiiii", admin_id)
-      // const body = JSON.stringify(userData)
-      const body = {admin_id, new_role_id}
-      console.log("bddd", body)
-      console.log("adminnn", admin_id)
-      try {
-        const response = await apiRequest({ url: `/admin/change_role/`, method: 'POST', body}, dispatch)
-        console.log({response})
-        if (response) {
-          if (response.data.success) {
-            swal('Good!', `${response.data.message}.`, 'success')
-            await dispatch(getAllData())
-            setFormModal(!formModal)
-          } else {
-            swal('Oops!', `${response.data.message}.`, 'error')
-          }
-        } else {
-          swal('Oops!', 'Something went wrong with your network.', 'error')
-        }
-      } catch (error) {
-        console.log({error})
-      }
+      await dispatch(changeAdminRole(id, userData.role))
+      setFormModal(!formModal)
+      // console.log("admiiii", admin_id)
+      // // const body = JSON.stringify(userData)
+      // const body = JSON.stringify({admin_id, new_role_id:userData.role})
+      // console.log("bddd", body)
+      // console.log("adminnn", admin_id)
+      // try {
+      //   const response = await apiRequest({ url: `/admin/change_role/`, method: 'POST', body}, dispatch)
+      //   console.log({response})
+      //   if (response) {
+      //     if (response.data.success) {
+      //       swal('Good!', `${response.data.message}.`, 'success')
+      //       await dispatch(getAllData())
+      //       setFormModal(!formModal)
+      //     } else {
+      //       swal('Oops!', `${response.data.message}.`, 'error')
+      //     }
+      //   } else {
+      //     swal('Oops!', 'Something went wrong with your network.', 'error')
+      //   }
+      // } catch (error) {
+      //   console.log({error})
+      // }
    }
   }
 
