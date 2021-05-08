@@ -28,9 +28,6 @@ const UserView = props => {
 
   const [userData, setUserData] = useState(null)
 
-
-    console.log("userrrrrrrrrrrrrrr", userData)
-
   // ** Get suer on mount
   useEffect(() => {
     dispatch(getUser(store.allData, id))
