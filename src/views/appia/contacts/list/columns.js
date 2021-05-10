@@ -55,13 +55,6 @@ export const columns = [
     cell: row => row.email
   },
   {
-    name: 'Id',
-    minWidth: '320px',
-    selector: 'id',
-    sortable: true,
-    cell: row => row.id
-  },
-  {
     name: 'Subject',
     minWidth: '138px',
     selector: 'subject',
@@ -74,5 +67,11 @@ export const columns = [
     selector: 'message',
     sortable: true,
     cell: row => row.message
+  }, {
+    name: 'Date Sent',
+    minWidth: '172px',
+    selector: 'created_at',
+    sortable: true,
+    cell: row => row.created_at
   }
 ]

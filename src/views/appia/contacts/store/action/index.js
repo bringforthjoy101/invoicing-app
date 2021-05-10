@@ -24,7 +24,7 @@ export const getAllData = () => {
 // ** Get filtered data on page or row change
 export const getFilteredData = (contacts, params) => {
   return async dispatch => {
-    const { q = '', perPage = 10, page = 1, subject = null} = params
+    const { q = '', perPage = 10, page = 1, subject = null, created_at = null} = params
     /* eslint-disable  */
     const queryLowered = q.toLowerCase()
     const filteredData = contacts.filter(
