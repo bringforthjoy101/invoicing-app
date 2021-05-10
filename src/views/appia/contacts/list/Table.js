@@ -14,8 +14,9 @@ import Select from 'react-select'
 import ReactPaginate from 'react-paginate'
 import { ChevronDown } from 'react-feather'
 import DataTable from 'react-data-table-component'
-import { selectThemeColors } from '@utils'
+import Flatpickr from 'react-flatpickr'
 import { Card, CardHeader, CardTitle, CardBody, Input, Row, Col, Label, CustomInput, Button } from 'reactstrap'
+import '@styles/react/libs/flatpickr/flatpickr.scss'
 
 // ** Styles
 import '@styles/react/libs/react-select/_react-select.scss'
@@ -36,7 +37,7 @@ const CustomHeader = ({ handlePerPage, rowsPerPage, handleFilter, searchTerm }) 
               value={rowsPerPage}
               onChange={handlePerPage}
               style={{
-                width: '5rem',
+                width: '10rem',
                 padding: '0 0.8rem',
                 backgroundPosition: 'calc(100% - 3px) 11px, calc(100% - 20px) 13px, 100% 0'
               }}
@@ -48,38 +49,32 @@ const CustomHeader = ({ handlePerPage, rowsPerPage, handleFilter, searchTerm }) 
             <Label for='rows-per-page'>Entries</Label>
           </div>
         </Col>
-        <Col
-          xl='6'
-          className='d-flex align-items-sm-center justify-content-lg-end justify-content-start flex-lg-nowrap flex-wrap flex-sm-row flex-column pr-lg-1 p-0 mt-lg-0 mt-1'
-        >
-          <div className='d-flex align-items-center mb-sm-0 mb-1 mr-1'>
-            <Label className='mb-0' for='search-invoice'>
-              Search:
+        <Col xl="6" className='d-flex align-items-sm-center justify-content-lg-end justify-content-start flex-lg-nowrap flex-wrap flex-sm-row flex-column pr-lg-1 p-0 mt-lg-0 mt-1'>
+          <Label className='mb-0 mt-1' for='search-invoice'>
+            Search:
             </Label>
-            <Input
-              id='search-invoice'
-              className='ml-50 w-100'
-              type='text'
-              value={searchTerm}
-              onChange={e => handleFilter(e.target.value)}
-            />
-          </div>
+          <Input
+            id='search-invoice'
+            className='ml-50 w-50'
+            type='text'
+            value={searchTerm}
+            onChange={e => handleFilter(e.target.value)}
+          />
         </Col>
       </Row>
     </div>
   )
 }
 
-const ReviewsList = () => {
+const ContactsList = () => {
   // ** Store Vars
   const dispatch = useDispatch()
-  const store = useSelector(state => state.appiaReviews)
+  const store = useSelector(state => state.appiaContacts)
 
   // ** States
   const [searchTerm, setSearchTerm] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
   const [rowsPerPage, setRowsPerPage] = useState(10)
-
 
   // ** Get data on mount
   useEffect(() => {
@@ -158,6 +153,26 @@ const ReviewsList = () => {
     )
   }
 
+  const PickerRange = () => {
+    const [picker, setPicker] = useState(new Date())
+    return (
+      <Fragment>
+        <Label for='range-picker'>Filter By Date</Label>
+        <Flatpickr
+          value={picker}
+          id='range-picker'
+          className='form-control'
+          onChange={date => setPicker(date)}
+          options={{
+            mode: 'range',
+            defaultDate: ['2020-02-01', '2020-02-15']
+          }}
+        />
+      </Fragment>
+    )
+  }
+
+
   // ** Table data to render
   const dataToRender = () => {
     const filters = {
@@ -181,15 +196,16 @@ const ReviewsList = () => {
     <Fragment>
       <Card>
         <CardHeader>
-          <CardTitle tag='h4'>Search Filter</CardTitle>
+          <CardTitle tag='h4'>Filter BY</CardTitle>
         </CardHeader>
         <CardBody>
           <Row>
-            
+            <Col md='4'>
+              <PickerRange />
+            </Col>
           </Row>
         </CardBody>
       </Card>
-
       <Card>
         <DataTable
           noHeader
@@ -216,4 +232,4 @@ const ReviewsList = () => {
   )
 }
 
-export default ReviewsList
+export default ContactsList

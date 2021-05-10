@@ -8,12 +8,11 @@ import Avatar from '@components/avatar'
 import { Card, CardBody, CardText, Button, Row, Col } from 'reactstrap'
 import { DollarSign, TrendingUp, User, Check, Star, Flag, Phone } from 'react-feather'
 
-const UserInfoCard = ({ selectedAdmin }) => {
+const UserInfoCard = ({ selectedUser }) => {
   // ** render user img
-  
   const renderUserImg = () => {
-    if (selectedAdmin !== null && selectedAdmin.avatar) {
-      return <img src={selectedAdmin.avatar} alt='user-avatar' className='img-fluid rounded' height='104' width='104' />
+    if (selectedUser !== null && selectedUser.avatar.length) {
+      return <img src={selectedUser.avatar} alt='user-avatar' className='img-fluid rounded' height='104' width='104' />
     } else {
       const stateNum = Math.floor(Math.random() * 6),
         states = ['light-success', 'light-danger', 'light-warning', 'light-info', 'light-primary', 'light-secondary'],
@@ -23,7 +22,7 @@ const UserInfoCard = ({ selectedAdmin }) => {
           initials
           color={color}
           className='rounded'
-          content={`${selectedAdmin.first_name} ${selectedAdmin.last_name}`}
+          content={selectedUser.fullName}
           contentStyles={{
             borderRadius: 0,
             fontSize: 'calc(36px)',
@@ -48,20 +47,20 @@ const UserInfoCard = ({ selectedAdmin }) => {
               <div className='d-flex justify-content-start'>
                 {renderUserImg()}
                 <div className='d-flex flex-column ml-1'>
-                  <div className='user-info mt-2'>
-                    <h4 className='mb-0'>{selectedAdmin !== null ? `${selectedAdmin.first_name} ${selectedAdmin.last_name}` : 'Appia Admin'}</h4>
+                  <div className='user-info mb-1'>
+                    <h4 className='mb-0'>{selectedUser !== null ? selectedUser.fullName : 'Eleanor Aguilar'}</h4>
                     <CardText tag='span'>
-                      {selectedAdmin !== null ? selectedAdmin.email : 'appia.admin@appiawave.com'}
+                      {selectedUser !== null ? selectedUser.email : 'eleanor.aguilar@gmail.com'}
                     </CardText>
                   </div>
-                  {/* <div className='d-flex flex-wrap align-items-center'>
-                    <Button.Ripple tag={Link} to={`/apps/user/edit/${selectedAdmin.id}`} color='primary'>
+                  <div className='d-flex flex-wrap align-items-center'>
+                    <Button.Ripple tag={Link} to={`/apps/user/edit/${selectedUser.id}`} color='primary'>
                       Edit
                     </Button.Ripple>
                     <Button.Ripple className='ml-1' color='danger' outline>
                       Delete
                     </Button.Ripple>
-                  </div> */}
+                  </div>
                 </div>
               </div>
             </div>
@@ -92,11 +91,11 @@ const UserInfoCard = ({ selectedAdmin }) => {
                 <div className='user-info-title'>
                   <User className='mr-1' size={14} />
                   <CardText tag='span' className='user-info-title font-weight-bold mb-0'>
-                    ID
+                    Username
                   </CardText>
                 </div>
                 <CardText className='mb-0'>
-                  {selectedAdmin !== null ? selectedAdmin.admin_id : ''}
+                  {selectedUser !== null ? selectedUser.username : 'eleanor.aguilar'}
                 </CardText>
               </div>
               <div className='d-flex flex-wrap align-items-center my-50'>
@@ -107,7 +106,7 @@ const UserInfoCard = ({ selectedAdmin }) => {
                   </CardText>
                 </div>
                 <CardText className='text-capitalize mb-0'>
-                  {selectedAdmin !== null ? selectedAdmin.status : 'Active'}
+                  {selectedUser !== null ? selectedUser.status : 'Active'}
                 </CardText>
               </div>
               <div className='d-flex flex-wrap align-items-center my-50'>
@@ -118,8 +117,17 @@ const UserInfoCard = ({ selectedAdmin }) => {
                   </CardText>
                 </div>
                 <CardText className='text-capitalize mb-0'>
-                  {selectedAdmin !== null ? selectedAdmin.role_name : 'Admin'}
+                  {selectedUser !== null ? selectedUser.role : 'Admin'}
                 </CardText>
+              </div>
+              <div className='d-flex flex-wrap align-items-center my-50'>
+                <div className='user-info-title'>
+                  <Flag className='mr-1' size={14} />
+                  <CardText tag='span' className='user-info-title font-weight-bold mb-0'>
+                    Country
+                  </CardText>
+                </div>
+                <CardText className='mb-0'>{selectedUser !== null ? selectedUser.country : 'England'}</CardText>
               </div>
               <div className='d-flex flex-wrap align-items-center'>
                 <div className='user-info-title'>
@@ -128,7 +136,7 @@ const UserInfoCard = ({ selectedAdmin }) => {
                     Contact
                   </CardText>
                 </div>
-                <CardText className='mb-0'>{selectedAdmin !== null ? selectedAdmin.phone : '(123) 456-7890'}</CardText>
+                <CardText className='mb-0'>{selectedUser !== null ? selectedUser.contact : '(123) 456-7890'}</CardText>
               </div>
             </div>
           </Col>

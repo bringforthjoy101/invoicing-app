@@ -11,6 +11,8 @@ import users from '@src/views/apps/user/store/reducer'
 import appiaUsers from '@src/views/appia/user/store/reducer'
 import appiaAdmins from '@src/views/appia/admin/store/reducer'
 import appiaFunds from '@src/views/appia/funds/store/reducer'
+import appiaContacts from '@src/views/appia/contacts/store/reducer'
+import appiaReviews from '@src/views/appia/reviews/store/reducer'
 import email from '@src/views/apps/email/store/reducer'
 import invoice from '@src/views/apps/invoice/store/reducer'
 import calendar from '@src/views/apps/calendar/store/reducer'
@@ -26,6 +28,8 @@ const rootReducer = combineReducers({
   appiaUsers,
   appiaAdmins,
   appiaFunds,
+  appiaContacts,
+  appiaReviews,
   navbar,
   layout,
   invoice,

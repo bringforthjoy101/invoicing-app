@@ -1,15 +1,14 @@
-import axios from 'axios'
 import { paginateArray, sortCompare, apiRequest, swal } from '@utils'
 
-// ** Get all Data
+//  Get all Data
 export const getAllData = () => {
   return async dispatch => {
-    const response = await apiRequest({ url: '/admin/get_admins', method: 'GET' }, dispatch)
+    const response = await apiRequest({ url: 'admin/misc/feedbacks', method: 'GET' }, dispatch)
     console.log({response})
     if (response) {
       if (response.data.data && response.data.success) {
         await dispatch({
-          type: 'GET_ALL_ADMIN_DATA',
+          type: 'GET_ALL_DATA',
           data: response.data.data
         })
       } else {
@@ -23,22 +22,21 @@ export const getAllData = () => {
 }
 
 // ** Get filtered data on page or row change
-export const getFilteredData = (admins, params) => {
+export const getFilteredData = (reviews, params) => {
   return async dispatch => {
-    const { q = '', perPage = 10, page = 1, role = null, status = null } = params
+    const { q = '', perPage = 10, page = 1, feature = null} = params
 
     /* eslint-disable  */
     const queryLowered = q.toLowerCase()
-    const filteredData = admins.filter(
-      admin =>
-        (admin.email.toLowerCase().includes(queryLowered) || admin.first_name.toLowerCase().includes(queryLowered) || admin.last_name.toLowerCase().includes(queryLowered)) &&
-        admin.role_name === (role || admin.role_name) &&
-        admin.status === (status || admin.status)
+    const filteredData = reviews.filter(
+      review =>
+        (review.email.toLowerCase().includes(queryLowered) || review.name.toLowerCase().includes(queryLowered)) &&
+        review.feature === (feature || review.feature)
     )
     /* eslint-enable  */
 
     dispatch({
-      type: 'GET_FILTERED_ADMIN_DATA',
+      type: 'GET_FILTERED_DATA',
       data: paginateArray(filteredData, perPage, page),
       totalPages: filteredData.length,
       params
@@ -46,130 +44,13 @@ export const getFilteredData = (admins, params) => {
   }
 }
 
-export const getAdmin = (admins, id) => {
+// get individual Review
+export const getReview = (reviews, id) => {
   return async dispatch => {
-    const admin = admins.find(i => i.admin_id === id)
+    const review = reviews.find(i => i.id === id)
     dispatch({
-      type: 'GET_ADMIN',
-      selectedAdmin: admin
+      type: 'GET_REVIEW',
+      selectedReview: review
     })
   }
 }
-
-export const setLoading = (payload) => {
-  return {
-    type: 'LOADING',
-    payload
-  }
-}
-
-
-export const getAdminActivity = () => {
-  return async dispatch => {
-    const response = await apiRequest({ url: '/admin/activities', method: 'GET' }, dispatch)
-    if (response) {
-      if (response.data.data && response.data.success) {
-        await dispatch({
-          type: 'GET_ALL_ADMIN_ACTIVITY',
-          data: response.data.data
-        })
-      } else {
-        console.log(response.error)
-      }
-    } else {
-      swal('Oops!', 'Something went wrong with your network.', 'error')
-    }
-
-  }
-}
-
-// activate admin account
-export const activateAdmin = (admins, id) => {
-  const admin = admins.find(i => i.admin_id === id)
-  return async dispatch => {
-    const response = await apiRequest({ url: `/admin/activate/${admin.admin_id}`, method: 'GET' }, dispatch)
-    if (response) {
-      if (response.data.success) {
-        dispatch({
-          type: 'GET_ADMIN',
-          selectedAdmin: {...admin, status: "Active"}
-        })
-        swal('Good!', `${response.data.message}.`, 'success')
-        await dispatch(getAllData())
-      } else {
-        swal('Oops!', `${response.data.message}.`, 'error')
-      }
-    } else {
-      swal('Oops!', 'Something went wrong with your network.', 'error')
-    }
-
-  }
-}
-
-// deactivate admin account
-export const deactivateAdmin = (admins, id) => {
-  console.log({ admins, id })
-  const admin = admins.find(i => i.admin_id === id)
-  return async dispatch => {
-    const response = await apiRequest({ url: `/admin/deactivate/${admin.admin_id}`, method: 'GET' }, dispatch)
-    if (response) {
-      if (response.data.success) {
-        dispatch({
-          type: 'GET_ADMIN',
-          selectedAdmin: {...admin, status: "Inactive"}
-        })
-        swal('Good!', `${response.data.message}.`, 'success')
-        await dispatch(getAllData())
-      } else {
-        swal('Oops!', `${response.data.message}.`, 'error')
-      }
-    } else {
-      swal('Oops!', 'Something went wrong with your network.', 'error')
-    }
-
-  }
-}
-
-// Get all roles
-export const getAllRoles = (admins) => {
-  return async dispatch => {
-    const response = await apiRequest({ url: '/admin/admin_role', method: 'GET' }, dispatch)
-    console.log({response})
-    if (response) {
-      if (response.data.data && response.data.success) {
-        await dispatch({
-          type: 'GET_ALL_ROLES',
-          data: response.data.data
-        })
-      } else {
-        console.log(response.error)
-      }
-    } else {
-      swal('Oops!', 'Somthing went wrong with your network.', 'error')
-    }
-
-  }
-}
-
-
-// Edit admin role
-export const editRole = (admin_id, new_role_id) => {
-  console.log("boddyyyy", admin_id, new_role_id)
-  // const body = {admin_id, new_role_id}
-  return async dispatch => {
-    const response = await apiRequest({ url: `/admin/change_role/`, method:'POST'}, dispatch)
-    console.log({response})
-    if (response) {
-      if (response.data.success) {
-        swal('Good!', `${response.data.message}.`, 'success')
-        await dispatch(getAllRoles())
-      } else {
-        swal('Oops!', `${response.data.message}.`, 'error')
-      }
-    } else {
-      swal('Oops!', 'Something went wrong with your network.', 'error')
-    }
-
-  }
-}
-
