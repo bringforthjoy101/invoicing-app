@@ -1,4 +1,4 @@
-import { Circle, ThumbsUp, Mail, User, List } from 'react-feather'
+import { Users, ThumbsUp, Mail, User, List } from 'react-feather'
 
 export default [
   {
@@ -47,5 +47,11 @@ export default [
     title: 'Contact us',
     icon: <Mail size={20} />,
     navLink: '/appia/contact/list'
+  },
+  {
+    id: 'subscribers',
+    title: 'Subscribers',
+    icon: <Users size={20} />,
+    navLink: '/appia/subscribers/list'
   }
 ]

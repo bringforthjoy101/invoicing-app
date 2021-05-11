@@ -24,14 +24,13 @@ export const getAllData = () => {
 // ** Get filtered data on page or row change
 export const getFilteredData = (feedbacks, params) => {
   return async dispatch => {
-    const { q = '', perPage = 10, page = 1, role = null, subject = null } = params
+    const { q = '', perPage = 10, page = 1, role = null} = params
 
     /* eslint-disable  */
     const queryLowered = q.toLowerCase()
     const filteredData = feedbacks.filter(
       feedback =>
-        (feedback.email.toLowerCase().includes(queryLowered) || feedback.name.toLowerCase().includes(queryLowered)) &&
-        feedback.subject === (subject || feedback.subject)
+        (feedback.email.toLowerCase().includes(queryLowered) || feedback.name.toLowerCase().includes(queryLowered))
     )
     /* eslint-enable  */
 

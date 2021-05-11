@@ -4,6 +4,7 @@ import { Fragment, useState, useEffect } from 'react'
 
 // ** Columns
 import { columns } from './columns'
+import Flatpickr from 'react-flatpickr'
 
 // ** Store & Actions
 import { getAllData, getFilteredData } from '../store/action'
@@ -53,6 +54,24 @@ const CustomHeader = ({  handlePerPage, rowsPerPage, handleFilter, searchTerm })
   )
 }
 
+const PickerRange = ({picker, setPicker}) => {
+  return (
+    <Fragment>
+      <Label for='range-picker'>Range</Label>
+      <Flatpickr
+        value={picker}
+        id='range-picker'
+        className='form-control'
+        onChange={date => setPicker(date)}
+        options={{
+          mode: 'range',
+          defaultDate: ['2020-02-01', '2020-02-15']
+        }}
+      />
+    </Fragment>
+  )
+}
+
 const ContactsList = () => {
   // ** Store Vars
   const dispatch = useDispatch()
@@ -62,8 +81,7 @@ const ContactsList = () => {
   const [searchTerm, setSearchTerm] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
   const [rowsPerPage, setRowsPerPage] = useState(10)
-  const [currentRole, setCurrentRole] = useState({ value: '', label: 'Select Role', number: 0})
-  const [currentStatus, setCurrentStatus] = useState({ value: '', label: 'Select Status', number: 0 })
+  const [picker, setPicker] = useState("")
 
 
   // ** Get data on mount
@@ -73,37 +91,17 @@ const ContactsList = () => {
       getFilteredData(store.allData, {
         page: currentPage,
         perPage: rowsPerPage,
-        role: currentRole.value,
-        status: currentStatus.value,
         q: searchTerm
       })
     )
   }, [dispatch])
   
-  // ** User filter options
-  const roleOptions = [
-    { value: '', label: 'Select Role', number: 0 },
-    { value: 'Admin', label: 'Admin', number: 1 },
-    { value: 'Customer Support', label: 'Customer Support', number: 2 },
-    { value: 'Super Admin', label: 'Super Admin', number: 3 },
-    { value: 'Control Admin', label: 'Control Admin', number: 4 }
-  ]
-
-  const statusOptions = [
-    { value: '', label: 'Select Status', number: 0 },
-    { value: 'Pending', label: 'Pending', number: 1 },
-    { value: 'Active', label: 'Active', number: 2 },
-    { value: 'Inactive', label: 'Inactive', number: 3 }
-  ]
-
   // ** Function in get data on page change
   const handlePagination = page => {
     dispatch(
       getFilteredData(store.allData, {
         page: page.selected + 1,
         perPage: rowsPerPage,
-        role: currentRole.value,
-        status: currentStatus.value,
         q: searchTerm
       })
     )
@@ -117,8 +115,6 @@ const ContactsList = () => {
       getFilteredData(store.allData, {
         page: currentPage,
         perPage: value,
-        role: currentRole.value,
-        status: currentStatus.value,
         q: searchTerm
       })
     )
@@ -132,8 +128,6 @@ const ContactsList = () => {
       getFilteredData(store.allData, {
         page: currentPage,
         perPage: rowsPerPage,
-        role: currentRole.value,
-        status: currentStatus.value,
         q: val
       })
     )
@@ -170,8 +164,6 @@ const ContactsList = () => {
   // ** Table data to render
   const dataToRender = () => {
     const filters = {
-      role: currentRole.value,
-      status: currentStatus.value,
       q: searchTerm
     }
 
@@ -196,50 +188,6 @@ const ContactsList = () => {
         </CardHeader>
         <CardBody>
           <Row>
-            <Col md='4'>
-              <Select
-                 theme={selectThemeColors}
-                 isClearable={false}
-                 className='react-select'
-                 classNamePrefix='select'
-                 options={roleOptions}
-                 value={currentRole}
-                 onChange={data => {
-                   setCurrentRole(data)
-                   dispatch(
-                     getFilteredData(store.allData, {
-                       page: currentPage,
-                       perPage: rowsPerPage,
-                       role: data.value,
-                       status: currentStatus.value,
-                       q: searchTerm
-                     })
-                   )
-                 }}
-              />
-            </Col>
-            <Col md='4'>
-              <Select
-                theme={selectThemeColors}
-                isClearable={false}
-                className='react-select'
-                classNamePrefix='select'
-                options={statusOptions}
-                value={currentStatus}
-                onChange={data => {
-                  setCurrentStatus(data)
-                  dispatch(
-                    getFilteredData(store.allData, {
-                      page: currentPage,
-                      perPage: rowsPerPage,
-                      role: currentRole.value,
-                      status: data.value,
-                      q: searchTerm
-                    })
-                  )
-                }}
-              />
-            </Col>
             <Col md="4" className="d-flex">
             <Label className='mb-0 mt-1' for='search-invoice'>
               Search:
@@ -251,6 +199,9 @@ const ContactsList = () => {
                 value={searchTerm}
                 onChange={e => handleFilter(e.target.value)}
               />
+          </Col>
+          <Col md='4'>
+            <PickerRange picker={picker} setPicker={setPicker} />
           </Col>
           </Row>
         </CardBody>

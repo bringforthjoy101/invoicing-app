@@ -4,6 +4,7 @@ import { Fragment, useState, useEffect } from 'react'
 
 // ** Columns
 import { columns } from './columns'
+import Flatpickr from 'react-flatpickr'
 
 // ** Store & Actions
 import { getAllData, getFilteredData } from '../store/action'
@@ -22,7 +23,7 @@ import '@styles/react/libs/react-select/_react-select.scss'
 import '@styles/react/libs/tables/react-dataTable-component.scss'
 
 // ** Table Header
-const CustomHeader = ({  handlePerPage, rowsPerPage, handleFilter, searchTerm }) => {
+const CustomHeader = ({ handlePerPage, rowsPerPage }) => {
   return (
     <div className='invoice-list-table-header w-100 mr-1 ml-50 mt-2 mb-75'>
       <Row>
@@ -53,18 +54,17 @@ const CustomHeader = ({  handlePerPage, rowsPerPage, handleFilter, searchTerm })
   )
 }
 
-const FeedbacksList = () => {
+const ContactsList = () => {
   // ** Store Vars
   const dispatch = useDispatch()
-  const store = useSelector(state => state.appiaFeedbacks)
+  const store = useSelector(state => state.appiaSubscribers)
 
   // ** States
   const [searchTerm, setSearchTerm] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
   const [rowsPerPage, setRowsPerPage] = useState(10)
-  const [currentRole, setCurrentRole] = useState({ value: '', label: 'Select Role', number: 0})
   const [currentStatus, setCurrentStatus] = useState({ value: '', label: 'Select Status', number: 0 })
-
+  const [picker, setPicker] = useState("")
 
   // ** Get data on mount
   useEffect(() => {
@@ -73,17 +73,26 @@ const FeedbacksList = () => {
       getFilteredData(store.allData, {
         page: currentPage,
         perPage: rowsPerPage,
+        status: currentStatus.value,
         q: searchTerm
       })
     )
   }, [dispatch])
-  
+
+  const statusOptions = [
+    { value: '', label: 'Select Status', number: 0 },
+    { value: 'Pending', label: 'Pending', number: 1 },
+    { value: 'Active', label: 'Active', number: 2 },
+    { value: 'Inactive', label: 'Inactive', number: 3 }
+  ]
+
   // ** Function in get data on page change
   const handlePagination = page => {
     dispatch(
       getFilteredData(store.allData, {
         page: page.selected + 1,
         perPage: rowsPerPage,
+        status: currentStatus.value,
         q: searchTerm
       })
     )
@@ -97,6 +106,7 @@ const FeedbacksList = () => {
       getFilteredData(store.allData, {
         page: currentPage,
         perPage: value,
+        status: currentStatus.value,
         q: searchTerm
       })
     )
@@ -110,16 +120,18 @@ const FeedbacksList = () => {
       getFilteredData(store.allData, {
         page: currentPage,
         perPage: rowsPerPage,
+        status: currentStatus.value,
         q: val
       })
     )
   }
 
+
   const filteredData = store.allData.filter(
-    item => (item.email.toLowerCase() || item.name.toLowerCase())
+    item => (item.email.toLowerCase() || item.name.toLowerCase() || item.created_at.toLowerCase())
   )
 
-    // ** Custom Pagination
+  // ** Custom Pagination
   const CustomPagination = () => {
     const count = Math.ceil(filteredData.length / rowsPerPage)
 
@@ -146,6 +158,7 @@ const FeedbacksList = () => {
   // ** Table data to render
   const dataToRender = () => {
     const filters = {
+      status: currentStatus.value,
       q: searchTerm
     }
 
@@ -170,9 +183,43 @@ const FeedbacksList = () => {
         </CardHeader>
         <CardBody>
           <Row>
+            <Col md='4' >
+              <Label for='range-picker'>Range</Label>
+              <Flatpickr
+                value={picker}
+                id='range-picker'
+                className='form-control'
+                onChange={date => setPicker(date)}
+                options={{
+                  mode: 'range',
+                  defaultDate: ['2020-02-01', '2020-02-15']
+                }}
+              />
+            </Col>
+            <Col md='4'>
+              <Select
+                theme={selectThemeColors}
+                isClearable={false}
+                className='react-select'
+                classNamePrefix='select'
+                options={statusOptions}
+                value={currentStatus}
+                onChange={data => {
+                  setCurrentStatus(data)
+                  dispatch(
+                    getFilteredData(store.allData, {
+                      page: currentPage,
+                      perPage: rowsPerPage,
+                      status: data.value,
+                      q: searchTerm
+                    })
+                  )
+                }}
+              />
+            </Col>
             <Col md="4" className="d-flex">
-            <Label className='mb-0 mt-1' for='search-invoice'>
-              Search:
+              <Label className='mb-0 mt-1' for='search-invoice'>
+                Search:
             </Label>
               <Input
                 id='search-invoice'
@@ -181,7 +228,7 @@ const FeedbacksList = () => {
                 value={searchTerm}
                 onChange={e => handleFilter(e.target.value)}
               />
-          </Col>
+            </Col>
           </Row>
         </CardBody>
       </Card>
@@ -212,4 +259,4 @@ const FeedbacksList = () => {
   )
 }
 
-export default FeedbacksList
+export default ContactsList

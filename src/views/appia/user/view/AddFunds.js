@@ -23,7 +23,7 @@ export const AddFunds = ({userId, userData}) => {
 
   return (
     <div>
-      {userData.role_name === "Super Admin" ? <Button.Ripple className='text-center mb-1' color='primary' outline block onClick={() => setFormModal(!formModal)}>
+      {userData.role_name === "Super Admin" || userData.role_name === "Admin" ? <Button.Ripple className='text-center mb-1' color='primary' outline block onClick={() => setFormModal(!formModal)}>
         Add Funds
       </Button.Ripple> : ""}
       <Modal isOpen={formModal} toggle={() => setFormModal(!formModal)} className='modal-dialog-centered'>
@@ -86,7 +86,7 @@ export const DeductFunds = ({userId, userData}) => {
 
   return (
     <div>
-     {userData.role_name === "Super Admin" ?  <Button.Ripple className='text-center mb-1' color='danger' outline block onClick={() => setFormModal(!formModal)}>
+     {userData.role_name === "Super Admin" || userData.role_name === "Admin" ?  <Button.Ripple className='text-center mb-1' color='danger' outline block onClick={() => setFormModal(!formModal)}>
         Deduct Funds
       </Button.Ripple> : ""}
       <Modal isOpen={formModal} toggle={() => setFormModal(!formModal)} className='modal-dialog-centered'>

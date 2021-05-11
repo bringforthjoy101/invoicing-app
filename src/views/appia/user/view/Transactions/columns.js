@@ -52,7 +52,7 @@ export const columns = [
     name: '#',
     minWidth: '180px',
     selector: 'trans_id',
-    cell: row => <Link to={`/apps/invoice/preview/${row.trans_id}`}>{`#${row.trans_id}`}</Link>
+    cell: row => <span>{ `#${row.trans_id}` }</span>
   },
   // {
   //   name: <TrendingUp size={14} />,

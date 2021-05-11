@@ -4,11 +4,11 @@ import { paginateArray, sortCompare, apiRequest, swal } from '@utils'
 // ** Get all Data
 export const getAllData = () => {
   return async dispatch => {
-    const response = await apiRequest({ url: '/admin/misc/contacts', method: 'GET' }, dispatch)
+    const response = await apiRequest({ url: '/admin/misc/subscribers', method: 'GET' }, dispatch)
     if (response) {
       if (response.data.data && response.data.success) {
         await dispatch({
-          type: 'GET_ALL_CONTACTS',
+          type: 'GET_ALL_SUBSCRIBERS',
           data: response.data.data
         })
       } else {
@@ -21,17 +21,16 @@ export const getAllData = () => {
   }
 }
 
-// ** Get filtered data on page or row change
-export const getFilteredData = (contacts, params) => {
+export const getFilteredData = (feedbacks, params) => {
   return async dispatch => {
-    const { q = '', perPage = 10, page = 1, role = null } = params
-
+    const { q = '', perPage = 10, page = 1, status = null, created_at = ""} = params
     /* eslint-disable  */
     const queryLowered = q.toLowerCase()
-    const filteredData = contacts.filter(
-      contact =>
-        (contact.email.toLowerCase().includes(queryLowered) || contact.name.toLowerCase().includes(queryLowered))
-    )
+    const filteredData = feedbacks.filter(
+      feedback => feedback.email.toLowerCase().includes(queryLowered, created_at) &&
+      feedback.status === (status || feedback.status) &&
+      feedback.created_at === (created_at || feedback.created_at)
+      )
     /* eslint-enable  */
 
     dispatch({
@@ -39,17 +38,6 @@ export const getFilteredData = (contacts, params) => {
       data: paginateArray(filteredData, perPage, page),
       totalPages: filteredData.length,
       params
-    })
-  }
-}
-
-export const getContact = (contacts, id) => {
-  return async dispatch => {
-    const contact = contacts.find(i => i.id === id)
-    console.log("contact", contact)
-    dispatch({
-      type: 'GET_CONTACT',
-      selectedContact: contact
     })
   }
 }

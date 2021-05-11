@@ -93,6 +93,10 @@ const AppiaRoutes = [
     meta: {
       navLink: '/appia/feedbacks/view'
     }
+  },
+  {
+    path: '/appia/subscribers/list',
+    component: lazy(() => import('../../views/appia/subscribers/list'))
   }
 ]
 

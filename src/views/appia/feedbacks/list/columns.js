@@ -57,16 +57,16 @@ export const columns = [
   {
     name: 'Subject',
     minWidth: '172px',
-    selector: 'subject',
+    selector: 'feature',
     sortable: true,
-    cell: row => row.subject
+    cell: row => row.feature
   },
   {
     name: 'Message',
     minWidth: '138px',
     selector: 'message',
     sortable: true,
-    cell: row => row.subject
+    cell: row => row.message
   }
   // {
   //   name: 'Actions',
