@@ -77,6 +77,22 @@ const AppiaRoutes = [
     meta: {
       navLink: '/appia/contacts/view'
     }
+  },
+  {
+    path: '/appia/feedbacks/list',
+    component: lazy(() => import('../../views/appia/feedbacks/list'))
+  },
+  {
+    path: '/appia/feedbacks/view',
+    exact: true,
+    component: () => <Redirect to='/appia/feedbacks/view/1' />
+  },
+  {
+    path: '/appia/feedbacks/view/:id',
+    component: lazy(() => import('../../views/appia/feedbacks/view')),
+    meta: {
+      navLink: '/appia/feedbacks/view'
+    }
   }
 ]
 

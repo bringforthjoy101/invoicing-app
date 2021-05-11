@@ -53,7 +53,7 @@ const CustomHeader = ({  handlePerPage, rowsPerPage, handleFilter, searchTerm })
   )
 }
 
-const AdminsList = () => {
+const ContactsList = () => {
   // ** Store Vars
   const dispatch = useDispatch()
   const store = useSelector(state => state.appiaContacts)
@@ -140,7 +140,7 @@ const AdminsList = () => {
   }
 
   const filteredData = store.allData.filter(
-    item => (item.email.toLowerCase() || item.first_name.toLowerCase() || item.last_name.toLowerCase())
+    item => (item.email.toLowerCase() || item.name.toLowerCase())
   )
 
     // ** Custom Pagination
@@ -282,4 +282,4 @@ const AdminsList = () => {
   )
 }
 
-export default AdminsList
+export default ContactsList

@@ -4,11 +4,11 @@ import { paginateArray, sortCompare, apiRequest, swal } from '@utils'
 // ** Get all Data
 export const getAllData = () => {
   return async dispatch => {
-    const response = await apiRequest({ url: '/admin/misc/contacts', method: 'GET' }, dispatch)
+    const response = await apiRequest({ url: '/admin/misc/feedbacks', method: 'GET' }, dispatch)
     if (response) {
       if (response.data.data && response.data.success) {
         await dispatch({
-          type: 'GET_ALL_CONTACTS',
+          type: 'GET_ALL_FEEDBACKS',
           data: response.data.data
         })
       } else {
@@ -22,16 +22,16 @@ export const getAllData = () => {
 }
 
 // ** Get filtered data on page or row change
-export const getFilteredData = (contacts, params) => {
+export const getFilteredData = (feedbacks, params) => {
   return async dispatch => {
     const { q = '', perPage = 10, page = 1, role = null, subject = null } = params
 
     /* eslint-disable  */
     const queryLowered = q.toLowerCase()
-    const filteredData = contacts.filter(
-      contact =>
-        (contact.email.toLowerCase().includes(queryLowered) || contact.name.toLowerCase().includes(queryLowered)) &&
-        contact.subject === (subject || contact.subject)
+    const filteredData = feedbacks.filter(
+      feedback =>
+        (feedback.email.toLowerCase().includes(queryLowered) || feedback.name.toLowerCase().includes(queryLowered)) &&
+        feedback.subject === (subject || feedback.subject)
     )
     /* eslint-enable  */
 
@@ -44,13 +44,13 @@ export const getFilteredData = (contacts, params) => {
   }
 }
 
-export const getContact = (contacts, id) => {
+export const getFeedback = (feedbacks, id) => {
   return async dispatch => {
-    const contact = contacts.find(i => i.id === id)
-    console.log("contact", contact)
+    const feedback = feedbacks.find(i => i.id === id)
+    console.log("feedback", feedback)
     dispatch({
-      type: 'GET_CONTACT',
-      selectedContact: contact
+      type: 'GET_FEEDBACK',
+      selectedFeedback: feedback
     })
   }
 }
@@ -58,7 +58,7 @@ export const getContact = (contacts, id) => {
 
 export const getAdminActivity = () => {
   return async dispatch => {
-    const response = await apiRequest({ url: '/contact/activities', method: 'GET' }, dispatch)
+    const response = await apiRequest({ url: '/feedback/activities', method: 'GET' }, dispatch)
     if (response) {
       if (response.data.data && response.data.success) {
         await dispatch({
@@ -75,16 +75,16 @@ export const getAdminActivity = () => {
   }
 }
 
-// activate contact account
-export const activateAdmin = (contacts, id) => {
-  const contact = contacts.find(i => i.admin_id === id)
+// activate feedback account
+export const activateAdmin = (feedbacks, id) => {
+  const feedback = feedbacks.find(i => i.admin_id === id)
   return async dispatch => {
-    const response = await apiRequest({ url: `/contact/activate/${contact.admin_id}`, method: 'GET' }, dispatch)
+    const response = await apiRequest({ url: `/feedback/activate/${feedback.admin_id}`, method: 'GET' }, dispatch)
     if (response) {
       if (response.data.success) {
         dispatch({
           type: 'GET_ADMIN',
-          selectedAdmin: {...contact, status: "Active"}
+          selectedAdmin: {...feedback, status: "Active"}
         })
         swal('Good!', `${response.data.message}.`, 'success')
         await dispatch(getAllData())
@@ -98,17 +98,17 @@ export const activateAdmin = (contacts, id) => {
   }
 }
 
-// deactivate contact account
-export const deactivateAdmin = (contacts, id) => {
-  console.log({ contacts, id })
-  const contact = contacts.find(i => i.admin_id === id)
+// deactivate feedback account
+export const deactivateAdmin = (feedbacks, id) => {
+  console.log({ feedbacks, id })
+  const feedback = feedbacks.find(i => i.admin_id === id)
   return async dispatch => {
-    const response = await apiRequest({ url: `/contact/deactivate/${contact.admin_id}`, method: 'GET' }, dispatch)
+    const response = await apiRequest({ url: `/feedback/deactivate/${feedback.admin_id}`, method: 'GET' }, dispatch)
     if (response) {
       if (response.data.success) {
         dispatch({
           type: 'GET_ADMIN',
-          selectedAdmin: {...contact, status: "Inactive"}
+          selectedAdmin: {...feedback, status: "Inactive"}
         })
         swal('Good!', `${response.data.message}.`, 'success')
         await dispatch(getAllData())
@@ -123,9 +123,9 @@ export const deactivateAdmin = (contacts, id) => {
 }
 
 // Get all roles
-export const getAllRoles = (contacts) => {
+export const getAllRoles = (feedbacks) => {
   return async dispatch => {
-    const response = await apiRequest({ url: '/contact/admin_role', method: 'GET' }, dispatch)
+    const response = await apiRequest({ url: '/feedback/admin_role', method: 'GET' }, dispatch)
     console.log({response})
     if (response) {
       if (response.data.data && response.data.success) {
@@ -148,7 +148,7 @@ export const changeAdminRole = (admin_id, new_role_id) => {
   console.log(admin_id, new_role_id)
   return async dispatch => {
     const body = JSON.stringify({admin_id, new_role_id})
-    const response = await apiRequest({ url: '/contact/change_role/', method: 'POST', body }, dispatch)
+    const response = await apiRequest({ url: '/feedback/change_role/', method: 'POST', body }, dispatch)
     console.log({response})
     if (response) {
       if (response.data.success) {

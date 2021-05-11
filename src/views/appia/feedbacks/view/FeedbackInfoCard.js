@@ -8,12 +8,12 @@ import Avatar from '@components/avatar'
 import { Card, CardBody, CardText, Button, Row, Col } from 'reactstrap'
 import { DollarSign, TrendingUp, User, Check, Star, Flag, Phone } from 'react-feather'
 
-const UserInfoCard = ({ selectedAdmin }) => {
+const FeedbackInfoCard = ({ selectedFeedback }) => {
   // ** render user img
   
   const renderUserImg = () => {
-    if (selectedAdmin !== null && selectedAdmin.avatar) {
-      return <img src={selectedAdmin.avatar} alt='user-avatar' className='img-fluid rounded' height='104' width='104' />
+    if (selectedFeedback !== null && selectedFeedback.avatar) {
+      return <img src={selectedFeedback.avatar} alt='user-avatar' className='img-fluid rounded' height='104' width='104' />
     } else {
       const stateNum = Math.floor(Math.random() * 6),
         states = ['light-success', 'light-danger', 'light-warning', 'light-info', 'light-primary', 'light-secondary'],
@@ -23,7 +23,7 @@ const UserInfoCard = ({ selectedAdmin }) => {
           initials
           color={color}
           className='rounded'
-          content={`${selectedAdmin.first_name} ${selectedAdmin.last_name}`}
+          content={`${selectedFeedback.name}`}
           contentStyles={{
             borderRadius: 0,
             fontSize: 'calc(36px)',
@@ -49,19 +49,11 @@ const UserInfoCard = ({ selectedAdmin }) => {
                 {renderUserImg()}
                 <div className='d-flex flex-column ml-1'>
                   <div className='user-info mt-2'>
-                    <h4 className='mb-0'>{selectedAdmin !== null ? `${selectedAdmin.first_name} ${selectedAdmin.last_name}` : 'Appia Admin'}</h4>
+                    <h4 className='mb-0'>{selectedFeedback !== null ? `${selectedFeedback.name}` : 'Appia Admin'}</h4>
                     <CardText tag='span'>
-                      {selectedAdmin !== null ? selectedAdmin.email : 'appia.admin@appiawave.com'}
+                      {selectedFeedback !== null ? selectedFeedback.email : 'appia.admin@appiawave.com'}
                     </CardText>
                   </div>
-                  {/* <div className='d-flex flex-wrap align-items-center'>
-                    <Button.Ripple tag={Link} to={`/apps/user/edit/${selectedAdmin.id}`} color='primary'>
-                      Edit
-                    </Button.Ripple>
-                    <Button.Ripple className='ml-1' color='danger' outline>
-                      Delete
-                    </Button.Ripple>
-                  </div> */}
                 </div>
               </div>
             </div>
@@ -96,7 +88,7 @@ const UserInfoCard = ({ selectedAdmin }) => {
                   </CardText>
                 </div>
                 <CardText className='mb-0'>
-                  {selectedAdmin !== null ? selectedAdmin.admin_id : ''}
+                  {selectedFeedback !== null ? selectedFeedback.admin_id : ''}
                 </CardText>
               </div>
               <div className='d-flex flex-wrap align-items-center my-50'>
@@ -107,7 +99,7 @@ const UserInfoCard = ({ selectedAdmin }) => {
                   </CardText>
                 </div>
                 <CardText className='text-capitalize mb-0'>
-                  {selectedAdmin !== null ? selectedAdmin.status : 'Active'}
+                  {selectedFeedback !== null ? selectedFeedback.status : 'Active'}
                 </CardText>
               </div>
               <div className='d-flex flex-wrap align-items-center my-50'>
@@ -118,7 +110,7 @@ const UserInfoCard = ({ selectedAdmin }) => {
                   </CardText>
                 </div>
                 <CardText className='text-capitalize mb-0'>
-                  {selectedAdmin !== null ? selectedAdmin.role_name : 'Admin'}
+                  {selectedFeedback !== null ? selectedFeedback.role_name : 'Admin'}
                 </CardText>
               </div>
               <div className='d-flex flex-wrap align-items-center'>
@@ -128,7 +120,7 @@ const UserInfoCard = ({ selectedAdmin }) => {
                     Contact
                   </CardText>
                 </div>
-                <CardText className='mb-0'>{selectedAdmin !== null ? selectedAdmin.phone : '(123) 456-7890'}</CardText>
+                <CardText className='mb-0'>{selectedFeedback !== null ? selectedFeedback.phone : '(123) 456-7890'}</CardText>
               </div>
             </div>
           </Col>
@@ -138,4 +130,4 @@ const UserInfoCard = ({ selectedAdmin }) => {
   )
 }
 
-export default UserInfoCard
+export default FeedbackInfoCard

@@ -37,10 +37,10 @@ export default [
     navLink: '/appia/funds/'
   },
   {
-    id: 'features',
-    title: 'Reviews and Ratings',
+    id: 'feedback',
+    title: 'Feedbacks',
     icon: <ThumbsUp size={20} />,
-    navLink: '/appia/reviews/list'
+    navLink: '/appia/feedbacks/list'
   },
   {
     id: 'contact',

@@ -16,10 +16,10 @@ const PlanCard = ({ selectedContact }) => {
 
   return (
     <Card className='plan-card border-primary'>
-      {/* <CardHeader className='d-flex justify-content-between align-items-center pt-75 pb-1'>
+      <CardHeader className='d-flex justify-content-between align-items-center pt-75 pb-1'>
         <h5 className='mb-0'>Actions</h5>
       </CardHeader>
-      <CardBody>
+      {/* <CardBody>
         {selectedContact.status === "Active" ? <Button.Ripple className='text-center mb-1' color= 'danger'  block onClick={() => { store.dispatch(deactivateAdmin(store.getState().appiaAdmins.allData, selectedContact.admin_id)) }}> Deactivate Admin</Button.Ripple> : <Button.Ripple 
 
          className='text-center mb-1' 
@@ -30,7 +30,7 @@ const PlanCard = ({ selectedContact }) => {
          Activate Admin
        </Button.Ripple>
         }
-      </CardBody>  */}
+      </CardBody> */}
     </Card>
   ) 
 }

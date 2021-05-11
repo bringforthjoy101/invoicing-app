@@ -1,8 +1,6 @@
 // ** React Imports
 import { Fragment, useState, useEffect } from 'react'
 
-// ** Invoice List Sidebar
-import Sidebar from './Sidebar'
 
 // ** Columns
 import { columns } from './columns'
@@ -24,7 +22,7 @@ import '@styles/react/libs/react-select/_react-select.scss'
 import '@styles/react/libs/tables/react-dataTable-component.scss'
 
 // ** Table Header
-const CustomHeader = ({ toggleSidebar, handlePerPage, rowsPerPage, handleFilter, searchTerm }) => {
+const CustomHeader = ({  handlePerPage, rowsPerPage, handleFilter, searchTerm }) => {
   return (
     <div className='invoice-list-table-header w-100 mr-1 ml-50 mt-2 mb-75'>
       <Row>
@@ -38,7 +36,7 @@ const CustomHeader = ({ toggleSidebar, handlePerPage, rowsPerPage, handleFilter,
               value={rowsPerPage}
               onChange={handlePerPage}
               style={{
-                width: '5rem',
+                width: '10rem',
                 padding: '0 0.8rem',
                 backgroundPosition: 'calc(100% - 3px) 11px, calc(100% - 20px) 13px, 100% 0'
               }}
@@ -50,37 +48,23 @@ const CustomHeader = ({ toggleSidebar, handlePerPage, rowsPerPage, handleFilter,
             <Label for='rows-per-page'>Entries</Label>
           </div>
         </Col>
-        <Col
-          xl='6'
-          className='d-flex align-items-sm-center justify-content-lg-end justify-content-start flex-lg-nowrap flex-wrap flex-sm-row flex-column pr-lg-1 p-0 mt-lg-0 mt-1'
-        >
-          <div className='d-flex align-items-center mb-sm-0 mb-1 mr-1'>
-            <Label className='mb-0' for='search-invoice'>
-              Search:
-            </Label>
-            <Input
-              id='search-invoice'
-              className='ml-50 w-100'
-              type='text'
-              value={searchTerm}
-              onChange={e => handleFilter(e.target.value)}
-            />
-          </div>
-        </Col>
       </Row>
     </div>
   )
 }
 
-const AdminsList = () => {
+const FeedbacksList = () => {
   // ** Store Vars
   const dispatch = useDispatch()
-  const store = useSelector(state => state.appiaAdmins)
+  const store = useSelector(state => state.appiaFeedbacks)
 
   // ** States
   const [searchTerm, setSearchTerm] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
   const [rowsPerPage, setRowsPerPage] = useState(10)
+  const [currentRole, setCurrentRole] = useState({ value: '', label: 'Select Role', number: 0})
+  const [currentStatus, setCurrentStatus] = useState({ value: '', label: 'Select Status', number: 0 })
+
 
   // ** Get data on mount
   useEffect(() => {
@@ -89,6 +73,8 @@ const AdminsList = () => {
       getFilteredData(store.allData, {
         page: currentPage,
         perPage: rowsPerPage,
+        role: currentRole.value,
+        status: currentStatus.value,
         q: searchTerm
       })
     )
@@ -116,6 +102,8 @@ const AdminsList = () => {
       getFilteredData(store.allData, {
         page: page.selected + 1,
         perPage: rowsPerPage,
+        role: currentRole.value,
+        status: currentStatus.value,
         q: searchTerm
       })
     )
@@ -129,6 +117,8 @@ const AdminsList = () => {
       getFilteredData(store.allData, {
         page: currentPage,
         perPage: value,
+        role: currentRole.value,
+        status: currentStatus.value,
         q: searchTerm
       })
     )
@@ -142,13 +132,15 @@ const AdminsList = () => {
       getFilteredData(store.allData, {
         page: currentPage,
         perPage: rowsPerPage,
+        role: currentRole.value,
+        status: currentStatus.value,
         q: val
       })
     )
   }
 
   const filteredData = store.allData.filter(
-    item => (item.email.toLowerCase() || item.first_name.toLowerCase() || item.last_name.toLowerCase())
+    item => (item.email.toLowerCase() || item.name.toLowerCase())
   )
 
     // ** Custom Pagination
@@ -171,25 +163,6 @@ const AdminsList = () => {
         pageLinkClassName={'page-link'}
         containerClassName={'pagination react-paginate justify-content-end my-2 pr-1'}
       />
-    )
-  }
-
-  const PickerRange = () => {
-    const [picker, setPicker] = useState(new Date())
-    return (
-      <Fragment>
-        <Label for='range-picker'>Filter By Date</Label>
-        <Flatpickr
-          value={picker}
-          id='range-picker'
-          className='form-control'
-          onChange={date => setPicker(date)}
-          options={{
-            mode: 'range',
-            defaultDate: ['2020-02-01', '2020-02-15']
-          }}
-        />
-      </Fragment>
     )
   }
 
@@ -219,16 +192,70 @@ const AdminsList = () => {
     <Fragment>
       <Card>
         <CardHeader>
-          <CardTitle tag='h4'>Filter BY</CardTitle>
+          <CardTitle tag='h4'>Search Filter</CardTitle>
         </CardHeader>
         <CardBody>
           <Row>
             <Col md='4'>
-              <PickerRange />
+              <Select
+                 theme={selectThemeColors}
+                 isClearable={false}
+                 className='react-select'
+                 classNamePrefix='select'
+                 options={roleOptions}
+                 value={currentRole}
+                 onChange={data => {
+                   setCurrentRole(data)
+                   dispatch(
+                     getFilteredData(store.allData, {
+                       page: currentPage,
+                       perPage: rowsPerPage,
+                       role: data.value,
+                       status: currentStatus.value,
+                       q: searchTerm
+                     })
+                   )
+                 }}
+              />
             </Col>
+            <Col md='4'>
+              <Select
+                theme={selectThemeColors}
+                isClearable={false}
+                className='react-select'
+                classNamePrefix='select'
+                options={statusOptions}
+                value={currentStatus}
+                onChange={data => {
+                  setCurrentStatus(data)
+                  dispatch(
+                    getFilteredData(store.allData, {
+                      page: currentPage,
+                      perPage: rowsPerPage,
+                      role: currentRole.value,
+                      status: data.value,
+                      q: searchTerm
+                    })
+                  )
+                }}
+              />
+            </Col>
+            <Col md="4" className="d-flex">
+            <Label className='mb-0 mt-1' for='search-invoice'>
+              Search:
+            </Label>
+              <Input
+                id='search-invoice'
+                className='ml-50 w-100'
+                type='text'
+                value={searchTerm}
+                onChange={e => handleFilter(e.target.value)}
+              />
+          </Col>
           </Row>
         </CardBody>
       </Card>
+
       <Card>
         <DataTable
           noHeader
@@ -243,7 +270,6 @@ const AdminsList = () => {
           data={dataToRender()}
           subHeaderComponent={
             <CustomHeader
-              toggleSidebar={toggleSidebar}
               handlePerPage={handlePerPage}
               rowsPerPage={rowsPerPage}
               searchTerm={searchTerm}
@@ -252,10 +278,8 @@ const AdminsList = () => {
           }
         />
       </Card>
-
-      <Sidebar open={sidebarOpen} toggleSidebar={toggleSidebar} />
     </Fragment>
   )
 }
 
-export default AdminsList
+export default FeedbacksList

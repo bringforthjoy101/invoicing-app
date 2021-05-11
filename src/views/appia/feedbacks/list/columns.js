@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import Avatar from '@components/avatar'
 
 // ** Store & Actions
-import { getContact } from '../store/action'
+import { getFeedback } from '../store/action'
 import { store } from '@store/storeConfig/store'
 
 // ** Third Party Components
@@ -36,9 +36,9 @@ export const columns = [
         {renderClient(row)}
         <div className='d-flex flex-column'>
           <Link
-            to={`/appia/contacts/view/${row.id}`}
+            to={`/appia/feedbacks/view/${row.id}`}
             className='user-name text-truncate mb-0'
-            onClick={() => store.dispatch(getContact(store.getState().appiaContacts.allData, row.id))}
+            onClick={() => store.dispatch(getFeedback(store.getState().appiaFeedbacks.allData, row.id))}
           >
             <span className='font-weight-bold'>{row.name}</span>
           </Link>
@@ -83,7 +83,7 @@ export const columns = [
   //           tag={Link}
   //           to={`/appia/admin/view/${row.admin_id}`}
   //           className='w-100'
-  //           onClick={() => store.dispatch(getContact(store.getState().appiaAdmins.allData, row.admin_id))}
+  //           onClick={() => store.dispatch(getFeedback(store.getState().appiaAdmins.allData, row.admin_id))}
   //         >
   //           <FileText size={14} className='mr-50' />
   //           <span className='align-middle'>Details</span>
@@ -92,7 +92,7 @@ export const columns = [
   //           tag={Link}
   //           to={`/appia/admin/edit/${row.id}`}
   //           className='w-100'
-  //           onClick={() => store.dispatch(getContact(store.getState().appiaAdmins.allData, row.admin_id))}
+  //           onClick={() => store.dispatch(getFeedback(store.getState().appiaAdmins.allData, row.admin_id))}
   //         >
   //           <Archive size={14} className='mr-50' />
   //           <span className='align-middle'>Edit</span>
