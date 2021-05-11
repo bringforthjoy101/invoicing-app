@@ -5,9 +5,11 @@ import Timeline from '@components/timeline'
 // ** Images
 import ceo from '@src/assets/images/avatars/12-small.png'
 import pdf from '@src/assets/images/icons/file-icons/pdf.png'
+import { getAdminActivity } from '../store/action'
 
 // ** Third Party Components
 import { Card, CardHeader, CardTitle, CardBody, Media } from 'reactstrap'
+import moment from 'moment'
 
 // ** Timeline Data
 const data = [
@@ -29,7 +31,7 @@ const data = [
     color: 'warning',
     customContent: (
       <Media className='align-items-center'>
-        <Avatar img={ceo} imgHeight={38} imgWidth={38} />
+        <Avatar color={'primary'} className='mr-1' content={`Emmanuel Adelugba` || 'John Doe'} initials />
         <Media className='ml-50' body>
           <h6 className='mb-0'>John Doe (Client)</h6>
           <span>CEO of Infibeam</span>
@@ -44,7 +46,24 @@ const data = [
   }
 ]
 
-const UserTimeline = () => {
+const UserTimeline = ({data}) => {
+  const activityData = []
+  data.forEach(activity => {
+    activityData.push({
+      title: activity.admin_id,
+      content: activity.activity,
+      meta: moment(activity.date).fromNow(),
+      customContent: (
+        <Media className='align-items-center'>
+          <Avatar color={'primary'} className='mr-1' content={activity.name || 'Appia Admin'} initials />
+          <Media className='ml-50' body>
+            <h6 className='mb-0'>{activity.name}</h6>
+            {/* <span>CEO of Infibeam</span> */}
+          </Media>
+        </Media>
+      )
+    })
+  })
   return (
     <Card>
       <CardHeader>
@@ -52,8 +71,8 @@ const UserTimeline = () => {
           User Timeline
         </CardTitle>
       </CardHeader>
-      <CardBody>
-        <Timeline data={data} />
+      <CardBody className="overflow-auto" style={{ maxHeight: "350px" }}>
+        <Timeline data={activityData} />
       </CardBody>
     </Card>
   )

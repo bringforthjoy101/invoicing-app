@@ -1,9 +1,10 @@
 // ** React Imports
 import { useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
+import moment from 'moment'
 
 // ** Store & Actions
-import { getReview } from '../store/action'
+import { getAdmin, getAdminActivity } from '../store/action'
 import { useSelector, useDispatch } from 'react-redux'
 
 // ** Reactstrap
@@ -13,6 +14,7 @@ import { Row, Col, Alert } from 'reactstrap'
 import PlanCard from './PlanCard'
 import UserInfoCard from './UserInfoCard'
 import UserTimeline from './UserTimeline'
+// import InvoiceList from '../../invoice/list'
 import PermissionsTable from './PermissionsTable'
 
 // ** Styles
@@ -20,35 +22,31 @@ import '@styles/react/apps/app-users.scss'
 
 const UserView = props => {
   // ** Vars
-  const store = useSelector(state => state.users),
+  const store = useSelector(state => state.appiaAdmins),
     dispatch = useDispatch(),
     { id } = useParams()
 
   // ** Get suer on mount
   useEffect(() => {
-    dispatch(getReview(parseInt(id)))
+    dispatch(getAdmin(store.allData, id))
+    dispatch(getAdminActivity())
   }, [dispatch])
-
-  return store.selectedUser !== null && store.selectedUser !== undefined ? (
+  return store.selectedAdmin !== null && store.selectedAdmin !== undefined ? (
     <div className='app-user-view'>
       <Row>
         <Col xl='9' lg='8' md='7'>
-          <UserInfoCard selectedUser={store.selectedUser} />
+          <UserInfoCard selectedAdmin={store.selectedAdmin} />
         </Col>
         <Col xl='3' lg='4' md='5'>
-          <PlanCard selectedUser={store.selectedUser} />
+          <PlanCard selectedAdmin={store.selectedAdmin} />
         </Col>
       </Row>
       <Row>
         <Col md='6'>
-          <UserTimeline />
+          <UserTimeline data={store.adminActivities.sort((a, b) => moment(b.date).format('YYYYMMDD') - moment(a.date).format('YYYYMMDD'))} />
         </Col>
         <Col md='6'>
           <PermissionsTable />
-        </Col>
-      </Row>
-      <Row>
-        <Col sm='12'>
         </Col>
       </Row>
     </div>

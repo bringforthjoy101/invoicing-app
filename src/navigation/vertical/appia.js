@@ -9,6 +9,20 @@ export default [
     title: 'User',
     icon: <User size={20} />,
     navLink: '/appia/user/list'
+    // children: [
+    //   {
+    //     id: 'list',
+    //     title: 'List',
+    //     icon: <Circle size={12} />,
+    //     navLink: '/appia/user/list'
+    //   },
+    //   {
+    //     id: 'edit',
+    //     title: 'Edit',
+    //     icon: <Circle size={12} />,
+    //     navLink: '/appia/user/edit'
+    //   }
+    // ]
   },
   {
     id: 'admins',
@@ -23,15 +37,15 @@ export default [
     navLink: '/appia/funds/'
   },
   {
-    id: 'contact',
-    title: 'Contact us',
-    icon: <Mail size={20} />,
-    navLink: '/appia/contact/list'
-  },
-  {
-    id: 'feedbacks',
-    title: 'Feedbacks',
+    id: 'features',
+    title: 'Reviews and Ratings',
     icon: <ThumbsUp size={20} />,
     navLink: '/appia/reviews/list'
+  },
+  {
+    id: 'contact',
+    title: 'Contact',
+    icon: <Mail size={20} />,
+    navLink: '/appia/contact/list'
   }
 ]

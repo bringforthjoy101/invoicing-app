@@ -7,7 +7,6 @@ export const apiUrl = process.env.REACT_APP_API_ENDPOINT
 export const getAllData = () => {
   return async dispatch => {
     const response = await apiRequest({url:'/admin/users', method:'GET'}, dispatch)
-    console.log({response})
     if (response && response.data.data && response.data.success) {
         await dispatch({
           type: 'GET_ALL_DATA',

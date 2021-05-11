@@ -1,6 +1,8 @@
 // ** React Imports
 import { Fragment, useState, useEffect } from 'react'
 
+// ** Invoice List Sidebar
+import Sidebar from './Sidebar'
 
 // ** Columns
 import { columns } from './columns'
@@ -22,7 +24,7 @@ import '@styles/react/libs/react-select/_react-select.scss'
 import '@styles/react/libs/tables/react-dataTable-component.scss'
 
 // ** Table Header
-const CustomHeader = ({ handlePerPage, rowsPerPage, handleFilter, searchTerm }) => {
+const CustomHeader = ({ toggleSidebar, handlePerPage, rowsPerPage, handleFilter, searchTerm }) => {
   return (
     <div className='invoice-list-table-header w-100 mr-1 ml-50 mt-2 mb-75'>
       <Row>
@@ -70,16 +72,21 @@ const CustomHeader = ({ handlePerPage, rowsPerPage, handleFilter, searchTerm }) 
   )
 }
 
-const ReviewsList = () => {
+const AdminsList = () => {
   // ** Store Vars
   const dispatch = useDispatch()
-  const store = useSelector(state => state.appiaReviews)
+  const store = useSelector(state => state.appiaAdmins)
 
   // ** States
   const [searchTerm, setSearchTerm] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
   const [rowsPerPage, setRowsPerPage] = useState(10)
+  const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [currentRole, setCurrentRole] = useState({ value: '', label: 'Select Role', number: 0})
+  const [currentStatus, setCurrentStatus] = useState({ value: '', label: 'Select Status', number: 0 })
 
+  // ** Function to toggle sidebar
+  const toggleSidebar = () => setSidebarOpen(!sidebarOpen)
 
   // ** Get data on mount
   useEffect(() => {
@@ -88,10 +95,28 @@ const ReviewsList = () => {
       getFilteredData(store.allData, {
         page: currentPage,
         perPage: rowsPerPage,
+        role: currentRole.value,
+        status: currentStatus.value,
         q: searchTerm
       })
     )
   }, [dispatch])
+  
+  // ** User filter options
+  const roleOptions = [
+    { value: '', label: 'Select Role', number: 0 },
+    { value: 'Admin', label: 'Admin', number: 1 },
+    { value: 'Customer Support', label: 'Customer Support', number: 2 },
+    { value: 'Super Admin', label: 'Super Admin', number: 3 },
+    { value: 'Control Admin', label: 'Control Admin', number: 4 }
+  ]
+
+  const statusOptions = [
+    { value: '', label: 'Select Status', number: 0 },
+    { value: 'Pending', label: 'Pending', number: 1 },
+    { value: 'Active', label: 'Active', number: 2 },
+    { value: 'Inactive', label: 'Inactive', number: 3 }
+  ]
 
   // ** Function in get data on page change
   const handlePagination = page => {
@@ -99,6 +124,8 @@ const ReviewsList = () => {
       getFilteredData(store.allData, {
         page: page.selected + 1,
         perPage: rowsPerPage,
+        role: currentRole.value,
+        status: currentStatus.value,
         q: searchTerm
       })
     )
@@ -112,6 +139,8 @@ const ReviewsList = () => {
       getFilteredData(store.allData, {
         page: currentPage,
         perPage: value,
+        role: currentRole.value,
+        status: currentStatus.value,
         q: searchTerm
       })
     )
@@ -125,17 +154,18 @@ const ReviewsList = () => {
       getFilteredData(store.allData, {
         page: currentPage,
         perPage: rowsPerPage,
+        role: currentRole.value,
+        status: currentStatus.value,
         q: val
       })
     )
   }
 
   const filteredData = store.allData.filter(
-    item => (item.email.toLowerCase() || item.name.toLowerCase())
+    item => (item.email.toLowerCase() || item.first_name.toLowerCase() || item.last_name.toLowerCase())
   )
 
-
-  // ** Custom Pagination
+    // ** Custom Pagination
   const CustomPagination = () => {
     const count = Math.ceil(filteredData.length / rowsPerPage)
 
@@ -158,9 +188,12 @@ const ReviewsList = () => {
     )
   }
 
+
   // ** Table data to render
   const dataToRender = () => {
     const filters = {
+      role: currentRole.value,
+      status: currentStatus.value,
       q: searchTerm
     }
 
@@ -180,17 +213,6 @@ const ReviewsList = () => {
   return (
     <Fragment>
       <Card>
-        <CardHeader>
-          <CardTitle tag='h4'>Search Filter</CardTitle>
-        </CardHeader>
-        <CardBody>
-          <Row>
-            
-          </Row>
-        </CardBody>
-      </Card>
-
-      <Card>
         <DataTable
           noHeader
           pagination
@@ -204,6 +226,7 @@ const ReviewsList = () => {
           data={dataToRender()}
           subHeaderComponent={
             <CustomHeader
+              toggleSidebar={toggleSidebar}
               handlePerPage={handlePerPage}
               rowsPerPage={rowsPerPage}
               searchTerm={searchTerm}
@@ -212,8 +235,10 @@ const ReviewsList = () => {
           }
         />
       </Card>
+
+      <Sidebar open={sidebarOpen} toggleSidebar={toggleSidebar} />
     </Fragment>
   )
 }
 
-export default ReviewsList
+export default AdminsList

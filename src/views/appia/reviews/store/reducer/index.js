@@ -4,24 +4,31 @@ const initialState = {
   data: [],
   total: 1,
   params: {},
-  selectedReview: null
+  selectedAdmin: null,
+  adminActivities: [],
+  loading: true
 }
 
-const reviews = (state = initialState, action) => {
+const admins = (state = initialState, action) => {
   switch (action.type) {
-    case 'GET_ALL_DATA':
+    case 'GET_ALL_ADMIN_DATA':
       return { ...state, allData: action.data }
-    case 'GET_FILTERED_DATA':
+    case 'GET_FILTERED_ADMIN_DATA':
       return {
         ...state,
         data: action.data,
         total: action.totalPages,
         params: action.params
       }
-    case 'GET_REVIEW':
-      return { ...state, selectedReview: action.selectedReview }
+    case 'GET_ADMIN':
+      return { ...state, selectedAdmin: action.selectedAdmin }
+    case 'GET_ALL_ADMIN_ACTIVITY':
+      return {...state, adminActivities: action.data}
+     case 'LOADING': {
+        return {...state, loading: action.payload}
+      }
     default:
       return { ...state }
   }
 }
-export default reviews
+export default admins
