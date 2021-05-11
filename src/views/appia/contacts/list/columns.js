@@ -25,9 +25,6 @@ const renderClient = row => {
   }
 }
 
-const dates = new Date("reated_at")
-console.log("dtsss", dates)
-
 export const columns = [
   {
     name: 'Full Name',
@@ -75,6 +72,6 @@ export const columns = [
     minWidth: '172px',
     selector: 'created_at',
     sortable: true,
-    cell: row => <span>{row.created_at}</span>
+    cell: row => row.created_at
   }
 ]

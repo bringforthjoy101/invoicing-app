@@ -75,8 +75,7 @@ const ContactsList = () => {
   const [searchTerm, setSearchTerm] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
   const [rowsPerPage, setRowsPerPage] = useState(10)
-  const [picker, setPicker] = useState('')
-  
+
   // ** Get data on mount
   useEffect(() => {
     dispatch(getAllData())
@@ -84,7 +83,6 @@ const ContactsList = () => {
       getFilteredData(store.allData, {
         page: currentPage,
         perPage: rowsPerPage,
-        created_at: picker,
         q: searchTerm
       })
     )
@@ -96,7 +94,6 @@ const ContactsList = () => {
       getFilteredData(store.allData, {
         page: page.selected + 1,
         perPage: rowsPerPage,
-        created_at: picker,
         q: searchTerm
       })
     )
@@ -110,7 +107,6 @@ const ContactsList = () => {
       getFilteredData(store.allData, {
         page: currentPage,
         perPage: value,
-        created_at: picker,
         q: searchTerm
       })
     )
@@ -124,30 +120,9 @@ const ContactsList = () => {
       getFilteredData(store.allData, {
         page: currentPage,
         perPage: rowsPerPage,
-        created_at: picker,
         q: val
       })
     )
-  }
-
-
-  const dater = new Date()
-  console.log("newwwwwww", dater)
-
-
-  // ** Function in get data on search query change
-  const handleDateFilter = val => {
-    console.log("vallll", val)
-    setPicker(val)
-    dispatch(
-      getFilteredData(store.allData, {
-        page: currentPage,
-        perPage: rowsPerPage,
-        created_at: new Date(val),
-        q: searchTerm
-      })
-    )
-
   }
 
   const filteredData = store.allData.filter(
@@ -178,7 +153,8 @@ const ContactsList = () => {
     )
   }
 
-  const PickerRange = ({picker, handleDateFilter}) => {
+  const PickerRange = () => {
+    const [picker, setPicker] = useState(new Date())
     return (
       <Fragment>
         <Label for='range-picker'>Filter By Date</Label>
@@ -186,7 +162,7 @@ const ContactsList = () => {
           value={picker}
           id='range-picker'
           className='form-control'
-          onChange={date => handleDateFilter(date)}
+          onChange={date => setPicker(date)}
           options={{
             mode: 'range',
             defaultDate: ['2020-02-01', '2020-02-15']
@@ -225,7 +201,7 @@ const ContactsList = () => {
         <CardBody>
           <Row>
             <Col md='4'>
-              <PickerRange handleDateFilter={handleDateFilter} picker={picker} />
+              <PickerRange />
             </Col>
           </Row>
         </CardBody>

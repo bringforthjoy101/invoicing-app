@@ -32,6 +32,6 @@ export default [
     id: 'feedbacks',
     title: 'Feedbacks',
     icon: <ThumbsUp size={20} />,
-    navLink: '/appia/feedbacks/list'
+    navLink: '/appia/reviews/list'
   }
 ]
