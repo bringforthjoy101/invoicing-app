@@ -1,5 +1,5 @@
 // ** Navigation sections imports
-import apps from './apps'
+// import apps from './apps'
 import appia from './appia'
 import pages from './pages'
 import forms from './forms'
@@ -10,4 +10,4 @@ import uiElements from './ui-elements'
 import chartsAndMaps from './charts-maps'
 
 // ** Merge & Export
-export default [...dashboards, ...appia, ...apps, ...pages, ...uiElements, ...forms, ...tables, ...chartsAndMaps, ...others]
+export default [...dashboards, ...appia, ...pages, ...uiElements, ...forms, ...tables, ...chartsAndMaps, ...others]

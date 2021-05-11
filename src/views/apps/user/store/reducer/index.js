@@ -20,6 +20,9 @@ const users = (state = initialState, action) => {
       }
     case 'GET_USER':
       return { ...state, selectedUser: action.selectedUser }
+
+    case 'GET_USER':
+      return { ...state, selectedUser: action.selectedUser }
     default:
       return { ...state }
   }

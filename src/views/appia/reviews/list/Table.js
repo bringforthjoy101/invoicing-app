@@ -81,12 +81,6 @@ const AdminsList = () => {
   const [searchTerm, setSearchTerm] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
   const [rowsPerPage, setRowsPerPage] = useState(10)
-  const [sidebarOpen, setSidebarOpen] = useState(false)
-  const [currentRole, setCurrentRole] = useState({ value: '', label: 'Select Role', number: 0})
-  const [currentStatus, setCurrentStatus] = useState({ value: '', label: 'Select Status', number: 0 })
-
-  // ** Function to toggle sidebar
-  const toggleSidebar = () => setSidebarOpen(!sidebarOpen)
 
   // ** Get data on mount
   useEffect(() => {
@@ -95,8 +89,6 @@ const AdminsList = () => {
       getFilteredData(store.allData, {
         page: currentPage,
         perPage: rowsPerPage,
-        role: currentRole.value,
-        status: currentStatus.value,
         q: searchTerm
       })
     )
@@ -124,8 +116,6 @@ const AdminsList = () => {
       getFilteredData(store.allData, {
         page: page.selected + 1,
         perPage: rowsPerPage,
-        role: currentRole.value,
-        status: currentStatus.value,
         q: searchTerm
       })
     )
@@ -139,8 +129,6 @@ const AdminsList = () => {
       getFilteredData(store.allData, {
         page: currentPage,
         perPage: value,
-        role: currentRole.value,
-        status: currentStatus.value,
         q: searchTerm
       })
     )
@@ -154,8 +142,6 @@ const AdminsList = () => {
       getFilteredData(store.allData, {
         page: currentPage,
         perPage: rowsPerPage,
-        role: currentRole.value,
-        status: currentStatus.value,
         q: val
       })
     )
@@ -188,6 +174,25 @@ const AdminsList = () => {
     )
   }
 
+  const PickerRange = () => {
+    const [picker, setPicker] = useState(new Date())
+    return (
+      <Fragment>
+        <Label for='range-picker'>Filter By Date</Label>
+        <Flatpickr
+          value={picker}
+          id='range-picker'
+          className='form-control'
+          onChange={date => setPicker(date)}
+          options={{
+            mode: 'range',
+            defaultDate: ['2020-02-01', '2020-02-15']
+          }}
+        />
+      </Fragment>
+    )
+  }
+
 
   // ** Table data to render
   const dataToRender = () => {
@@ -212,6 +217,18 @@ const AdminsList = () => {
 
   return (
     <Fragment>
+      <Card>
+        <CardHeader>
+          <CardTitle tag='h4'>Filter BY</CardTitle>
+        </CardHeader>
+        <CardBody>
+          <Row>
+            <Col md='4'>
+              <PickerRange />
+            </Col>
+          </Row>
+        </CardBody>
+      </Card>
       <Card>
         <DataTable
           noHeader
