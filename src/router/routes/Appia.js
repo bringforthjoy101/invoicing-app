@@ -61,35 +61,23 @@ const AppiaRoutes = [
   {
     path: '/appia/funds',
     component: lazy(() => import('../../views/appia/funds/list'))
+  },
+  {
+    path: '/appia/contact/list',
+    component: lazy(() => import('../../views/appia/contacts/list'))
+  },
+  {
+    path: '/appia/contacts/view',
+    exact: true,
+    component: () => <Redirect to='/appia/contacts/view/1' />
+  },
+  {
+    path: '/appia/contacts/view/:id',
+    component: lazy(() => import('../../views/appia/contacts/view')),
+    meta: {
+      navLink: '/appia/contacts/view'
+    }
   }
-  // {
-  //   path: '/appia/contact/list',
-  //   component: lazy(() => import('../../views/appia/contacts/list'))
-  // },
-  // {
-  //   path: '/appia/contact/edit',
-  //   exact: true,
-  //   component: () => <Redirect to='/appia/contacts/edit/1' />
-  // },
-  // {
-  //   path: '/appia/contacts/edit/:id',
-  //   component: lazy(() => import('../../views/appia/contacts/edit')),
-  //   meta: {
-  //     navLink: '/appia/contacts/edit'
-  //   }
-  // },
-  // {
-  //   path: '/appia/contacts/view',
-  //   exact: true,
-  //   component: () => <Redirect to='/appia/contacts/view/1' />
-  // },
-  // {
-  //   path: '/appia/contacts/view/:id',
-  //   component: lazy(() => import('../../views/appia/contacts/view')),
-  //   meta: {
-  //     navLink: '/appia/contacts/view'
-  //   }
-  // },
 ]
 
 export default AppiaRoutes

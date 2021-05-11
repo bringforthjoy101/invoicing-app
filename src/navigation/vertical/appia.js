@@ -44,7 +44,7 @@ export default [
   },
   {
     id: 'contact',
-    title: 'Contact',
+    title: 'Contact us',
     icon: <Mail size={20} />,
     navLink: '/appia/contact/list'
   }
