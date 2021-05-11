@@ -49,18 +49,6 @@ const CustomHeader = ({ handlePerPage, rowsPerPage, handleFilter, searchTerm }) 
             <Label for='rows-per-page'>Entries</Label>
           </div>
         </Col>
-        <Col xl="6" className='d-flex align-items-sm-center justify-content-lg-end justify-content-start flex-lg-nowrap flex-wrap flex-sm-row flex-column pr-lg-1 p-0 mt-lg-0 mt-1'>
-          <Label className='mb-0 mt-1' for='search-invoice'>
-            Search:
-            </Label>
-          <Input
-            id='search-invoice'
-            className='ml-50 w-50'
-            type='text'
-            value={searchTerm}
-            onChange={e => handleFilter(e.target.value)}
-          />
-        </Col>
       </Row>
     </div>
   )
@@ -69,7 +57,7 @@ const CustomHeader = ({ handlePerPage, rowsPerPage, handleFilter, searchTerm }) 
 const ContactsList = () => {
   // ** Store Vars
   const dispatch = useDispatch()
-  const store = useSelector(state => state.appiaContacts)
+  const store = useSelector(state => state.appiaFeedbacks)
 
   // ** States
   const [searchTerm, setSearchTerm] = useState('')
@@ -226,6 +214,20 @@ const ContactsList = () => {
           <Row>
             <Col md='4'>
               <PickerRange handleDateFilter={handleDateFilter} picker={picker} />
+            </Col>
+            <Col md="5">
+              <div className='d-flex align-items-center mb-sm-0 mt-2 mr-1'>
+                <Label className='mb-0' for='search-invoice'>
+                  Search:
+            </Label>
+                <Input
+                  id='search-invoice'
+                  className='ml-50 w-100'
+                  type='text'
+                  value={searchTerm}
+                  onChange={e => handleFilter(e.target.value)}
+                />
+              </div>
             </Col>
           </Row>
         </CardBody>

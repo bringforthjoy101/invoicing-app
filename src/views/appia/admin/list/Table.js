@@ -254,18 +254,20 @@ const AdminsList = () => {
                 }}
               />
             </Col>
-            <Col md="4" className="d-flex">
-            <Label className='mb-0 mt-1' for='search-invoice'>
-              Search:
+            <Col md="4">
+              <div className='d-flex align-items-center mb-sm-0 mb-1 mr-1'>
+                <Label className='mb-0' for='search-invoice'>
+                  Search:
             </Label>
-              <Input
-                id='search-invoice'
-                className='ml-50 w-100'
-                type='text'
-                value={searchTerm}
-                onChange={e => handleFilter(e.target.value)}
-              />
-          </Col>
+                <Input
+                  id='search-invoice'
+                  className='ml-50 w-100'
+                  type='text'
+                  value={searchTerm}
+                  onChange={e => handleFilter(e.target.value)}
+                />
+              </div>
+            </Col>
           </Row>
         </CardBody>
       </Card>

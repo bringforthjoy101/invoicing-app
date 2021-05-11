@@ -55,21 +55,21 @@ const AppiaRoutes = [
     }
   },
   {
-    path: '/appia/reviews/list',
-    component: lazy(() => import('../../views/appia/reviews/list'))
+    path: '/appia/feedbacks/list',
+    component: lazy(() => import('../../views/appia/feedbacks/list'))
+  },
+  {
+    path: '/appia/feedbacks/view',
+    exact: true,
+    component: () => <Redirect to='/appia/feedbacks/view/1' />
+  },
+  {
+    path: '/appia/feedbacks/view/:id',
+    component: lazy(() => import('../../views/appia/feedbacks/view')),
+    meta: {
+      navLink: '/appia/feedbacks/view'
+    }
   }
-  // {
-  //   path: '/appia/reviews/view',
-  //   exact: true,
-  //   component: () => <Redirect to='/appia/reviews/view/1' />
-  // },
-  // {
-  //   path: '/appia/reviess/view/:id',
-  //   component: lazy(() => import('../../views/appia/reviews/view')),
-  //   meta: {
-  //     navLink: '/appia/reviews/view'
-  //   }
-  // }
 ]
 
 export default AppiaRoutes

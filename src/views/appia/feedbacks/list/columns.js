@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import Avatar from '@components/avatar'
 
 // ** Store & Actions
-import { getContact } from '../store/action'
+import { getFeedback } from '../store/action'
 import { store } from '@store/storeConfig/store'
 
 // ** Third Party Components
@@ -25,9 +25,6 @@ const renderClient = row => {
   }
 }
 
-const dates = new Date("reated_at")
-console.log("dtsss", dates)
-
 export const columns = [
   {
     name: 'Full Name',
@@ -39,9 +36,9 @@ export const columns = [
         {renderClient(row)}
         <div className='d-flex flex-column'>
           <Link
-            to={`/appia/contacts/view/${row.id}`}
+            to={`/appia/feedbacks/view/${row.id}`}
             className='user-name text-truncate mb-0'
-            onClick={() => store.dispatch(getContact(store.getState().appiaContacts.allData, row.id))}
+            onClick={() => store.dispatch(getFeedback(store.getState().appiaFeedbacks.allData, row.id))}
           >
             <span className='font-weight-bold'>{row.name}</span>
           </Link>
@@ -58,11 +55,11 @@ export const columns = [
     cell: row => row.email
   },
   {
-    name: 'Subject',
+    name: 'Feature',
     minWidth: '138px',
-    selector: 'subject',
+    selector: 'feature',
     sortable: true,
-    cell: row => row.subject
+    cell: row => row.feature
   },
   {
     name: 'Message',
