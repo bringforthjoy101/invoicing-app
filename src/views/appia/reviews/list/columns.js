@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import Avatar from '@components/avatar'
 
 // ** Store & Actions
-import { getContact } from '../store/action'
+import { getReview } from '../store/action'
 import { store } from '@store/storeConfig/store'
 
 // ** Third Party Components
@@ -38,7 +38,7 @@ export const columns = [
           <Link
             to={`/appia/contacts/view/${row.id}`}
             className='user-name text-truncate mb-0'
-            onClick={() => store.dispatch(getContact(store.getState().appiaContacts.allData, row.id))}
+            onClick={() => store.dispatch(getReview(store.getState().appiaReviews.allData, row.id))}
           >
             <span className='font-weight-bold'>{row.name}</span>
           </Link>
@@ -55,21 +55,14 @@ export const columns = [
     cell: row => row.email
   },
   {
-    name: 'Id',
-    minWidth: '320px',
-    selector: 'id',
-    sortable: true,
-    cell: row => row.id
-  },
-  {
-    name: 'Subject',
+    name: 'Feature',
     minWidth: '138px',
-    selector: 'subject',
+    selector: 'feature',
     sortable: true,
-    cell: row => row.subject
+    cell: row => row.feature
   },
   {
-    name: 'Message',
+    name: 'Comment',
     minWidth: '172px',
     selector: 'message',
     sortable: true,
