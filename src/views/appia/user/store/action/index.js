@@ -132,6 +132,7 @@ export const addFunds = ({user_id, reason, amount}) => {
     const body = JSON.stringify({user_id, reason, amount})
     console.log({body})
     const response = await apiRequest({url:`/admin/users/add`, method:'POST', body}, dispatch)
+    console.log({response})
     if (response && response.data.success) {
       swal('Good!', `Funds of ${amount} was successfully added and is pending aproval!.`, 'success')
     } else {

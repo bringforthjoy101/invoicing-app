@@ -78,8 +78,6 @@ const UsersList = () => {
       getFilteredData(store.allData, {
         page: page.selected + 1,
         perPage: rowsPerPage,
-        role: currentRole.value,
-        currentPlan: currentPlan.value,
         status: currentStatus.value,
         q: searchTerm
       })

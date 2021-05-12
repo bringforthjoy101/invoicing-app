@@ -37,6 +37,12 @@ export default [
     navLink: '/appia/funds/'
   },
   {
+    id: 'subscribers',
+    title: 'Subscribers',
+    icon: <Users size={20} />,
+    navLink: '/appia/subscribers/list'
+  },
+  {
     id: 'feedback',
     title: 'Feedbacks',
     icon: <ThumbsUp size={20} />,
@@ -47,11 +53,5 @@ export default [
     title: 'Contact us',
     icon: <Mail size={20} />,
     navLink: '/appia/contact/list'
-  },
-  {
-    id: 'subscribers',
-    title: 'Subscribers',
-    icon: <Users size={20} />,
-    navLink: '/appia/subscribers/list'
   }
 ]
