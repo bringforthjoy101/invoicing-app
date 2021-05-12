@@ -1,5 +1,5 @@
 // ** Logo
-import logo from '@src/assets/images/logo/logo.png'
+import logo from '@src/assets/images/logo/Appia.png'
 
 const SpinnerComponent = () => {
   return (

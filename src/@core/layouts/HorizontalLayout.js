@@ -27,6 +27,7 @@ import { useSkin } from '@hooks/useSkin'
 import { useNavbarType } from '@hooks/useNavbarType'
 import { useFooterType } from '@hooks/useFooterType'
 import { useNavbarColor } from '@hooks/useNavbarColor'
+import Logo from '../../assets/images/logo/Appia.png'
 
 // ** Styles
 import '@styles/base/core/menu/menu-types/horizontal-menu.scss'
@@ -125,7 +126,7 @@ const HorizontalLayout = props => {
               <NavItem>
                 <Link to='/' className='navbar-brand'>
                   <span className='brand-logo'>
-                    <img src={themeConfig.app.appLogoImage} alt='logo' />
+                    <img src={Logo} alt='logo' />
                   </span>
                   <h2 className='brand-text mb-0'>{themeConfig.app.appName}</h2>
                 </Link>

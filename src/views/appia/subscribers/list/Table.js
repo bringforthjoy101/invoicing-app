@@ -183,7 +183,7 @@ const ContactsList = () => {
         </CardHeader>
         <CardBody>
           <Row>
-            <Col md='4' >
+            {/* <Col md='4' >
               <Label for='range-picker'>Range</Label>
               <Flatpickr
                 value={picker}
@@ -195,7 +195,7 @@ const ContactsList = () => {
                   defaultDate: ['2020-02-01', '2020-02-15']
                 }}
               />
-            </Col>
+            </Col> */}
             <Col md='4'>
               <Select
                 theme={selectThemeColors}

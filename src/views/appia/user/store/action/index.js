@@ -7,6 +7,7 @@ export const apiUrl = process.env.REACT_APP_API_ENDPOINT
 export const getAllData = () => {
   return async dispatch => {
     const response = await apiRequest({url:'/admin/users', method:'GET'}, dispatch)
+    console.log({response})
     if (response && response.data.data && response.data.success) {
         await dispatch({
           type: 'GET_ALL_DATA',
@@ -22,14 +23,12 @@ export const getAllData = () => {
 // ** Get filtered data on page or row change
 export const getFilteredData = (users, params) => {
   return async dispatch => {
-    const { q = '', perPage = 10, page = 1, role = null, currentPlan = null, status = null } = params
+    const { q = '', perPage = 10, page = 1, status = null } = params
     /* eslint-disable  */
     const queryLowered = q.toLowerCase()
     const filteredData = users.filter(
       user =>
-        (user.email.toLowerCase().includes(queryLowered) || user.user_id.toLowerCase().includes(queryLowered)) &&
-        user.role === (role || user.role) &&
-        user.currentPlan === (currentPlan || user.currentPlan) &&
+        (user.email.toLowerCase().includes(queryLowered) || user.names.toLowerCase().includes(queryLowered) || user.user_id.toLowerCase().includes(queryLowered)) &&
         user.status === (status || user.status)
     )
     /* eslint-enable  */

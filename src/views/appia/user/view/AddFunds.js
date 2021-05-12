@@ -25,7 +25,7 @@ export const AddFunds = ({userId, userData}) => {
     <div>
       <Button.Ripple className='text-center mb-1' color='primary' outline block onClick={() => setFormModal(!formModal)}>
         Add Funds
-      </Button.Ripple>
+      </Button.Ripple> 
       <Modal isOpen={formModal} toggle={() => setFormModal(!formModal)} className='modal-dialog-centered'>
         <ModalHeader toggle={() => setFormModal(!formModal)}>Add Funds</ModalHeader>
           <Formik
@@ -88,7 +88,7 @@ export const DeductFunds = ({userId, userData}) => {
     <div>
      <Button.Ripple className='text-center mb-1' color='danger' outline block onClick={() => setFormModal(!formModal)}>
         Deduct Funds
-      </Button.Ripple>
+      </Button.Ripple> 
       <Modal isOpen={formModal} toggle={() => setFormModal(!formModal)} className='modal-dialog-centered'>
         <ModalHeader toggle={() => setFormModal(!formModal)}>Deduct Funds</ModalHeader>
           <Formik
