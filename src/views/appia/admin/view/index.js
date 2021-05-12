@@ -29,7 +29,7 @@ const UserView = props => {
   // ** Get suer on mount
   useEffect(() => {
     dispatch(getAdmin(store.allData, id))
-    dispatch(getAdminActivity())
+    dispatch(getAdminActivity(id))
   }, [dispatch])
   return store.selectedAdmin !== null && store.selectedAdmin !== undefined ? (
     <div className='app-user-view'>

@@ -55,9 +55,17 @@ export const getAdmin = (admins, id) => {
   }
 }
 
-export const getAdminActivity = () => {
+export const setLoading = (payload) => {
+  return {
+    type: 'LOADING',
+    payload
+  }
+}
+
+
+export const getAdminActivity = (id) => {
   return async dispatch => {
-    const response = await apiRequest({ url: '/admin/activiy/', method: 'GET' }, dispatch)
+    const response = await apiRequest({ url: `/admin/activity/${id}`, method: 'GET' }, dispatch)
     console.log({response})
     if (response) {
       if (response.data.data && response.data.success) {

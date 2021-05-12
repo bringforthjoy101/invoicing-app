@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 
 // ** Custom Components
 import Avatar from '@components/avatar'
+import moment from 'moment'
 
 // ** Store & Actions
 import { getContact } from '../store/action'
@@ -62,47 +63,47 @@ export const columns = [
     cell: row => row.subject
   },
   {
-    name: 'Message',
+    name: 'Date',
     minWidth: '138px',
-    selector: 'message',
+    selector: 'created_at',
     sortable: true,
-    cell: row => row.subject
+    cell: row => moment(row.posted_date).format('lll')
+  },
+  {
+    name: 'Actions',
+    minWidth: '100px',
+    selector: 'fullName',
+    sortable: true,
+    cell: row => (
+      <UncontrolledDropdown>
+        <DropdownToggle tag='div' className='btn btn-sm'>
+          <MoreVertical size={14} className='cursor-pointer' />
+        </DropdownToggle>
+        <DropdownMenu right>
+          <DropdownItem
+            tag={Link}
+            to={`/appia/admin/view/${row.admin_id}`}
+            className='w-100'
+            onClick={() => store.dispatch(getContact(store.getState().appiaContacts.allData, row.admin_id))}
+          >
+            <FileText size={14} className='mr-50' />
+            <span className='align-middle'>Details</span>
+          </DropdownItem>
+          <DropdownItem
+            tag={Link}
+            to={`/appia/admin/edit/${row.id}`}
+            className='w-100'
+            onClick={() => store.dispatch(getContact(store.getState().appiaAdmins.allData, row.admin_id))}
+          >
+            <Archive size={14} className='mr-50' />
+            <span className='align-middle'>Edit</span>
+          </DropdownItem>
+          <DropdownItem className='w-100'>
+            <Trash2 size={14} className='mr-50' />
+            <span className='align-middle'>Delete</span>
+          </DropdownItem>
+        </DropdownMenu>
+      </UncontrolledDropdown>
+    )
   }
-  // {
-  //   name: 'Actions',
-  //   minWidth: '100px',
-  //   selector: 'fullName',
-  //   sortable: true,
-  //   cell: row => (
-  //     <UncontrolledDropdown>
-  //       <DropdownToggle tag='div' className='btn btn-sm'>
-  //         <MoreVertical size={14} className='cursor-pointer' />
-  //       </DropdownToggle>
-  //       <DropdownMenu right>
-  //         <DropdownItem
-  //           tag={Link}
-  //           to={`/appia/admin/view/${row.admin_id}`}
-  //           className='w-100'
-  //           onClick={() => store.dispatch(getContact(store.getState().appiaAdmins.allData, row.admin_id))}
-  //         >
-  //           <FileText size={14} className='mr-50' />
-  //           <span className='align-middle'>Details</span>
-  //         </DropdownItem>
-  //         <DropdownItem
-  //           tag={Link}
-  //           to={`/appia/admin/edit/${row.id}`}
-  //           className='w-100'
-  //           onClick={() => store.dispatch(getContact(store.getState().appiaAdmins.allData, row.admin_id))}
-  //         >
-  //           <Archive size={14} className='mr-50' />
-  //           <span className='align-middle'>Edit</span>
-  //         </DropdownItem>
-  //         <DropdownItem className='w-100'>
-  //           <Trash2 size={14} className='mr-50' />
-  //           <span className='align-middle'>Delete</span>
-  //         </DropdownItem>
-  //       </DropdownMenu>
-  //     </UncontrolledDropdown>
-  //   )
-  // }
 ]
