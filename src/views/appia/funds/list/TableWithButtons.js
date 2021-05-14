@@ -67,7 +67,7 @@ const columns = [
     name: 'User',
     selector: 'user_details',
     sortable: true,
-    minWidth: '250px',
+    minWidth: '280px',
     cell: row => (
       <div className='d-flex align-items-center'>
         {!row.avatar ? (
@@ -83,6 +83,13 @@ const columns = [
     )
   },
   {
+    name: 'Email',
+    selector: 'user_details',
+    sortable: true,
+    minWidth: '240px', 
+    cell: row => row.user_details.email
+  },
+  {
     name: 'Purpose',
     selector: 'purpose',
     sortable: true,
@@ -92,13 +99,13 @@ const columns = [
     name: 'Description',
     selector: 'description',
     sortable: true,
-    minWidth: '150px'
+    minWidth: '100px'
   },
   {
     name: 'Status',
     selector: 'status',
     sortable: true,
-    // minWidth: '100px',
+    minWidth: '100px',
     cell: row => {
       return (
         <Badge color={status[row.status].color} pill>
@@ -111,14 +118,14 @@ const columns = [
     name: 'Date',
     selector: 'posted_date',
     sortable: true,
-    // minWidth: '150px',
+    minWidth: '200px',
     cell: row => moment(row.posted_date).format('lll')
   },
   {
     name: 'Posted By',
     selector: 'posted_by',
     sortable: true,
-    minWidth: '150px',
+    minWidth: '170px',
     cell: row => (
       <div className='d-flex align-items-center'>
         <Avatar color={`light-${states[3]}`} content={row.posted_by} initials />
@@ -232,7 +239,7 @@ const DataTableWithButtons = () => {
       nextLabel=''
       forcePage={currentPage}
       onPageChange={page => handlePagination(page)}
-      pageCount={searchValue.length ? filteredData.length / 7 : store.allData.length / 7 || 1}
+      pageCount={searchValue.length ? filteredData.length / 10 : store.allData.length / 10 || 1}
       breakLabel='...'
       pageRangeDisplayed={2}
       marginPagesDisplayed={2}
@@ -288,6 +295,8 @@ const DataTableWithButtons = () => {
     return result
   }
 
+
+  console.log("dttt", store.allData)
   // ** Downloads CSV
   function downloadCSV(array) {
     const link = document.createElement('a')
@@ -318,6 +327,14 @@ const DataTableWithButtons = () => {
     store.allData.map(arr => {
       doc.autoTable({
         styles: { halign: 'left' },
+        columnStyles: {
+          0: {cellWidth: 45},
+          1: {cellWidth: 55},
+          2: {cellWidth: 50},
+          3: {cellWidth: 40},
+          4: {cellWidth: 70},
+          5: {cellWidth: 40}
+        },
         body: [[(arr.user_details.user_name), (arr.purpose), (arr.description), (arr.status), (arr.posted_date), (arr.posted_by)]]
       })
     })
@@ -330,7 +347,10 @@ const DataTableWithButtons = () => {
       <Card>
         <CardHeader className='flex-md-row flex-column align-md-items-center align-items-start border-bottom'>
           <CardTitle tag='h4'>All Funds</CardTitle>
-          <div className='d-flex mt-md-0 mt-1'>
+          
+        </CardHeader>
+        <Row className='justify-content-between mx-0'>
+        <Col className='d-flex align-items-center justify-content-start mt-1' md='3' sm='12'>
             <UncontrolledButtonDropdown>
               <DropdownToggle color='secondary' caret outline>
                 <Share size={15} />
@@ -351,14 +371,8 @@ const DataTableWithButtons = () => {
                 </DropdownItem>
               </DropdownMenu>
             </UncontrolledButtonDropdown>
-            <Button className='ml-2' color='primary' onClick={handleModal}>
-              <Plus size={15} />
-              <span className='align-middle ml-50'>Add Record</span>
-            </Button>
-          </div>
-        </CardHeader>
-        <Row className='justify-content-end mx-0'>
-          <Col className='d-flex align-items-center justify-content-end mt-1' md='6' sm='12'>
+          </Col>
+          <Col className='d-flex align-items-center justify-content-end mt-1' md='3' sm='12'>
             <Label className='mr-1' for='search-input'>
               Search
             </Label>
@@ -378,7 +392,7 @@ const DataTableWithButtons = () => {
           pagination
           selectableRows
           columns={columns}
-          paginationPerPage={7}
+          paginationPerPage={10}
           className='react-dataTable'
           sortIcon={<ChevronDown size={10} />}
           paginationDefaultPage={currentPage + 1}

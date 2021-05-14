@@ -14,14 +14,52 @@ import { useDispatch, useSelector } from 'react-redux'
 // ** Third Party Components
 import Select from 'react-select'
 import ReactPaginate from 'react-paginate'
-import { ChevronDown } from 'react-feather'
+import { ChevronDown, Share, Printer, FileText } from 'react-feather'
 import DataTable from 'react-data-table-component'
 import { selectThemeColors } from '@utils'
-import { Card, CardHeader, CardTitle, CardBody, Input, Row, Col, Label, CustomInput, Button } from 'reactstrap'
+import { Card, CardHeader, CardTitle, CardBody, UncontrolledButtonDropdown, DropdownMenu, DropdownItem, DropdownToggle, Input, Row, Col, Label, CustomInput, Button } from 'reactstrap'
 
 // ** Styles
 import '@styles/react/libs/react-select/_react-select.scss'
 import '@styles/react/libs/tables/react-dataTable-component.scss'
+import jsPDF from 'jspdf'
+import 'jspdf-autotable'
+
+// ** Table Header
+const CustomHeader = ({ downloadCSV, storeData, downloadPDF }) => {
+  return (
+    <div className='invoice-list-table-header w-100 mr-1 ml-50 mt-2 mb-75'>
+      <Row>
+        <Col
+          xl='12'
+          className='d-flex align-items-sm-center justify-content-lg-end justify-content-start flex-lg-nowrap flex-wrap flex-sm-row flex-column pr-lg-1 p-0 mt-lg-0 mt-1'
+        >
+         <UncontrolledButtonDropdown>
+              <DropdownToggle color='secondary' caret outline>
+                <Share size={15} />
+                <span className='align-middle ml-50'>Download Table</span>
+              </DropdownToggle>
+              <DropdownMenu right>
+                <DropdownItem className='w-100' onClick={() => printOrder(filteredData)}>
+                  <Printer size={15} />
+                  <span className='align-middle ml-50'>Print</span>
+                </DropdownItem>
+                <DropdownItem className='w-100' onClick={() => downloadCSV(storeData)}>
+                  <FileText size={15} />
+                  <span className='align-middle ml-50'>CSV</span>
+                </DropdownItem>
+                <DropdownItem className='w-100' onClick={() => downloadPDF()}>
+                  <FileText size={15} />
+                  <span className='align-middle ml-50'>PDF</span>
+                </DropdownItem>
+              </DropdownMenu>
+            </UncontrolledButtonDropdown>
+        </Col>
+      </Row>
+    </div>
+  )
+}
+
 
 const UsersList = () => {
   // ** Store Vars
@@ -113,7 +151,7 @@ const UsersList = () => {
   }
 
   const filteredData = store.allData.filter(
-    item => (item.email.toLowerCase() || item.first_name.toLowerCase() || item.last_name.toLowerCase())
+    item => (item.email.toLowerCase() || item.first_name.toLowerCase() || item.last_name.toLowerCase() || item.referral_code.dataToRender())
   )
 
   // ** Custom Pagination
@@ -137,6 +175,79 @@ const UsersList = () => {
         containerClassName={'pagination react-paginate justify-content-end my-2 pr-1'}
       />
     )
+  }
+
+
+   // ** Converts table to CSV
+   function convertArrayOfObjectsToCSV(array) {
+    let result
+
+    const columnDelimiter = ','
+    const lineDelimiter = '\n'
+    const keys = Object.keys(store.allData[0])
+    console.log("keyss", keys)
+
+    result = ''
+    result += keys.join(columnDelimiter)
+    result += lineDelimiter
+
+    array.forEach(item => {
+      let ctr = 0
+      keys.forEach(key => {
+        if (ctr > 0) result += columnDelimiter
+
+        result += item[key]
+
+        ctr++
+      })
+      result += lineDelimiter
+      console.log('esults', result)
+    })
+
+    return result
+  }
+
+  // ** Downloads CSV
+  function downloadCSV(array) {
+    const link = document.createElement('a')
+    let csv = convertArrayOfObjectsToCSV(array)
+    if (csv === null) return
+
+    const filename = 'export.csv'
+
+    if (!csv.match(/^data:text\/csv/i)) {
+      csv = `data:text/csv;charset=utf-8,${csv}`
+    }
+
+    link.setAttribute('href', encodeURI(csv))
+    link.setAttribute('download', filename)
+    link.click()
+  }
+
+  // download PDF
+  const downloadPDF = () => {
+    const doc = new jsPDF({
+      orientation: "landscape"
+    })
+
+    doc.autoTable({
+        styles: { halign: 'center'},
+        head: [['User', 'Email', 'Balance', 'Naira Wallet', 'Status']]
+    })
+    store.allData.map(arr => {
+      doc.autoTable({
+        styles: { halign: 'left' },
+        columnStyles: {
+          0: {cellWidth: 40},
+          1: {cellWidth: 70},
+          2: {cellWidth: 70},
+          3: {cellWidth: 60},
+          4: {cellWidth: 30}
+        },
+        body: [[(arr.names), (arr.email), (arr.balance), (arr.naira_wallet), (arr.status)]]
+      })
+    })
+    doc.save("export.pdf")
   }
 
   // ** Table data to render
@@ -239,6 +350,17 @@ const UsersList = () => {
           className='react-dataTable'
           paginationComponent={CustomPagination}
           data={dataToRender()}
+          subHeaderComponent={
+            <CustomHeader
+              handlePerPage={handlePerPage}
+              rowsPerPage={rowsPerPage}
+              searchTerm={searchTerm}
+              handleFilter={handleFilter}
+              downloadCSV={downloadCSV}
+              storeData={store.allData}
+              downloadPDF={downloadPDF}
+            />
+          }
         />
       </Card>
     </Fragment>

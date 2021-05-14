@@ -92,17 +92,17 @@ export const columns = [
   },
   {
     name: 'Email',
-    minWidth: '200px',
+    minWidth: '300px',
     selector: 'email',
     sortable: true,
     cell: row => row.email
   },
   {
-    name: 'Role',
+    name: 'Balance',
     minWidth: '80px',
-    selector: 'role',
+    selector: 'balance',
     sortable: true,
-    cell: row => renderRole(row)
+    cell: row => <span className="text-capitalize">{row.balance.toLocaleString('en-US', {style: 'currency', currency: 'NGN'})}</span>
   },
   {
     name: 'Savings',
@@ -110,6 +110,13 @@ export const columns = [
     selector: 'naira_wallet',
     sortable: true,
     cell: row => <span className='text-capitalize'>{row.naira_wallet.toLocaleString('en-US', { style: 'currency', currency: 'NGN' })}</span>
+  },
+  {
+    name: 'Refferal Code',
+    minWidth: '80px',
+    selector: 'referral_code',
+    sortable: true,
+    cell: row => row.referral_code
   },
   {
     name: 'Status',

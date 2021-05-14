@@ -7,9 +7,9 @@ import { columns } from './columns'
 
 // ** Third Party Components
 import ReactPaginate from 'react-paginate'
-import { ChevronDown } from 'react-feather'
+import { ChevronDown, Share, Printer, FileText } from 'react-feather'
 import DataTable from 'react-data-table-component'
-import { Button, Label, Input, CustomInput, Row, Col, Card } from 'reactstrap'
+import { Button, Label, Input, UncontrolledButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem, CustomInput, Row, Col, Card } from 'reactstrap'
 
 // ** Store & Actions
 import { getUserAllTransactions, getFilteredUserTransactions } from '../../store/action'
@@ -18,8 +18,11 @@ import { useDispatch, useSelector } from 'react-redux'
 // ** Styles
 import '@styles/react/apps/app-invoice.scss'
 import '@styles/react/libs/tables/react-dataTable-component.scss'
+import jsPDF from 'jspdf'
+import 'jspdf-autotable'
 
-const CustomHeader = ({ handleFilter, value, handleStatusValue, statusValue, handlePerPage, rowsPerPage }) => {
+// custom Header
+const CustomHeader = ({ handleFilter, value, handlePerPage, rowsPerPage, downloadCSV, storeData, downloadPDF }) => {
   return (
     <div className='invoice-list-table-header w-100 py-2'>
       <Row>
@@ -55,15 +58,26 @@ const CustomHeader = ({ handleFilter, value, handleStatusValue, statusValue, han
               placeholder='Search Invoice'
             />
           </div>
-          {/* <Input className='w-auto ' type='select' value={statusValue} onChange={handleStatusValue}>
-            <option value=''>Select Status</option>
-            <option value='downloaded'>Downloaded</option>
-            <option value='draft'>Draft</option>
-            <option value='paid'>Paid</option>
-            <option value='partial payment'>Partial Payment</option>
-            <option value='past due'>Past Due</option>
-            <option value='partial payment'>Partial Payment</option>
-          </Input> */}
+          <UncontrolledButtonDropdown>
+            <DropdownToggle color='secondary' caret outline>
+              <Share size={15} />
+              <span className='align-middle ml-50'>Download Table</span>
+            </DropdownToggle>
+            <DropdownMenu right>
+              <DropdownItem className='w-100' onClick={() => printOrder(filteredData)}>
+                <Printer size={15} />
+                <span className='align-middle ml-50'>Print</span>
+              </DropdownItem>
+              <DropdownItem className='w-100' onClick={() => downloadCSV(storeData)}>
+                <FileText size={15} />
+                <span className='align-middle ml-50'>CSV</span>
+              </DropdownItem>
+              <DropdownItem className='w-100' onClick={() => downloadPDF()}>
+                <FileText size={15} />
+                <span className='align-middle ml-50'>PDF</span>
+              </DropdownItem>
+            </DropdownMenu>
+          </UncontrolledButtonDropdown>
         </Col>
       </Row>
     </div>
@@ -164,6 +178,87 @@ const TransactionList = () => {
     )
   }
 
+  // ** Converts table to CSV
+  function convertArrayOfObjectsToCSV(array) {
+    let result
+
+    const columnDelimiter = ','
+    const lineDelimiter = '\n'
+    const keys = Object.keys(store.selectedUserAllTransactions[0])
+    console.log("keyss", keys)
+
+    result = ''
+    result += keys.join(columnDelimiter)
+    result += lineDelimiter
+
+    array.forEach(item => {
+      let ctr = 0
+      keys.forEach(key => {
+        if (ctr > 0) result += columnDelimiter
+
+        result += item[key]
+
+        ctr++
+      })
+      result += lineDelimiter
+      console.log('esults', result)
+    })
+
+    return result
+  }
+
+  // ** Downloads CSV
+  function downloadCSV(array) {
+    const link = document.createElement('a')
+    let csv = convertArrayOfObjectsToCSV(array)
+    if (csv === null) return
+
+    const filename = 'export.csv'
+
+    if (!csv.match(/^data:text\/csv/i)) {
+      csv = `data:text/csv;charset=utf-8,${csv}`
+    }
+
+    link.setAttribute('href', encodeURI(csv))
+    link.setAttribute('download', filename)
+    link.click()
+  }
+
+  // download PDF
+  const downloadPDF = () => {
+    const doc = new jsPDF({
+      orientation: "landscape"
+    })
+
+    doc.autoTable({
+        styles: { halign: 'center'},
+        columnStyles: {
+          0: {cellWidth: 30},
+          1: {cellWidth: 70},
+          2: {cellWidth: 30},
+          3: {cellWidth: 30},
+          4: {cellWidth: 60}
+        },
+        head: [['Id', 'Type', 'Amount', 'Balance', 'Date']]
+    })
+    store.selectedUserAllTransactions.map(arr => {
+      doc.autoTable({
+        styles: { halign: 'left' },
+        columnStyles: {
+          0: {cellWidth: 40},
+          1: {cellWidth: 70},
+          2: {cellWidth: 70},
+          3: {cellWidth: 30},
+          4: {cellWidth: 100}
+        },
+        body: [[(arr.trans_id), (arr.trans_type), (arr.trans_amount), (arr.balance), (arr.trans_date)]]
+      })
+    })
+    doc.save("export.pdf")
+  }
+
+
+  // Data to Render
   const dataToRender = () => {
     const filters = {
       status: statusValue,
@@ -205,12 +300,13 @@ const TransactionList = () => {
             data={dataToRender()}
             subHeaderComponent={
               <CustomHeader
-                value={value}
-                statusValue={statusValue}
                 rowsPerPage={rowsPerPage}
                 handleFilter={handleFilter}
                 handlePerPage={handlePerPage}
                 handleStatusValue={handleStatusValue}
+                downloadCSV={downloadCSV}
+                storeData={store.selectedUserAllTransactions}
+                downloadPDF={downloadPDF}
               />
             }
           />

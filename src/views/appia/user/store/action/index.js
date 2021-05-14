@@ -28,7 +28,7 @@ export const getFilteredData = (users, params) => {
     const queryLowered = q.toLowerCase()
     const filteredData = users.filter(
       user =>
-        (user.email.toLowerCase().includes(queryLowered) || user.names.toLowerCase().includes(queryLowered) || user.user_id.toLowerCase().includes(queryLowered)) &&
+        (user.email.toLowerCase().includes(queryLowered) || user.names.toLowerCase().includes(queryLowered) || user.user_id.toLowerCase().includes(queryLowered) || user.referral_code.toLowerCase().includes(queryLowered)) &&
         user.status === (status || user.status)
     )
     /* eslint-enable  */

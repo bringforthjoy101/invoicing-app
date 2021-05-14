@@ -67,7 +67,7 @@ export const columns = [
   // },
   {
     name: 'Type',
-    minWidth: '200px',
+    minWidth: '300px',
     selector: 'trans_type',
     sortable: true,
     cell: row => row.trans_type
@@ -78,13 +78,6 @@ export const columns = [
     sortable: true,
     minWidth: '150px',
     cell: row => <span>{(row.trans_amount || 0).toLocaleString('en-US', { style: 'currency', currency: 'NGN' })}</span>
-  },
-  {
-    name: 'Date',
-    selector: 'trans_date',
-    sortable: true,
-    minWidth: '200px',
-    cell: row => moment(row.trans_date).format('lll')
   },
   {
     name: 'Balance',
@@ -100,42 +93,12 @@ export const columns = [
         </Badge>
       )
     }
+  },
+  {
+    name: 'Date',
+    selector: 'trans_date',
+    sortable: true,
+    minWidth: '200px',
+    cell: row => moment(row.trans_date).format('lll')
   }
-  // {
-  //   name: 'Action',
-  //   minWidth: '110px',
-  //   selector: '',
-  //   sortable: true,
-  //   cell: row => (
-  //     <div className='column-action d-flex align-items-center'>
-  //       <Send size={17} />
-  //       <Link to={`/apps/invoice/preview/${row.trans_id}`}>
-  //         <Eye size={17} className='mx-1' />
-  //       </Link>
-  //       <UncontrolledDropdown>
-  //         <DropdownToggle tag='span'>
-  //           <MoreVertical size={17} className='cursor-pointer' />
-  //         </DropdownToggle>
-  //         <DropdownMenu right>
-  //           <DropdownItem tag='a' href='/' className='w-100' onClick={e => e.preventDefault()}>
-  //             <Download size={14} className='mr-50' />
-  //             <span className='align-middle'>Download</span>
-  //           </DropdownItem>
-  //           <DropdownItem tag={Link} to={`/apps/invoice/edit/${row.id}`} className='w-100'>
-  //             <Edit size={14} className='mr-50' />
-  //             <span className='align-middle'>Edit</span>
-  //           </DropdownItem>
-  //           <DropdownItem tag='a' href='/' className='w-100' onClick={e => e.preventDefault()}>
-  //             <Trash size={14} className='mr-50' />
-  //             <span className='align-middle'>Delete</span>
-  //           </DropdownItem>
-  //           <DropdownItem tag='a' href='/' className='w-100' onClick={e => e.preventDefault()}>
-  //             <Copy size={14} className='mr-50' />
-  //             <span className='align-middle'>Duplicate</span>
-  //           </DropdownItem>
-  //         </DropdownMenu>
-  //       </UncontrolledDropdown>
-  //     </div>
-  //   )
-  // }
 ]
