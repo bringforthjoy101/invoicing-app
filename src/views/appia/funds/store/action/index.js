@@ -44,6 +44,7 @@ export const reviewFunds = (log_id, action) => {
         const body = JSON.stringify({log_id})
         console.log({body})
         const response = await apiRequest({url:`/admin/fund/${action}`, method:'POST', body}, dispatch)
+        console.log({response})
         if (response && response.data.success) {
           dispatch(getAllFundsData())
           swal('Good!', `Fund was successfully ${status}`, 'success')

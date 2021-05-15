@@ -47,10 +47,9 @@ export const EditRole = ({ selectedAdmin }) => {
               >
                 {/* <option value='0'>Select Role</option> */}
                 <option value='0'>Select Role</option>
-                <option value='1'>Admin</option>
-                <option value='2'>Customer Support</option>
+                <option value='1'>Control Admin</option>
+                <option value='2'>Financial Admin</option>
                 <option value='3'>Super Admin</option>
-                <option value='4'>Control Admin</option>
               </AvInput>
             </FormGroup>
           </ModalBody>

@@ -97,10 +97,9 @@ const AdminsList = () => {
   // ** User filter options
   const roleOptions = [
     { value: '', label: 'Select Role', number: 0 },
-    { value: 'Admin', label: 'Admin', number: 1 },
-    { value: 'Customer Support', label: 'Customer Support', number: 2 },
-    { value: 'Super Admin', label: 'Super Admin', number: 3 },
-    { value: 'Control Admin', label: 'Control Admin', number: 4 }
+    { value: 'Control Admin', label: 'Control Admin', number: 1 },
+    { value: 'Financial Admin', label: 'Financial Admin', number: 2 },
+    { value: 'Super Admin', label: 'Super Admin', number: 3 }
   ]
 
   const statusOptions = [

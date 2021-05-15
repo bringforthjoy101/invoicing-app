@@ -64,10 +64,6 @@ const CustomHeader = ({ handleFilter, value, handlePerPage, rowsPerPage, downloa
               <span className='align-middle ml-50'>Download Table</span>
             </DropdownToggle>
             <DropdownMenu right>
-              <DropdownItem className='w-100' onClick={() => printOrder(filteredData)}>
-                <Printer size={15} />
-                <span className='align-middle ml-50'>Print</span>
-              </DropdownItem>
               <DropdownItem className='w-100' onClick={() => downloadCSV(storeData)}>
                 <FileText size={15} />
                 <span className='align-middle ml-50'>CSV</span>
@@ -75,6 +71,10 @@ const CustomHeader = ({ handleFilter, value, handlePerPage, rowsPerPage, downloa
               <DropdownItem className='w-100' onClick={() => downloadPDF()}>
                 <FileText size={15} />
                 <span className='align-middle ml-50'>PDF</span>
+              </DropdownItem>
+              <DropdownItem className='w-100' onClick={() => printOrder(filteredData)}>
+                <Printer size={15} />
+                <span className='align-middle ml-50'>Print</span>
               </DropdownItem>
             </DropdownMenu>
           </UncontrolledButtonDropdown>
