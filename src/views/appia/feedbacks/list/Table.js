@@ -17,12 +17,17 @@ import DataTable from 'react-data-table-component'
 import { selectThemeColors } from '@utils'
 import { Card, CardHeader, CardTitle, CardBody, Input, Row, Col, Label, CustomInput, Button } from 'reactstrap'
 
+// import Breadcrumbs from '@components/breadcrumbs'
+import '@styles/react/libs/flatpickr/flatpickr.scss'
+
+import Flatpickr from 'react-flatpickr'
+
 // ** Styles
 import '@styles/react/libs/react-select/_react-select.scss'
 import '@styles/react/libs/tables/react-dataTable-component.scss'
 
 // ** Table Header
-const CustomHeader = ({  handlePerPage, rowsPerPage, handleFilter, searchTerm }) => {
+const CustomHeader = ({ handlePerPage, rowsPerPage, handleFilter, searchTerm }) => {
   return (
     <div className='invoice-list-table-header w-100 mr-1 ml-50 mt-2 mb-75'>
       <Row>
@@ -62,8 +67,9 @@ const FeedbacksList = () => {
   const [searchTerm, setSearchTerm] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
   const [rowsPerPage, setRowsPerPage] = useState(10)
-  const [currentRole, setCurrentRole] = useState({ value: '', label: 'Select Role', number: 0})
-  const [currentStatus, setCurrentStatus] = useState({ value: '', label: 'Select Status', number: 0 })
+  const [picker, setPicker] = useState("")
+  const start = picker && Date.parse(picker[0])
+  const end = picker && Date.parse(picker[1])
 
 
   // ** Get data on mount
@@ -77,7 +83,7 @@ const FeedbacksList = () => {
       })
     )
   }, [dispatch])
-  
+
   // ** Function in get data on page change
   const handlePagination = page => {
     dispatch(
@@ -115,11 +121,23 @@ const FeedbacksList = () => {
     )
   }
 
+
+  const handleRange = date => {
+    setPicker(date)
+    dispatch(
+      getFilteredData(store.allData, {
+        page: currentPage,
+        perPage: rowsPerPage,
+        q: searchTerm
+      })
+    )
+  }
+
   const filteredData = store.allData.filter(
     item => (item.email.toLowerCase() || item.name.toLowerCase())
   )
 
-    // ** Custom Pagination
+  // ** Custom Pagination
   const CustomPagination = () => {
     const count = Math.ceil(filteredData.length / rowsPerPage)
 
@@ -148,12 +166,21 @@ const FeedbacksList = () => {
     const filters = {
       q: searchTerm
     }
+    const dateFilter = store.allData.filter((contact) => {
+      if (Date.parse(contact.created_at) >= start &&
+        Date.parse(contact.created_at) <= end) {
+        return contact
+      }
+    })
+
 
     const isFiltered = Object.keys(filters).some(function (k) {
       return filters[k].length > 0
     })
 
-    if (store.data.length > 0) {
+    if (!searchTerm && start && end) {
+      return dateFilter.slice(0, rowsPerPage)
+    } else if (store.data.length > 0) {
       return store.data
     } else if (store.data.length === 0 && isFiltered) {
       return []
@@ -171,8 +198,8 @@ const FeedbacksList = () => {
         <CardBody>
           <Row>
             <Col md="4" className="d-flex">
-            <Label className='mb-0 mt-1' for='search-invoice'>
-              Search:
+              <Label className='mb-0 mt-1' for='search-invoice'>
+                Search:
             </Label>
               <Input
                 id='search-invoice'
@@ -181,7 +208,19 @@ const FeedbacksList = () => {
                 value={searchTerm}
                 onChange={e => handleFilter(e.target.value)}
               />
-          </Col>
+            </Col>
+            <Col md='4' className="d-flex">
+              <Label className='mb-0 mt-1' for='range-picker'>Range: </Label>
+              <Flatpickr
+                value={picker}
+                id='range-picker'
+                className='form-control'
+                onChange={handleRange}
+                options={{
+                  mode: 'range'
+                }}
+              />
+            </Col>
           </Row>
         </CardBody>
       </Card>

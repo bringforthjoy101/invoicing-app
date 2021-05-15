@@ -67,7 +67,7 @@ export const columns = [
     minWidth: '138px',
     selector: 'created_at',
     sortable: true,
-    cell: row => moment(row.posted_date).format('lll')
+    cell: row => moment(row.created_at).format('lll')
   },
   {
     name: 'Actions',

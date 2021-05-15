@@ -1,10 +1,10 @@
 import axios from 'axios'
 import { paginateArray, sortCompare, apiRequest, swal } from '@utils'
-
 // ** Get all Data
 export const getAllData = () => {
   return async dispatch => {
     const response = await apiRequest({ url: '/admin/misc/contacts', method: 'GET' }, dispatch)
+    console.log({response})
     if (response) {
       if (response.data.data && response.data.success) {
         await dispatch({
@@ -24,14 +24,14 @@ export const getAllData = () => {
 // ** Get filtered data on page or row change
 export const getFilteredData = (contacts, params) => {
   return async dispatch => {
-    const { q = '', perPage = 10, page = 1, role = null } = params
+    const { q = '', perPage = 10, page = 1, role = null} = params
 
     /* eslint-disable  */
     const queryLowered = q.toLowerCase()
     const filteredData = contacts.filter(
       contact =>
         (contact.email.toLowerCase().includes(queryLowered) || contact.name.toLowerCase().includes(queryLowered))
-    )
+    ) 
     /* eslint-enable  */
 
     dispatch({

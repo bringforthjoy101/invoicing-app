@@ -21,15 +21,14 @@ export const getAllData = () => {
   }
 }
 
-export const getFilteredData = (feedbacks, params) => {
+export const getFilteredData = (subscribers, params) => {
   return async dispatch => {
-    const { q = '', perPage = 10, page = 1, status = null, created_at = ""} = params
+    const { q = '', perPage = 10, page = 1, status = null} = params
     /* eslint-disable  */
     const queryLowered = q.toLowerCase()
-    const filteredData = feedbacks.filter(
-      feedback => feedback.email.toLowerCase().includes(queryLowered, created_at) &&
-      feedback.status === (status || feedback.status) &&
-      feedback.created_at === (created_at || feedback.created_at)
+    const filteredData = subscribers.filter(
+      subscribe => (subscribe.email.toLowerCase().includes(queryLowered)) &&
+      subscribe.status === (status || subscribe.status)
       )
     /* eslint-enable  */
 
