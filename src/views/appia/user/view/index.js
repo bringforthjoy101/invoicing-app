@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 
 // ** Store & Actions
-import { getUser, getUserAllTransactions } from '../store/action'
+import { getUser, getUserAllTransactions, userDetails } from '../store/action'
 import { useSelector, useDispatch } from 'react-redux'
 
 // ** Reactstrap
@@ -33,6 +33,7 @@ const UserView = props => {
   useEffect(() => {
     dispatch(getUser(store.allData, id))
     dispatch(getUserAllTransactions(id))
+    // dispatch(userDetails(id))
   }, [dispatch])
 
   useEffect(() => {
@@ -40,6 +41,8 @@ const UserView = props => {
       setUserData(JSON.parse(localStorage.getItem('userData')))
     }
   }, [])
+
+  // console.log("strrrrrr", store.selectedUser)
 
   return store.selectedUser !== null && store.selectedUser !== undefined ? (
     <div className='app-user-view'>
