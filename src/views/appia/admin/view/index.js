@@ -44,7 +44,7 @@ const UserView = props => {
       </Row>
       <Row>
         <Col md='6'>
-          <UserTimeline data={store.adminActivities.sort((a, b) => moment(b.date).format('YYYYMMDD') - moment(a.date).format('YYYYMMDD'))} />
+          <UserTimeline selectedAdmin={store.selectedAdmin} data={store.adminActivities.sort((a, b) => moment(b.date).format('YYYYMMDD') - moment(a.date).format('YYYYMMDD'))} />
         </Col>
         <Col md='6'>
           <PermissionsTable />

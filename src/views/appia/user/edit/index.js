@@ -8,7 +8,7 @@ import AccountTab from './Account'
 import InfoTab from './Information'
 
 // ** Store & Actions
-import { getUser } from '../store/action'
+import { userDetails } from '../store/action'
 import { useSelector, useDispatch } from 'react-redux'
 
 // ** Third Party Components
@@ -30,7 +30,7 @@ const UserEdit = () => {
 
   // ** Function to get user on mount
   useEffect(() => {
-    dispatch(getUser(parseInt(id)))
+    dispatch(userDetails(parseInt(id)))
   }, [dispatch])
 
   return store.selectedUser !== null && store.selectedUser !== undefined ? (

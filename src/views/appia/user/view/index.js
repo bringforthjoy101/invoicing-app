@@ -42,7 +42,7 @@ const UserView = props => {
     }
   }, [])
 
-  // console.log("strrrrrr", store.selectedUser)
+  console.log("strrrrrr", store.selectedUser)
 
   return store.selectedUser !== null && store.selectedUser !== undefined ? (
     <div className='app-user-view'>

@@ -202,22 +202,22 @@ export const deactivateUser = (users, id) => {
 }
 
 // get users details
-// export const userDetails = (id) => {
-//   console.log("uddddf", id)
-//   return async dispatch => {
-//     const response = await apiRequest({url:`/admin/users/details/${id}`, method:'GET'}, dispatch)
-//     console.log({response})
-//     if (response && response.data.data && response.data.success) {
-//         await dispatch({
-//           type: 'USER_DETAIL',
-//           data: response.data.data
-//         })
-//     } else {
-//       console.log(response)
-//       swal('Oops!', 'Something went wrong.', 'error')
-//     }
-//   }
-// }
+export const userDetails = (id) => {
+  console.log("uddddf", id)
+  return async dispatch => {
+    const response = await apiRequest({url:`/admin/users/details/${id}`, method:'GET'}, dispatch)
+    console.log("resppppp", {response})
+    if (response) {}
+    if (response.data.success) {
+        await dispatch({
+          type: 'USER_DETAIL',
+          data: response.data.data
+        })
+    } else {
+      swal('Oops!', 'Something went wrong.', 'error')
+    }
+  }
+}
 
 //  Reset User Password
 export const passwordReset = ({user_id}) => {

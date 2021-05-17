@@ -1,12 +1,12 @@
 import { useContext, useState, useEffect } from 'react'
-import { paginateArray, sortCompare, apiRequest, swal, kFormatter, isUserLoggedIn  } from '@utils'
+import { paginateArray, sortCompare, apiRequest, swal, kFormatter, isUserLoggedIn } from '@utils'
 import { ThemeColors } from '@src/utility/context/ThemeColors'
 import AvgSessions from '@src/views/ui-elements/cards/analytics/AvgSessions'
 import UsersCountInfo from '@src/views/ui-elements/cards/analytics/UsersCountInfo'
 import AdminCountsInfo from '@src/views/ui-elements/cards/analytics/AdminCountsInfo'
 import FundsCountsInfo from '@src/views/ui-elements/cards/analytics/FundsCountsInfo'
 import { Row, Col } from 'reactstrap'
-import OrdersReceived from '@src/views/ui-elements/cards/statistics/OrdersReceived'
+import ContactsCount from '@src/views/ui-elements/cards/statistics/ContactsCountInfo'
 import CardCongratulations from '@src/views/ui-elements/cards/advance/CardCongratulations'
 import SubscribersGained from '@src/views/ui-elements/cards/statistics/SubscribersGained'
 
@@ -28,13 +28,13 @@ const AnalyticsDashboard = () => {
   }, [])
 
   // ** Get all Dashboard Data
- const dashboardData = async () => {
-  // return  => {
-    const response = await apiRequest({ url: '/admin/data', method: 'GET'})
-    console.log({response}) 
+  const dashboardData = async () => {
+    // return  => {
+    const response = await apiRequest({ url: '/admin/data', method: 'GET' })
+    console.log({ response })
     if (response) {
       if (response.data.data && response.data.success) {
-         await setDashData(response.data.data)
+        await setDashData(response.data.data)
       } else {
         console.log(response.error)
       }
@@ -42,31 +42,31 @@ const AnalyticsDashboard = () => {
       swal('Oops!', 'Somthing went wrong with your network.', 'error')
     }
 
-  // }
-}
+    // }
+  }
 
-    // ** Get admin activities
-    useEffect(() => {
-     dashboardData()
-    }, [])
+  // ** Get admin activities
+  useEffect(() => {
+    dashboardData()
+  }, [])
 
-    console.log("dashhhh", dashData)
- 
+  console.log("dashhhh", dashData)
+
   return (
     <div id='dashboard-analytics'>
       <Row className='match-height'>
         <Col lg='6' sm='12'>
           <CardCongratulations userData={userData} />
         </Col>
-        <Col lg='6' sm='12'>
+        <Col lg='3' sm='6'>
           <SubscribersGained kFormatter={kFormatter} dashData={dashData} />
         </Col>
-        {/* <Col lg='3' sm='6'>
-          <OrdersReceived kFormatter={kFormatter} warning={colors.warning.main} />
-        </Col> */}
+        <Col lg='3' sm='6'>
+          <ContactsCount kFormatter={kFormatter} warning={colors.warning.main} dashData={dashData} />
+        </Col>
       </Row>
       <Row className='match-height'>
-      <Col lg='6' xs='12'>
+        <Col lg='6' xs='12'>
           <UsersCountInfo primary={colors.primary.main} danger={colors.danger.main} dashData={dashData} />
         </Col>
         <Col lg='6' xs='12'>

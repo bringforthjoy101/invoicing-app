@@ -46,7 +46,7 @@ const data = [
   }
 ]
 
-const UserTimeline = ({data}) => {
+const UserTimeline = ({data, selectedAdmin}) => {
   const activityData = []
   data.forEach(activity => {
     activityData.push({
@@ -55,7 +55,7 @@ const UserTimeline = ({data}) => {
       meta: moment(activity.date).fromNow(),
       customContent: (
         <Media className='align-items-center'>
-          <Avatar color={'primary'} className='mr-1' content={activity.name || 'Appia Admin'} initials />
+          <Avatar color={'primary'} className='mr-1' content={`${selectedAdmin.first_name} ${selectedAdmin.last_name}`  || 'Appia Admin'} initials />
           <Media className='ml-50' body>
             <h6 className='mb-0'>{activity.name}</h6>
             {/* <span>CEO of Infibeam</span> */}
@@ -68,7 +68,7 @@ const UserTimeline = ({data}) => {
     <Card>
       <CardHeader>
         <CardTitle tag='h4' className='mb-2'>
-          User Timeline
+          Admin Timeline
         </CardTitle>
       </CardHeader>
       <CardBody className="overflow-auto" style={{ maxHeight: "350px" }}>
