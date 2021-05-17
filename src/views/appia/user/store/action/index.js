@@ -68,7 +68,6 @@ export const getUser = (users, id) => {
   }
 }
 
-
 // Get data
 
 export const getUserAllTransactions = (user_id) => {
@@ -199,5 +198,41 @@ export const deactivateUser = (users, id) => {
         swal('Oops!', 'Something went wrong with your network.', 'error')
       }
       
+  }
+}
+
+// get users details
+export const userDetails = (users, id) => {
+  const user = users.find(i => i.user_id === id)
+  console.log("uddddf", users)
+  return async dispatch => {
+    const response = await apiRequest({url:`/admin/users/details/${user.user_id}`, method:'GET'}, dispatch)
+    console.log({response})
+    if (response && response.data.data && response.data.success) {
+        await dispatch({
+          type: 'USER_DETAIL',
+          data: response.data.data
+        })
+    } else {
+      console.log(response)
+      swal('Oops!', 'Something went wrong.', 'error')
+    }
+  }
+}
+
+
+export const passwordReset = ({user_id}) => {
+  console.log("iuss", user_id)
+  return async dispatch => {
+    const body = JSON.stringify({user_id})
+    console.log(user_id)
+    const response = await apiRequest({url:`/admin/users/reset/`, method:'POST', body}, dispatch)
+    console.log("resss", {response})
+    if (response && response.data.success) {
+      swal('Good!', `User password reset Sucessfully.`, 'success')
+    } else {
+      console.log(response)
+      swal('Oops!', 'Somthing went wrong with your network.', 'error')
+    }
   }
 }

@@ -3,7 +3,7 @@ import axios from 'axios'
 import { Users } from 'react-feather'
 import StatsWithAreaChart from '@components/widgets/stats/StatsWithAreaChart'
 
-const SubscribersGained = ({ kFormatter }) => {
+const SubscribersGained = ({ kFormatter, dashData}) => {
   const [data, setData] = useState(null)
 
   useEffect(() => {
@@ -14,7 +14,7 @@ const SubscribersGained = ({ kFormatter }) => {
     <StatsWithAreaChart
       icon={<Users size={21} />}
       color='primary'
-      stats={kFormatter(data.analyticsData.subscribers)}
+      stats={kFormatter(dashData?.subscribers?.registered_subscribers)}
       statTitle='Subscribers Gained'
       series={data.series}
       type='area'

@@ -67,6 +67,7 @@ const ContactsList = () => {
   const [currentPage, setCurrentPage] = useState(1)
   const [rowsPerPage, setRowsPerPage] = useState(10)
   const [picker, setPicker] = useState("")
+  
   const start = picker && Date.parse(picker[0])
   const end = picker && Date.parse(picker[1])
 
@@ -138,7 +139,6 @@ const ContactsList = () => {
   // ** Custom Pagination
   const CustomPagination = () => {
     const count = Math.ceil(filteredData.length / rowsPerPage)
-
     return (
       <ReactPaginate
         previousLabel={''}
@@ -183,7 +183,7 @@ const ContactsList = () => {
     } else if (store.data.length === 0 && isFiltered) {
       return []
     } else {
-      return store.allData.slice(0, rowsPerPage)
+      return store.data.slice(0, rowsPerPage)
     }
   }
 

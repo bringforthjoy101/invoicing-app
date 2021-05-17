@@ -2,7 +2,7 @@
 import { Card, CardHeader, CardBody, Badge, UncontrolledTooltip, Button } from 'reactstrap'
 
 import { activateUser, deactivateUser } from '../store/action'
-import {AddFunds, DeductFunds} from './AddFunds'
+import {AddFunds, DeductFunds, PasswordReset} from './AddFunds'
 import { store } from '@store/storeConfig/store'
 
 
@@ -32,6 +32,7 @@ const PlanCard = ({ selectedUser, userData }) => {
         }
         <AddFunds userId={selectedUser.user_id} userData={userData} />
         <DeductFunds userId={selectedUser.user_id} userData={userData} />
+        <PasswordReset userId={selectedUser.user_id} userData={userData} />
       </CardBody>
     </Card>
   )

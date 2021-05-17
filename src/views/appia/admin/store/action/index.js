@@ -1,5 +1,4 @@
-import axios from 'axios'
-import { paginateArray, sortCompare, apiRequest, swal } from '@utils'
+
 
 // ** Get all Data
 export const getAllData = () => {

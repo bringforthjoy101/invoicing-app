@@ -4,7 +4,6 @@ import { Fragment, useState, useEffect } from 'react'
 
 // ** Columns
 import { columns } from './columns'
-import Flatpickr from 'react-flatpickr'
 
 // ** Store & Actions
 import { getAllData, getFilteredData } from '../store/action'
@@ -68,8 +67,6 @@ const ContactsList = () => {
   const [rowsPerPage, setRowsPerPage] = useState(10)
   const [currentStatus, setCurrentStatus] = useState({ value: '', label: 'Select Status', number: 0 })
   const [picker, setPicker] = useState("")
-  const start = picker && Date.parse(picker[0])
-  const end = picker && Date.parse(picker[1])
 
   // ** Get data on mount
   useEffect(() => {
@@ -131,17 +128,6 @@ const ContactsList = () => {
     )
   }
 
-  const handleRange = date => {
-    setPicker(date)
-    dispatch(
-      getFilteredData(store.allData, {
-        page: currentPage,
-        perPage: rowsPerPage,
-        q: searchTerm
-      })
-    )
-   }
-
 
   const filteredData = store.allData.filter(
     item => (item.email.toLowerCase() || item.created_at.toLowerCase())
@@ -177,21 +163,12 @@ const ContactsList = () => {
       status: currentStatus.value,
       q: searchTerm
     }
-    const dateFilter = store.allData.filter((feedback) => {
-      if (Date.parse(feedback.created_at) >= start &&
-         Date.parse(feedback.created_at) <= end) {
-         return feedback
-       }
-   })
-
  
    const isFiltered = Object.keys(filters).some(function (k) {
      return filters[k].length > 0
    })
 
-   if (!searchTerm  && !currentStatus.value && start && end) {
-     return dateFilter.slice(0, rowsPerPage)
-   } else if (store.data.length > 0) {
+    if (store.data.length > 0) {
       return store.data
     } else if (store.data.length === 0 && isFiltered) {
       return []
@@ -208,18 +185,6 @@ const ContactsList = () => {
         </CardHeader>
         <CardBody>
           <Row>
-          <Col md='4' className="d-flex mb-2">
-              <Label className='mb-0 mt-1' for='range-picker'>Range: </Label>
-              <Flatpickr
-                value={picker}
-                id='range-picker'
-                className='form-control'
-                onChange={handleRange}
-                options={{
-                  mode: 'range'
-                }}
-              />
-            </Col>
             <Col md='4'>
               <Select
                 theme={selectThemeColors}

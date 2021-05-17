@@ -2,7 +2,7 @@
 // import apps from './apps'
 import appia from './appia'
 // import pages from './pages'
-import forms from './forms'
+// import forms from './forms'
 // import tables from './tables'
 // import others from './others'
 import dashboards from './dashboards'
@@ -10,5 +10,5 @@ import dashboards from './dashboards'
 // import chartsAndMaps from './charts-maps'
 
 // ** Merge & Export
-export default [...dashboards, ...appia, ...forms]
+export default [...dashboards, ...appia]
     // ...pages, ...uiElements, ...forms, ...tables, ...chartsAndMaps, ...others]
