@@ -6,7 +6,7 @@ export default [
   },
   {
     id: 'appiaUsers',
-    title: 'User',
+    title: 'Users',
     icon: <User size={20} />,
     navLink: '/appia/user/list'
     // children: [
@@ -26,7 +26,7 @@ export default [
   },
   {
     id: 'admins',
-    title: 'Admin',
+    title: 'Admins',
     icon: <User size={20} />,
     navLink: '/appia/admin/list'
   },
