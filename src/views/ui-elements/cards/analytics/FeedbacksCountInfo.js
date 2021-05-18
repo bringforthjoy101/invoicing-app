@@ -14,9 +14,10 @@ import {
   Col
 } from 'reactstrap'
 import Chart from 'react-apexcharts'
-import { Users } from 'react-feather'
+import { ThumbsUp } from 'react-feather'
 
-const usersCount = props => {
+
+const FeedbacksCount = props => {
   const { dashData } = props
   const [data, setData] = useState(null)
 
@@ -71,21 +72,21 @@ const usersCount = props => {
       stroke: {
         dashArray: 8
       },
-      labels: ['Unverified Users']
+      labels: ['All feedbacks']
     },
-    series = [unverified]
+    series = [0]
 
   return dashData !== "" ? (
     <Card>
       <CardHeader className='pb-0'>
-        <CardTitle tag='h4'>Users</CardTitle>
-        <Users size={20} />
+        <CardTitle tag='h4'>Feedbacks</CardTitle>
+        <ThumbsUp size={20} />
       </CardHeader>
       <CardBody>
         <Row>
           <Col sm='2' className='d-flex flex-column flex-wrap text-center'>
-            <h1 className='font-large-2 font-weight-bolder mt-2 mb-0'>{dashData?.users?.registered_users}</h1>
-            <CardText>All Users</CardText>
+            <h1 className='font-large-2 font-weight-bolder mt-2 mb-0'>{dashData?.feedbacks}</h1>
+            <CardText>All Feedbacks</CardText>
           </Col>
           <Col sm='10' className='d-flex justify-content-center'>
             <Chart options={options} series={series} type='radialBar' height={270} id='support-tracker-card' />
@@ -93,20 +94,16 @@ const usersCount = props => {
         </Row>
         <div className='d-flex justify-content-between mt-1'>
           <div className='text-center'>
-            <CardText className='mb-50'>Active Users</CardText>
-            <span className='font-large-1 font-weight-bold'>{dashData?.users?.active_users}</span>
+            <CardText className='mb-50'>Feature</CardText>
+            <span className='font-large-1 font-weight-bold'>{dashData ? dashData?.feedbacks : "0"}</span>
           </div>
           <div className='text-center'>
-            <CardText className='mb-50'>Inactive Users</CardText>
-            <span className='font-large-1 font-weight-bold'>{dashData?.users?.inactive_users}</span>
+            <CardText className='mb-50'>Feature</CardText>
+            <span className='font-large-1 font-weight-bold'>{dashData ? dashData?.feedbacks : "0"}</span>
           </div>
-          {/* <div className='text-center'>
-            <CardText className='mb-50'>Pending Users</CardText>
-            <span className='font-large-1 font-weight-bold'>{dashData?.users?.pending_users}</span>
-          </div> */}
         </div>
       </CardBody>
     </Card>
   ) : null
 }
-export default usersCount
+export default FeedbacksCount

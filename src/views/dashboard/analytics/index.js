@@ -5,6 +5,7 @@ import AvgSessions from '@src/views/ui-elements/cards/analytics/AvgSessions'
 import UsersCountInfo from '@src/views/ui-elements/cards/analytics/UsersCountInfo'
 import AdminCountsInfo from '@src/views/ui-elements/cards/analytics/AdminCountsInfo'
 import FundsCountsInfo from '@src/views/ui-elements/cards/analytics/FundsCountsInfo'
+import FeedbacksCountsInfo from '@src/views/ui-elements/cards/analytics/FeedbacksCountInfo'
 import { Row, Col } from 'reactstrap'
 import ContactsCount from '@src/views/ui-elements/cards/statistics/ContactsCountInfo'
 import CardCongratulations from '@src/views/ui-elements/cards/advance/CardCongratulations'
@@ -74,6 +75,9 @@ const AnalyticsDashboard = () => {
         </Col>
         <Col lg='6' xs='12'>
           <FundsCountsInfo primary={colors.primary.main} danger={colors.danger.main} dashData={dashData} />
+        </Col>
+        <Col lg='6' xs='12'>
+          <FeedbacksCountsInfo primary={colors.primary.main} danger={colors.danger.main} dashData={dashData} />
         </Col>
       </Row>
     </div>

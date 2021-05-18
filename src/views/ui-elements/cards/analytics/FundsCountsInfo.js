@@ -14,7 +14,7 @@ import {
   Col
 } from 'reactstrap'
 import Chart from 'react-apexcharts'
-
+import { List } from 'react-feather'
 const fundCount = props => {
   const { dashData } = props
   const [data, setData] = useState(null)
@@ -77,7 +77,8 @@ const fundCount = props => {
   return dashData !== "" ? (
     <Card>
       <CardHeader className='pb-0'>
-        <CardTitle tag='h4'>Fund Requests</CardTitle>
+        <CardTitle tag='h4'>Fund Requests</CardTitle>\
+        <List size={20} />
       </CardHeader>
       <CardBody>
         <Row>

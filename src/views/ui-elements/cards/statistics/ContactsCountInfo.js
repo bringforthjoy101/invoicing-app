@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
-import { Package } from 'react-feather'
+import { Mail } from 'react-feather'
 import StatsWithAreaChart from '@components/widgets/stats/StatsWithAreaChart'
 
 const ContactsCount = ({ kFormatter, warning, dashData }) => {
@@ -61,7 +61,7 @@ const ContactsCount = ({ kFormatter, warning, dashData }) => {
 
   return data !== null ? (
     <StatsWithAreaChart
-      icon={<Package size={21} />}
+      icon={<Mail size={21} />}
       color='warning'
       stats={kFormatter(dashData.contacts)}
       statTitle='Contact Messages'

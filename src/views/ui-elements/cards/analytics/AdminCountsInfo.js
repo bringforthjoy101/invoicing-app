@@ -14,6 +14,7 @@ import {
   Col
 } from 'reactstrap'
 import Chart from 'react-apexcharts'
+import { Users } from 'react-feather'
 
 const adminsCount = props => {
   const { dashData } = props
@@ -78,6 +79,7 @@ const adminsCount = props => {
     <Card>
       <CardHeader className='pb-0'>
         <CardTitle tag='h4'>Admins</CardTitle>
+        <Users size={20} />
       </CardHeader>
       <CardBody>
         <Row>
