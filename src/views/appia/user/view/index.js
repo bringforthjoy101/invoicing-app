@@ -14,7 +14,7 @@ import PlanCard from './PlanCard'
 import UserInfoCard from './UserInfoCard'
 import UserTimeline from './UserTimeline'
 import TransactionList from './Transactions'
-import { isUserLoggedIn } from '@utils'
+import { isUserLoggedIn, apiRequest, swal } from '@utils'
 import PermissionsTable from './PermissionsTable'
 
 // ** Styles
@@ -27,14 +27,30 @@ const UserView = props => {
     { id } = useParams()
 
   const [userData, setUserData] = useState(null)
+  const [detail, setDetail] = useState(null)
 
+  // get users details
+const userDetails = async(id) => {
+  console.log("uddddf", id)
+  // return async dispatch => {
+   const response = await apiRequest({url:`/admin/users/details/${id}`, method:'GET'}, dispatch)
+    console.log("detll", response.data)
+    if (response && response.data.success) {
+        await setDetail(response.data)
+    } else {
+      // console.log(response)
+      swal('Oops!', 'Something went wrong.', 'error')
+    }
+  // }
+}
 
   // ** Get user on mount
   useEffect(() => {
     dispatch(getUser(store.allData, id))
     dispatch(getUserAllTransactions(id))
-    // dispatch(userDetails(id))
+    userDetails(id)
   }, [dispatch])
+
 
   useEffect(() => {
     if (isUserLoggedIn() !== null) {
@@ -42,13 +58,12 @@ const UserView = props => {
     }
   }, [])
 
-  console.log("strrrrrr", store.selectedUser)
 
   return store.selectedUser !== null && store.selectedUser !== undefined ? (
     <div className='app-user-view'>
       <Row>
         <Col xl='9' lg='8' md='7'>
-          <UserInfoCard selectedUser={store.selectedUser} />
+          <UserInfoCard selectedUser={store.selectedUser} detail={detail} />
         </Col>
         <Col xl='3' lg='4' md='5'>
           <PlanCard selectedUser={store.selectedUser} userData={userData} />

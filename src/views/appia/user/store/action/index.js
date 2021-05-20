@@ -7,7 +7,7 @@ export const apiUrl = process.env.REACT_APP_API_ENDPOINT
 export const getAllData = () => {
   return async dispatch => {
     const response = await apiRequest({url:'/admin/users', method:'GET'}, dispatch)
-    console.log({response})
+    console.log("reeeee", {response})
     if (response && response.data.data && response.data.success) {
         await dispatch({
           type: 'GET_ALL_DATA',
@@ -58,7 +58,6 @@ export const getData = params => {
 
 //  Get User
 export const getUser = (users, id) => {
-  console.log({users})
   return async dispatch => {
     const user = users.find(i => i.user_id === id)
     dispatch({
@@ -74,7 +73,6 @@ export const getUserAllTransactions = (user_id) => {
   return async dispatch => {
     const body = JSON.stringify({user_id})
     const response = await apiRequest({url:'/admin/users/transactions/all', method:'POST', body}, dispatch)
-    console.log({response})
     if (response && response.data.data && response.data.success) {
         await dispatch({
           type: 'GET_USER_ALL_TRANSACTIONS',
@@ -93,7 +91,7 @@ export const getFilteredUserTransactions = (userTransactions, params) => {
       /* eslint-enable */
 
       const queryLowered = q.toLowerCase()
-      console.log({userTransactions}, typeof userTransactions)
+      // console.log({userTransactions}, typeof userTransactions)
       const filteredData = userTransactions.filter(
           transaction => {
             let found = false
@@ -198,24 +196,6 @@ export const deactivateUser = (users, id) => {
         swal('Oops!', 'Something went wrong with your network.', 'error')
       }
       
-  }
-}
-
-// get users details
-export const userDetails = (id) => {
-  console.log("uddddf", id)
-  return async dispatch => {
-    const response = await apiRequest({url:`/admin/users/details/${id}`, method:'GET'}, dispatch)
-    console.log("resppppp", {response})
-    if (response) {}
-    if (response.data.success) {
-        await dispatch({
-          type: 'USER_DETAIL',
-          data: response.data.data
-        })
-    } else {
-      swal('Oops!', 'Something went wrong.', 'error')
-    }
   }
 }
 

@@ -7,8 +7,9 @@ import Avatar from '@components/avatar'
 // ** Third Party Components
 import { Card, CardBody, CardText, Button, Row, Col } from 'reactstrap'
 import { Pocket, DollarSign, TrendingUp, User, Check, Star, Flag, Phone } from 'react-feather'
+import CardTitle from 'reactstrap/lib/CardTitle'
 
-const UserInfoCard = ({ selectedUser }) => {
+const UserInfoCard = ({ selectedUser, detail }) => {
   // ** render user img
   const renderUserImg = () => {
     if (selectedUser !== null && selectedUser.avatar) {
@@ -111,24 +112,38 @@ const UserInfoCard = ({ selectedUser }) => {
                 <CardText className='text-capitalize mb-0'>
                   {selectedUser !== null ? selectedUser.role || 'User' : 'User'}
                 </CardText>
+              </div> 
+              <div className='d-flex flex-wrap align-items-end mt-2 mb-0'>
+              <div className='user-info-title'>
+                <CardTitle>Bank Details: </CardTitle>
               </div>
-              <div className='d-flex flex-wrap align-items-center my-50'>
+              </div>
+              <div className='d-flex flex-wrap align-items-center mt-0'>
                 <div className='user-info-title'>
                   <Flag className='mr-1' size={14} />
                   <CardText tag='span' className='user-info-title font-weight-bold mb-0'>
-                    Country
+                    Account Name
                   </CardText>
                 </div>
-                <CardText className='mb-0'>{selectedUser !== null ? selectedUser.country : 'England'}</CardText>
+                <CardText className='mb-0'>{detail?.user_providus_details?.account_name}</CardText>
               </div>
-              <div className='d-flex flex-wrap align-items-center'>
+              <div className='d-flex flex-wrap align-items-center mt-1'>
+                <div className='user-info-title'>
+                  <Flag className='mr-1' size={14} />
+                  <CardText tag='span' className='user-info-title font-weight-bold mb-0'>
+                    Account Number
+                  </CardText>
+                </div>
+                <CardText className='mb-0'>{detail ? detail?.user_providus_details?.account_number : detail?.user_bank_details}</CardText>
+              </div>
+              <div className='d-flex flex-wrap align-items-center mt-1'>
                 <div className='user-info-title'>
                   <Phone className='mr-1' size={14} />
                   <CardText tag='span' className='user-info-title font-weight-bold mb-0'>
-                    Contact
+                    Bank Name
                   </CardText>
                 </div>
-                <CardText className='mb-0'>{selectedUser !== null ? selectedUser.contact : '(123) 456-7890'}</CardText>
+                <CardText className='mb-0'>{detail?.user_providus_details?.bank_name}</CardText>
               </div>
             </div>
           </Col>
