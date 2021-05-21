@@ -4,30 +4,29 @@ import { useParams, Link } from 'react-router-dom'
 import moment from 'moment'
 
 // ** Store & Actions
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 
 // ** Reactstrap
 import { Row, Col, Alert } from 'reactstrap'
 
 // ** User View Components
 import PlanCard from './PlanCard'
-import ContactInfoCard from './ContactInfoCard'
+import FeedbackInfoCard from './FeedbackInfoCard'
 // import InvoiceList from '../../invoice/list'
 
 // ** Styles
 import '@styles/react/apps/app-users.scss'
 
-const ContactView = props => {
+const FeedbackView = props => {
   // ** Vars
   const store = useSelector(state => state.appiaContacts),
     { id } = useParams()
-
 
   return store.selectedContact !== null && store.selectedContact !== undefined ? (
     <div className='app-user-view'>
       <Row>
         <Col xl='9' lg='8' md='7'>
-          <ContactInfoCard selectedContact={store.selectedContact} />
+          <FeedbackInfoCard selectedContact={store.selectedContact} />
         </Col>
         <Col xl='3' lg='4' md='5'>
           <PlanCard selectedContact={store.selectedContact} />
@@ -43,4 +42,4 @@ const ContactView = props => {
     </Alert>
   )
 }
-export default ContactView
+export default FeedbackView

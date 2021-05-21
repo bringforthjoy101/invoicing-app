@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom'
 
 // ** Custom Components
 import Avatar from '@components/avatar'
-import moment from 'moment'
 
 // ** Store & Actions
 import { getContact } from '../store/action'
 import { store } from '@store/storeConfig/store'
+import moment from 'moment'
 
 // ** Third Party Components
 import { Badge, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
@@ -37,7 +37,7 @@ export const columns = [
         {renderClient(row)}
         <div className='d-flex flex-column'>
           <Link
-            to={`/appia/contacts/view/${row.id}`}
+            to={`/appia/feedbacks/view/${row.id}`}
             className='user-name text-truncate mb-0'
             onClick={() => store.dispatch(getContact(store.getState().appiaContacts.allData, row.id))}
           >
@@ -58,16 +58,16 @@ export const columns = [
   {
     name: 'Subject',
     minWidth: '172px',
-    selector: 'subject',
+    selector: 'feature',
     sortable: true,
-    cell: row => row.subject
+    cell: row => row.feature
   },
   {
     name: 'Date',
     minWidth: '138px',
     selector: 'created_at',
     sortable: true,
-    cell: row => moment(row.created_at).format('lll')
+    cell: row => moment(row.posted_date).format('lll')
   },
   {
     name: 'Actions',
@@ -84,7 +84,7 @@ export const columns = [
             tag={Link}
             to={`/appia/admin/view/${row.admin_id}`}
             className='w-100'
-            onClick={() => store.dispatch(getContact(store.getState().appiaContacts.allData, row.admin_id))}
+            onClick={() => store.dispatch(getFeedback(store.getState().appiaContacts.allData, row.admin_id))}
           >
             <FileText size={14} className='mr-50' />
             <span className='align-middle'>Details</span>
@@ -93,7 +93,7 @@ export const columns = [
             tag={Link}
             to={`/appia/admin/edit/${row.id}`}
             className='w-100'
-            onClick={() => store.dispatch(getContact(store.getState().appiaAdmins.allData, row.admin_id))}
+            onClick={() => store.dispatch(getFeedback(store.getState().appiaContacts.allData, row.admin_id))}
           >
             <Archive size={14} className='mr-50' />
             <span className='align-middle'>Edit</span>

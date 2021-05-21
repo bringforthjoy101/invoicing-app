@@ -1,10 +1,10 @@
 import axios from 'axios'
 import { paginateArray, sortCompare, apiRequest, swal } from '@utils'
+
 // ** Get all Data
 export const getAllData = () => {
   return async dispatch => {
     const response = await apiRequest({ url: '/admin/misc/contacts', method: 'GET' }, dispatch)
-    console.log({response})
     if (response) {
       if (response.data.data && response.data.success) {
         await dispatch({
@@ -29,9 +29,9 @@ export const getFilteredData = (contacts, params) => {
     /* eslint-disable  */
     const queryLowered = q.toLowerCase()
     const filteredData = contacts.filter(
-      contact =>
-        (contact.email.toLowerCase().includes(queryLowered) || contact.name.toLowerCase().includes(queryLowered))
-    ) 
+      feedback =>
+        (contact.email.toLowerCase().includes(queryLowered) || feedback.contact.toLowerCase().includes(queryLowered))
+    )
     /* eslint-enable  */
 
     dispatch({
@@ -53,3 +53,4 @@ export const getContact = (contacts, id) => {
     })
   }
 }
+

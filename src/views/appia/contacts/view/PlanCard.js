@@ -2,17 +2,7 @@ import { useState } from 'react'
 // ** Reactstrap
 import { Card, CardHeader, CardBody, Badge, UncontrolledTooltip, Button } from 'reactstrap'
 
-import { activateAdmin, deactivateAdmin } from '../store/action'
-import { store } from '@store/storeConfig/store'
-
-
-const PlanCard = ({ selectedContact }) => {
-
-  // state
-  const [toggleButton, setToggleButton] = useState(false)
-
-  // ** Function to toggle sidebar
-  const openButton = () => setToggleButton(!toggleButton)
+const PlanCard = ({ selectedFeedback }) => {
 
   return (
     <Card className='plan-card border-primary'>
@@ -20,12 +10,12 @@ const PlanCard = ({ selectedContact }) => {
         <h5 className='mb-0'>Actions</h5>
       </CardHeader>
       {/* <CardBody>
-        {selectedContact.status === "Active" ? <Button.Ripple className='text-center mb-1' color= 'danger'  block onClick={() => { store.dispatch(deactivateAdmin(store.getState().appiaAdmins.allData, selectedContact.admin_id)) }}> Deactivate Admin</Button.Ripple> : <Button.Ripple 
+        {selectedFeedback.status === "Active" ? <Button.Ripple className='text-center mb-1' color= 'danger'  block onClick={() => { store.dispatch(deactivateAdmin(store.getState().appiaAdmins.allData, selectedFeedback.admin_id)) }}> Deactivate Admin</Button.Ripple> : <Button.Ripple 
 
          className='text-center mb-1' 
          color='success'
          block
-         onClick={() => { store.dispatch(activateAdmin(store.getState().appiaAdmins.allData, selectedContact.admin_id)) }}
+         onClick={() => { store.dispatch(activateAdmin(store.getState().appiaAdmins.allData, selectedFeedback.admin_id)) }}
        >
          Activate Admin
        </Button.Ripple>

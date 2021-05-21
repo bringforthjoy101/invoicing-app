@@ -4,11 +4,12 @@ import { Link } from 'react-router-dom'
 // ** Custom Components
 import Avatar from '@components/avatar'
 import moment from 'moment'
+
 // ** Third Party Components
 import { Card, CardBody, CardText, Button, Row, Col } from 'reactstrap'
 import { DollarSign, TrendingUp, User, Check, Star, Flag, Phone } from 'react-feather'
 
-const ContactInfoCard = ({ selectedContact }) => {
+const FeedbackInfoCard = ({ selectedContact }) => {
   // ** render user img
 
   const renderUserImg = () => {
@@ -44,13 +45,13 @@ const ContactInfoCard = ({ selectedContact }) => {
       <CardBody>
         <Row className='my-2'>
           <Col className='d-flex align-items-center justify-content-center mb-2 mb-md-0' md='5' xs='12'>
-            <div className='d-flex align-items-center justify-content-center'>
+            <div className='d-flex justify-content-start'>
               {renderUserImg()}
             </div>
           </Col>
           <div className='d-flex flex-column ml-1'>
-            <Col md='12' xs='12'>
-              <h4>Full Name: { selectedContact !== null ? `${selectedContact.name}` : 'Appia Admin'}</h4>
+            <Col>
+            <h4>Full Name: { selectedContact !== null ? `${selectedContact.name}` : 'Appia Admin'}</h4>
               <CardText className="mt-1">
                 Email: { selectedContact !== null ? selectedContact.email : 'appia.admin@appiawave.com'}
               </CardText>
@@ -58,7 +59,7 @@ const ContactInfoCard = ({ selectedContact }) => {
               <hr />
               <div className="d-flex">
                 <h6>
-                  Subject: <span>{selectedContact.subject}</span>
+                  Feature: <span>{selectedContact.feature}</span>
                 </h6>
                 <h6 className="ml-5">Date <span>{moment(selectedContact.created_at).format('lll')}</span></h6>
               </div>
@@ -72,4 +73,4 @@ const ContactInfoCard = ({ selectedContact }) => {
   )
 }
 
-export default ContactInfoCard
+export default FeedbackInfoCard

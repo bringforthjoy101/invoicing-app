@@ -134,7 +134,7 @@ const UserInfoCard = ({ selectedUser, detail }) => {
                     Account Number
                   </CardText>
                 </div>
-                <CardText className='mb-0'>{detail ? detail?.user_providus_details?.account_number : detail?.user_bank_details}</CardText>
+                <CardText className='mb-0'>{detail?.user_providus_details?.account_number}</CardText>
               </div>
               <div className='d-flex flex-wrap align-items-center mt-1'>
                 <div className='user-info-title'>

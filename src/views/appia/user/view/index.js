@@ -31,10 +31,8 @@ const UserView = props => {
 
   // get users details
 const userDetails = async(id) => {
-  console.log("uddddf", id)
   // return async dispatch => {
    const response = await apiRequest({url:`/admin/users/details/${id}`, method:'GET'}, dispatch)
-    console.log("detll", response.data)
     if (response && response.data.success) {
         await setDetail(response.data)
     } else {
