@@ -179,8 +179,6 @@ const DataTableWithButtons = () => {
     dispatch(getAllFundsData())
   }, [dispatch])
 
-  // ** Function to handle Modal toggle
-  const handleModal = () => setModal(!modal)
 
   // ** Function to handle filter
   const handleFilter = e => {
@@ -295,8 +293,6 @@ const DataTableWithButtons = () => {
     return result
   }
 
-
-  console.log("dttt", store.allData)
   // ** Downloads CSV
   function downloadCSV(array) {
     const link = document.createElement('a')

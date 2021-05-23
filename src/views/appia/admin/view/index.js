@@ -1,11 +1,12 @@
 // ** React Imports
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import moment from 'moment'
 
 // ** Store & Actions
 import { getAdmin, getAdminActivity } from '../store/action'
 import { useSelector, useDispatch } from 'react-redux'
+import { isUserLoggedIn } from '@utils'
 
 // ** Reactstrap
 import { Row, Col, Alert } from 'reactstrap'
@@ -26,30 +27,37 @@ const UserView = props => {
     dispatch = useDispatch(),
     { id } = useParams()
 
+  const [userData, setUserData] = useState(null)
+
+  useEffect(() => {
+    if (isUserLoggedIn() !== null) {
+      setUserData(JSON.parse(localStorage.getItem('userData')))
+    }
+  }, [])
   // ** Get suer on mount
   useEffect(() => {
     dispatch(getAdmin(store.allData, id))
     dispatch(getAdminActivity(id))
   }, [dispatch])
-  
+
   return store.selectedAdmin !== null && store.selectedAdmin !== undefined ? (
     <div className='app-user-view'>
       <Row>
         <Col xl='9' lg='8' md='7'>
           <UserInfoCard selectedAdmin={store.selectedAdmin} />
         </Col>
-        <Col xl='3' lg='4' md='5'>
+        {userData?.role_name === "Super Admin" ? <Col xl='3' lg='4' md='5'>
           <PlanCard selectedAdmin={store.selectedAdmin} />
-        </Col>
+        </Col> : ""}
       </Row>
-      <Row>
+      {userData?.role_name === "Super Admin" ? <Row>
         <Col md='6'>
           <UserTimeline selectedAdmin={store.selectedAdmin} data={store.adminActivities.sort((a, b) => moment(b.date).format('YYYYMMDD') - moment(a.date).format('YYYYMMDD'))} />
         </Col>
         <Col md='6'>
           <PermissionsTable />
         </Col>
-      </Row>
+      </Row> : ""}
     </div>
   ) : (
     <Alert color='danger'>

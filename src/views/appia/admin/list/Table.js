@@ -16,7 +16,7 @@ import Select from 'react-select'
 import ReactPaginate from 'react-paginate'
 import { ChevronDown } from 'react-feather'
 import DataTable from 'react-data-table-component'
-import { selectThemeColors } from '@utils'
+import { selectThemeColors, isUserLoggedIn } from '@utils'
 import { Card, CardHeader, CardTitle, CardBody, Input, Row, Col, Label, CustomInput, Button } from 'reactstrap'
 
 // ** Styles
@@ -24,7 +24,7 @@ import '@styles/react/libs/react-select/_react-select.scss'
 import '@styles/react/libs/tables/react-dataTable-component.scss'
 
 // ** Table Header
-const CustomHeader = ({ toggleSidebar, handlePerPage, rowsPerPage, handleFilter, searchTerm }) => {
+const CustomHeader = ({ toggleSidebar, handlePerPage, rowsPerPage, userData }) => {
   return (
     <div className='invoice-list-table-header w-100 mr-1 ml-50 mt-2 mb-75'>
       <Row>
@@ -50,15 +50,23 @@ const CustomHeader = ({ toggleSidebar, handlePerPage, rowsPerPage, handleFilter,
             <Label for='rows-per-page'>Entries</Label>
           </div>
         </Col>
-        <Col
+        {userData?.role_name === "Super Admin" ?  <Col
           xl='6'
           className='d-flex align-items-sm-center justify-content-lg-end justify-content-start flex-lg-nowrap flex-wrap flex-sm-row flex-column pr-lg-1 p-0 mt-lg-0 mt-1'
         >
           
-          <Button.Ripple color='primary' onClick={toggleSidebar}>
+          <Button.Ripple color='primary'  onClick={toggleSidebar}>
             Add New Admin
           </Button.Ripple>
-        </Col>
+          </Col> : <Col
+          xl='6'
+          className='d-flex align-items-sm-center justify-content-lg-end justify-content-start flex-lg-nowrap flex-wrap flex-sm-row flex-column pr-lg-1 p-0 mt-lg-0 mt-1'
+        >
+          
+          <Button.Ripple color='primary'disabled onClick={toggleSidebar}>
+            Add New Admin
+            </Button.Ripple>
+        </Col> }
       </Row>
     </div>
   )
@@ -76,6 +84,8 @@ const AdminsList = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [currentRole, setCurrentRole] = useState({ value: '', label: 'Select Role', number: 0})
   const [currentStatus, setCurrentStatus] = useState({ value: '', label: 'Select Status', number: 0 })
+  const [userData, setUserData] = useState(null)
+
 
   // ** Function to toggle sidebar
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen)
@@ -93,6 +103,12 @@ const AdminsList = () => {
       })
     )
   }, [dispatch])
+
+  useEffect(() => {
+    if (isUserLoggedIn() !== null) {
+      setUserData(JSON.parse(localStorage.getItem('userData')))
+    }
+  }, [])
   
   // ** User filter options
   const roleOptions = [

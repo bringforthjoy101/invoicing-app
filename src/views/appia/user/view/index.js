@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 
 // ** Store & Actions
-import { getUser, getUserAllTransactions, userDetails } from '../store/action'
+import { getUser, getUserAllTransactions } from '../store/action'
 import { useSelector, useDispatch } from 'react-redux'
 
 // ** Reactstrap
@@ -15,7 +15,6 @@ import UserInfoCard from './UserInfoCard'
 import UserTimeline from './UserTimeline'
 import TransactionList from './Transactions'
 import { isUserLoggedIn, apiRequest, swal } from '@utils'
-import PermissionsTable from './PermissionsTable'
 
 // ** Styles
 import '@styles/react/apps/app-users.scss'
@@ -56,16 +55,15 @@ const userDetails = async(id) => {
     }
   }, [])
 
-
   return store.selectedUser !== null && store.selectedUser !== undefined ? (
     <div className='app-user-view'>
       <Row>
         <Col xl='9' lg='8' md='7'>
           <UserInfoCard selectedUser={store.selectedUser} detail={detail} />
-        </Col>
-        <Col xl='3' lg='4' md='5'>
+        </Col> 
+        {userData.role_name === " Control Admin" ? <Col xl='3' lg='4' md='5'>
           <PlanCard selectedUser={store.selectedUser} userData={userData} />
-        </Col>
+        </Col> : "" }
       </Row>
       <Row>
         <Col sm='12'>

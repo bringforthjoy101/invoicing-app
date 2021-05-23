@@ -77,21 +77,19 @@ const UserInfoCard = ({ selectedUser, detail }) => {
                 </div>
               </div>
             </div>
-          </Col>
-          <Col xl='6' lg='12' className='mt-2 mt-xl-0'>
-            <div className='user-info-wrapper'>
-              <div className='d-flex flex-wrap align-items-center'>
+            <div className="mt-3 mr-5">
+              <div className='d-flex flex-wrap justify-content-between align-items-center'>
                 <div className='user-info-title'>
                   <User className='mr-1' size={14} />
                   <CardText tag='span' className='user-info-title font-weight-bold mb-0'>
-                    Username
+                    User Id
                   </CardText>
                 </div>
                 <CardText className='mb-0'>
                   {selectedUser !== null ? selectedUser.user_id : 'eleanor.aguilar'}
                 </CardText>
               </div>
-              <div className='d-flex flex-wrap align-items-center my-50'>
+              <div className='d-flex flex-wrap justify-content-between align-items-center my-50'>
                 <div className='user-info-title'>
                   <Check className='mr-1' size={14} />
                   <CardText tag='span' className='user-info-title font-weight-bold mb-0'>
@@ -102,48 +100,84 @@ const UserInfoCard = ({ selectedUser, detail }) => {
                   {selectedUser !== null ? selectedUser.status || 'Active' : 'Active'}
                 </CardText>
               </div>
-              <div className='d-flex flex-wrap align-items-center my-50'>
+              <div className='d-flex flex-wrap justify-content-between align-items-center my-50'>
                 <div className='user-info-title'>
                   <Star className='mr-1' size={14} />
                   <CardText tag='span' className='user-info-title text-capitalize font-weight-bold mb-0'>
-                    Role
+                    Coin Balance
                   </CardText>
                 </div>
                 <CardText className='text-capitalize mb-0'>
-                  {selectedUser !== null ? selectedUser.role || 'User' : 'User'}
+                  {selectedUser !== null ? selectedUser?.appia_coins.toLocaleString() || 'User' : 'User'}
                 </CardText>
-              </div> 
-              <div className='d-flex flex-wrap align-items-end mt-2 mb-0'>
-              <div className='user-info-title'>
-                <CardTitle>Bank Details: </CardTitle>
               </div>
-              </div>
-              <div className='d-flex flex-wrap align-items-center mt-0'>
+            </div>
+          </Col>
+          <Col xl='6' lg='12' className='mt-2 mt-xl-0'>
+            <div className='user-info-wrapper'>
+              {detail?.user_bank_details !== null ? <div className="mt-2">
                 <div className='user-info-title'>
-                  <Flag className='mr-1' size={14} />
-                  <CardText tag='span' className='user-info-title font-weight-bold mb-0'>
-                    Account Name
-                  </CardText>
+                  <CardTitle> Bank Details: </CardTitle>
                 </div>
-                <CardText className='mb-0'>{detail?.user_providus_details?.account_name}</CardText>
-              </div>
-              <div className='d-flex flex-wrap align-items-center mt-1'>
+                <div className='d-flex flex-wrap align-items-center mt-0'>
+                  <div className='user-info-title'>
+                    <User className='mr-1' size={14} />
+                    <CardText tag='span' className='user-info-title font-weight-bold mb-0'>
+                      Account Name
+                </CardText>
+                  </div>
+                  <CardText className='mb-0'>{detail?.user_bank_details?.account_name}</CardText>
+                </div>
+                <div className='d-flex flex-wrap align-items-center mt-1'>
+                  <div className='user-info-title'>
+                    <Flag className='mr-1' size={14} />
+                    <CardText tag='span' className='user-info-title font-weight-bold mb-0'>
+                      Account Number
+                </CardText>
+                  </div>
+                  <CardText className='mb-0'>{detail?.user_bank_details?.account_number}</CardText>
+                </div>
+                <div className='d-flex flex-wrap align-items-center mt-1'>
+                  <div className='user-info-title'>
+                    <Phone className='mr-1' size={14} />
+                    <CardText tag='span' className='user-info-title font-weight-bold mb-0'>
+                      Bank Name
+                </CardText>
+                  </div>
+                  <CardText className='mb-0'>{detail?.user_bank_details?.bank_name}</CardText>
+                </div>
+              </div> : ""}
+              <div className="mt-2">
                 <div className='user-info-title'>
-                  <Flag className='mr-1' size={14} />
-                  <CardText tag='span' className='user-info-title font-weight-bold mb-0'>
-                    Account Number
-                  </CardText>
+                  <CardTitle> Providus Details: </CardTitle>
                 </div>
-                <CardText className='mb-0'>{detail?.user_providus_details?.account_number}</CardText>
-              </div>
-              <div className='d-flex flex-wrap align-items-center mt-1'>
-                <div className='user-info-title'>
-                  <Phone className='mr-1' size={14} />
-                  <CardText tag='span' className='user-info-title font-weight-bold mb-0'>
-                    Bank Name
+                <div className='d-flex flex-wrap align-items-center mt-0'>
+                  <div className='user-info-title'>
+                    <User className='mr-1' size={14} />
+                    <CardText tag='span' className='user-info-title font-weight-bold mb-0'>
+                      Account Name
                   </CardText>
+                  </div>
+                  <CardText className='mb-0'>{detail?.user_providus_details?.account_name}</CardText>
                 </div>
-                <CardText className='mb-0'>{detail?.user_providus_details?.bank_name}</CardText>
+                <div className='d-flex flex-wrap align-items-center mt-1'>
+                  <div className='user-info-title'>
+                    <Flag className='mr-1' size={14} />
+                    <CardText tag='span' className='user-info-title font-weight-bold mb-0'>
+                      Account Number
+                  </CardText>
+                  </div>
+                  <CardText className='mb-0'>{detail?.user_providus_details?.account_number}</CardText>
+                </div>
+                <div className='d-flex flex-wrap align-items-center mt-1'>
+                  <div className='user-info-title'>
+                    <Phone className='mr-1' size={14} />
+                    <CardText tag='span' className='user-info-title font-weight-bold mb-0'>
+                      Bank Name
+                  </CardText>
+                  </div>
+                  <CardText className='mb-0'>{detail?.user_providus_details?.bank_name}</CardText>
+                </div>
               </div>
             </div>
           </Col>
