@@ -50,6 +50,7 @@ import {
 } from 'reactstrap'
 import jsPDF from 'jspdf'
 import 'jspdf-autotable'
+import { isUserLoggedIn } from '@utils'
 
 const states = ['success', 'danger', 'warning', 'info', 'dark', 'primary', 'secondary']
 
@@ -173,11 +174,18 @@ const DataTableWithButtons = () => {
   const [currentPage, setCurrentPage] = useState(0)
   const [searchValue, setSearchValue] = useState('')
   const [filteredData, setFilteredData] = useState([])
+  const [userData, setUserData] = useState(null)
 
   // ** Get data on mount
   useEffect(() => {
     dispatch(getAllFundsData())
   }, [dispatch])
+
+  useEffect(() => {
+    if (isUserLoggedIn() !== null) {
+      setUserData(JSON.parse(localStorage.getItem('userData')))
+    }
+  }, [])
 
 
   // ** Function to handle filter

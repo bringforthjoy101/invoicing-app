@@ -68,6 +68,7 @@
     "react-shepherd": "3.3.0",
     "react-slidedown": "2.4.5",
     "react-sortablejs": "6.0.0",
+    "react-star-rating-component": "^1.4.1",
     "react-to-print": "^2.12.4",
     "react-toastify": "6.0.9",
     "reactstrap": "8.6.0",

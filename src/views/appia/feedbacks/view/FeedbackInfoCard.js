@@ -7,7 +7,8 @@ import moment from 'moment'
 
 // ** Third Party Components
 import { Card, CardBody, CardText, Button, Row, Col } from 'reactstrap'
-import { DollarSign, TrendingUp, User, Check, Star, Flag, Phone } from 'react-feather'
+// import { DollarSign, TrendingUp, User, Check, Star, Flag, Phone } from 'react-feather'
+import Rating from './Ratings'
 
 const FeedbackInfoCard = ({ selectedFeedback }) => {
   // ** render user img
@@ -56,6 +57,7 @@ const FeedbackInfoCard = ({ selectedFeedback }) => {
                 Email: { selectedFeedback !== null ? selectedFeedback.email : 'appia.admin@appiawave.com'}
               </CardText>
               <CardText className="mt-1">User Id: { selectedFeedback.id}</CardText>
+              <Rating feedback={selectedFeedback} />
               <hr />
               <div className="d-flex">
                 <h6>
