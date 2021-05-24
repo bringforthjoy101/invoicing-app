@@ -37,7 +37,7 @@ export const columns = [
         {renderClient(row)}
         <div className='d-flex flex-column'>
           <Link
-            to={`/appia/feedbacks/view/${row.id}`}
+            to={`/appia/contacts/view/${row.id}`}
             className='user-name text-truncate mb-0'
             onClick={() => store.dispatch(getContact(store.getState().appiaContacts.allData, row.id))}
           >
@@ -58,9 +58,9 @@ export const columns = [
   {
     name: 'Subject',
     minWidth: '172px',
-    selector: 'feature',
+    selector: 'subject',
     sortable: true,
-    cell: row => row.feature
+    cell: row => row.subject
   },
   {
     name: 'Date',
@@ -82,7 +82,7 @@ export const columns = [
         <DropdownMenu right>
           <DropdownItem
             tag={Link}
-            to={`/appia/admin/view/${row.admin_id}`}
+            to={`/appia/contacts/view/${row.admin_id}`}
             className='w-100'
             onClick={() => store.dispatch(getFeedback(store.getState().appiaContacts.allData, row.admin_id))}
           >
@@ -91,7 +91,7 @@ export const columns = [
           </DropdownItem>
           <DropdownItem
             tag={Link}
-            to={`/appia/admin/edit/${row.id}`}
+            to={`/appia/contacts/edit/${row.id}`}
             className='w-100'
             onClick={() => store.dispatch(getFeedback(store.getState().appiaContacts.allData, row.admin_id))}
           >

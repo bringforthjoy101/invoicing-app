@@ -11,7 +11,7 @@ import { Row, Col, Alert } from 'reactstrap'
 
 // ** User View Components
 import PlanCard from './PlanCard'
-import FeedbackInfoCard from './FeedbackInfoCard'
+import ContactInfoCard from './ContactInfoCard'
 // import InvoiceList from '../../invoice/list'
 
 // ** Styles
@@ -26,11 +26,11 @@ const FeedbackView = props => {
     <div className='app-user-view'>
       <Row>
         <Col xl='9' lg='8' md='7'>
-          <FeedbackInfoCard selectedContact={store.selectedContact} />
+          <ContactInfoCard selectedContact={store.selectedContact} />
         </Col>
-        <Col xl='3' lg='4' md='5'>
+        {/* <Col xl='3' lg='4' md='5'>
           <PlanCard selectedContact={store.selectedContact} />
-        </Col>
+        </Col> */}
       </Row>
     </div>
   ) : (

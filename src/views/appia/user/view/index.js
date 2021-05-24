@@ -61,7 +61,7 @@ const userDetails = async(id) => {
         <Col xl='9' lg='8' md='7'>
           <UserInfoCard selectedUser={store.selectedUser} detail={detail} />
         </Col> 
-        {userData.role_name === " Control Admin" ? <Col xl='3' lg='4' md='5'>
+        {userData?.role_name === " Control Admin" ? <Col xl='3' lg='4' md='5'>
           <PlanCard selectedUser={store.selectedUser} userData={userData} />
         </Col> : "" }
       </Row>

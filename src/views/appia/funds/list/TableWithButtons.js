@@ -141,17 +141,18 @@ const columns = [
     name: 'Actions',
     allowOverflow: true,
     // minWidth: '100px',
+    selector: 'role_name',
     cell: row => {
-      return (
+      return  row?.role_name === "Financial Admin" ?  (
         <div className='d-flex'>
           {row.status === 'Pending' ? (
             <div>
-              <Check size={30} className='text-success' onClick={() => store.dispatch(reviewFunds(row.log_id, 'approve'))} />
+            <Check size={30} className='text-success' onClick={() => store.dispatch(reviewFunds(row.log_id, 'approve'))} />
               <X size={30} className='text-danger' onClick={() => store.dispatch(reviewFunds(row.log_id, 'disapprove'))} />
             </div>
           ) : <Bookmark size={30} className='text-info' onClick={() => alert('Reviewed')} />}
         </div>
-      )
+      ) : ""
     }
   }
 ]
@@ -175,6 +176,7 @@ const DataTableWithButtons = () => {
   const [searchValue, setSearchValue] = useState('')
   const [filteredData, setFilteredData] = useState([])
   const [userData, setUserData] = useState(null)
+
 
   // ** Get data on mount
   useEffect(() => {

@@ -9,7 +9,7 @@ import moment from 'moment'
 import { Card, CardBody, CardText, Button, Row, Col } from 'reactstrap'
 import { DollarSign, TrendingUp, User, Check, Star, Flag, Phone } from 'react-feather'
 
-const FeedbackInfoCard = ({ selectedContact }) => {
+const ContactInfo = ({ selectedContact }) => {
   // ** render user img
 
   const renderUserImg = () => {
@@ -59,7 +59,7 @@ const FeedbackInfoCard = ({ selectedContact }) => {
               <hr />
               <div className="d-flex">
                 <h6>
-                  Feature: <span>{selectedContact.feature}</span>
+                  Subject: <span>{selectedContact.subject}</span>
                 </h6>
                 <h6 className="ml-5">Date <span>{moment(selectedContact.created_at).format('lll')}</span></h6>
               </div>
@@ -73,4 +73,4 @@ const FeedbackInfoCard = ({ selectedContact }) => {
   )
 }
 
-export default FeedbackInfoCard
+export default ContactInfo

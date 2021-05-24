@@ -12,9 +12,7 @@ import { Row, Col, Alert } from 'reactstrap'
 // ** User View Components
 import PlanCard from './PlanCard'
 import UserInfoCard from './UserInfoCard'
-import UserTimeline from './UserTimeline'
 import TransactionList from './Transactions'
-import PermissionsTable from './PermissionsTable'
 
 // ** Styles
 import '@styles/react/apps/app-users.scss'

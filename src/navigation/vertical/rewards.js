@@ -17,7 +17,7 @@ export default [
             {
                 id: 'rewardItems',
                 title: 'Reward Items',
-                icon: <User size={20} />,
+                icon: <Award size={20} />,
                 navLink: '/appia/rewardItems/list'
             },
             {

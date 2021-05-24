@@ -81,7 +81,7 @@ export const columns = [
           <Link
             to={`/appia/user/view/${row.user_id}`}
             className='user-name text-truncate mb-0'
-            onClick={() => store.dispatch(getUser(store.getState().appiaAdmins.allData, row.user_id))}
+            onClick={() => store.dispatch(getUser(store.getState().appiaUsers.allData, row.user_id))}
           >
             <span className='font-weight-bold'>{row.names}</span>
           </Link>

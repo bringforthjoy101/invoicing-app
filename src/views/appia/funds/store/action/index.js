@@ -25,7 +25,8 @@ export const getAllFundsData = () => {
   }
 }
 
-export const reviewFunds = (log_id, action) => {
+export const reviewFunds = (log_id, action, admins) => {
+  console.log("redcr", admins)
   const status = action === 'approve' ? 'approved' : 'disapproved'
   return async dispatch => {
     return MySwal.fire({
