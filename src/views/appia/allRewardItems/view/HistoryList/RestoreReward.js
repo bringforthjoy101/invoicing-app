@@ -12,19 +12,12 @@ const DeleteRewardSchema = Yup.object().shape({
 })
 
 
-const RestoreReward = () => {
+const RestoreReward = ({selectedReward}) => {
     const dispatch = useDispatch()
   const store = useSelector(state => state.appiaDeletedRewards)
 
     const [formModal, setFormModal] = useState(false)
-
-    useEffect(() => {
-      dispatch(getHistory())
-    }, [dispatch])
-
-  console.log("rwddd", store.selectedHistory)
-
-  
+    
     return (
       <div>
         <Button.Ripple className='text-center mb-1 mt-1' color='success' outline onClick={() => setFormModal(!formModal)}>
@@ -34,7 +27,7 @@ const RestoreReward = () => {
             <ModalHeader toggle={() => setFormModal(!formModal)}> Restore Reward</ModalHeader>
             <Formik
               initialValues={{
-                reward_id: store.selectedHistory?.id
+                reward_id: store.selectedReward?.id
               }}
               validationSchema={DeleteRewardSchema}
               onSubmit={async (values, { setSubmitting }) => {
