@@ -12,13 +12,13 @@ export default [
                 id: 'dataPlan',
                 title: 'Data Plan',
                 icon: <User size={20} />,
-                navLink: '/appia/DataPlan/list'
+                navLink: '/appia/dataPlans/list'
             },
             {
                 id: 'rewardItems',
                 title: 'Reward Items',
                 icon: <Award size={20} />,
-                navLink: '/appia/rewardItems/list'
+                navLink: '/appia/allRewardItems/list'
             },
             {
                 id: 'claimedRewards',

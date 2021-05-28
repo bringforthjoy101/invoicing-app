@@ -56,7 +56,7 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
       <Sidebar
         size='lg'
         open={open}
-        title='New User'
+        title='New Admin'
         headerClassName='mb-1'
         contentClassName='pt-0'
         toggleSidebar={toggleSidebar}
@@ -118,10 +118,10 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
               onChange={e => setUserData({...userData, role: e.target.value})}
               required
             >
-              <option value='4'>Control Admin</option>
+              <option value='0'>Select Option</option>
+              <option value='1'>Control Admin</option>
+              <option value='2'>Financial Admin</option>
               <option value='3'>Super Admin</option>
-              <option value='2'>Customer Support</option>
-              <option value='1'>Admin</option>
             </AvInput>
           </FormGroup>
           <Button type='submit' className='mr-1' color='primary'>

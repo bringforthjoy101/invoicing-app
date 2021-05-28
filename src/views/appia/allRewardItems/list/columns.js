@@ -5,41 +5,44 @@ import { Link } from 'react-router-dom'
 import Avatar from '@components/avatar'
 
 // ** Store & Actions
-import { getFeedback } from '../store/action'
-import { store } from '@store/storeConfig/store'
+import { getReward } from '../store/action'
 import moment from 'moment'
+import { store } from '@store/storeConfig/store'
 
 // ** Third Party Components
 import { Badge, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
 import { Slack, User, Settings, Database, Edit, MoreVertical, FileText, Trash2, Archive } from 'react-feather'
 
-// ** Renders Client Columns
-const renderClient = row => {
-  const stateNum = Math.floor(Math.random() * 6),
-    states = ['light-success', 'light-danger', 'light-warning', 'light-info', 'light-primary', 'light-secondary'],
-    color = states[stateNum]
-
-  if (row.avatar) {
-    return <Avatar className='mr-1' img={row.avatar} width='32' height='32' />
-  } else {
-    return <Avatar color={color || 'primary'} className='mr-1' content={`${row.name}` || 'John Doe'} initials />
-  }
+const statusObj = {
+  pending: 'light-warning',
+  active: 'light-success',
+  inactive: 'light-danger'
 }
 
 export const columns = [
   {
-    name: 'Full Name',
-    minWidth: '297px',
+    name: 'Image',
+    minWidth: '40px',
+    selector: 'image',
+    sortable: true,
+    cell: row => (
+      <Badge>
+        <img src={row.image} width="30px" alt=""/>
+      </Badge>
+    )
+  },
+  {
+    name: 'Name',
+    minWidth: '200px',
     selector: 'name',
     sortable: true,
     cell: row => (
       <div className='d-flex justify-content-left align-items-center'>
-        {renderClient(row)}
         <div className='d-flex flex-column'>
           <Link
-            to={`/appia/feedbacks/view/${row.id}`}
+            to={`/appia/admin/view/${row.id}`}
             className='user-name text-truncate mb-0'
-            onClick={() => store.dispatch(getFeedback(store.getState().appiaFeedbacks.allData, row.id))}
+            onClick={() => store.dispatch(getReward(store.getState().appiaAllRewards.allData, row.id))}
           >
             <span className='font-weight-bold'>{row.name}</span>
           </Link>
@@ -48,23 +51,42 @@ export const columns = [
       </div>
     )
   },
+  
   {
-    name: 'Email',
-    minWidth: '320px',
-    selector: 'email',
+    name: 'Quantity',
+    minWidth: '100px',
+    selector: 'qty',
     sortable: true,
-    cell: row => row.email
+    cell: row => row.qty
   },
   {
-    name: 'Subject',
+    name: 'Value',
     minWidth: '172px',
-    selector: 'feature',
+    selector: 'value',
     sortable: true,
-    cell: row => row.feature
+    cell: row => row?.value?.toLocaleString('en-US', { style: 'currency', currency: 'NGN' })
+  },
+  {
+    name: 'Type',
+    minWidth: '138px',
+    selector: 'price',
+    sortable: true,
+    cell: row => row.type
+  },
+  {
+    name: 'Status',
+    minWidth: '138px',
+    selector: 'status',
+    sortable: true,
+    cell: row => (
+      <Badge className='text-capitalize' color={statusObj[row.status]} pill>
+        {row.status}
+      </Badge>
+    )
   },
   {
     name: 'Date',
-    minWidth: '138px',
+    minWidth: '172px',
     selector: 'created_at',
     sortable: true,
     cell: row => moment(row.created_at).format('lll')
@@ -82,9 +104,9 @@ export const columns = [
         <DropdownMenu right>
           <DropdownItem
             tag={Link}
-            to={`/appia/admin/view/${row.admin_id}`}
+            to={`/appia/admin/view/${row.id}`}
             className='w-100'
-            onClick={() => store.dispatch(getFeedback(store.getState().appiaAdmins.allData, row.admin_id))}
+            onClick={() => store.dispatch(getReward(store.getState().appiaAllRewards.allData, row.id))}
           >
             <FileText size={14} className='mr-50' />
             <span className='align-middle'>Details</span>
@@ -93,7 +115,7 @@ export const columns = [
             tag={Link}
             to={`/appia/admin/edit/${row.id}`}
             className='w-100'
-            onClick={() => store.dispatch(getFeedback(store.getState().appiaFeedbacks.allData, row.admin_id))}
+            onClick={() => store.dispatch(getReward(store.getState().appiaAllRewards.allData, row.id))}
           >
             <Archive size={14} className='mr-50' />
             <span className='align-middle'>Edit</span>

@@ -97,6 +97,62 @@ const AppiaRoutes = [
   {
     path: '/appia/subscribers/list',
     component: lazy(() => import('../../views/appia/subscribers/list'))
+  }, 
+  {
+    path: '/appia/dataPlans/list',
+    component: lazy(() => import('../../views/appia/dataPlans/list'))
+  },
+  {
+    path: '/appia/dataPlans/edit',
+    exact: true,
+    component: () => <Redirect to='/appia/dataPlans/edit/1' />
+  },
+  {
+    path: '/appia/dataPlans/edit/:id',
+    component: lazy(() => import('../../views/appia/dataPlans/edit')),
+    meta: {
+      navLink: '/appia/dataPlans/edit'
+    }
+  },
+  {
+    path: '/appia/allRewardItems/view',
+    exact: true,
+    component: () => <Redirect to='/appia/allRewardItems/view/1' />
+  },
+  {
+    path: '/appia/allRewardItems/view/:id',
+    component: lazy(() => import('../../views/appia/allRewardItems/view')),
+    meta: {
+      navLink: '/appia/dataPlans/view'
+    }
+  },
+  {
+    path: '/appia/allRewardItems/list',
+    component: lazy(() => import('../../views/appia/allRewardItems/list'))
+  },
+  {
+    path: '/appia/allRewardItems/edit',
+    exact: true,
+    component: () => <Redirect to='/appia/allRewardItems/edit/1' />
+  },
+  {
+    path: '/appia/allRewardItems/edit/:id',
+    component: lazy(() => import('../../views/appia/allRewardItems/edit')),
+    meta: {
+      navLink: '/appia/allRewardItems/edit'
+    }
+  },
+  {
+    path: '/appia/dataPlans/view',
+    exact: true,
+    component: () => <Redirect to='/appia/dataPlans/view/1' />
+  },
+  {
+    path: '/appia/dataPlans/view/:id',
+    component: lazy(() => import('../../views/appia/dataPlans/view')),
+    meta: {
+      navLink: '/appia/dataPlans/view'
+    }
   }
 ]
 

@@ -14,6 +14,8 @@ import appiaFunds from '@src/views/appia/funds/store/reducer'
 import appiaContacts from '@src/views/appia/contacts/store/reducer'
 import appiaFeedbacks from '@src/views/appia/feedbacks/store/reducer'
 import appiaSubscribers from '@src/views/appia/subscribers/store/reducer'
+import appiaDataPlans from '@src/views/appia/dataPlans/store/reducer'
+import appiaAllRewards from '@src/views/appia/allRewardItems/store/reducer'
 import email from '@src/views/apps/email/store/reducer'
 import invoice from '@src/views/apps/invoice/store/reducer'
 import calendar from '@src/views/apps/calendar/store/reducer'
@@ -32,6 +34,8 @@ const rootReducer = combineReducers({
   appiaContacts,
   appiaFeedbacks,
   appiaSubscribers,
+  appiaDataPlans,
+  appiaAllRewards,
   navbar,
   layout,
   invoice,
