@@ -103,6 +103,18 @@ const AppiaRoutes = [
     component: lazy(() => import('../../views/appia/dataPlans/list'))
   },
   {
+    path: '/appia/dataPlans/view',
+    exact: true,
+    component: () => <Redirect to='/appia/dataPlans/view/1' />
+  },
+  {
+    path: '/appia/dataPlans/view/:id',
+    component: lazy(() => import('../../views/appia/dataPlans/view')),
+    meta: {
+      navLink: '/appia/dataPlans/view'
+    }
+  },
+  {
     path: '/appia/dataPlans/edit',
     exact: true,
     component: () => <Redirect to='/appia/dataPlans/edit/1' />
@@ -123,7 +135,7 @@ const AppiaRoutes = [
     path: '/appia/allRewardItems/view/:id',
     component: lazy(() => import('../../views/appia/allRewardItems/view')),
     meta: {
-      navLink: '/appia/dataPlans/view'
+      navLink: '/appia/allRewardItems/view'
     }
   },
   {
@@ -143,15 +155,31 @@ const AppiaRoutes = [
     }
   },
   {
-    path: '/appia/dataPlans/view',
+    path: '/appia/claimedRewards/view',
     exact: true,
-    component: () => <Redirect to='/appia/dataPlans/view/1' />
+    component: () => <Redirect to='/appia/claimedRewards/view/1' />
   },
   {
-    path: '/appia/dataPlans/view/:id',
-    component: lazy(() => import('../../views/appia/dataPlans/view')),
+    path: '/appia/claimedRewards/view/:id',
+    component: lazy(() => import('../../views/appia/claimedRewards/view')),
     meta: {
-      navLink: '/appia/dataPlans/view'
+      navLink: '/appia/claimedRewards/view'
+    }
+  },
+  {
+    path: '/appia/claimedRewards/list',
+    component: lazy(() => import('../../views/appia/claimedRewards/list'))
+  },
+  {
+    path: '/appia/claimedRewards/edit',
+    exact: true,
+    component: () => <Redirect to='/appia/claimedRewards/edit/1' />
+  },
+  {
+    path: '/appia/claimedRewards/edit/:id',
+    component: lazy(() => import('../../views/appia/claimedRewards/edit')),
+    meta: {
+      navLink: '/appia/claimedRewards/edit'
     }
   }
 ]

@@ -14,7 +14,7 @@ import { Row, Col, Alert } from 'reactstrap'
 // ** User View Components
 import PlanCard from './PlanCard'
 import UserInfoCard from './UserInfoCard'
-import UserTimeline from './UserTimeline'
+import AdminTimeline from './AdminTimeline'
 // import InvoiceList from '../../invoice/list'
 import PermissionsTable from './PermissionsTable'
 
@@ -52,7 +52,7 @@ const UserView = props => {
       </Row>
       {userData?.role_name === "Super Admin" ? <Row>
         <Col md='6'>
-          <UserTimeline selectedAdmin={store.selectedAdmin} data={store.adminActivities.sort((a, b) => moment(b.date).format('YYYYMMDD') - moment(a.date).format('YYYYMMDD'))} />
+          <AdminTimeline selectedAdmin={store.selectedAdmin} data={store.adminActivities.sort((a, b) => moment(b.date).format('YYYYMMDD') - moment(a.date).format('YYYYMMDD'))} />
         </Col>
         <Col md='6'>
           <PermissionsTable />

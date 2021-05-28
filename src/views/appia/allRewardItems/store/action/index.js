@@ -1,11 +1,10 @@
 import { paginateArray, sortCompare, apiRequest, swal } from '@utils'
 
-
 // ** Get all Data
 export const getAllData = () => {
   return async dispatch => {
     const response = await apiRequest({ url: '/admin/rewards/get', method: 'GET' }, dispatch)
-    console.log({response})
+    console.log({ response })
     if (response) {
       if (response.data.data && response.data.success) {
         await dispatch({
@@ -24,6 +23,7 @@ export const getAllData = () => {
 
 // ** Get filtered data on page or row change
 export const getFilteredData = (rewards, params) => {
+  console.log("rdcvv", rewards)
   return async dispatch => {
     const { q = '', perPage = 10, page = 1, role = null, status = null } = params
 
@@ -53,5 +53,5 @@ export const getReward = (rewards, id) => {
       type: 'GET_REWARD',
       selectedReward: reward
     })
-}
+  }
 }

@@ -5,9 +5,10 @@ import { Link } from 'react-router-dom'
 import Avatar from '@components/avatar'
 
 // ** Store & Actions
-import { getReward } from '../store/action'
+import { getReward } from '../../store/action'
 import moment from 'moment'
 import { store } from '@store/storeConfig/store'
+import RestoreReward from './RestoreReward'
 
 // ** Third Party Components
 import { Badge, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
@@ -75,7 +76,7 @@ export const columns = [
   },
   {
     name: 'Status',
-    minWidth: '138px',
+    minWidth: '100px',
     selector: 'status',
     sortable: true,
     cell: row => (
@@ -93,39 +94,40 @@ export const columns = [
   },
   {
     name: 'Actions',
-    minWidth: '100px',
+    minWidth: '200px',
     selector: 'fullName',
     sortable: true,
     cell: row => (
-      <UncontrolledDropdown>
-        <DropdownToggle tag='div' className='btn btn-sm'>
-          <MoreVertical size={14} className='cursor-pointer' />
-        </DropdownToggle>
-        <DropdownMenu right>
-          <DropdownItem
-            tag={Link}
-            to={`/appia/admin/view/${row.id}`}
-            className='w-100'
-            onClick={() => store.dispatch(getReward(store.getState().appiaAllRewards.allData, row.id))}
-          >
-            <FileText size={14} className='mr-50' />
-            <span className='align-middle'>Details</span>
-          </DropdownItem>
-          <DropdownItem
-            tag={Link}
-            to={`/appia/admin/edit/${row.id}`}
-            className='w-100'
-            onClick={() => store.dispatch(getReward(store.getState().appiaAllRewards.allData, row.id))}
-          >
-            <Archive size={14} className='mr-50' />
-            <span className='align-middle'>Edit</span>
-          </DropdownItem>
-          <DropdownItem className='w-100'>
-            <Trash2 size={14} className='mr-50' />
-            <span className='align-middle'>Delete</span>
-          </DropdownItem>
-        </DropdownMenu>
-      </UncontrolledDropdown>
+      <RestoreReward />
+      // <UncontrolledDropdown>
+      //   <DropdownToggle tag='div' className='btn btn-sm'>
+      //     <MoreVertical size={14} className='cursor-pointer' />
+      //   </DropdownToggle>
+      //   <DropdownMenu right>
+      //     <DropdownItem
+      //       tag={Link}
+      //       to={`/appia/admin/view/${row.id}`}
+      //       className='w-100'
+      //       onClick={() => store.dispatch(getReward(store.getState().appiaAllRewards.allData, row.id))}
+      //     >
+      //       <FileText size={14} className='mr-50' />
+      //       <span className='align-middle'>Details</span>
+      //     </DropdownItem>
+      //     <DropdownItem
+      //       tag={Link}
+      //       to={`/appia/admin/edit/${row.id}`}
+      //       className='w-100'
+      //       onClick={() => store.dispatch(getReward(store.getState().appiaAllRewards.allData, row.id))}
+      //     >
+      //       <Archive size={14} className='mr-50' />
+      //       <span className='align-middle'>Edit</span>
+      //     </DropdownItem>
+      //     <DropdownItem className='w-100'>
+      //       <Trash2 size={14} className='mr-50' />
+      //       <span className='align-middle'>Delete</span>
+      //     </DropdownItem>
+      //   </DropdownMenu>
+      // </UncontrolledDropdown>
     )
   }
 ]

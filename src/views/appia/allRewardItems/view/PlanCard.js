@@ -2,10 +2,11 @@ import { useState } from 'react'
 // ** Reactstrap
 import { Card, CardHeader, CardBody, Badge, UncontrolledTooltip, Button } from 'reactstrap'
 
+import { DeleteReward } from './DeleteReward'
 import { store } from '@store/storeConfig/store'
 
 
-const PlanCard = ({ selectedAdmin }) => {
+const PlanCard = ({ selectedReward }) => {
 
   // state
   const [toggleButton, setToggleButton] = useState(false)
@@ -19,10 +20,10 @@ const PlanCard = ({ selectedAdmin }) => {
         <h5 className='mb-0'>Actions</h5>
       </CardHeader>
       <CardBody>
-        
-      </CardBody> 
+          <DeleteReward selectedReward={selectedReward} />
+      </CardBody>
     </Card>
-  ) 
+  )
 }
 
 export default PlanCard

@@ -1,6 +1,6 @@
 // ** Custom Components
 import Sidebar from '@components/sidebar'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { swal, apiRequest } from '@utils'
@@ -26,10 +26,12 @@ const sidebarNewDataPlan = ({ open, toggleSidebar }) => {
     image: ""
   })
 
+
   const onChange = async (event, errors) => {
     if (errors && !errors.length) {
+      const body = JSON.stringify()
       try {
-        const response = await apiRequest({ url: '/admin/upload-images', method: 'GET' }, dispatch)
+        const response = await apiRequest({ url: '/admin/upload-images', method: 'POST', body }, dispatch)
         console.log("imggg", {response})
         if (response) {
           if (response.data.success) {
@@ -48,6 +50,12 @@ const sidebarNewDataPlan = ({ open, toggleSidebar }) => {
     }
 
   }
+
+
+  useEffect(() => {
+    onChange()
+  }, [])
+
   const onSubmit = async (event, errors) => {
     event.preventDefault()
     if (errors && !errors.length) {
@@ -182,7 +190,7 @@ const sidebarNewDataPlan = ({ open, toggleSidebar }) => {
                 id='image'
                 type='file'
                 value={userData.image}
-                onChange={onChange}
+                onChange={e => setUserData({ ...userData, image: e.target.value })}
                 hidden
                 accept='image/*'
               />

@@ -12,38 +12,43 @@ import { Row, Col, Alert } from 'reactstrap'
 
 // ** User View Components
 import PlanCard from './PlanCard'
-import AllRewardInfo from './AllRewardInfo'
-import HistoryList from './HistoryList'
+import DataPlanInfo from './DataPlanInfo'
 
 // ** Styles
 import '@styles/react/apps/app-users.scss'
 
 const UserView = props => {
   // ** Vars
-  const store = useSelector(state => state.appiaAllRewards),
+  const store = useSelector(state => state.appiaDataPlans),
     dispatch = useDispatch(),
     { id } = useParams()
 
   const [userData, setUserData] = useState(null)
-  const [plan, setPlan] = useState(null)
 
   useEffect(() => {
     if (isUserLoggedIn() !== null) {
       setUserData(JSON.parse(localStorage.getItem('userData')))
     }
   }, [])
+  // ** Get suer on mount
+  useEffect(() => {
+    // dispatch(getPlan(store.allData, id))
+  }, [dispatch])
 
-  return store.selectedReward !== null && store.selectedReward !== undefined ? (
+  console.log("strrr", store.selectedPlan)
+
+  return store.selectedPlan !== null && store.selectedPlan !== undefined ? (
     <div className='app-user-view'>
       <Row>
         <Col xl='9' lg='8' md='7'>
-          <AllRewardInfo selectedReward={store.selectedReward} />
+          <DataPlanInfo selectedPlan={store.selectedPlan} />
         </Col>
+        {/* {userData?.role_name === "Super Admin" ?  */}
         <Col xl='3' lg='4' md='5'>
-          <PlanCard selectedReward={store.selectedReward} />
+          <PlanCard selectedPlan={store.selectedPlan} />
         </Col> 
+        {/* // : ""} */}
       </Row>
-        <HistoryList selectedReward={store.selectedReward} />
     </div>
   ) : (
     <Alert color='danger'>
