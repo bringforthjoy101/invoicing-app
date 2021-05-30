@@ -8,7 +8,7 @@ import AccountTab from './Account'
 import InfoTab from './Information'
 
 // ** Store & Actions
-import { getPlan, getUser } from '../store/action'
+import { getClaim, getUser } from '../store/action'
 import { useSelector, useDispatch } from 'react-redux'
 
 // ** Third Party Components
@@ -30,7 +30,7 @@ const AdminEdit = () => {
 
   // ** Function to get user on mount
   useEffect(() => {
-    dispatch(getPlan(parseInt(id)))
+    dispatch(getClaim(parseInt(id)))
   }, [dispatch])
 
 

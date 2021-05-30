@@ -5,7 +5,6 @@ import rewards from '../../../../../navigation/vertical/rewards'
 export const getAllHistoryData = () => {
     return async dispatch => {
       const response = await apiRequest({ url: '/admin/rewards/deleted', method: 'GET' }, dispatch)
-      console.log({response})
       if (response) {
         if (response.data.data && response.data.success) {
           await dispatch({
@@ -24,7 +23,6 @@ export const getAllHistoryData = () => {
   
   // ** Get filtered reward data on page or row change
   export const getFilteredHistoryData = (rewards, params) => {
-    console.log("rrrr", rewards)
     return async dispatch => {
       const { q = '', perPage = 10, page = 1} = params
   
@@ -47,8 +45,7 @@ export const getAllHistoryData = () => {
 
   export const getHistory = (rewards, id) => {
     return async dispatch => {
-      const history = rewards.find(i => i.id === id)
-      console.log("llllll", history)
+      const history = rewards?.find(i => i?.id === id)
       dispatch({
         type: 'GET_HISTORY',
         selectedHistory: history

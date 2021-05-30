@@ -1,25 +1,28 @@
 // ** React Imports
 import { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
+import { getUserClaimHistory} from '../store/action'
 import moment from 'moment'
 
 // ** Store & Actions
 import { useSelector, useDispatch } from 'react-redux'
 import { isUserLoggedIn } from '@utils'
 
+
 // ** Reactstrap
 import { Row, Col, Alert } from 'reactstrap'
 
 // ** User View Components
 import PlanCard from './PlanCard'
-import DataPlanInfo from './DataPlanInfo'
+import ClaimedHistory from './Claimed'
+import UserClaimedHistory from './UserClaimHistory'
 
 // ** Styles
 import '@styles/react/apps/app-users.scss'
 
 const UserView = props => {
   // ** Vars
-  const store = useSelector(state => state.appiaDataPlans),
+  const store = useSelector(state => state.appiaClaimedRewards),
     dispatch = useDispatch(),
     { id } = useParams()
 
@@ -30,24 +33,28 @@ const UserView = props => {
       setUserData(JSON.parse(localStorage.getItem('userData')))
     }
   }, [])
-  // ** Get suer on mount
+
+  const reward_id = store.selectedClaim.reward_id
+
   useEffect(() => {
-    // dispatch(getPlan(store.allData, id))
+    dispatch(getUserClaimHistory(reward_id))
   }, [dispatch])
 
-  console.log("strrr", store.selectedPlan)
 
-  return store.selectedPlan !== null && store.selectedPlan !== undefined ? (
+  return store.selectedClaim !== null && store.selectedClaim !== undefined ? (
     <div className='app-user-view'>
       <Row>
         <Col xl='9' lg='8' md='7'>
-          <DataPlanInfo selectedPlan={store.selectedPlan} />
+          <ClaimedHistory selectedClaim={store.selectedClaim} />
         </Col>
-        {/* {userData?.role_name === "Super Admin" ?  */}
         <Col xl='3' lg='4' md='5'>
-          <PlanCard selectedPlan={store.selectedPlan} />
+          <PlanCard selectedClaim={store.selectedClaim} />
         </Col> 
-        {/* // : ""} */}
+      </Row>
+      <Row xl='9' lg='8' md='7'>
+        <Col md='6'>
+        <UserClaimedHistory claimHistory={store.claimHistory} />
+        </Col>
       </Row>
     </div>
   ) : (

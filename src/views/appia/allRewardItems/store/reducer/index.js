@@ -4,9 +4,7 @@ const initialState = {
   data: [],
   total: 1,
   params: {},
-  selectedReward: null,
-  allHistory: [],
-  history: []
+  selectedReward: null
 }
 
 const admins = (state = initialState, action) => {
@@ -22,15 +20,6 @@ const admins = (state = initialState, action) => {
       }
     case 'GET_REWARD':
       return { ...state, selectedReward: action.selectedReward }
-      case 'GET_ALL_HISTORY':
-      return { ...state, allHistory: action.history }
-    case 'GET_FILTERED_HISTORY':
-      return {
-        ...state,
-        hsitory: action.history,
-        total: action.totalPages,
-        params: action.params
-      }
     default:
       return { ...state }
   }

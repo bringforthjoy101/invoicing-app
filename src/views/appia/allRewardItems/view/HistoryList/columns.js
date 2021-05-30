@@ -33,6 +33,13 @@ export const columns = [
     )
   },
   {
+    name: 'Reward Id',
+    minWidth: '100px',
+    selector: 'id',
+    sortable: true,
+    cell: row => row.id
+  },
+  {
     name: 'Name',
     minWidth: '200px',
     selector: 'name',
@@ -40,19 +47,11 @@ export const columns = [
     cell: row => (
       <div className='d-flex justify-content-left align-items-center'>
         <div className='d-flex flex-column'>
-          <Link
-            to={`/appia/allRewardItems/view/${row.id}`}
-            className='user-name text-truncate mb-0'
-            onClick={() => store.dispatch(getReward(store.getState().appiaAllRewards.allData, row.id))}
-          >
             <span className='font-weight-bold'>{row.name}</span>
-          </Link>
-          <small className='text-truncate text-muted mb-0'>{row.email}</small>
         </div>
       </div>
     )
   },
-  
   {
     name: 'Quantity',
     minWidth: '100px',

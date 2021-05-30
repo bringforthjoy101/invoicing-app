@@ -143,7 +143,7 @@ const columns = [
     // minWidth: '100px',
     selector: 'role_name',
     cell: row => {
-      return  row?.role_name === "Financial Admin" ?  (
+      return  (
         <div className='d-flex'>
           {row.status === 'Pending' ? (
             <div>
@@ -152,7 +152,7 @@ const columns = [
             </div>
           ) : <Bookmark size={30} className='text-info' onClick={() => alert('Reviewed')} />}
         </div>
-      ) : ""
+      ) 
     }
   }
 ]

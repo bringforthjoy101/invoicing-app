@@ -26,10 +26,18 @@ const sidebarNewDataPlan = ({ open, toggleSidebar }) => {
     image: ""
   })
 
+  const onChange = e => {
+    const reader = new FileReader(),
+      files = e.target.files
+    reader.onload = function () {
+      setUserData({...userData, image: reader.result})
+    }
+    reader.readAsDataURL(files[0])
+  }
 
-  const onChange = async (event, errors) => {
+  const onClicked = async (event, errors) => {
     if (errors && !errors.length) {
-      const body = JSON.stringify()
+      const body = JSON.stringify(userdata.image)
       try {
         const response = await apiRequest({ url: '/admin/upload-images', method: 'POST', body }, dispatch)
         console.log("imggg", {response})
@@ -50,11 +58,6 @@ const sidebarNewDataPlan = ({ open, toggleSidebar }) => {
     }
 
   }
-
-
-  useEffect(() => {
-    onChange()
-  }, [])
 
   const onSubmit = async (event, errors) => {
     event.preventDefault()
@@ -183,14 +186,14 @@ const sidebarNewDataPlan = ({ open, toggleSidebar }) => {
             required
           />
           <Media className='mt-75 ml-0' body>
-            <Button.Ripple tag={Label} className='mr-75' size='md' color='primary'>
+            <Button.Ripple onClick={onClicked} tag={Label} className='mr-75' size='md' color='primary'>
               Upload Image
               <AvInput
                 name='image'
                 id='image'
                 type='file'
-                value={userData.image}
-                onChange={e => setUserData({ ...userData, image: e.target.value })}
+                // value={userData.image}
+                onChange={onChange}
                 hidden
                 accept='image/*'
               />

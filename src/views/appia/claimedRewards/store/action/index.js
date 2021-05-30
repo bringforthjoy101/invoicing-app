@@ -5,12 +5,11 @@ import { data } from 'jquery'
 // ** Get all Data
 export const getAllData = () => {
   return async dispatch => {
-    const response = await apiRequest({ url: '/admin/rewards/data-plans/get', method: 'GET' }, dispatch)
-    console.log({response})
+    const response = await apiRequest({ url: '/admin/rewards/claims', method: 'GET' }, dispatch)
     if (response) {
       if (response.data.data && response.data.success) {
         await dispatch({
-          type: 'GET_ALL_DATA_PLANS',
+          type: 'GET_ALL_CLAIMED_REWARDS',
           data: response.data.data
         })
       } else {
@@ -24,21 +23,20 @@ export const getAllData = () => {
 }
 
 // ** Get filtered data on page or row change
-export const getFilteredData = (dataPlans, params) => {
+export const getFilteredData = (claimedRewards, params) => {
   return async dispatch => {
     const { q = '', perPage = 10, page = 1, role = null, category = null } = params
 
     /* eslint-disable  */
     const queryLowered = q.toLowerCase()
-    const filteredData = dataPlans.filter(
-      plan =>
-        (plan.network.toLowerCase().includes(queryLowered) || plan.category.toLowerCase().includes(queryLowered) || plan.validity.toLowerCase().includes(queryLowered)) &&
-        plan.category === (category || plan.category)
+    const filteredData = claimedRewards.filter(
+      claimed =>
+        (claimed.user_id.toLowerCase().includes(queryLowered) || claimed.transaction_id.toLowerCase().includes(queryLowered))
     )
     /* eslint-enable  */
 
     dispatch({
-      type: 'GET_FILTERED_DATA_PLANS',
+      type: 'GET_FILTERED_CLAIMED_DATA',
       data: paginateArray(filteredData, perPage, page),
       totalPages: filteredData.length,
       params
@@ -46,13 +44,32 @@ export const getFilteredData = (dataPlans, params) => {
   }
 }
 
-export const getPlan = (dataPlans, id) => {
+export const getClaim = (claimedRewards, id) => {
   return async dispatch => {
-    const plan = dataPlans.find(i => i.id === id)
-    console.log("llllll", plan.id)
+    const claimed = claimedRewards.find(i => i.id === id)
     dispatch({
-      type: 'GET_PLAN',
-      selectedPlan: plan
+      type: 'GET_CLAIM',
+      selectedClaim: claimed
     })
+  }
+}
+
+export const getUserClaimHistory = (reward_id) => {
+
+  return async dispatch => {
+    const response = await apiRequest({ url: `/admin/rewards/claims/${reward_id}`, method: 'GET' }, dispatch)
+    if (response) {
+      if (response.data.data && response.data.success) {
+        await dispatch({
+          type: 'GET_USER_CLAIM_HISTORY',
+          data: response.data.data
+        })
+      } else {
+        console.log(response.error)
+      }
+    } else {
+      swal('Oops!', 'Something went wrong with your network.', 'error')
+    }
+
   }
 }

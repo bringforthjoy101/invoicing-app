@@ -5,9 +5,6 @@ import { Fragment, useState, useEffect } from 'react'
 import { columns } from './columns'
 
 
-// ** Invoice List Sidebar
-import Sidebar from './Sidebar'
-
 // ** Store & Actions
 import { getAllData, getFilteredData } from '../store/action'
 import { useDispatch, useSelector } from 'react-redux'
@@ -25,7 +22,7 @@ import '@styles/react/libs/react-select/_react-select.scss'
 import '@styles/react/libs/tables/react-dataTable-component.scss'
 
 // ** Table Header
-const CustomHeader = ({ toggleSidebar, handlePerPage, rowsPerPage, userData }) => {
+const CustomHeader = ({ handlePerPage, rowsPerPage }) => {
   return (
     <div className='invoice-list-table-header w-100 mr-1 ml-50 mt-2 mb-75'>
       <Row>
@@ -51,25 +48,6 @@ const CustomHeader = ({ toggleSidebar, handlePerPage, rowsPerPage, userData }) =
             <Label for='rows-per-page'>Entries</Label>
           </div>
         </Col>
-        {/* {userData?.role_name === "Super Admin" ?   */}
-        <Col
-          xl='6'
-          className='d-flex align-items-sm-center justify-content-lg-end justify-content-start flex-lg-nowrap flex-wrap flex-sm-row flex-column pr-lg-1 p-0 mt-lg-0 mt-1'
-        >
-          
-          <Button.Ripple color='primary'  onClick={toggleSidebar}>
-            Create Data PLan
-          </Button.Ripple>
-          </Col> 
-          {/* : <Col
-          xl='6'
-          className='d-flex align-items-sm-center justify-content-lg-end justify-content-start flex-lg-nowrap flex-wrap flex-sm-row flex-column pr-lg-1 p-0 mt-lg-0 mt-1'
-        >
-          
-          <Button.Ripple color='primary'disabled onClick={toggleSidebar}>
-            Add New Admin
-            </Button.Ripple>
-        </Col>} */}
       </Row>
     </div>
   )
@@ -78,19 +56,14 @@ const CustomHeader = ({ toggleSidebar, handlePerPage, rowsPerPage, userData }) =
 const DataPlansPlist = () => {
   // ** Store Vars
   const dispatch = useDispatch()
-  const store = useSelector(state => state.appiaDataPlans)
+  const store = useSelector(state => state.appiaClaimedRewards)
 
   // ** States
   const [searchTerm, setSearchTerm] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
   const [rowsPerPage, setRowsPerPage] = useState(10)
-  const [sidebarOpen, setSidebarOpen] = useState(false)
-  const [currentcategory, setCurrentcategory] = useState({ value: '', label: 'Select category'})
   const [userData, setUserData] = useState(null)
 
-
-  // ** Function to toggle sidebar
-  const toggleSidebar = () => setSidebarOpen(!sidebarOpen)
 
   // ** Get data on mount
   useEffect(() => {
@@ -99,7 +72,6 @@ const DataPlansPlist = () => {
       getFilteredData(store.allData, {
         page: currentPage,
         perPage: rowsPerPage,
-        category: currentcategory.value,
         q: searchTerm
       })
     )
@@ -111,20 +83,12 @@ const DataPlansPlist = () => {
     }
   }, [])
 
-  const categoryOptions = [
-    { value: '', label: 'Select category'},
-    { value: 'Daily', label: 'Daily' }, 
-    {value: 'weekly', label: 'Weekly'},
-    { value: 'Monthly', label: 'Monthly'}
-  ]
-
   // ** Function in get data on page change
   const handlePagination = page => {
     dispatch(
       getFilteredData(store.allData, {
         page: page.selected + 1,
         perPage: rowsPerPage,
-        category: currentcategory.value,
         q: searchTerm
       })
     )
@@ -138,7 +102,6 @@ const DataPlansPlist = () => {
       getFilteredData(store.allData, {
         page: currentPage,
         perPage: value,
-        category: currentcategory.value,
         q: searchTerm
       })
     )
@@ -152,14 +115,13 @@ const DataPlansPlist = () => {
       getFilteredData(store.allData, {
         page: currentPage,
         perPage: rowsPerPage,
-        category: currentcategory.value,
         q: val
       })
     )
   }
 
   const filteredData = store.allData.filter(
-    item => (item.network.toLowerCase() || item.validity.toLowerCase())
+    item => (item.user_id.toLowerCase() || item.transaction_id.toLowerCase())
   )
 
     // ** Custom Pagination
@@ -189,7 +151,6 @@ const DataPlansPlist = () => {
   // ** Table data to render
   const dataToRender = () => {
     const filters = {
-      category: currentcategory.value,
       q: searchTerm
     }
 
@@ -214,27 +175,6 @@ const DataPlansPlist = () => {
         </CardHeader>
         <CardBody>
           <Row>
-            <Col md='4'>
-              <Select
-                theme={selectThemeColors}
-                isClearable={false}
-                className='react-select'
-                classNamePrefix='select'
-                options={categoryOptions}
-                value={currentcategory}
-                onChange={data => {
-                  setCurrentcategory(data)
-                  dispatch(
-                    getFilteredData(store.allData, {
-                      page: currentPage,
-                      perPage: rowsPerPage,
-                      category: data.value,
-                      q: searchTerm
-                    })
-                  )
-                }}
-              />
-            </Col>
             <Col md="4" className="d-flex">
             <Label className='mb-0 mt-1' for='search-invoice'>
               Search:
@@ -266,7 +206,6 @@ const DataPlansPlist = () => {
           data={dataToRender()}
           subHeaderComponent={
             <CustomHeader
-              toggleSidebar={toggleSidebar}
               handlePerPage={handlePerPage}
               rowsPerPage={rowsPerPage}
               searchTerm={searchTerm}
@@ -275,7 +214,6 @@ const DataPlansPlist = () => {
           }
         />
       </Card>
-      <Sidebar open={sidebarOpen} toggleSidebar={toggleSidebar} />
     </Fragment>
   )
 }

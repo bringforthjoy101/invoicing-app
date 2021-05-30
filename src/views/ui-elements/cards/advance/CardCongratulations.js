@@ -6,8 +6,6 @@ import decorationRight from '@src/assets/images/elements/decore-right.png'
 
 const CardCongratulations = ({userData}) => {
   
-  console.log("user", userData)
-
   return (
     <Card className='card-congratulations'>
       <CardBody className='text-center'>

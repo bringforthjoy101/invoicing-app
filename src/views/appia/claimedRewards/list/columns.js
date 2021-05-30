@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import Avatar from '@components/avatar'
 
 // ** Store & Actions
-import { getPlan } from '../store/action'
+import { getClaim } from '../store/action'
 import moment from 'moment'
 import { store } from '@store/storeConfig/store'
 
@@ -15,44 +15,37 @@ import { Slack, User, Settings, Database, Edit, MoreVertical, FileText, Trash2, 
 
 export const columns = [
   {
-    name: 'Product Id',
+    name: 'User Id',
     minWidth: '100px',
-    selector: 'product_id',
+    selector: 'user_id',
     sortable: true,
     cell: row => (
       <div className='d-flex justify-content-left align-items-center'>
         <div className='d-flex flex-column'>
           <Link
-            to={`/appia/dataPlans/view/${row.id}`}
+            to={`/appia/claimedRewards/view/${row.id}`}
             className='user-name text-truncate mb-0'
-            onClick={() => store.dispatch(getPlan(store.getState().appiaDataPlans.allData, row.id))}
+            onClick={() => store.dispatch(getClaim(store.getState().appiaClaimedRewards.allData, row.id))}
           >
-            <span className='font-weight-bold'>{row.product_id}</span>
+            <span className='font-weight-bold'>{row.user_id}</span>
           </Link>
         </div>
       </div>
     )
   },
   {
-    name: 'Price',
+    name: 'Reward Id',
     minWidth: '138px',
-    selector: 'price',
+    selector: 'reward_id',
     sortable: true,
-    cell: row => row.price
+    cell: row => row.reward_id
   },
   {
-    name: 'Network',
+    name: 'Transaction Id',
     minWidth: '172px',
-    selector: 'network',
+    selector: 'transaction_id',
     sortable: true,
-    cell: row => row.network
-  },
-  {
-    name: 'Category',
-    minWidth: '172px',
-    selector: 'category',
-    sortable: true,
-    cell: row => row.category
+    cell: row => row.transaction_id
   },
   {
     name: 'Date',

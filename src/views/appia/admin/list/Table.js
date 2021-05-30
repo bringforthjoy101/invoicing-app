@@ -304,6 +304,7 @@ const AdminsList = () => {
               rowsPerPage={rowsPerPage}
               searchTerm={searchTerm}
               handleFilter={handleFilter}
+              userData={userData}
             />
           }
         />

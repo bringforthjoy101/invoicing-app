@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
-import { getHistory } from '../../store/action/history'
+import { useParams} from 'react-router-dom'
+import { getAllHistoryData } from '../../store/action/history'
 import { Button, Spinner, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup } from 'reactstrap'
 import { Formik, Field, Form, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
@@ -12,8 +13,9 @@ const DeleteRewardSchema = Yup.object().shape({
 })
 
 
-const RestoreReward = ({selectedReward}) => {
-    const dispatch = useDispatch()
+const RestoreReward = () => {
+    const dispatch = useDispatch(),
+    { id } = useParams()
   const store = useSelector(state => state.appiaDeletedRewards)
 
     const [formModal, setFormModal] = useState(false)
@@ -27,7 +29,7 @@ const RestoreReward = ({selectedReward}) => {
             <ModalHeader toggle={() => setFormModal(!formModal)}> Restore Reward</ModalHeader>
             <Formik
               initialValues={{
-                reward_id: store.selectedReward?.id
+                reward_id: ""
               }}
               validationSchema={DeleteRewardSchema}
               onSubmit={async (values, { setSubmitting }) => {
@@ -38,7 +40,7 @@ const RestoreReward = ({selectedReward}) => {
                   if (response) {
                     if (response.data.success) {
                       swal('Great job!', response.data.message, 'success')
-                      // dispatch(getAllData())
+                      dispatch(getAllHistoryData())
                     } else {
                       swal('Oops!', response.data.message, 'error')
                     }
