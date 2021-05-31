@@ -9,6 +9,7 @@ import { getAllData, getFilteredData } from '../store/action'
 // ** Third Party Components
 import { Button, FormGroup, Label, FormText, Media } from 'reactstrap'
 import { AvForm, AvInput } from 'availity-reactstrap-validation-safe'
+import { FormattedDateParts } from 'react-intl'
 
 const sidebarNewDataPlan = ({ open, toggleSidebar }) => {
   const dispatch = useDispatch()
@@ -23,28 +24,35 @@ const sidebarNewDataPlan = ({ open, toggleSidebar }) => {
     qty: "",
     message: "",
     data_plan_id: "",
-    image: ""
+    image: null,
+    image_preview: ""
   })
 
-  const onChange = e => {
-    const reader = new FileReader(),
-      files = e.target.files
-    reader.onload = function () {
-      setUserData({...userData, image: reader.result})
-    }
-    reader.readAsDataURL(files[0])
-  }
+  // const onChange = e => {
+  //   const reader = new FileReader(),
+  //     files = e.target.files
+  //   reader.onload = function () {
+  //     setUserData({...userData, image: reader.result})
+  //   }
+  //   reader.readAsDataURL(files[0])
+  // }
+  console.log("imgg", userData.image)
 
-  const onClicked = async (event, errors) => {
-    if (errors && !errors.length) {
-      const body = JSON.stringify(userdata.image)
+  const onClicked = async (event) => {
+
+    event.preventDefault()
+    console.log("filll", userData.image)
+    if (userData.image !== null) {
+    const formData = new FormData()
+    formData.append("image", userData.image)
       try {
-        const response = await apiRequest({ url: '/admin/upload-images', method: 'POST', body }, dispatch)
-        console.log("imggg", {response})
+        const response = await apiRequest({ url: '/admin/upload-images', method: 'POST', body: formData })
+        console.log({response})
+        const preview = response.data.data
         if (response) {
           if (response.data.success) {
             swal('Great job!', response.data.message, 'success')
-            dispatch(setUserData({ ...userData, image: response }))
+            setUserData({...userData, image_preview: preview})
           } else {
             swal('Oops!', response.data.message, 'error')
           }
@@ -59,6 +67,7 @@ const sidebarNewDataPlan = ({ open, toggleSidebar }) => {
 
   }
 
+
   const onSubmit = async (event, errors) => {
     event.preventDefault()
     if (errors && !errors.length) {
@@ -70,7 +79,7 @@ const sidebarNewDataPlan = ({ open, toggleSidebar }) => {
         value: userData.value,
         message: userData.message,
         data_plan_id: userData.data_plan_id,
-        image: userData.image
+        image: userData.image_preview
     })
       try {
         const response = await apiRequest({ url: '/admin/rewards/create', method: 'POST', body }, dispatch)
@@ -79,7 +88,6 @@ const sidebarNewDataPlan = ({ open, toggleSidebar }) => {
           if (response.data.success) {
             swal('Great job!', response.data.message, 'success')
             dispatch(getAllData())
-            toggleSidebar()
           } else {
             swal('Oops!', response.data.message, 'error')
           }
@@ -186,20 +194,26 @@ const sidebarNewDataPlan = ({ open, toggleSidebar }) => {
             required
           />
           <Media className='mt-75 ml-0' body>
-            <Button.Ripple onClick={onClicked} tag={Label} className='mr-75' size='md' color='primary'>
-              Upload Image
+           <div className="d-flex mt-2">
+           <Button.Ripple  tag={Label} className='mr-75' size='md' outline color='secondary'>
+              Select an Image
               <AvInput
                 name='image'
                 id='image'
                 type='file'
-                // value={userData.image}
-                onChange={onChange}
+                onChange={e => setUserData({...userData, image: e.target.files[0]})}
                 hidden
                 accept='image/*'
               />
+             </Button.Ripple> 
+             <Button.Ripple  tag={Label} onClick={onClicked} className='mr-75' size='md' color='primary'>
+              Upload Image
             </Button.Ripple>
+           </div>
             <p>Allowed JPG, GIF or PNG. Max size of 800kB</p>
-          </Media>
+          </Media> 
+            
+
         </FormGroup>
         <Button type='submit' className='mr-1 mt-2' color='primary'>
           Submit
