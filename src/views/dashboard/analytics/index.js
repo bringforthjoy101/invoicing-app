@@ -51,8 +51,6 @@ const AnalyticsDashboard = () => {
     dashboardData()
   }, [])
 
-  console.log("dashhhh", dashData)
-
   return (
     <div id='dashboard-analytics'>
       <Row className='match-height'>

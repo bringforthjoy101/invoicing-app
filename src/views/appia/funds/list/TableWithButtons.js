@@ -144,14 +144,14 @@ const columns = [
     selector: 'role_name',
     cell: row => {
       return  (
-        <div className='d-flex'>
+       row.role_name === "Financial Admin" ? <div className='d-flex'>
           {row.status === 'Pending' ? (
             <div>
             <Check size={30} className='text-success' onClick={() => store.dispatch(reviewFunds(row.log_id, 'approve'))} />
               <X size={30} className='text-danger' onClick={() => store.dispatch(reviewFunds(row.log_id, 'disapprove'))} />
             </div>
           ) : <Bookmark size={30} className='text-info' onClick={() => alert('Reviewed')} />}
-        </div>
+        </div> : ""
       ) 
     }
   }

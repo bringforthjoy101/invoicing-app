@@ -243,7 +243,7 @@ const ContactsList = () => {
                 onChange={e => handleFilter(e.target.value)}
               />
             </Col>
-            <Col md='4' className="d-flex mt-2">
+            {/* <Col md='4' className="d-flex mt-2">
               <Label className='mb-0 mt-1' for='range-picker'>Range: </Label>
               <Flatpickr
                 value={picker}
@@ -254,7 +254,7 @@ const ContactsList = () => {
                   mode: 'range'
                 }}
               />
-            </Col>
+            </Col> */}
           </Row>
         </CardBody>
       </Card>

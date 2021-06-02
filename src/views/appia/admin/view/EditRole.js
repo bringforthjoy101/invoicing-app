@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { swal, apiRequest } from '@utils'
+import { isUserLoggedIn } from '@utils'
 import { Button, Spinner, Modal, ModalHeader, ModalBody, ModalFooter, Label, FormGroup, Input } from 'reactstrap'
 import { Formik, Field, Form, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
@@ -22,9 +22,12 @@ export const EditRole = ({ selectedAdmin }) => {
     event.preventDefault()
     if (errors && !errors.length) {
       await dispatch(changeAdminRole(id, userData.role))
+      isUserLoggedIn()
+      dispatch(getAllData())
       setFormModal(!formModal)
    }
   }
+
 
   return (
     <div>
@@ -45,7 +48,6 @@ export const EditRole = ({ selectedAdmin }) => {
                 onChange={e => setUserData({ ...userData, role: e.target.value })}
                 required
               >
-                {/* <option value='0'>Select Role</option> */}
                 <option value='0'>Select Role</option>
                 <option value='1'>Control Admin</option>
                 <option value='2'>Financial Admin</option>

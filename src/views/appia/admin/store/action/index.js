@@ -5,6 +5,7 @@ import { paginateArray, sortCompare, apiRequest, swal } from '@utils'
 export const getAllData = () => {
   return async dispatch => {
     const response = await apiRequest({ url: '/admin/get_admins', method: 'GET' }, dispatch)
+    console.log(response)
     if (response) {
       if (response.data.data && response.data.success) {
         await dispatch({
@@ -161,6 +162,7 @@ export const changeAdminRole = (admin_id, new_role_id) => {
     if (response) {
       if (response.data.success) {
         swal('Good!', `${response.data.message}.`, 'success')
+        dispatch(getAllData())
       } else {
         swal('Oops!', `${response.data.message}.`, 'error')
       }

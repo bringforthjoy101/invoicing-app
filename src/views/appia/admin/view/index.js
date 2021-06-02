@@ -29,12 +29,20 @@ const UserView = props => {
 
   const [userData, setUserData] = useState(null)
 
+
+  // useEffect(() => {
+  //   localStorage.setItem("userData", JSON.stringify(userData))
+  //   setUserData(JSON.parse(localStorage.getItem("userData")))
+   
+  // }, [])
+
   useEffect(() => {
-    if (isUserLoggedIn() !== null) {
+     if (isUserLoggedIn() !== null) {
       setUserData(JSON.parse(localStorage.getItem('userData')))
     }
   }, [])
-  // ** Get suer on mount
+ 
+  // ** Get Admin on mount
   useEffect(() => {
     dispatch(getAdmin(store.allData, id))
     dispatch(getAdminActivity(id))
