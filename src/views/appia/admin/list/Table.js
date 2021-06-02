@@ -28,7 +28,7 @@ const CustomHeader = ({ toggleSidebar, handlePerPage, rowsPerPage, userData }) =
   return (
     <div className='invoice-list-table-header w-100 mr-1 ml-50 mt-2 mb-75'>
       <Row>
-        <Col xl='6' className='d-flex align-items-center p-0'>
+        <Col xl='6' sm="12" className='d-flex align-items-center p-0'>
           <div className='d-flex align-items-center w-100'>
             <Label for='rows-per-page'>Show</Label>
             <CustomInput
@@ -52,7 +52,7 @@ const CustomHeader = ({ toggleSidebar, handlePerPage, rowsPerPage, userData }) =
         </Col>
         {userData?.role_name === "Super Admin" ?  <Col
           xl='6'
-          className='d-flex align-items-sm-center justify-content-lg-end justify-content-start flex-lg-nowrap flex-wrap flex-sm-row flex-column pr-lg-1 p-0 mt-lg-0 mt-1'
+          className='d-flex align-items-sm-left justify-content-lg-end justify-sm-content-center flex-lg-nowrap flex-wrap flex-sm-row flex-column pr-lg-1 p-0 mt-lg-0 mt-1'
         >
           
           <Button.Ripple color='primary'  onClick={toggleSidebar}>

@@ -26,7 +26,7 @@ const CustomHeader = ({ handleFilter, value, handlePerPage, rowsPerPage, downloa
   return (
     <div className='invoice-list-table-header w-100 py-2'>
       <Row>
-        <Col lg='6' className='d-flex align-items-center px-0 px-lg-1'>
+        <Col lg='6'sm="12" className='d-flex align-items-center px-0 px-lg-1 mb-2'>
           <div className='d-flex align-items-center mr-2'>
             <Label for='rows-per-page'>Show</Label>
             <CustomInput
@@ -41,11 +41,11 @@ const CustomHeader = ({ handleFilter, value, handlePerPage, rowsPerPage, downloa
               <option value='50'>50</option>
             </CustomInput>
           </div>
-          <h3>User's Transactions</h3>
+          <h3 className="d-none d-lg-block">User's Transactions</h3>
         </Col>
         <Col
-          lg='6'
-          className='actions-right d-flex align-items-center justify-content-lg-end flex-lg-nowrap flex-wrap mt-lg-0 mt-1 pr-lg-1 p-0'
+          lg='3' sm="12"
+          className='actions-right d-flex align-items-center justify-content-lg-end flex-lg-nowrap flex-wrap mt-lg-0 mt-1 pr-lg-1 p-0 mb-2'
         >
           <div className='d-flex align-items-center'>
             <Label for='search-invoice'>Search</Label>
@@ -58,7 +58,10 @@ const CustomHeader = ({ handleFilter, value, handlePerPage, rowsPerPage, downloa
               placeholder='Search Invoice'
             />
           </div>
-          <UncontrolledButtonDropdown>
+          
+        </Col>
+        <Col lg="3" sm="12">
+        <UncontrolledButtonDropdown>
             <DropdownToggle color='secondary' caret outline>
               <Share size={15} />
               <span className='align-middle ml-50'>Download Table</span>
