@@ -22,7 +22,6 @@ export const EditRole = ({ selectedAdmin }) => {
     event.preventDefault()
     if (errors && !errors.length) {
       await dispatch(changeAdminRole(id, userData.role))
-      isUserLoggedIn()
       dispatch(getAllData())
       setFormModal(!formModal)
    }
