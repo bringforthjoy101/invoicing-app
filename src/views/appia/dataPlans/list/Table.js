@@ -23,6 +23,7 @@ import { Card, CardHeader, CardTitle, CardBody, Input, Row, Col, Label, CustomIn
 // ** Styles
 import '@styles/react/libs/react-select/_react-select.scss'
 import '@styles/react/libs/tables/react-dataTable-component.scss'
+import FormGroup from 'reactstrap/lib/FormGroup'
 
 // ** Table Header
 const CustomHeader = ({ toggleSidebar, handlePerPage, rowsPerPage, userData }) => {
@@ -113,7 +114,7 @@ const DataPlansPlist = () => {
 
   const categoryOptions = [
     { value: '', label: 'Select category'},
-    { value: 'Daily', label: 'Daily' }, 
+    { value: 'daily', label: 'Daily' }, 
     {value: 'weekly', label: 'Weekly'},
     { value: 'Monthly', label: 'Monthly'}
   ]
@@ -213,44 +214,47 @@ const DataPlansPlist = () => {
           <CardTitle tag='h4'>Search Filter</CardTitle>
         </CardHeader>
         <CardBody>
-          <Row>
-            <Col md='4'>
-              <Select
-                theme={selectThemeColors}
-                isClearable={false}
-                className='react-select'
-                classNamePrefix='select'
-                options={categoryOptions}
-                value={currentcategory}
-                onChange={data => {
-                  setCurrentcategory(data)
-                  dispatch(
-                    getFilteredData(store.allData, {
-                      page: currentPage,
-                      perPage: rowsPerPage,
-                      category: data.value,
-                      q: searchTerm
-                    })
-                  )
-                }}
-              />
+        <Row>
+            <Col lg='4' md='6'>
+              <FormGroup>
+                <Label for='select'>Select Status:</Label>
+                <Select
+                  theme={selectThemeColors}
+                  isClearable={false}
+                  className='react-select'
+                  classNamePrefix='select'
+                  id='select'
+                  options={categoryOptions}
+                  value={currentcategory}
+                  onChange={data => {
+                    setCurrentcategory(data)
+                    dispatch(
+                      getFilteredData(store.allData, {
+                        page: currentPage,
+                        perPage: rowsPerPage,
+                        category: data.value,
+                        q: searchTerm
+                      })
+                    )
+                  }}
+                />
+              </FormGroup>
             </Col>
-            <Col md="4" className="d-flex">
-            <Label className='mb-0 mt-1' for='search-invoice'>
-              Search:
-            </Label>
-              <Input
-                id='search-invoice'
-                className='ml-50 w-100'
-                type='text'
-                value={searchTerm}
-                onChange={e => handleFilter(e.target.value)}
-              />
-          </Col>
+            <Col lg="4" md="6">
+              <FormGroup>
+                <Label for='search-invoice'> Search:</Label>
+                <Input
+                  id='search-invoice'
+                  type="text"
+                  value={searchTerm}
+                  placeholder='Search Id, Network and Category'
+                  onChange={e => handleFilter(e.target.value)}
+                />
+              </FormGroup>
+            </Col>
           </Row>
         </CardBody>
       </Card>
-
       <Card>
         <DataTable
           noHeader

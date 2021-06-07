@@ -29,9 +29,9 @@ export const getFilteredData = (contacts, params) => {
 
     /* eslint-disable  */
     const queryLowered = q.toLowerCase()
-    const filteredData = contacts.filter(
+    const filteredData = contacts?.filter(
       contact =>
-        (contact.email.toLowerCase().includes(queryLowered) || feedback.contact.toLowerCase().includes(queryLowered))
+        (contact?.email?.toLowerCase().includes(queryLowered) || contact?.name?.toLowerCase()?.includes(queryLowered))
     )
     /* eslint-enable  */
 

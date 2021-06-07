@@ -21,37 +21,6 @@ import { Card, CardHeader, CardTitle, CardBody, Input, Row, Col, Label, CustomIn
 import '@styles/react/libs/react-select/_react-select.scss'
 import '@styles/react/libs/tables/react-dataTable-component.scss'
 
-// ** Table Header
-const CustomHeader = ({ handlePerPage, rowsPerPage }) => {
-  return (
-    <div className='invoice-list-table-header w-100 mr-1 ml-50 mt-2 mb-75'>
-      <Row>
-        <Col xl='6' className='d-flex align-items-center p-0'>
-          <div className='d-flex align-items-center w-100'>
-            <Label for='rows-per-page'>Show</Label>
-            <CustomInput
-              className='form-control mx-50'
-              type='select'
-              id='rows-per-page'
-              value={rowsPerPage}
-              onChange={handlePerPage}
-              style={{
-                width: '10rem',
-                padding: '0 0.8rem',
-                backgroundPosition: 'calc(100% - 3px) 11px, calc(100% - 20px) 13px, 100% 0'
-              }}
-            >
-              <option value='10'>10</option>
-              <option value='25'>25</option>
-              <option value='50'>50</option>
-            </CustomInput>
-            <Label for='rows-per-page'>Entries</Label>
-          </div>
-        </Col>
-      </Row>
-    </div>
-  )
-}
 
 const DataPlansPlist = () => {
   // ** Store Vars
@@ -124,7 +93,7 @@ const DataPlansPlist = () => {
     item => (item.user_id.toLowerCase() || item.transaction_id.toLowerCase())
   )
 
-    // ** Custom Pagination
+  // ** Custom Pagination
   const CustomPagination = () => {
     const count = Math.ceil(filteredData.length / rowsPerPage)
 
@@ -176,22 +145,46 @@ const DataPlansPlist = () => {
         <CardBody>
           <Row>
             <Col md="4" className="d-flex">
-            <Label className='mb-0 mt-1' for='search-invoice'>
-              Search:
+              <Label className='mb-0 mt-1' for='search-invoice'>
+                Search:
             </Label>
               <Input
                 id='search-invoice'
                 className='ml-50 w-100'
                 type='text'
                 value={searchTerm}
+                placeholder='User and Transaction Id Search'
                 onChange={e => handleFilter(e.target.value)}
               />
-          </Col>
+            </Col>
           </Row>
         </CardBody>
       </Card>
-
       <Card>
+        <Row className='mx-0 mt-3 mb-0'>
+          <Col sm='6'>
+            <div className='d-flex align-items-center'>
+              <Label for='rows-per-page'>Show</Label>
+              <CustomInput
+                className='form-control mx-50'
+                type='select'
+                id='rows-per-page'
+                value={rowsPerPage}
+                onChange={handlePerPage}
+                style={{
+                  width: '10rem',
+                  padding: '0 0.8rem',
+                  backgroundPosition: 'calc(100% - 3px) 11px, calc(100% - 20px) 13px, 100% 0'
+                }}
+              >
+                <option value='10'>10</option>
+                <option value='25'>25</option>
+                <option value='50'>50</option>
+              </CustomInput>
+              <Label for='rows-per-page'>Entries</Label>
+            </div>
+          </Col>
+        </Row>
         <DataTable
           className='table-hover-animation'
           noHeader
@@ -204,14 +197,6 @@ const DataPlansPlist = () => {
           className='react-dataTable'
           paginationComponent={CustomPagination}
           data={dataToRender()}
-          subHeaderComponent={
-            <CustomHeader
-              handlePerPage={handlePerPage}
-              rowsPerPage={rowsPerPage}
-              searchTerm={searchTerm}
-              handleFilter={handleFilter}
-            />
-          }
         />
       </Card>
     </Fragment>

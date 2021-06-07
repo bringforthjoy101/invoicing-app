@@ -19,53 +19,7 @@ import { Card, CardHeader, CardTitle, CardBody, Input, Row, Col, Label, CustomIn
 // ** Styles
 import '@styles/react/libs/react-select/_react-select.scss'
 import '@styles/react/libs/tables/react-dataTable-component.scss'
-
-// ** Table Header
-const CustomHeader = ({ handlePerPage, rowsPerPage, searchTerm, handleFilter }) => {
-  return (
-    <div className='invoice-list-table-header w-100 mr-1 ml-50 mt-2 mb-75'>
-      <Row>
-        <Col xl="3">
-          <h3>Deleted Reward History</h3>
-        </Col>
-        <Col xl='6' className='d-flex align-items-center p-0'>
-          <div className='d-flex align-items-center w-100'>
-            <Label for='rows-per-page'>Show</Label>
-            <CustomInput
-              className='form-control mx-50'
-              type='select'
-              id='rows-per-page'
-              value={rowsPerPage}
-              onChange={handlePerPage}
-              style={{
-                width: '10rem',
-                padding: '0 0.8rem',
-                backgroundPosition: 'calc(100% - 3px) 11px, calc(100% - 20px) 13px, 100% 0'
-              }}
-            >
-              <option value='10'>10</option>
-              <option value='25'>25</option>
-              <option value='50'>50</option>
-            </CustomInput>
-            <Label for='rows-per-page'>Entries</Label>
-          </div>
-        </Col>
-        <Col xl="3" className="d-flex">
-            <Label className='mb-0 mt-1' for='search-invoice'>
-              Search:
-            </Label>
-              <Input
-                id='search-invoice'
-                className='ml-50 w-100'
-                type='text'
-                value={searchTerm}
-                onChange={e => handleFilter(e.target.value)}
-              />
-          </Col>
-      </Row>
-    </div>
-  )
-}
+import FormGroup from 'reactstrap/lib/FormGroup'
 
 const DataPlansPlist = () => {
   // ** Store Vars
@@ -202,33 +156,70 @@ const DataPlansPlist = () => {
         </CardHeader>
         <CardBody>
           <Row>
-            <Col md='4'>
-              <Select
-                theme={selectThemeColors}
-                isClearable={false}
-                className='react-select'
-                classNamePrefix='select'
-                options={statusOptions}
-                value={currentStatus}
-                onChange={data => {
-                  setCurrentStatus(data)
-                  dispatch(
-                    getFilteredHistoryData(store.allData, {
-                      page: currentPage,
-                      perPage: rowsPerPage,
-                      status: data.value,
-                      q: searchTerm
-                    })
-                  )
-                }}
+          {/* <Col lg='4' md='6'>
+              <FormGroup>
+                <Label for='select'>Select Status:</Label>
+                <Select
+                  theme={selectThemeColors}
+                  isClearable={false}
+                  className='react-select'
+                  classNamePrefix='select'
+                  id='select'
+                  options={statusOptions}
+                  value={currentStatus}
+                  onChange={data => {
+                    setCurrentStatus(data)
+                    dispatch(
+                      getFilteredData(store.allData, {
+                        page: currentPage,
+                        perPage: rowsPerPage,
+                        status: data.value,
+                        q: searchTerm
+                      })
+                    )
+                  }}
+                />
+              </FormGroup>
+            </Col> */}
+          <Col lg='4' sm='6'>
+          <FormGroup>
+          <Label for='search-invoice'>Search:</Label>
+              <Input
+                id='search-invoice'
+                type='text'
+                value={searchTerm}
+                onChange={e => handleFilter(e.target.value)}
               />
-            </Col>
-           
+          </FormGroup>
+          </Col>
           </Row>
         </CardBody>
       </Card>
-
       <Card>
+      <Row className='mx-0 mt-3'>
+          <Col sm='6'>
+            <div className='d-flex align-items-center'>
+              <Label for='rows-per-page'>Show</Label>
+              <CustomInput
+                className='form-control mx-50'
+                type='select'
+                id='rows-per-page'
+                value={rowsPerPage}
+                onChange={handlePerPage}
+                style={{
+                  width: '10rem',
+                  padding: '0 0.8rem',
+                  backgroundPosition: 'calc(100% - 3px) 11px, calc(100% - 20px) 13px, 100% 0'
+                }}
+              >
+                <option value='10'>10</option>
+                <option value='25'>25</option>
+                <option value='50'>50</option>
+              </CustomInput>
+              <Label for='rows-per-page'>Entries</Label>
+            </div>
+          </Col>
+        </Row>
         <DataTable
           noHeader
           pagination
@@ -240,14 +231,14 @@ const DataPlansPlist = () => {
           className='react-dataTable'
           paginationComponent={CustomPagination}
           data={dataToRender()}
-          subHeaderComponent={
-            <CustomHeader
-              handlePerPage={handlePerPage}
-              rowsPerPage={rowsPerPage}
-              searchTerm={searchTerm}
-              handleFilter={handleFilter}
-            />
-          }
+          // subHeaderComponent={
+          //   <CustomHeader
+          //     handlePerPage={handlePerPage}
+          //     rowsPerPage={rowsPerPage}
+          //     searchTerm={searchTerm}
+          //     handleFilter={handleFilter}
+          //   />
+          // }
         />
       </Card>
     </Fragment>

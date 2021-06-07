@@ -28,16 +28,6 @@ const sidebarNewDataPlan = ({ open, toggleSidebar }) => {
     image_preview: ""
   })
 
-  // const onChange = e => {
-  //   const reader = new FileReader(),
-  //     files = e.target.files
-  //   reader.onload = function () {
-  //     setUserData({...userData, image: reader.result})
-  //   }
-  //   reader.readAsDataURL(files[0])
-  // }
-  console.log("imgg", userData.image)
-
   const onClicked = async (event) => {
 
     event.preventDefault()
@@ -206,7 +196,7 @@ const sidebarNewDataPlan = ({ open, toggleSidebar }) => {
                 accept='image/*'
               />
              </Button.Ripple> 
-             <Button.Ripple  tag={Label} onClick={onClicked} className='mr-75' size='md' color='primary'>
+             <Button.Ripple  tag={Label} onClick={onClicked} className='mr-75'color='primary'>
               Upload Image
             </Button.Ripple>
            </div>

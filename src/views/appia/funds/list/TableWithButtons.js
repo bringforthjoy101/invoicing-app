@@ -87,7 +87,7 @@ const columns = [
     name: 'Email',
     selector: 'user_details',
     sortable: true,
-    minWidth: '240px', 
+    minWidth: '240px',
     cell: row => row.user_details.email
   },
   {
@@ -143,16 +143,16 @@ const columns = [
     // minWidth: '100px',
     selector: 'role_name',
     cell: row => {
-      return  (
-       row.role_name === "Financial Admin" ? <div className='d-flex'>
+      return (
+        row.role_name === "Financial Admin" ? <div className='d-flex'>
           {row.status === 'Pending' ? (
             <div>
-            <Check size={30} className='text-success' onClick={() => store.dispatch(reviewFunds(row.log_id, 'approve'))} />
+              <Check size={30} className='text-success' onClick={() => store.dispatch(reviewFunds(row.log_id, 'approve'))} />
               <X size={30} className='text-danger' onClick={() => store.dispatch(reviewFunds(row.log_id, 'disapprove'))} />
             </div>
           ) : <Bookmark size={30} className='text-info' onClick={() => alert('Reviewed')} />}
         </div> : ""
-      ) 
+      )
     }
   }
 ]
@@ -272,7 +272,7 @@ const DataTableWithButtons = () => {
     document.body.innerHTML = oldPage
     window.print()
     document.body.innerHTML = oldPage
-}
+  }
 
   // ** Converts table to CSV
   function convertArrayOfObjectsToCSV(array) {
@@ -327,19 +327,19 @@ const DataTableWithButtons = () => {
     })
 
     doc.autoTable({
-        styles: { halign: 'center'},
-        head: [['User', 'Purpose', 'Description', 'Status', 'Date', 'Posted by']]
+      styles: { halign: 'center' },
+      head: [['User', 'Purpose', 'Description', 'Status', 'Date', 'Posted by']]
     })
     store.allData.map(arr => {
       doc.autoTable({
         styles: { halign: 'left' },
         columnStyles: {
-          0: {cellWidth: 45},
-          1: {cellWidth: 55},
-          2: {cellWidth: 50},
-          3: {cellWidth: 40},
-          4: {cellWidth: 70},
-          5: {cellWidth: 40}
+          0: { cellWidth: 45 },
+          1: { cellWidth: 55 },
+          2: { cellWidth: 50 },
+          3: { cellWidth: 40 },
+          4: { cellWidth: 70 },
+          5: { cellWidth: 40 }
         },
         body: [[(arr.user_details.user_name), (arr.purpose), (arr.description), (arr.status), (arr.posted_date), (arr.posted_by)]]
       })
@@ -353,10 +353,7 @@ const DataTableWithButtons = () => {
       <Card>
         <CardHeader className='flex-md-row flex-column align-md-items-center align-items-start border-bottom'>
           <CardTitle tag='h4'>All Funds</CardTitle>
-          
-        </CardHeader>
-        <Row className='justify-content-between mx-0'>
-        <Col className='d-flex align-items-center justify-content-start mt-1' md='3' sm='12'>
+          <div className='d-flex mt-md-0 mt-1'>
             <UncontrolledButtonDropdown>
               <DropdownToggle color='secondary' caret outline>
                 <Share size={15} />
@@ -377,7 +374,9 @@ const DataTableWithButtons = () => {
                 </DropdownItem>
               </DropdownMenu>
             </UncontrolledButtonDropdown>
-          </Col>
+          </div>
+        </CardHeader>
+        <Row className='justify-content-end mx-0'>
           <Col className='d-flex align-items-center justify-content-end mt-1' md='3' sm='12'>
             <Label className='mr-1' for='search-input'>
               Search
@@ -393,7 +392,7 @@ const DataTableWithButtons = () => {
           </Col>
         </Row>
         <DataTable
-          printableId= "printme"
+          printableId="printme"
           noHeader
           pagination
           selectableRows

@@ -24,6 +24,7 @@ import '@styles/react/libs/react-select/_react-select.scss'
 import '@styles/react/libs/tables/react-dataTable-component.scss'
 import jsPDF from 'jspdf'
 import 'jspdf-autotable'
+import FormGroup from 'reactstrap/lib/FormGroup'
 
 // ** Table Header
 const CustomHeader = ({ downloadCSV, storeData, downloadPDF, rowsPerPage, handlePerPage }) => {
@@ -299,41 +300,45 @@ const UsersList = () => {
           <CardTitle tag='h4'>Search Filter</CardTitle>
         </CardHeader>
         <CardBody>
-          <Row>
-            <Col md='6' sm="12" className="mb-2">
-              <Select
-                theme={selectThemeColors}
-                isClearable={false}
-                className='react-select'
-                classNamePrefix='select'
-                options={statusOptions}
-                value={currentStatus}
-                onChange={data => {
-                  setCurrentStatus(data)
-                  dispatch(
-                    getFilteredData(store.allData, {
-                      page: currentPage,
-                      perPage: rowsPerPage,
-                      status: data.value,
-                      q: searchTerm
-                    })
-                  )
-                }}
-              />
+        <Row  form className='mt-1 mb-50'>
+            <Col lg='4' md='6'>
+              <FormGroup>
+                <Label for='select'>Select Status:</Label>
+                <Select
+                  theme={selectThemeColors}
+                  isClearable={false}
+                  className='react-select'
+                  classNamePrefix='select'
+                  id='select'
+                  options={statusOptions}
+                  value={currentStatus}
+                  onChange={data => {
+                    setCurrentStatus(data)
+                    dispatch(
+                      getFilteredData(store.allData, {
+                        page: currentPage,
+                        perPage: rowsPerPage,
+                        status: data.value,
+                        q: searchTerm
+                      })
+                    )
+                  }}
+                />
+              </FormGroup>
             </Col>
-            <Col md="6" sm='12'>
-              <div className='d-flex align-items-center mb-sm-0 mb-1 mr-1'>
+            <Col lg="4" md="6">
+              <FormGroup>
                 <Label className='mb-0' for='search-invoice'>
                   Search:
-            </Label>
+              </Label>
                 <Input
                   id='search-invoice'
-                  className='ml-50 w-100'
-                  type='text'
+                  type="text"
                   value={searchTerm}
+                  placeholder='Name and Email Search'
                   onChange={e => handleFilter(e.target.value)}
                 />
-              </div>
+              </FormGroup>
             </Col>
           </Row>
         </CardBody>

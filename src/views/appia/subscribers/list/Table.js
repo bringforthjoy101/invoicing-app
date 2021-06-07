@@ -24,38 +24,8 @@ import '@styles/react/libs/flatpickr/flatpickr.scss'
 // ** Styles
 import '@styles/react/libs/react-select/_react-select.scss'
 import '@styles/react/libs/tables/react-dataTable-component.scss'
+import FormGroup from 'reactstrap/lib/FormGroup'
 
-// ** Table Header
-const CustomHeader = ({ handlePerPage, rowsPerPage }) => {
-  return (
-    <div className='invoice-list-table-header w-100 mr-1 ml-50 mt-2 mb-75'>
-      <Row>
-        <Col xl='6' className='d-flex align-items-center p-0'>
-          <div className='d-flex align-items-center w-100'>
-            <Label for='rows-per-page'>Show</Label>
-            <CustomInput
-              className='form-control mx-50'
-              type='select'
-              id='rows-per-page'
-              value={rowsPerPage}
-              onChange={handlePerPage}
-              style={{
-                width: '10rem',
-                padding: '0 0.8rem',
-                backgroundPosition: 'calc(100% - 3px) 11px, calc(100% - 20px) 13px, 100% 0'
-              }}
-            >
-              <option value='10'>10</option>
-              <option value='25'>25</option>
-              <option value='50'>50</option>
-            </CustomInput>
-            <Label for='rows-per-page'>Entries</Label>
-          </div>
-        </Col>
-      </Row>
-    </div>
-  )
-}
 
 const ContactsList = () => {
   // ** Store Vars
@@ -68,9 +38,11 @@ const ContactsList = () => {
   const [rowsPerPage, setRowsPerPage] = useState(10)
   const [currentStatus, setCurrentStatus] = useState({ value: '', label: 'Select Status', number: 0 })
   const [picker, setPicker] = useState("")
-  
+
+
   const start = picker && Date.parse(picker[0])
   const end = picker && Date.parse(picker[1])
+
   // ** Get data on mount
   useEffect(() => {
     dispatch(getAllData())
@@ -79,7 +51,8 @@ const ContactsList = () => {
         page: currentPage,
         perPage: rowsPerPage,
         status: currentStatus.value,
-        q: searchTerm
+        q: searchTerm,
+        created_at: picker
       })
     )
   }, [dispatch])
@@ -98,7 +71,8 @@ const ContactsList = () => {
         page: page.selected + 1,
         perPage: rowsPerPage,
         status: currentStatus.value,
-        q: searchTerm
+        q: searchTerm,
+        created_at: picker
       })
     )
     setCurrentPage(page.selected + 1)
@@ -112,7 +86,8 @@ const ContactsList = () => {
         page: currentPage,
         perPage: value,
         status: currentStatus.value,
-        q: searchTerm
+        q: searchTerm,
+        created_at: picker
       })
     )
     setRowsPerPage(value)
@@ -126,22 +101,24 @@ const ContactsList = () => {
         page: currentPage,
         perPage: rowsPerPage,
         status: currentStatus.value,
-        q: val
+        q: val,
+        created_at: picker
       })
     )
   }
 
-  const handleRange = date => {
+  const handleRange = (date) => {
     setPicker(date)
     dispatch(
       getFilteredData(store.allData, {
         page: currentPage,
         perPage: rowsPerPage,
-        q: searchTerm
+        status: currentStatus.value,
+        q: searchTerm,
+        created_at: date
       })
     )
-   }
-
+  }
 
   const filteredData = store.allData.filter(
     item => (item.email.toLowerCase() || item.created_at.toLowerCase())
@@ -179,21 +156,21 @@ const ContactsList = () => {
     }
     const dateFilter = store.allData.filter((contact) => {
       if (Date.parse(contact.created_at) >= start &&
-         Date.parse(contact.created_at) <= end) {
-         return contact
-       }
-   })
+        Date.parse(contact.created_at) <= end) {
+        return contact
+      }
+    })
 
-   console.log("date", dateFilter)
+    console.log("date", dateFilter)
 
- 
-   const isFiltered = Object.keys(filters).some(function (k) {
-     return filters[k].length > 0
-   })
 
-   if (!searchTerm && start && end) {
-     return dateFilter.slice(0, rowsPerPage)
-   } else if (store.data.length > 0) {
+    const isFiltered = Object.keys(filters).some(function (k) {
+      return filters[k].length > 0
+    })
+
+    if (!searchTerm && start && end) {
+      return dateFilter.slice(0, rowsPerPage)
+    } else if (store.data.length > 0) {
       return store.data
     } else if (store.data.length === 0 && isFiltered) {
       return []
@@ -209,39 +186,45 @@ const ContactsList = () => {
           <CardTitle tag='h4'>Search Filter</CardTitle>
         </CardHeader>
         <CardBody>
-          <Row>
-            <Col md='4'>
-              <Select
-                theme={selectThemeColors}
-                isClearable={false}
-                className='react-select'
-                classNamePrefix='select'
-                options={statusOptions}
-                value={currentStatus}
-                onChange={data => {
-                  setCurrentStatus(data)
-                  dispatch(
-                    getFilteredData(store.allData, {
-                      page: currentPage,
-                      perPage: rowsPerPage,
-                      status: data.value,
-                      q: searchTerm
-                    })
-                  )
-                }}
-              />
+          <Row  form className='mt-1 mb-50'>
+            <Col lg='4' md='6'>
+              <FormGroup>
+                <Label for='select'>Select Status:</Label>
+                <Select
+                  theme={selectThemeColors}
+                  isClearable={false}
+                  className='react-select'
+                  classNamePrefix='select'
+                  id='select'
+                  options={statusOptions}
+                  value={currentStatus}
+                  onChange={data => {
+                    setCurrentStatus(data)
+                    dispatch(
+                      getFilteredData(store.allData, {
+                        page: currentPage,
+                        perPage: rowsPerPage,
+                        status: data.value,
+                        q: searchTerm
+                      })
+                    )
+                  }}
+                />
+              </FormGroup>
             </Col>
-            <Col md="4" className="d-flex">
-              <Label className='mb-0 mt-1' for='search-invoice'>
-                Search:
-            </Label>
-              <Input
-                id='search-invoice'
-                className='ml-50 w-100'
-                type='text'
-                value={searchTerm}
-                onChange={e => handleFilter(e.target.value)}
-              />
+            <Col lg="4" md="6">
+              <FormGroup>
+                <Label className='mb-0' for='search-invoice'>
+                  Search:
+              </Label>
+                <Input
+                  id='search-invoice'
+                  type="text"
+                  value={searchTerm}
+                  placeholder='Email Search'
+                  onChange={e => handleFilter(e.target.value)}
+                />
+              </FormGroup>
             </Col>
             {/* <Col md='4' className="d-flex mt-2">
               <Label className='mb-0 mt-1' for='range-picker'>Range: </Label>
@@ -249,7 +232,8 @@ const ContactsList = () => {
                 value={picker}
                 id='range-picker'
                 className='form-control'
-                onChange={handleRange}
+                onChange={(handleRange)}
+                onChange={date => setPicker(date)}
                 options={{
                   mode: 'range'
                 }}
@@ -260,6 +244,30 @@ const ContactsList = () => {
       </Card>
 
       <Card>
+        <Row className='mx-0 mt-3'>
+          <Col sm='6'>
+            <div className='d-flex align-items-center'>
+              <Label for='rows-per-page'>Show</Label>
+              <CustomInput
+                className='form-control mx-50'
+                type='select'
+                id='rows-per-page'
+                value={rowsPerPage}
+                onChange={handlePerPage}
+                style={{
+                  width: '10rem',
+                  padding: '0 0.8rem',
+                  backgroundPosition: 'calc(100% - 3px) 11px, calc(100% - 20px) 13px, 100% 0'
+                }}
+              >
+                <option value='10'>10</option>
+                <option value='25'>25</option>
+                <option value='50'>50</option>
+              </CustomInput>
+              <Label for='rows-per-page'>Entries</Label>
+            </div>
+          </Col>
+        </Row>
         <DataTable
           noHeader
           pagination
@@ -271,14 +279,6 @@ const ContactsList = () => {
           className='react-dataTable'
           paginationComponent={CustomPagination}
           data={dataToRender()}
-          subHeaderComponent={
-            <CustomHeader
-              handlePerPage={handlePerPage}
-              rowsPerPage={rowsPerPage}
-              searchTerm={searchTerm}
-              handleFilter={handleFilter}
-            />
-          }
         />
       </Card>
     </Fragment>

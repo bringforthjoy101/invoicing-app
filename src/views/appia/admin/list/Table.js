@@ -22,13 +22,14 @@ import { Card, CardHeader, CardTitle, CardBody, Input, Row, Col, Label, CustomIn
 // ** Styles
 import '@styles/react/libs/react-select/_react-select.scss'
 import '@styles/react/libs/tables/react-dataTable-component.scss'
+import FormGroup from 'reactstrap/lib/FormGroup'
 
 // ** Table Header
 const CustomHeader = ({ toggleSidebar, handlePerPage, rowsPerPage, userData }) => {
   return (
     <div className='invoice-list-table-header w-100 mr-1 ml-50 mt-2 mb-75'>
       <Row>
-        <Col xl='6' sm="12" className='d-flex align-items-center p-0'>
+        <Col xl='6'className='d-flex align-items-center p-0'>
           <div className='d-flex align-items-center w-100'>
             <Label for='rows-per-page'>Show</Label>
             <CustomInput
@@ -225,12 +226,15 @@ const AdminsList = () => {
         </CardHeader>
         <CardBody>
           <Row>
-            <Col md='4'>
+          <Col lg='4' md='6'>
+              <FormGroup>
+                <Label for='select'>Select Role:</Label>
               <Select
                  theme={selectThemeColors}
                  isClearable={false}
                  className='react-select'
                  classNamePrefix='select'
+                 id='select'
                  options={roleOptions}
                  value={currentRole}
                  onChange={data => {
@@ -246,41 +250,45 @@ const AdminsList = () => {
                    )
                  }}
               />
+              </FormGroup>
             </Col>
-            <Col md='4'>
-              <Select
-                theme={selectThemeColors}
-                isClearable={false}
-                className='react-select'
-                classNamePrefix='select'
-                options={statusOptions}
-                value={currentStatus}
-                onChange={data => {
-                  setCurrentStatus(data)
-                  dispatch(
-                    getFilteredData(store.allData, {
-                      page: currentPage,
-                      perPage: rowsPerPage,
-                      role: currentRole.value,
-                      status: data.value,
-                      q: searchTerm
-                    })
-                  )
-                }}
-              />
+            <Col lg='4' md='6'>
+              <FormGroup>
+                <Label for='select'>Select Status:</Label>
+                <Select
+                  theme={selectThemeColors}
+                  isClearable={false}
+                  className='react-select'
+                  classNamePrefix='select'
+                  id='select'
+                  options={statusOptions}
+                  value={currentStatus}
+                  onChange={data => {
+                    setCurrentStatus(data)
+                    dispatch(
+                      getFilteredData(store.allData, {
+                        page: currentPage,
+                        perPage: rowsPerPage,
+                        status: data.value,
+                        q: searchTerm
+                      })
+                    )
+                  }}
+                />
+              </FormGroup>
             </Col>
-            <Col md="4" className="d-flex">
-            <Label className='mb-0 mt-1' for='search-invoice'>
-              Search:
-            </Label>
-              <Input
-                id='search-invoice'
-                className='ml-50 w-100'
-                type='text'
-                value={searchTerm}
-                onChange={e => handleFilter(e.target.value)}
-              />
-          </Col>
+            <Col lg="4" md="6">
+              <FormGroup>
+                <Label for='search-invoice'> Search:</Label>
+                <Input
+                  id='search-invoice'
+                  type="text"
+                  value={searchTerm}
+                  placeholder='Name ad Email Search'
+                  onChange={e => handleFilter(e.target.value)}
+                />
+              </FormGroup>
+            </Col>
           </Row>
         </CardBody>
       </Card>

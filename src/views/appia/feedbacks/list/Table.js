@@ -177,15 +177,16 @@ const FeedbacksList = () => {
                 className='ml-50 w-100'
                 type='text'
                 value={searchTerm}
+                placeholder='Name and Email Search'
                 onChange={e => handleFilter(e.target.value)}
               />
             </Col>
           </Row>
         </CardBody>
       </Card>
-
       <Card>
-        <DataTable
+     
+       <DataTable
           noHeader
           pagination
           subHeader
@@ -196,14 +197,6 @@ const FeedbacksList = () => {
           className='react-dataTable'
           paginationComponent={CustomPagination}
           data={dataToRender()}
-          subHeaderComponent={
-            <CustomHeader
-              handlePerPage={handlePerPage}
-              rowsPerPage={rowsPerPage}
-              searchTerm={searchTerm}
-              handleFilter={handleFilter}
-            />
-          }
         />
       </Card>
     </Fragment>
