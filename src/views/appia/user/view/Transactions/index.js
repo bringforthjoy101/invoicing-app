@@ -44,7 +44,7 @@ const CustomHeader = ({ handleFilter, value, handlePerPage, rowsPerPage, downloa
           <h3 className="d-none d-lg-block">User's Transactions</h3>
         </Col>
         <Col
-          lg='3' sm="12"
+          lg='3' sm="6"
           className='actions-right d-flex align-items-center justify-content-lg-end flex-lg-nowrap flex-wrap mt-lg-0 mt-1 pr-lg-1 p-0 mb-2'
         >
           <div className='d-flex align-items-center'>

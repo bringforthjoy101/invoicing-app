@@ -16,7 +16,7 @@ import { Slack, User, Settings, Database, Edit, MoreVertical, FileText, Trash2, 
 export const columns = [
   {
     name: 'Product Id',
-    minWidth: '100px',
+    minWidth: '160px',
     selector: 'product_id',
     sortable: true,
     cell: row => (
@@ -56,7 +56,7 @@ export const columns = [
   },
   {
     name: 'Date',
-    minWidth: '172px',
+    minWidth: '200px',
     selector: 'created_at',
     sortable: true,
     cell: row => moment(row.created_at).format('lll')

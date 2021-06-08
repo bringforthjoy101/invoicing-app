@@ -31,7 +31,7 @@ const statusObj = {
 export const columns = [
   {
     name: 'User Id',
-    minWidth: '297px',
+    minWidth: '120px',
     selector: 'id',
     sortable: true,
     cell: row => row.id
@@ -45,7 +45,7 @@ export const columns = [
   },
   {
     name: 'Status',
-    minWidth: '138px',
+    minWidth: '100px',
     selector: 'status',
     sortable: true,
     cell: row => (
@@ -56,7 +56,7 @@ export const columns = [
   },
   {
     name: 'Date Subscribed',
-    minWidth: '138px',
+    minWidth: '200px',
     selector: 'created_at',
     sortable: true,
     cell: row => moment(row.created_at).format('lll')

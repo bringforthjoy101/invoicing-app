@@ -2,6 +2,7 @@
 import React, { Fragment, useState, useEffect, forwardRef, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import moment from 'moment'
+import { Link } from 'react-router-dom'
 
 // ** Custom Components
 import Avatar from '@components/avatar'
@@ -29,7 +30,7 @@ import {
   Edit,
   FileText,
   Archive,
-  Trash, X, Check, Bookmark
+  Trash, X, Check, Bookmark, Trash2
 } from 'react-feather'
 
 import {
@@ -151,7 +152,35 @@ const columns = [
               <X size={30} className='text-danger' onClick={() => store.dispatch(reviewFunds(row.log_id, 'disapprove'))} />
             </div>
           ) : <Bookmark size={30} className='text-info' onClick={() => alert('Reviewed')} />}
-        </div> : ""
+        </div> : <UncontrolledDropdown>
+        <DropdownToggle tag='div' className='btn btn-sm'>
+          <MoreVertical size={14} className='cursor-pointer' />
+        </DropdownToggle>
+        <DropdownMenu right>
+          <DropdownItem
+            tag={Link}
+            to={`/appia/admin/view/${row.admin_id}`}
+            className='w-100'
+            onClick={() => store.dispatch(getFeedback(store.getState().appiaFunds.allData, row.id))}
+          >
+            <FileText size={14} className='mr-50' />
+            <span className='align-middle'>Details</span>
+          </DropdownItem>
+          <DropdownItem
+            tag={Link}
+            to={`/appia/admin/edit/${row.id}`}
+            className='w-100'
+            onClick={() => store.dispatch(getFeedback(store.getState().appiaFunds.allData, row.id))}
+          >
+            <Archive size={14} className='mr-50' />
+            <span className='align-middle'>Edit</span>
+          </DropdownItem>
+          <DropdownItem className='w-100'>
+            <Trash2 size={14} className='mr-50' />
+            <span className='align-middle'>Delete</span>
+          </DropdownItem>
+        </DropdownMenu>
+      </UncontrolledDropdown>
       )
     }
   }

@@ -34,7 +34,7 @@ export const columns = [
   },
   {
     name: 'Reward Id',
-    minWidth: '100px',
+    minWidth: '140px',
     selector: 'id',
     sortable: true,
     cell: row => row.id
@@ -86,7 +86,7 @@ export const columns = [
   },
   {
     name: 'Date',
-    minWidth: '172px',
+    minWidth: '200px',
     selector: 'created_at',
     sortable: true,
     cell: row => moment(row.created_at).format('lll')

@@ -64,7 +64,7 @@ export const columns = [
   },
   {
     name: 'Date',
-    minWidth: '138px',
+    minWidth: '200px',
     selector: 'created_at',
     sortable: true,
     cell: row => moment(row.created_at).format('lll')

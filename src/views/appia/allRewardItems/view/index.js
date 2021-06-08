@@ -36,10 +36,10 @@ const UserView = props => {
   return store.selectedReward !== null && store.selectedReward !== undefined ? (
     <div className='app-user-view'>
       <Row>
-        <Col xl='9' lg='8' md='7'>
+        <Col xl='9' lg='9' md='10'>
           <AllRewardInfo selectedReward={store.selectedReward} />
         </Col>
-        <Col xl='3' lg='4' md='5'>
+        <Col xl='3' lg='3' md='2'>
           <PlanCard selectedReward={store.selectedReward} />
         </Col> 
       </Row>

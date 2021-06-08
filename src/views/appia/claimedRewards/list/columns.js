@@ -16,7 +16,7 @@ import { Slack, User, Settings, Database, Edit, MoreVertical, FileText, Trash2, 
 export const columns = [
   {
     name: 'User Id',
-    minWidth: '100px',
+    minWidth: '120px',
     selector: 'user_id',
     sortable: true,
     cell: row => (
@@ -35,21 +35,21 @@ export const columns = [
   },
   {
     name: 'Reward Id',
-    minWidth: '138px',
+    minWidth: '140px',
     selector: 'reward_id',
     sortable: true,
     cell: row => row.reward_id
   },
   {
     name: 'Transaction Id',
-    minWidth: '172px',
+    minWidth: '200px',
     selector: 'transaction_id',
     sortable: true,
     cell: row => row.transaction_id
   },
   {
     name: 'Date',
-    minWidth: '172px',
+    minWidth: '200px',
     selector: 'created_at',
     sortable: true,
     cell: row => moment(row.created_at).format('lll')
