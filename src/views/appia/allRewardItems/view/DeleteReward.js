@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { getAllData } from '../store/action'
+import { getAllHistoryData } from '../store/action/history'
 import { Button, Spinner, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup } from 'reactstrap'
 import { Formik, Field, Form, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
@@ -32,11 +33,11 @@ export const DeleteReward = ({selectedReward}) => {
               const body = JSON.stringify(values)
               try {
                 const response = await apiRequest({ url: '/admin/rewards/delete', method: 'POST', body }, dispatch)
-                console.log("plddddd", { response })
                 if (response) {
                   if (response.data.success) {
                     swal('Great job!', response.data.message, 'success')
                     dispatch(getAllData())
+                    dispatch(getAllHistoryData())
                   } else {
                     swal('Oops!', response.data.message, 'error')
                   }

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useParams} from 'react-router-dom'
 import { getAllHistoryData } from '../../store/action/history'
+import { getAllData } from '../../store/action/index'
 import { Button, Spinner, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup } from 'reactstrap'
 import { Formik, Field, Form, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
@@ -36,11 +37,11 @@ const RestoreReward = () => {
                 const body = JSON.stringify(values)
                 try {
                   const response = await apiRequest({ url: '/admin/rewards/restore', method: 'POST', body }, dispatch)
-                  console.log("plddddd", { response })
                   if (response) {
                     if (response.data.success) {
                       swal('Great job!', response.data.message, 'success')
                       dispatch(getAllHistoryData())
+                      dispatch(getAllData())
                     } else {
                       swal('Oops!', response.data.message, 'error')
                     }

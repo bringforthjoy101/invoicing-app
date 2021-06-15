@@ -35,7 +35,7 @@ export default StatsWithAreaChart
 StatsWithAreaChart.propTypes = {
   icon: PropTypes.element.isRequired,
   color: PropTypes.string.isRequired,
-  stats: PropTypes.string.isRequired,
+  // stats: PropTypes.number.isRequired,
   statTitle: PropTypes.string.isRequired,
   options: PropTypes.object,
   series: PropTypes.array.isRequired,

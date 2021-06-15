@@ -161,9 +161,6 @@ const ContactsList = () => {
       }
     })
 
-    console.log("date", dateFilter)
-
-
     const isFiltered = Object.keys(filters).some(function (k) {
       return filters[k].length > 0
     })

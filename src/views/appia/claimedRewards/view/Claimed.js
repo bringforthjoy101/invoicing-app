@@ -3,7 +3,7 @@ import moment from 'moment'
 
 // ** Third Party Components
 import { Card, CardBody, CardText, Button, Row, Col } from 'reactstrap'
-import { DollarSign, TrendingUp, User, Check, Star, Flag, Phone, BarChart, Key, Layers, Clock, Pocket } from 'react-feather'
+import { DollarSign, TrendingUp, User, Check, Star, Flag, Phone, BarChart, Key, Layers, Clock, Pocket, Code } from 'react-feather'
 
 const DataPlanInfo = ({ selectedClaim }) => {
 
@@ -11,7 +11,7 @@ const DataPlanInfo = ({ selectedClaim }) => {
     <Card>
       <CardBody>
         <Row>
-          <Col xl='6' lg='12' className='mt-2 mt-xl-0'>
+          <Col xl='12' lg='12' className='mt-2 mt-xl-0'>
             <div className='user-info-wrapper'>
               <div className='d-flex flex-wrap align-items-center mb-1'>
                 <div className='d-flex align-items-center'>
@@ -63,6 +63,19 @@ const DataPlanInfo = ({ selectedClaim }) => {
                 </div>
                 <CardText className='text-capitalize mb-0'>
                   {moment(selectedClaim?.created_at).format('lll')}
+                </CardText>
+              </div>
+              <div className='d-flex flex-wrap align-items-center mb-1'>
+                <div className='d-flex align-items-center'>
+                  <div className='color-box bg-light-secoundary'>
+                    <Code className='text-secoundary' />
+                  </div>
+                  <CardText tag='span' className='user-info-title font-weight-bold mb-0 ml-1'>
+                     Claim Code
+                  </CardText>
+                </div>
+                <CardText className='text-capitalize mb-0'>
+                  {selectedClaim?.code !== null ? selectedClaim.code : "123"}
                 </CardText>
               </div>
             </div>

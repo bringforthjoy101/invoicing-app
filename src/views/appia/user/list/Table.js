@@ -27,61 +27,61 @@ import 'jspdf-autotable'
 import FormGroup from 'reactstrap/lib/FormGroup'
 
 // ** Table Header
-const CustomHeader = ({ downloadCSV, storeData, downloadPDF, rowsPerPage, handlePerPage }) => {
-  return (
-    <div className='invoice-list-table-header w-100 mr-1 ml-50 mt-2 mb-75'>
-      <Row>
-      <Col xl='6' sm="12" className='d-flex align-items-center p-0'>
-          <div className='d-flex align-items-center w-100'>
-            <Label for='rows-per-page'>Show</Label>
-            <CustomInput
-              className='form-control mx-50'
-              type='select'
-              id='rows-per-page'
-              value={rowsPerPage}
-              onChange={handlePerPage}
-              style={{
-                width: '10rem',
-                padding: '0 0.8rem',
-                backgroundPosition: 'calc(100% - 3px) 11px, calc(100% - 20px) 13px, 100% 0'
-              }}
-            >
-              <option value='10'>10</option>
-              <option value='25'>25</option>
-              <option value='50'>50</option>
-            </CustomInput>
-            <Label for='rows-per-page'>Entries</Label>
-          </div>
-        </Col>
-        <Col
-          xl='6'
-          className='d-flex align-items-sm-center justify-content-lg-end justify-content-start flex-lg-nowrap flex-wrap flex-sm-row flex-column pr-lg-1 p-0 mt-lg-0 mt-1'
-        >
-         <UncontrolledButtonDropdown>
-              <DropdownToggle color='secondary' caret outline>
-                <Share size={15} />
-                <span className='align-middle ml-50'>Download Table</span>
-              </DropdownToggle>
-              <DropdownMenu right>
-                <DropdownItem className='w-100' onClick={() => downloadCSV(storeData)}>
-                  <FileText size={15} />
-                  <span className='align-middle ml-50'>CSV</span>
-                </DropdownItem>
-                <DropdownItem className='w-100' onClick={() => downloadPDF()}>
-                  <FileText size={15} />
-                  <span className='align-middle ml-50'>PDF</span>
-                </DropdownItem>
-                <DropdownItem className='w-100' onClick={() => printOrder(filteredData)}>
-                  <Printer size={15} />
-                  <span className='align-middle ml-50'>Print</span>
-                </DropdownItem>
-              </DropdownMenu>
-            </UncontrolledButtonDropdown>
-        </Col>
-      </Row>
-    </div>
-  )
-}
+// const CustomHeader = ({ downloadCSV, storeData, downloadPDF, rowsPerPage, handlePerPage }) => {
+//   return (
+//     <div className='invoice-list-table-header w-100 mr-1 ml-50 mt-2 mb-75'>
+//       <Row>
+//       <Col xl='6' sm="12" className='d-flex align-items-center p-0'>
+//           <div className='d-flex align-items-center w-100'>
+//             <Label for='rows-per-page'>Show</Label>
+//             <CustomInput
+//               className='form-control mx-50'
+//               type='select'
+//               id='rows-per-page'
+//               value={rowsPerPage}
+//               onChange={handlePerPage}
+//               style={{
+//                 width: '10rem',
+//                 padding: '0 0.8rem',
+//                 backgroundPosition: 'calc(100% - 3px) 11px, calc(100% - 20px) 13px, 100% 0'
+//               }}
+//             >
+//               <option value='10'>10</option>
+//               <option value='25'>25</option>
+//               <option value='50'>50</option>
+//             </CustomInput>
+//             <Label for='rows-per-page'>Entries</Label>
+//           </div>
+//         </Col>
+//         <Col
+//           xl='6' sm='12'
+//           className='d-flex align-items-sm-center justify-content-lg-end justify-content-start flex-lg-nowrap flex-wrap flex-sm-row flex-column pr-lg-1 p-0 mt-lg-0 mt-1'
+//         >
+//          <UncontrolledButtonDropdown>
+//               <DropdownToggle color='secondary' caret outline>
+//                 <Share size={15} />
+//                 <span className='align-middle ml-50'>Download Table</span>
+//               </DropdownToggle>
+//               <DropdownMenu right>
+//                 <DropdownItem className='w-100' onClick={() => downloadCSV(storeData)}>
+//                   <FileText size={15} />
+//                   <span className='align-middle ml-50'>CSV</span>
+//                 </DropdownItem>
+//                 <DropdownItem className='w-100' onClick={() => downloadPDF()}>
+//                   <FileText size={15} />
+//                   <span className='align-middle ml-50'>PDF</span>
+//                 </DropdownItem>
+//                 <DropdownItem className='w-100' onClick={() => printOrder(filteredData)}>
+//                   <Printer size={15} />
+//                   <span className='align-middle ml-50'>Print</span>
+//                 </DropdownItem>
+//               </DropdownMenu>
+//             </UncontrolledButtonDropdown>
+//         </Col>
+//       </Row>
+//     </div>
+//   )
+// }
 
 
 const UsersList = () => {
@@ -344,6 +344,55 @@ const UsersList = () => {
         </CardBody>
       </Card>
       <Card>
+      <Row className='mx-0 mt-3'>
+      <Col xl='6' sm="12" className='d-flex align-items-center pl-3'>
+          <div className='d-flex align-items-center w-100'>
+            <Label for='rows-per-page'>Show</Label>
+            <CustomInput
+              className='form-control mx-50'
+              type='select'
+              id='rows-per-page'
+              value={rowsPerPage}
+              onChange={handlePerPage}
+              style={{
+                width: '10rem',
+                padding: '0 0.8rem',
+                backgroundPosition: 'calc(100% - 3px) 11px, calc(100% - 20px) 13px, 100% 0'
+              }}
+            >
+              <option value='10'>10</option>
+              <option value='25'>25</option>
+              <option value='50'>50</option>
+            </CustomInput>
+            <Label for='rows-per-page'>Entries</Label>
+          </div>
+        </Col>
+        <Col
+          xl='6' sm='12'
+          className='d-flex align-items-sm-center justify-content-lg-end justify-content-center pr-lg-3 p-0 mt-lg-0 mt-1'
+        >
+         <UncontrolledButtonDropdown>
+              <DropdownToggle className="mr-lg-0 mr-5" color='secondary' caret outline>
+                <Share size={15} />
+                <span className='align-middle ml-lg-50'>Download Table</span>
+              </DropdownToggle>
+              <DropdownMenu right>
+                <DropdownItem className='w-100' onClick={() => downloadCSV(storeData)}>
+                  <FileText size={15} />
+                  <span className='align-middle ml-50'>CSV</span>
+                </DropdownItem>
+                <DropdownItem className='w-100' onClick={() => downloadPDF()}>
+                  <FileText size={15} />
+                  <span className='align-middle ml-50'>PDF</span>
+                </DropdownItem>
+                <DropdownItem className='w-100' onClick={() => printOrder(filteredData)}>
+                  <Printer size={15} />
+                  <span className='align-middle ml-50'>Print</span>
+                </DropdownItem>
+              </DropdownMenu>
+            </UncontrolledButtonDropdown>
+        </Col>
+      </Row>
         <DataTable
           noHeader
           pagination
@@ -355,17 +404,17 @@ const UsersList = () => {
           className='react-dataTable'
           paginationComponent={CustomPagination}
           data={dataToRender()}
-          subHeaderComponent={
-            <CustomHeader
-              handlePerPage={handlePerPage}
-              rowsPerPage={rowsPerPage}
-              searchTerm={searchTerm}
-              handleFilter={handleFilter}
-              downloadCSV={downloadCSV}
-              storeData={store.allData}
-              downloadPDF={downloadPDF}
-            />
-          }
+          // subHeaderComponent={
+          //   <CustomHeader
+          //     handlePerPage={handlePerPage}
+          //     rowsPerPage={rowsPerPage}
+          //     searchTerm={searchTerm}
+          //     handleFilter={handleFilter}
+          //     downloadCSV={downloadCSV}
+          //     storeData={store.allData}
+          //     downloadPDF={downloadPDF}
+          //   />
+          // }
         />
       </Card>
     </Fragment>

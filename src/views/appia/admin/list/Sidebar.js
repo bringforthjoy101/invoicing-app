@@ -27,13 +27,10 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
     //   toggleSidebar()
     // }
     event.preventDefault()
-    console.log({errors})
     if (errors && !errors.length) {
-      console.log({userData})
       const body = JSON.stringify(userData)
       try {
         const response = await apiRequest({url:'/admin/register', method:'POST', body}, dispatch)
-        console.log({response})
         if (response) {
           if (response.data.success) {
             swal('Great job!', response.data.message, 'success')

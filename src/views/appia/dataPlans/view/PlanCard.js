@@ -5,6 +5,7 @@ import { Formik, Field, Form, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 import { store } from '@store/storeConfig/store'
 import { useSelector, useDispatch } from 'react-redux'
+import { getAllData } from '../store/action'
 import { swal, apiRequest } from '@utils'
 
 
@@ -39,7 +40,6 @@ const PlanCard = ({ selectedPlan }) => {
               const body = JSON.stringify(values)
               try {
                 const response = await apiRequest({ url: '/admin/rewards/data-plan/delete', method: 'POST', body }, dispatch)
-                console.log("plddddd", { response })
                 if (response) {
                   if (response.data.success) {
                     swal('Great job!', response.data.message, 'success')

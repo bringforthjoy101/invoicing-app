@@ -1,6 +1,6 @@
 // ** Custom Components
 import Sidebar from '@components/sidebar'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 
 import { swal, apiRequest } from '@utils'
@@ -13,6 +13,7 @@ import { AvForm, AvInput } from 'availity-reactstrap-validation-safe'
 const sidebarNewDataPlan = ({ open, toggleSidebar }) => {
   const dispatch = useDispatch()
 
+
   const [userData, setUserData] = useState({
     network: '',
     category: '',
@@ -21,12 +22,11 @@ const sidebarNewDataPlan = ({ open, toggleSidebar }) => {
     product_id: ''
   })
   const onSubmit = async (event, errors) => {
-    event.preventDefault()
+    event?.preventDefault()
     if (errors && !errors.length) {
       const body = JSON.stringify(userData)
       try {
         const response = await apiRequest({url:'/admin/rewards/data-plan/create', method:'POST', body}, dispatch)
-        console.log({response})
         if (response) {
           if (response.data.success) {
             swal('Great job!', response.data.message, 'success')
@@ -44,6 +44,11 @@ const sidebarNewDataPlan = ({ open, toggleSidebar }) => {
       }
     }
   }
+
+  useEffect(() => {
+    onSubmit()
+    dispatch(getAllData())
+  }, [dispatch])
 
     return (
       <Sidebar

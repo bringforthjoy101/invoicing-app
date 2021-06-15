@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { isUserLoggedIn } from '@utils'
 import { Button, Spinner, Modal, ModalHeader, ModalBody, ModalFooter, Label, FormGroup, Input } from 'reactstrap'
 import { Formik, Field, Form, ErrorMessage } from 'formik'
@@ -19,13 +19,18 @@ export const EditRole = ({ selectedAdmin }) => {
   const [formModal, setFormModal] = useState(false)
 
   const onSubmit = async (event, errors, admin_id) => {
-    event.preventDefault()
+    event?.preventDefault()
     if (errors && !errors.length) {
       await dispatch(changeAdminRole(id, userData.role))
       dispatch(getAllData())
       setFormModal(!formModal)
    }
   }
+
+  useEffect(() => {
+    onSubmit()
+    dispatch(getAllData())
+  }, dispatch)
 
 
   return (

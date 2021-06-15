@@ -6,7 +6,6 @@ import { data } from 'jquery'
 export const getAllData = () => {
   return async dispatch => {
     const response = await apiRequest({ url: '/admin/rewards/data-plans/get', method: 'GET' }, dispatch)
-    console.log({response})
     if (response) {
       if (response.data.data && response.data.success) {
         await dispatch({
