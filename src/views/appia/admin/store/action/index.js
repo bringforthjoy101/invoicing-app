@@ -5,6 +5,7 @@ import { paginateArray, sortCompare, apiRequest, swal } from '@utils'
 export const getAllData = () => {
   return async dispatch => {
     const response = await apiRequest({ url: '/admin/get_admins', method: 'GET' }, dispatch)
+    console.log({response})
     if (response) {
       if (response.data.data && response.data.success) {
         await dispatch({

@@ -110,6 +110,7 @@ const AdminsList = () => {
       setUserData(JSON.parse(localStorage.getItem('userData')))
     }
   }, [])
+
   
   // ** User filter options
   const roleOptions = [
