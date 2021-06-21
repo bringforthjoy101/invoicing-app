@@ -54,12 +54,10 @@ export const getSetting = (settings, id) => {
   }
 }
 
-export const updateSetting = ({payload}) => {
+export const updateSetting = (values) => {
   return async dispatch => {
-    const body = JSON.stringify({payload})
-    console.log({body})
+    const body = JSON.stringify(values)
     const response = await apiRequest({url:`/admin/settings/update`, method:'POST', body}, dispatch)
-    console.log({response})
     if (response && response.data.success) {
       swal('Good!', `${response.data.message}.`, 'success')
       dispatch(getAllData())

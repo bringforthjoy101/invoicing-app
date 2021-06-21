@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Button, Spinner, Modal, ModalHeader, ModalBody, ModalFooter, Label, FormGroup, Input } from 'reactstrap'
-import { Formik, Field, Form, ErrorMessage } from 'formik'
+import { Formik, Field, Form, ErrorMessage, FieldArray } from 'formik'
 import * as Yup from 'yup'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -24,31 +24,27 @@ export const UpdateSetting = () => {
         Update Setting
       </Button.Ripple>
       <Modal isOpen={formModal} toggle={() => setFormModal(!formModal)} className='modal-dialog-centered'>
-        <ModalHeader toggle={() => setFormModal(!formModal)}>Add Funds</ModalHeader>
+        <ModalHeader toggle={() => setFormModal(!formModal)}>Update Setting</ModalHeader>
         <Formik
           initialValues={{
-            payload: [
-              {
                 id: '',
                 name: '',
                 value: '',
                 description: ''
-              }
-            ]
           }}
           validationSchema={UpdateSettingSchema}
           onSubmit={async (values, { setSubmitting }) => {
-            await dispatch(updateSetting(values))
+            await dispatch(updateSetting({payload:[values]}))
             setSubmitting(false)
             setFormModal(!formModal)
           }}
         >
 
-          {({ errors, touched, isSubmitting }) => (
+          {({ errors, touched, isSubmitting, values }) => (
             <Form>
               <ModalBody>
                 <FormGroup>
-                  <label htmlFor='amount'>Setting Id</label>
+                  <label htmlFor='id'>Setting Id</label>
                   <Field
                     type='number'
                     name='id'
@@ -68,7 +64,7 @@ export const UpdateSetting = () => {
                   <ErrorMessage name='name' component='div' className='field-error text-danger' />
                 </FormGroup>
                 <FormGroup>
-                  <label htmlFor='name'>Value</label>
+                  <label htmlFor='value'>Value</label>
                   <Field
                     type='text'
                     name='value'
@@ -94,6 +90,7 @@ export const UpdateSetting = () => {
                   <span className='ml-50'>Update</span>
                 </Button.Ripple>
               </ModalFooter>
+
             </Form>
           )}
         </Formik>

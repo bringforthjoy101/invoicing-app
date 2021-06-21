@@ -37,7 +37,6 @@ const sidebarNewDataPlan = ({ open, toggleSidebar }) => {
     formData.append("image", userData.image)
       try {
         const response = await apiRequest({ url: '/admin/upload-images', method: 'POST', body: formData })
-        console.log({response})
         const preview = response.data.data
         if (response) {
           if (response.data.success) {
