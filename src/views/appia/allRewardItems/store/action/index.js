@@ -58,7 +58,7 @@ export const getReward = (rewards, id) => {
  export const getAllServiceId =  () => {
   return async dispatch => {
     const response = await apiRequest({ url: '/admin/rewards/service-id/get', method: 'GET' })
-  console.log({response})
+  console.log(response.data.data)
   if (response) {
     if (response.data.data && response.data.success) {
       await dispatch({

@@ -30,19 +30,16 @@ const sidebarNewDataPlan = ({ open, toggleSidebar }) => {
     image_preview: ""
   })
 
+  // const handleSelectChange = () => {
+  //   setUserData({...userData, service_id: store.allServiceId.map((x) => x.value)})
+  // }
+
+  // console.log("haddd", handleSelectChange())
+
 
   useEffect(() => {
     dispatch(getAllServiceId())
   }, [dispatch])
-
-  const serviceId = (id) => {
-    const services = store.allServiceId.indexOf(service => service)
-    return services
-    console.log("services", services)
-  }
-
-  console.log("strrr", serviceId())
-
 
   const onClicked = async (event) => {
     event?.preventDefault()
@@ -192,8 +189,8 @@ const sidebarNewDataPlan = ({ open, toggleSidebar }) => {
             type='select'
             id='service_id'
             name='service_id'
-            value={userData.role}
-            onChange={e => setUserData({ ...userData, service_id: serviceId() })}
+            value={userData.service_id}
+            onChange={e => setUserData({ ...userData, service_id: handleSelectChange() })}
             required
           >
             <option value='0'>Select Option</option>
