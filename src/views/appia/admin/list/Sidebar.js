@@ -27,7 +27,6 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
       const body = JSON.stringify(userData)
       try {
         const response = await apiRequest({url:'/admin/register', method:'POST', body}, dispatch)
-        console.log({response})
         if (response) {
           if (response.data.success) {
             swal('Great job!', response.data.message, 'success')
