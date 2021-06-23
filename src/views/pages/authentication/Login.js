@@ -74,7 +74,7 @@ const Login = props => {
       useJwt
         .login({ email, password })
         .then(res => {
-          if (res.data.success && res.data.verified === true) {
+          if (res.data.success) {
             const data = { 
               ...res.data.data, 
               accessToken: res.data.token, 
@@ -87,23 +87,6 @@ const Login = props => {
             dispatch(handleLogin(data))
             ability.update(data.ability)
             history.push(getHomeRouteForLoggedInUser(data.role_name))
-            toast.success(
-              <ToastContent name={`${data.first_name} ${data.last_name}` || data.fullName || data.username || 'John Doe'} role={data.role || 'admin'} />,
-              { transition: Slide, hideProgressBar: true, autoClose: 2000 }
-            )
-          } else if (res.data.success && res.data.verified === false) {
-            const data = { 
-              ...res.data.data, 
-              accessToken: res.data.token, 
-              refreshToken: res.data.token,
-              ability: [{action: "manage", subject: "all"}],
-              avatar: "/demo/Appia-react-admin-dashboard-template/demo-1/static/media/avatar-s-11.1d46cc62.jpg",
-              extras: {eCommerceCartItemsCount: 5}
-            }
-
-            dispatch(handleLogin(data))
-            ability.update(data.ability)
-            history.push("./pages/account-settings")
             toast.success(
               <ToastContent name={`${data.first_name} ${data.last_name}` || data.fullName || data.username || 'John Doe'} role={data.role || 'admin'} />,
               { transition: Slide, hideProgressBar: true, autoClose: 2000 }
