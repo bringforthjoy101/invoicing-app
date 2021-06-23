@@ -90,7 +90,6 @@ export const UpdateSetting = () => {
                   <span className='ml-50'>Update</span>
                 </Button.Ripple>
               </ModalFooter>
-
             </Form>
           )}
         </Formik>

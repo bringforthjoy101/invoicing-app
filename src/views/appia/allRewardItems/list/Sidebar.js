@@ -2,9 +2,10 @@
 import Sidebar from '@components/sidebar'
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useParams } from 'react-router-dom'
 
 import { swal, apiRequest } from '@utils'
-import { getAllData, getFilteredData } from '../store/action'
+import { getAllData, getAllServiceId } from '../store/action'
 
 // ** Third Party Components
 import { Button, FormGroup, Label, FormText, Media } from 'reactstrap'
@@ -12,10 +13,10 @@ import { AvForm, AvInput } from 'availity-reactstrap-validation-safe'
 import { FormattedDateParts } from 'react-intl'
 
 const sidebarNewDataPlan = ({ open, toggleSidebar }) => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch(),
+    { id } = useParams()
   const store = useSelector(state => state.appiaAllRewards)
 
-// console.log("stttt", store.selectedReward)
   const [userData, setUserData] = useState({
     name: "",
     coin: "",
@@ -23,25 +24,38 @@ const sidebarNewDataPlan = ({ open, toggleSidebar }) => {
     value: "",
     qty: "",
     message: "",
-    data_plan_id: "",
+    service_id: "",
+    variation_code: "",
     image: null,
     image_preview: ""
   })
 
-  const onClicked = async (event) => {
 
-    event.preventDefault()
-    console.log("filll", userData.image)
+  useEffect(() => {
+    dispatch(getAllServiceId())
+  }, [dispatch])
+
+  const serviceId = (id) => {
+    const services = store.allServiceId.indexOf(service => service)
+    return services
+    console.log("services", services)
+  }
+
+  console.log("strrr", serviceId())
+
+
+  const onClicked = async (event) => {
+    event?.preventDefault()
     if (userData.image !== null) {
-    const formData = new FormData()
-    formData.append("image", userData.image)
+      const formData = new FormData()
+      formData.append("image", userData.image)
       try {
         const response = await apiRequest({ url: '/admin/upload-images', method: 'POST', body: formData })
         const preview = response.data.data
         if (response) {
           if (response.data.success) {
             swal('Great job!', response.data.message, 'success')
-            setUserData({...userData, image_preview: preview})
+            setUserData({ ...userData, image_preview: preview })
           } else {
             swal('Oops!', response.data.message, 'error')
           }
@@ -56,7 +70,6 @@ const sidebarNewDataPlan = ({ open, toggleSidebar }) => {
 
   }
 
-
   const onSubmit = async (event, errors) => {
     event.preventDefault()
     if (errors && !errors.length) {
@@ -67,12 +80,13 @@ const sidebarNewDataPlan = ({ open, toggleSidebar }) => {
         qty: userData.qty,
         value: userData.value,
         message: userData.message,
-        data_plan_id: userData.data_plan_id,
+        service_id: userData.service_id,
+        variation_code: userData.variation_code,
         image: userData.image_preview
-    })
+      })
       try {
         const response = await apiRequest({ url: '/admin/rewards/create', method: 'POST', body }, dispatch)
-        console.log({response})
+        console.log({ response })
         if (response) {
           if (response.data.success) {
             swal('Great job!', response.data.message, 'success')
@@ -173,35 +187,58 @@ const sidebarNewDataPlan = ({ open, toggleSidebar }) => {
           />
         </FormGroup>
         <FormGroup>
-          <Label for='data_plan_id'>Product Id</Label>
+          <Label for='service_id'>Service Id</Label>
           <AvInput
-            name='data_plan_id'
-            id='data_plan_id'
-            placeholder='MT2'
-            value={userData.data_plan_id}
-            onChange={e => setUserData({ ...userData, data_plan_id: e.target.value })}
+            type='select'
+            id='service_id'
+            name='service_id'
+            value={userData.role}
+            onChange={e => setUserData({ ...userData, service_id: serviceId() })}
+            required
+          >
+            <option value='0'>Select Option</option>
+            <option value='mtn'>Mtn Airtime</option>
+            <option value='glo'>Glo Airtime</option>
+            <option value='etisalat'>Etisalat Airtime</option>
+            <option value='mtn-data'>Mtn Data</option>
+            <option value='glo-data'>Glo Data</option>
+            <option value='airtel-data'>Airtel Data</option>
+            <option value='etisalat-data'>Etisalat Data</option>
+            <option value='smile-direct'>Smile Direct</option>
+          </AvInput>
+        </FormGroup>
+        <FormGroup>
+          <Label for='variation_code'>Variation Code</Label>
+          <AvInput
+            name='variation_code'
+            id='variation_code'
+            placeholder=''
+            value={userData.variation_code}
+            onChange={e => setUserData({ ...userData, variation_code: serviceIdChange() })}
             required
           />
+        </FormGroup>
+        <FormGroup>
           <Media className='mt-75 ml-0' body>
-           <div className="d-flex mt-2">
-           <Button.Ripple  tag={Label} className='mr-75' size='md' outline color='secondary'>
-              Select an Image
+            <div className="d-flex mt-2">
+              <Button.Ripple tag={Label} className='mr-75' size='md' outline color='secondary'>
+                Select an Image
               <AvInput
-                name='image'
-                id='image'
-                type='file'
-                onChange={e => setUserData({...userData, image: e.target.files[0]})}
-                hidden
-                accept='image/*'
-              />
-             </Button.Ripple> 
-             <Button.Ripple  tag={Label} onClick={onClicked} className='mr-75'color='primary'>
-              Upload Image
+                  name='image'
+                  id='image'
+                  type='file'
+                  onChange={e => setUserData({ ...userData, image: e.target.files[0] })}
+                  hidden
+                  accept='image/*'
+                />
+              </Button.Ripple>
+              <Button.Ripple tag={Label} onClick={onClicked} className='mr-75' color='primary'>
+                Upload Image
             </Button.Ripple>
-           </div>
+            </div>
             <p>Allowed JPG, GIF or PNG. Max size of 800kB</p>
-          </Media> 
-            
+          </Media>
+
 
         </FormGroup>
         <Button type='submit' className='mr-1 mt-2' color='primary'>

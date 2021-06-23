@@ -4,7 +4,8 @@ const initialState = {
   data: [],
   total: 1,
   params: {},
-  selectedReward: null
+  selectedReward: null,
+  allServiceId: []
 }
 
 const admins = (state = initialState, action) => {
@@ -20,6 +21,8 @@ const admins = (state = initialState, action) => {
       }
     case 'GET_REWARD':
       return { ...state, selectedReward: action.selectedReward }
+      case 'GET_SERVICE_ID':
+        return { ...state, allServiceId: action.data }
     default:
       return { ...state }
   }
