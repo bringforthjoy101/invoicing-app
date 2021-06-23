@@ -18,7 +18,7 @@ export const EditRole = ({ selectedAdmin }) => {
   })
   const [formModal, setFormModal] = useState(false)
 
-  const onSubmit = async (event, errors, admin_id) => {
+  const onSubmit = async (event, errors) => {
     event?.preventDefault()
     if (errors && !errors.length) {
       await dispatch(changeAdminRole(id, userData.role))
@@ -26,12 +26,6 @@ export const EditRole = ({ selectedAdmin }) => {
       setFormModal(!formModal)
    }
   }
-
-  useEffect(() => {
-    onSubmit()
-    dispatch(getAllData())
-  }, dispatch)
-
 
   return (
     <div>

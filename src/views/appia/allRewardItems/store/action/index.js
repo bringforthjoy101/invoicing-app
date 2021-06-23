@@ -4,7 +4,6 @@ import { paginateArray, sortCompare, apiRequest, swal } from '@utils'
 export const getAllData = () => {
   return async dispatch => {
     const response = await apiRequest({ url: '/admin/rewards/get', method: 'GET' }, dispatch)
-    console.log({response})
       if (response) {
       if (response.data.data && response.data.success) {
         await dispatch({
@@ -58,7 +57,6 @@ export const getReward = (rewards, id) => {
  export const getAllServiceId =  () => {
   return async dispatch => {
     const response = await apiRequest({ url: '/admin/rewards/service-id/get', method: 'GET' })
-  console.log(response.data.data)
   if (response) {
     if (response.data.data && response.data.success) {
       await dispatch({

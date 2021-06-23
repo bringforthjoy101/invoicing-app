@@ -48,7 +48,6 @@ export const getFilteredData = (dataPlans, params) => {
 export const getPlan = (dataPlans, id) => {
   return async dispatch => {
     const plan = dataPlans.find(i => i.id === id)
-    console.log("llllll", plan.id)
     dispatch({
       type: 'GET_PLAN',
       selectedPlan: plan

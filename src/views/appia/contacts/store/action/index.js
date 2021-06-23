@@ -46,7 +46,6 @@ export const getFilteredData = (contacts, params) => {
 export const getContact = (contacts, id) => {
   return async dispatch => {
     const contact = contacts.find(i => i.id === id)
-    console.log("contact", contact)
     dispatch({
       type: 'GET_CONTACT',
       selectedContact: contact

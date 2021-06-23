@@ -161,10 +161,10 @@ export const activateUser = (users, id) => {
         if (response.data.success) {
           dispatch({
             type: 'GET_USER',
-
             selectedUser:{...user, status: "Active"}
           })
           swal('Good!', `${response.data.message}.`, 'success')
+          dispatch(getAllData())
         } else {
           swal('Oops!', `${response.data.message}.`, 'error')
         }
@@ -187,7 +187,7 @@ export const deactivateUser = (users, id) => {
             selectedUser:{...user, status: "Inactive"}
           })
           swal('Good!', `${response.data.message}.`, 'success')
-          // dispatch(getAdmin(admins, id))
+          dispatch(getAllData())
         } else {
           swal('Oops!', `${response.data.message}.`, 'error')
         }

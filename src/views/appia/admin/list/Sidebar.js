@@ -20,17 +20,14 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
     phone: '',
     role: ''
   })
-  const [password, setPassword] = useState('kfxHdSCqM')
   // ** Function to handle form submit
   const onSubmit = async (event, errors) => {
-    // if (!errors.length) {
-    //   toggleSidebar()
-    // }
     event.preventDefault()
     if (errors && !errors.length) {
       const body = JSON.stringify(userData)
       try {
         const response = await apiRequest({url:'/admin/register', method:'POST', body}, dispatch)
+        console.log({response})
         if (response) {
           if (response.data.success) {
             swal('Great job!', response.data.message, 'success')

@@ -35,7 +35,6 @@ const UserView = props => {
     // dispatch(getPlan(store.allData, id))
   }, [dispatch])
 
-  console.log("strrr", store.selectedPlan)
 
   return store.selectedPlan !== null && store.selectedPlan !== undefined ? (
     <div className='app-user-view'>

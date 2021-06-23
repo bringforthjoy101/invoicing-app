@@ -28,9 +28,6 @@ const FeedbackView = props => {
         <Col xl='9' lg='8' md='7'>
           <ContactInfoCard selectedContact={store.selectedContact} />
         </Col>
-        {/* <Col xl='3' lg='4' md='5'>
-          <PlanCard selectedContact={store.selectedContact} />
-        </Col> */}
       </Row>
     </div>
   ) : (

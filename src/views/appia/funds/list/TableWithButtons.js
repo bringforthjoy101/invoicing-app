@@ -328,7 +328,6 @@ const DataTableWithButtons = () => {
         ctr++
       })
       result += lineDelimiter
-      console.log('esults', result)
     })
 
     return result

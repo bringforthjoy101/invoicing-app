@@ -5,7 +5,6 @@ import { paginateArray, sortCompare, apiRequest, swal } from '@utils'
 export const getAllData = () => {
   return async dispatch => {
     const response = await apiRequest({ url: '/admin/get_admins', method: 'GET' }, dispatch)
-    console.log({response})
     if (response) {
       if (response.data.data && response.data.success) {
         await dispatch({
@@ -59,7 +58,6 @@ export const getAdmin = (admins, id) => {
 export const getAdminActivity = (id) => {
   return async dispatch => {
     const response = await apiRequest({ url: `/admin/activity/${id}`, method: 'GET' }, dispatch)
-    console.log({response})
     if (response) {
       if (response.data.data && response.data.success) {
         await dispatch({
@@ -101,7 +99,6 @@ export const activateAdmin = (admins, id) => {
 
 // deactivate admin account
 export const deactivateAdmin = (admins, id) => {
-  console.log({ admins, id })
   const admin = admins.find(i => i.admin_id === id)
   return async dispatch => {
     const response = await apiRequest({ url: `/admin/deactivate/${admin.admin_id}`, method: 'GET' }, dispatch)
@@ -127,7 +124,6 @@ export const deactivateAdmin = (admins, id) => {
 export const getAllRoles = (admins) => {
   return async dispatch => {
     const response = await apiRequest({ url: '/admin/admin_role', method: 'GET' }, dispatch)
-    console.log({response})
     if (response) {
       if (response.data.data && response.data.success) {
         await dispatch({
@@ -146,11 +142,9 @@ export const getAllRoles = (admins) => {
 
 // Get all roles
 export const changeAdminRole = (admin_id, new_role_id) => {
-  console.log(admin_id, new_role_id)
   return async dispatch => {
     const body = JSON.stringify({admin_id, new_role_id})
     const response = await apiRequest({ url: '/admin/change_role/', method: 'POST', body }, dispatch)
-    console.log({response})
     if (response) {
       if (response.data.success) {
         swal('Good!', `${response.data.message}.`, 'success')

@@ -26,7 +26,6 @@ export const getAllFundsData = () => {
 }
 
 export const reviewFunds = (log_id, action, admins) => {
-  console.log("redcr", admins)
   const status = action === 'approve' ? 'approved' : 'disapproved'
   return async dispatch => {
     return MySwal.fire({
@@ -43,9 +42,7 @@ export const reviewFunds = (log_id, action, admins) => {
     }).then(async function (result) {
       if (result.value) {
         const body = JSON.stringify({log_id})
-        console.log({body})
         const response = await apiRequest({url:`/admin/fund/${action}`, method:'POST', body}, dispatch)
-        console.log({response})
         if (response && response.data.success) {
           dispatch(getAllFundsData())
           swal('Good!', `Fund was successfully ${status}`, 'success')

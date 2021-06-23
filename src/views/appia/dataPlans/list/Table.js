@@ -116,7 +116,7 @@ const DataPlansPlist = () => {
     { value: '', label: 'Select category'},
     { value: 'daily', label: 'Daily' }, 
     {value: 'weekly', label: 'Weekly'},
-    { value: 'Monthly', label: 'Monthly'}
+    { value: 'monthly', label: 'Monthly'}
   ]
 
   // ** Function in get data on page change
