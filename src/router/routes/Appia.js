@@ -197,6 +197,34 @@ const AppiaRoutes = [
   {
     path: '/appia/settings/list',
     component: lazy(() => import('../../views/appia/settings/list'))
+  },
+  {
+    path: '/appia/escrow/list',
+    component: lazy(() => import('../../views/appia/escrow/list'))
+  },
+  {
+    path: '/appia/escrow/edit',
+    exact: true,
+    component: () => <Redirect to='/appia/escrow/edit/1' />
+  },
+  {
+    path: '/appia/escrow/edit/:id',
+    component: lazy(() => import('../../views/appia/escrow/edit')),
+    meta: {
+      navLink: '/appia/escrow/edit'
+    }
+  },
+  {
+    path: '/appia/escrow/view',
+    exact: true,
+    component: () => <Redirect to='/appia/escrow/view/1' />
+  },
+  {
+    path: '/appia/escrow/view/:id',
+    component: lazy(() => import('../../views/appia/escrow/view')),
+    meta: {
+      navLink: '/appia/escrow/view'
+    }
   }
 ]
 

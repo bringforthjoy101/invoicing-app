@@ -34,7 +34,7 @@ const AnalyticsDashboard = () => {
     const response = await apiRequest({ url: '/admin/data', method: 'GET' })
     console.log({ response })
     if (response) {
-      if (response.data.data && response.data.success) {
+      if (response?.data?.data && response?.data?.success) {
         await setDashData(response.data.data)
       } else {
         console.log(response.error)

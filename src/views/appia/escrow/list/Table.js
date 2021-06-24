@@ -30,12 +30,13 @@ import FormGroup from 'reactstrap/lib/FormGroup'
 const UsersList = () => {
   // ** Store Vars
   const dispatch = useDispatch()
-  const store = useSelector(state => state.appiaUsers)
+  const store = useSelector(state => state.appiaEscrow)
 
   // ** States
   const [searchTerm, setSearchTerm] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
   const [rowsPerPage, setRowsPerPage] = useState(10)
+  const [currentRole, setCurrentRole] = useState({ value: '', label: 'Select Role', number: 0})
   const [currentStatus, setCurrentStatus] = useState({ value: '', label: 'Select Status', number: 0 })
 
   // ** Get data on mount
@@ -45,20 +46,19 @@ const UsersList = () => {
       getFilteredData(store.allData, {
         page: currentPage,
         perPage: rowsPerPage,
+        role: currentRole.value,
         status: currentStatus.value,
         q: searchTerm
       })
     )
   }, [dispatch])
 
+
   // ** User filter options
   const roleOptions = [
     { value: '', label: 'Select Role' },
-    { value: 'admin', label: 'Admin' },
-    { value: 'author', label: 'Author' },
-    { value: 'editor', label: 'Editor' },
-    { value: 'maintainer', label: 'Maintainer' },
-    { value: 'subscriber', label: 'Subscriber' }
+    { value: 'Sender', label: 'Sender' },
+    { value: 'Receiver', label: 'Receiver' }
   ]
 
   const planOptions = [
@@ -72,8 +72,8 @@ const UsersList = () => {
   const statusOptions = [
     { value: '', label: 'Select Status', number: 0 },
     { value: 'Pending', label: 'Pending', number: 1 },
-    { value: 'Active', label: 'Active', number: 2 },
-    { value: 'Inactive', label: 'Inactive', number: 3 }
+    { value: 'Contested', label: 'Contested', number: 2 },
+    { value: 'Completed', label: 'Completed', number: 3 }
   ]
 
   // ** Function in get data on page change
@@ -82,6 +82,7 @@ const UsersList = () => {
       getFilteredData(store.allData, {
         page: page.selected + 1,
         perPage: rowsPerPage,
+        role: currentRole.value,
         status: currentStatus.value,
         q: searchTerm
       })
@@ -96,6 +97,7 @@ const UsersList = () => {
       getFilteredData(store.allData, {
         page: currentPage,
         perPage: value,
+        role: currentRole.value,
         status: currentStatus.value,
         q: searchTerm
       })
@@ -110,14 +112,16 @@ const UsersList = () => {
       getFilteredData(store.allData, {
         page: currentPage,
         perPage: rowsPerPage,
+        role: currentRole.value,
         status: currentStatus.value,
         q: val
       })
     )
   }
 
+
   const filteredData = store.allData.filter(
-    item => (item.email?.toLowerCase() || item.names?.toLowerCase() || item?.referral_code?.dataToRender())
+    item => (item.user_id.toLowerCase())
   )
 
   // ** Custom Pagination
@@ -219,6 +223,7 @@ const UsersList = () => {
   // ** Table data to render
   const dataToRender = () => {
     const filters = {
+      role: currentRole.value,
       status: currentStatus.value,
       q: searchTerm
     }
@@ -244,6 +249,32 @@ const UsersList = () => {
         </CardHeader>
         <CardBody>
         <Row  form className='mt-1 mb-50'>
+        <Col lg='4' md='6'>
+              <FormGroup>
+                <Label for='select'>Select Role:</Label>
+              <Select
+                 theme={selectThemeColors}
+                 isClearable={false}
+                 className='react-select'
+                 classNamePrefix='select'
+                 id='select'
+                 options={roleOptions}
+                 value={currentRole}
+                 onChange={data => {
+                   setCurrentRole(data)
+                   dispatch(
+                     getFilteredData(store.allData, {
+                       page: currentPage,
+                       perPage: rowsPerPage,
+                       role: data.value,
+                       status: currentStatus.value,
+                       q: searchTerm
+                     })
+                   )
+                 }}
+              />
+              </FormGroup>
+            </Col>
             <Col lg='4' md='6'>
               <FormGroup>
                 <Label for='select'>Select Status:</Label>
@@ -278,7 +309,7 @@ const UsersList = () => {
                 className='ml-50 w-100'
                 type='text'
                 value={searchTerm}
-                placeholder='Name and Email Search'
+                placeholder='User Id'
                 onChange={e => handleFilter(e.target.value)}
               />
             </Col>

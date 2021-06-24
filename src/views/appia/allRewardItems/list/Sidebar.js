@@ -30,16 +30,6 @@ const sidebarNewDataPlan = ({ open, toggleSidebar }) => {
     image_preview: ""
   })
 
-  // const handleSelectChange = () => {
-  //   setUserData({...userData, service_id: store.allServiceId.map((x) => x.value)})
-  // }
-
-  // console.log("haddd", handleSelectChange())
-
-
-  useEffect(() => {
-    dispatch(getAllServiceId())
-  }, [dispatch])
 
   const onClicked = async (event) => {
     event?.preventDefault()
@@ -100,6 +90,15 @@ const sidebarNewDataPlan = ({ open, toggleSidebar }) => {
       }
     }
   }
+
+  useEffect(() => {
+    dispatch(getAllServiceId())
+  }, [dispatch])
+
+  const services = store.allServiceId.map(service => {
+    console.log("serr", service)
+  })
+  console.log("services", services)
 
   return (
     <Sidebar
@@ -189,11 +188,15 @@ const sidebarNewDataPlan = ({ open, toggleSidebar }) => {
             type='select'
             id='service_id'
             name='service_id'
+            label='option'
             value={userData.service_id}
             onChange={e => setUserData({ ...userData, service_id: handleSelectChange() })}
             required
           >
-            <option value='0'>Select Option</option>
+            {services.map((service) => {
+              <option key={service} value={service}>{service}</option>
+            })}
+            {/* <option value='0'>Select Option</option>
             <option value='mtn'>Mtn Airtime</option>
             <option value='glo'>Glo Airtime</option>
             <option value='etisalat'>Etisalat Airtime</option>
@@ -201,7 +204,7 @@ const sidebarNewDataPlan = ({ open, toggleSidebar }) => {
             <option value='glo-data'>Glo Data</option>
             <option value='airtel-data'>Airtel Data</option>
             <option value='etisalat-data'>Etisalat Data</option>
-            <option value='smile-direct'>Smile Direct</option>
+            <option value='smile-direct'>Smile Direct</option> */}
           </AvInput>
         </FormGroup>
         <FormGroup>

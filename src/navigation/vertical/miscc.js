@@ -1,4 +1,4 @@
-import { Users, ThumbsUp, Mail, User, List, Settings } from 'react-feather'
+import { Users, ThumbsUp, Mail, Send, List, Settings } from 'react-feather'
 
 export default [
     {
@@ -33,5 +33,11 @@ export default [
     title: 'Settings',
     icon: <Settings size={20} />,
     navLink: '/appia/settings/list'
+  },
+  {
+    id: 'escrow',
+    title: 'Escrow',
+    icon: <Send size={20} />,
+    navLink: '/appia/escrow/list'
   }
 ]

@@ -1,6 +1,6 @@
 // ** Custom Components
 import Sidebar from '@components/sidebar'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 
 import { swal, apiRequest } from '@utils'
@@ -20,41 +20,40 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
     phone: '',
     role: ''
   })
+  const [password, setPassword] = useState('kfxHdSCqM')
   // ** Function to handle form submit
   const onSubmit = async (event, errors) => {
-    event?.preventDefault()
+    // if (!errors.length) {
+    //   toggleSidebar()
+    // }
+    event.preventDefault()
+    console.log({errors})
     if (errors && !errors.length) {
+      // const {first_name, last_name, email, phone, role} = userData
+      // const body = JSON.stringify
+      console.log({userData})
       const body = JSON.stringify(userData)
       try {
         const response = await apiRequest({url:'/admin/register', method:'POST', body}, dispatch)
-        if (response) {
-          if (response.data.success) {
+        console.log({response})
+        if (response.data.success) {
             swal('Great job!', response.data.message, 'success')
             dispatch(getAllData())
             toggleSidebar()
-          } else {
-            swal('Oops!', response.data.message, 'error')
-          }
         } else {
-          swal('Oops!', 'Something went wrong with your network.', 'error')
+          swal('Oops!', response.data.message, 'error')
         }
-        
       } catch (error) {
         console.error({error})
       }
     }
   }
 
-  useEffect(() => {
-    onSubmit()
-    dispatch(getAllData())
-  }, [dispatch])
-
     return (
       <Sidebar
         size='lg'
         open={open}
-        title='New Admin'
+        title='New User'
         headerClassName='mb-1'
         contentClassName='pt-0'
         toggleSidebar={toggleSidebar}
@@ -116,10 +115,11 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
               onChange={e => setUserData({...userData, role: e.target.value})}
               required
             >
-              <option value='0'>Select Option</option>
-              <option value='1'>Control Admin</option>
-              <option value='2'>Financial Admin</option>
-              <option value='3'>Super Admin</option>
+              <option value='5'>Subscriber</option>
+              <option value='4'>Editor</option>
+              <option value='3'>Maintainer</option>
+              <option value='2'>Author</option>
+              <option value='1'>Admin</option>
             </AvInput>
           </FormGroup>
           <Button type='submit' className='mr-1' color='primary'>

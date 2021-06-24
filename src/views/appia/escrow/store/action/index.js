@@ -6,10 +6,11 @@ export const apiUrl = process.env.REACT_APP_API_ENDPOINT
 // ** Get all Data
 export const getAllData = () => {
   return async dispatch => {
-    const response = await apiRequest({url:'/admin/users', method:'GET'}, dispatch)
+    const response = await apiRequest({url:'/admin/escrows', method:'GET'}, dispatch)
+    console.log({response})
     if (response && response.data.data && response.data.success) {
         await dispatch({
-          type: 'GET_ALL_DATA',
+          type: 'GET_ALL_ESCROW',
           data: response.data.data
         })
     } else {
@@ -20,15 +21,16 @@ export const getAllData = () => {
 }
 
 // ** Get filtered data on page or row change
-export const getFilteredData = (users, params) => {
+export const getFilteredData = (escrows, params) => {
   return async dispatch => {
-    const { q = '', perPage = 10, page = 1, status = null } = params
+    const { q = '', perPage = 10, page = 1, role = null, status = null } = params
     /* eslint-disable  */
     const queryLowered = q.toLowerCase()
-    const filteredData = users?.filter(
-      user =>
-        (user.email.toLowerCase().includes(queryLowered) || user.names.toLowerCase().includes(queryLowered) || user.user_id.toLowerCase().includes(queryLowered) || user.referral_code.toLowerCase().includes(queryLowered)) &&
-        user.status === (status || user.status)
+    const filteredData = escrows.filter(
+      escrow =>
+        ( escrow.user_id.toLowerCase().includes(queryLowered)) &&
+        escrow.role === (role || escrow.role) &&
+        escrow.status === (status || escrow.status)
     )
     /* eslint-enable  */
 
@@ -56,25 +58,25 @@ export const getData = params => {
 }
 
 //  Get User
-export const getUser = (users, id) => {
+export const getEscrow = (escrows, id) => {
   return async dispatch => {
-    const user = users.find(i => i.user_id === id)
+    const escrow = escrows.find(i => i.user_id === id)
     dispatch({
-      type: 'GET_USER',
-      selectedUser: user
+      type: 'GET_ESCROW',
+      selectedEscrow: escrow
     })
   }
 }
 
 // Get data
 
-export const getUserAllTransactions = (user_id) => {
+export const getAllUserEscrowTransactions = (user_id) => {
   return async dispatch => {
     const body = JSON.stringify({user_id})
-    const response = await apiRequest({url:'/admin/users/transactions/all', method:'POST', body}, dispatch)
+    const response = await apiRequest({url:`/admin/escrows/${user_id}`, method:'GET'}, dispatch)
     if (response && response.data.data && response.data.success) {
         await dispatch({
-          type: 'GET_USER_ALL_TRANSACTIONS',
+          type: 'GET__ALL_USER_ESCROW_TRANSACTIONS',
           data: response.data.data
         })
     } else {

@@ -61,10 +61,10 @@ const sidebarNewDataPlan = ({ open, toggleSidebar }) => {
       >
         <AvForm onSubmit={onSubmit}>
           <FormGroup>
-            <Label for='first_name'>Network</Label>
+            <Label for='network'>Network</Label>
             <AvInput 
               name='network' 
-              id='first_name' 
+              id='network' 
               placeholder='MTN' 
               value={userData.network}
               onChange={e => setUserData({...userData, network: e.target.value})}

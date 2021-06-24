@@ -6,8 +6,9 @@ import { useSelector } from 'react-redux'
 import Avatar from '@components/avatar'
 
 // ** Store & Actions
-import { getUser } from '../store/action'
+import { getEscrow } from '../store/action'
 import { store } from '@store/storeConfig/store'
+import moment from 'moment'
 
 // ** Third Party Components
 import { Badge, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
@@ -22,33 +23,21 @@ const renderClient = row => {
   if (row.avatar) {
     return <Avatar className='mr-1' img={row.avatar} width='32' height='32' />
   } else {
-    return <Avatar color={color || 'primary'} className='mr-1' content={`${row.names}` || 'John Doe'} initials />
+    return <Avatar color={color || 'primary'} className='mr-1' content={`${row.user_id}` || 'John Doe'} initials />
   }
 }
 
 // ** Renders Role Columns
+
 const renderRole = row => {
-  
   const roleObj = {
-    subscriber: {
+    receiver: {
       class: 'text-primary',
       icon: User
     },
-    maintainer: {
+    sender: {
       class: 'text-success',
       icon: Database
-    },
-    editor: {
-      class: 'text-info',
-      icon: Edit
-    },
-    author: {
-      class: 'text-warning',
-      icon: Settings
-    },
-    admin: {
-      class: 'text-danger',
-      icon: Slack
     }
   }
 
@@ -57,70 +46,69 @@ const renderRole = row => {
   return (
     <span className='text-truncate text-capitalize align-middle'>
       <Icon size={18} className={`${roleObj[row.role] ? roleObj[row.role].class : 'text-primary'} mr-50`} />
-      {row.role_name || 'User'}
+      {row.role}
     </span>
   )
 }
 
 const statusObj = {
   Pending: 'light-warning',
-  Active: 'light-success',
-  Inactive: 'light-danger'
+  Contested: 'light-danger',
+  Completed: 'light-success'
 }
 const {users} = store.getState()
 export const columns = [
   {
-    name: 'User',
-    minWidth: '297px',
-    selector: 'fullName',
+    name: 'User Id',
+    minWidth: '180px',
+    selector: 'user_id',
     sortable: true,
     cell: row => (
       <div className='d-flex justify-content-left align-items-center'>
         {renderClient(row)}
         <div className='d-flex flex-column'>
           <Link
-            to={`/appia/user/view/${row.user_id}`}
+            to={`/appia/escrow/view/${row.user_id}`}
             className='user-name text-truncate mb-0'
-            onClick={() => store.dispatch(getUser(store.getState().appiaUsers.allData, row.user_id))}
+            onClick={() => store.dispatch(getEscrow(store.getState().appiaEscrow.allData, row.user_id))}
           >
-            <span className='font-weight-bold'>{row.names}</span>
+            <span className='font-weight-bold'>{row.user_id}</span>
           </Link>
-          <small className='text-truncate text-muted mb-0'>{row.email}</small>
         </div>
       </div>
     )
   },
   {
-    name: 'Email',
-    minWidth: '300px',
-    selector: 'email',
-    sortable: true,
-    cell: row => row.email
-  },
-  {
-    name: 'Balance',
+    name: 'Code',
     minWidth: '150px',
-    selector: 'balance',
+    selector: 'code',
     sortable: true,
-    cell: row => <span className="text-capitalize">{row?.balance?.toLocaleString('en-US', {style: 'currency', currency: 'NGN'})}</span>
+    cell: row => row.code
   },
   {
-    name: 'Savings',
-    minWidth: '150px',
-    selector: 'naira_wallet',
+    name: 'Transaction Amount',
+    minWidth: '250px',
+    selector: 'trans_amount',
     sortable: true,
-    cell: row => <span className='text-capitalize'>{row?.naira_wallet?.toLocaleString('en-US', { style: 'currency', currency: 'NGN' })}</span>
+    cell: row => <span className="text-capitalize">{row?.trans_amount?.toLocaleString('en-US', {style: 'currency', currency: 'NGN'})}</span>
   },
   {
-    name: 'Refferal Code',
-    minWidth: '80px',
-    selector: 'referral_code',
+    name: 'Transaction Name',
+    minWidth: '200px',
+    selector: 'trans_name',
     sortable: true,
-    cell: row => row.referral_code
+    cell: row => row.trans_name
+  },
+  {
+    name: 'Role',
+    minWidth: '100px',
+    selector: 'role',
+    sortable: true,
+    cell: row => renderRole(row)
   },
   {
     name: 'Status',
-    minWidth: '138px',
+    minWidth: '100px',
     selector: 'status',
     sortable: true,
     cell: row => (
@@ -128,6 +116,13 @@ export const columns = [
         {row.status}
       </Badge>
     )
+  },
+  {
+    name: 'Date',
+    minWidth: '200px',
+    selector: 'date_created',
+    sortable: true,
+    cell: row => moment(row.date_created).format('lll')
   },
   {
     name: 'Actions',
@@ -142,18 +137,18 @@ export const columns = [
         <DropdownMenu right>
           <DropdownItem
             tag={Link}
-            to={`/appia/user/view/${row.user_id}`}
+            to={`/appia/escrow/view/${row.user_id}`}
             className='w-100'
-            onClick={() => store.dispatch(getUser(store.getState().appiaUsers.allData, row.user_id))}
+            onClick={() => store.dispatch(getEscrow(store.getState().appiaEscrow.allData, row.user_id))}
           >
             <FileText size={14} className='mr-50' />
             <span className='align-middle'>Details</span>
           </DropdownItem>
           <DropdownItem
             tag={Link}
-            to={`/appia/user/edit/${row.user_id}`}
+            to={`/appia/escrow/edit/${row.user_id}`}
             className='w-100'
-            onClick={() => store.dispatch(getUser(row.user_id))}
+            onClick={() => store.dispatch(getEscrow(row.user_id))}
           >
             <Archive size={14} className='mr-50' />
             <span className='align-middle'>Edit</span>
