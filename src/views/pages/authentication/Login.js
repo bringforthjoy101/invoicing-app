@@ -213,7 +213,7 @@ const Login = props => {
                 <span className='ml-50'>Sign In</span>
               </Button.Ripple>
             </AvForm>
-            <p className='text-center mt-2'>
+            {/* <p className='text-center mt-2'>
               <span className='mr-25'>New on our platform?</span>
               <Link to='/register'>
                 <span>Create an account</span>
@@ -235,7 +235,7 @@ const Login = props => {
               <Button.Ripple className='mr-0' color='github'>
                 <GitHub size={14} />
               </Button.Ripple>
-            </div>
+            </div> */}
           </Col>
         </Col>
       </Row>
