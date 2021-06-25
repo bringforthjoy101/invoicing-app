@@ -49,56 +49,65 @@ const renderClient = row => {
 // ** Table columns
 export const columns = [
   {
-    name: '#',
+    name: '#User Id',
     minWidth: '180px',
-    selector: 'trans_id',
-    cell: row => <span>{ `#${row.trans_id}` }</span>
-  },
-  // {
-  //   name: <TrendingUp size={14} />,
-  //   minWidth: '102px',
-  //   selector: 'invoiceStatus',
-  //   sortable: true,
-  //   cell: row => {
-  //     const color = invoiceStatusObj[row.invoiceStatus] ? invoiceStatusObj[row.invoiceStatus].color : 'light-secondary',
-  //       Icon = invoiceStatusObj[row.invoiceStatus] ? invoiceStatusObj[row.invoiceStatus].icon : Send
-  //     return <Avatar color={color} icon={<Icon size={14} />} />
-  //   }
-  // },
-  {
-    name: 'Type',
-    minWidth: '300px',
-    selector: 'trans_type',
+    selector: 'user_id',
     sortable: true,
-    cell: row => row.trans_type
+    cell: row => (
+      <div className='d-flex justify-content-left align-items-center'>
+        {renderClient(row)}
+        <div className='d-flex flex-column'>
+          <Link
+            to={`/appia/escrow/view/Transactions/${row.id}`}
+            className='user-name text-truncate mb-0'
+            onClick={() => store.dispatch(getEscrow(store.getState().appiaEscrow.allData, row.id))}
+          >
+            <span className='font-weight-bold'>{row.id}</span>
+          </Link>
+        </div>
+      </div>
+    )
   },
   {
-    name: 'Amount',
+    name: 'Transaction Name',
+    minWidth: '200px',
+    selector: 'trans_name',
+    sortable: true,
+    cell: row => row.trans_name
+  },
+  {
+    name: 'Transaction Amount',
     selector: 'trans_amount',
     sortable: true,
-    minWidth: '150px',
+    minWidth: '220px',
     cell: row => <span>{(row.trans_amount || 0).toLocaleString('en-US', { style: 'currency', currency: 'NGN' })}</span>
   },
   {
-    name: 'Balance',
-    selector: 'balance',
+    name: 'Transaction Code',
+    minWidth: '200px',
+    selector: 'code',
     sortable: true,
-    minWidth: '164px',
-    cell: row => {
-      return row.balance !== 0 ? (
-        <span>{(row.balance || 0).toLocaleString('en-US', { style: 'currency', currency: 'NGN' })}</span>
-      ) : (
-        <Badge color='light-success' pill>
-          Paid
-        </Badge>
-      )
-    }
+    cell: row => row.code
+  },
+  {
+    name: 'Decline Reason',
+    minWidth: '200px',
+    selector: 'decline_reason',
+    sortable: true,
+    cell: row => <span>{row.decline_reason !== null ? row.decline_reason : "No Issue"}</span>
+  },
+  {
+    name: 'Details',
+    minWidth: '200px',
+    selector: 'details',
+    sortable: true,
+    cell: row => row.details
   },
   {
     name: 'Date',
-    selector: 'trans_date',
+    selector: 'date_created',
     sortable: true,
     minWidth: '200px',
-    cell: row => moment(row.trans_date).format('lll')
+    cell: row => moment(row.date_created).format('lll')
   }
 ]

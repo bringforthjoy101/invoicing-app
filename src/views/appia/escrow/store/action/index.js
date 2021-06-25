@@ -43,24 +43,11 @@ export const getFilteredData = (escrows, params) => {
   }
 }
 
-// ** Get data on page or row change
-export const getData = params => {
-  return async dispatch => {
-    await axios.get('/api/users/list/data', params).then(response => {
-      dispatch({
-        type: 'GET_DATA',
-        data: response.data.users,
-        totalPages: response.data.total,
-        params
-      })
-    })
-  }
-}
-
-//  Get User
+//  Get Escrow
 export const getEscrow = (escrows, id) => {
   return async dispatch => {
     const escrow = escrows.find(i => i.user_id === id)
+    console.log("esss", escrow)
     dispatch({
       type: 'GET_ESCROW',
       selectedEscrow: escrow
@@ -68,12 +55,12 @@ export const getEscrow = (escrows, id) => {
   }
 }
 
-// Get data
-
+// Get Transactions
 export const getAllUserEscrowTransactions = (user_id) => {
   return async dispatch => {
     const body = JSON.stringify({user_id})
     const response = await apiRequest({url:`/admin/escrows/${user_id}`, method:'GET'}, dispatch)
+    console.log({response})
     if (response && response.data.data && response.data.success) {
         await dispatch({
           type: 'GET__ALL_USER_ESCROW_TRANSACTIONS',
@@ -86,6 +73,7 @@ export const getAllUserEscrowTransactions = (user_id) => {
   }
 }
 
+// Filter Transaction
 export const getFilteredUserTransactions = (userTransactions, params) => {
   return async dispatch => {
       const { q = '', perPage = 10, page = 1, status = null } = params
@@ -107,10 +95,6 @@ export const getFilteredUserTransactions = (userTransactions, params) => {
               }
             return found
           }
-            /* eslint-disable operator-linebreak, implicit-arrow-linebreak */
-            // (transaction.trans_id.toLowerCase().includes(queryLowered) ||
-            // transaction.trans_type.toLowerCase().includes(queryLowered)) 
-            // && transaction.invoiceStatus.toLowerCase() === (status.toLowerCase() || transaction.invoiceStatus.toLowerCase())
           
         )
         .sort(sortCompare('trans_id'))
@@ -125,14 +109,15 @@ export const getFilteredUserTransactions = (userTransactions, params) => {
   }
 }
 
-export const addFunds = ({user_id, reason, amount}) => {
+// Resolve Escrow
+export const escrowResolve = ({code, status, reason}) => {
   return async dispatch => {
-    const body = JSON.stringify({user_id, reason, amount})
+    const body = JSON.stringify({code, status,  reason})
     console.log({body})
-    const response = await apiRequest({url:`/admin/users/add`, method:'POST', body}, dispatch)
+    const response = await apiRequest({url:`/admin/escrow/resolve`, method:'POST', body}, dispatch)
     console.log({response})
     if (response && response.data.success) {
-      swal('Good!', `Funds of ${amount} was successfully added and is pending aproval!.`, 'success')
+      swal('Good!', `${response.data.message}.`, 'success')
     } else {
       console.log(response)
       swal('Oops!', 'Somthing went wrong with your network.', 'error')
@@ -140,79 +125,3 @@ export const addFunds = ({user_id, reason, amount}) => {
   }
 }
 
-export const deductFunds = ({user_id, reason, amount}) => {
-  return async dispatch => {
-    const body = JSON.stringify({user_id, reason, amount})
-    const response = await apiRequest({url:`/admin/users/deduct`, method:'POST', body}, dispatch)
-    // console.log({response})
-    if (response && response.data.success) {
-      swal('Good!', `Funds of ${amount} was successfully deducted and is pending aproval!.`, 'success')
-    } else {
-      console.log(response)
-      swal('Oops!', 'Somthing went wrong with your network.', 'error')
-    }
-  }
-}
-
-// ACtivate  User account
-export const activateUser = (users, id) => {
-  const user = users.find(i => i.user_id === id)
-  return async dispatch => {
-    const response = await apiRequest({url:`/admin/users/activate/${user.user_id}`, method:'GET'}, dispatch)
-      if (response) {
-        if (response.data.success) {
-          dispatch({
-            type: 'GET_USER',
-            selectedUser:{...user, status: "Active"}
-          })
-          swal('Good!', `${response.data.message}.`, 'success')
-          dispatch(getAllData())
-        } else {
-          swal('Oops!', `${response.data.message}.`, 'error')
-        }
-      } else {
-        swal('Oops!', 'Something went wrong with your network.', 'error')
-      }
-      
-  }
-}
-
-// deactivate User account
-export const deactivateUser = (users, id) => {
-    const user = users.find(i => i.user_id === id)
-    return async dispatch => {
-    const response = await apiRequest({url:`/admin/users/deactivate/${user.user_id}`, method:'GET'}, dispatch)
-      if (response) {
-        if (response.data.success) {
-          dispatch({
-            type: 'GET_USER',
-            selectedUser:{...user, status: "Inactive"}
-          })
-          swal('Good!', `${response.data.message}.`, 'success')
-          dispatch(getAllData())
-        } else {
-          swal('Oops!', `${response.data.message}.`, 'error')
-        }
-      } else {
-        swal('Oops!', 'Something went wrong with your network.', 'error')
-      }
-      
-  }
-}
-
-//  Reset User Password
-export const passwordReset = ({user_id}) => {
-  console.log("iuss", user_id)
-  return async dispatch => {
-    const body = JSON.stringify({user_id})
-    console.log(user_id)
-    const response = await apiRequest({url:`/admin/users/reset/`, method:'POST', body}, dispatch)
-    console.log("resss", {response})
-    if (response && response.data.success) {
-      swal('Good!', `User password reset Sucessfully.`, 'success')
-    } else {
-      console.log(response)
-      swal('Oops!', 'Somthing went wrong with your network.', 'error')
-    }
-  }
-}

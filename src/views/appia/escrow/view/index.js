@@ -16,6 +16,7 @@ import { isUserLoggedIn, apiRequest, swal } from '@utils'
 
 // ** Styles
 import '@styles/react/apps/app-users.scss'
+import PlanCard from '../../escrow/view/PlanCard'
 
 const UserView = props => {
   // ** Vars
@@ -46,11 +47,14 @@ const UserView = props => {
         <Col xl='9' lg='8' md='7'>
           <UserInfoCard selectedEscrow={store.selectedEscrow} />
         </Col> 
+        <Col xl='3' lg='4' md='5'>
+          <PlanCard selectedEscrow={store.selectedEscrow} />
+        </Col> 
       </Row>
       <Row>
-        {/* <Col sm='12'>
-          <TransactionList />
-        </Col> */}
+        <Col sm='12'>
+          <TransactionList selectedEscrow={store.selectedEscrow} />
+        </Col>
       </Row>
     </div>
   ) : (

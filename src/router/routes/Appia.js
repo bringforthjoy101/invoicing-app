@@ -225,6 +225,18 @@ const AppiaRoutes = [
     meta: {
       navLink: '/appia/escrow/view'
     }
+  },
+  {
+    path: '/appia/escrow/view/Transactions',
+    exact: true,
+    component: () => <Redirect to='/appia/escrow/view/Transactions/1' />
+  },
+  {
+    path: '/appia/escrow/view/Transactions/:id',
+    component: lazy(() => import('../../views/appia/escrow/view/Transactions')),
+    meta: {
+      navLink: '/appia/escrow/view/Transactions'
+    }
   }
 ]
 

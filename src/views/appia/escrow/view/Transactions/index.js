@@ -12,7 +12,7 @@ import DataTable from 'react-data-table-component'
 import { Button, Label, Input, UncontrolledButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem, CustomInput, Row, Col, Card } from 'reactstrap'
 
 // ** Store & Actions
-import { getAllUserEscrowTransactions, getAllData } from '../../store/action'
+import { getAllUserEscrowTransactions, getAllData, getFilteredUserTransactions } from '../../store/action'
 import { useDispatch, useSelector } from 'react-redux'
 
 // ** Styles
@@ -41,7 +41,7 @@ const CustomHeader = ({ handleFilter, value, handlePerPage, rowsPerPage, downloa
               <option value='50'>50</option>
             </CustomInput>
           </div>
-          <h3 className="d-none d-lg-block">User's Transactions</h3>
+          <h3 className="d-none d-lg-block">User's Escrow Transactions</h3>
         </Col>
         <Col
           lg='3' sm="6"
@@ -87,7 +87,7 @@ const CustomHeader = ({ handleFilter, value, handlePerPage, rowsPerPage, downloa
   )
 }
 
-const TransactionList = () => {
+const TransactionList = ({selectedEscrow}) => {
   const dispatch = useDispatch()
   const store = useSelector(state => state.appiaEscrow)
 
@@ -100,7 +100,7 @@ const TransactionList = () => {
     dispatch(getAllData())
     dispatch(getAllUserEscrowTransactions(store.selectedEscrow.user_id))
     dispatch(
-      getFilteredUserTransactions(store.selectedUserAllTransactions, {
+      getFilteredUserTransactions(store.selectedUserTransactions, {
         page: currentPage,
         perPage: rowsPerPage,
         status: statusValue,
@@ -114,7 +114,7 @@ const TransactionList = () => {
   const handleFilter = val => {
     setValue(val)
     dispatch(
-      getFilteredUserTransactions(store.selectedUserAllTransactions, {
+      getFilteredUserTransactions(store.selectedUserTransactions, {
         page: currentPage,
         perPage: rowsPerPage,
         status: statusValue,
@@ -125,7 +125,7 @@ const TransactionList = () => {
 
   const handlePerPage = e => {
     dispatch(
-      getFilteredUserTransactions(store.selectedUserAllTransactions, {
+      getFilteredUserTransactions(store.selectedUserTransactions, {
         page: currentPage,
         perPage: parseInt(e.target.value),
         status: statusValue,
@@ -138,7 +138,7 @@ const TransactionList = () => {
   const handleStatusValue = e => {
     setStatusValue(e.target.value)
     dispatch(
-      getFilteredUserTransactions(store.selectedUserAllTransactions, {
+      getFilteredUserTransactions(store.selectedUserTransactions, {
         page: currentPage,
         perPage: rowsPerPage,
         status: e.target.value,
@@ -149,7 +149,7 @@ const TransactionList = () => {
 
   const handlePagination = page => {
     dispatch(
-      getFilteredUserTransactions(store.selectedUserAllTransactions, {
+      getFilteredUserTransactions(store.selectedUserTransactions, {
         page: page.selected + 1,
         perPage: rowsPerPage,
         status: statusValue,
@@ -190,7 +190,7 @@ const TransactionList = () => {
 
     const columnDelimiter = ','
     const lineDelimiter = '\n'
-    const keys = Object.keys(store.selectedUserAllTransactions[0])
+    const keys = Object.keys(store.selectedUserTransactions[0])
     console.log("keyss", keys)
 
     result = ''
@@ -247,7 +247,7 @@ const TransactionList = () => {
         },
         head: [['Id', 'Type', 'Amount', 'Balance', 'Date']]
     })
-    store.selectedUserAllTransactions.map(arr => {
+    store.selectedUserTransactions.map(arr => {
       doc.autoTable({
         styles: { halign: 'left' },
         columnStyles: {
@@ -274,14 +274,10 @@ const TransactionList = () => {
     const isFiltered = Object.keys(filters).some(function (k) {
       return filters[k].length > 0
     })
-    if (store.selectedUserAllTransactions.length > 0 && !isFiltered) {
-      return store.selectedUserAllTransactions
-    } else if (store.selectedUserTransactions.length === 0 && isFiltered) {
-      return []
-    } else if (store.selectedUserAllTransactions.length === 0) {
-      return []
-    } else if (store.selectedUserTransactions.length > 0) {
+    if (store.selectedUserTransactions.length > 0 && !isFiltered) {
       return store.selectedUserTransactions
+    }  else if (store.selectedUserTransactions.length === 0) {
+      return []
     } else {
       return store.selectedUserTransactons.slice(0, rowsPerPage)
     }
@@ -311,7 +307,7 @@ const TransactionList = () => {
                 handlePerPage={handlePerPage}
                 handleStatusValue={handleStatusValue}
                 downloadCSV={downloadCSV}
-                storeData={store.selectedUserAllTransactions}
+                storeData={store.selectedUserTransactions}
                 downloadPDF={downloadPDF}
               />
             }
