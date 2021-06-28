@@ -1,9 +1,6 @@
 // ** Reactstrap
 import { Card, CardHeader, CardBody, Badge, UncontrolledTooltip, Button } from 'reactstrap'
-
-import { activateUser, deactivateUser } from '../store/action'
 import ResolveEscrow from './ResolveEscrow'
-import { store } from '@store/storeConfig/store'
 
 
 const PlanCard = ({ selectedEscrow, userData }) => {
@@ -20,7 +17,7 @@ const PlanCard = ({ selectedEscrow, userData }) => {
         </UncontrolledTooltip>
       </CardHeader>
       <CardBody>
-        <ResolveEscrow code={selectedEscrow.code} userData={userData} />
+        <ResolveEscrow code={selectedEscrow.code} status={selectedEscrow.status} />
       </CardBody>
     </Card>
   )

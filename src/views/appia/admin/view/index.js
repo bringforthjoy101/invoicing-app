@@ -13,7 +13,7 @@ import { Row, Col, Alert } from 'reactstrap'
 
 // ** User View Components
 import PlanCard from './PlanCard'
-import UserInfoCard from './UserInfoCard'
+import AdminInfoCard from './AdminInfoCard'
 import AdminTimeline from './AdminTimeline'
 // import InvoiceList from '../../invoice/list'
 import PermissionsTable from './PermissionsTable'
@@ -52,7 +52,7 @@ const UserView = props => {
     <div className='app-user-view'>
       <Row>
         <Col xl='9' lg='8' md='7'>
-          <UserInfoCard selectedAdmin={store.selectedAdmin} />
+          <AdminInfoCard selectedAdmin={store.selectedAdmin} />
         </Col>
         {userData?.role_name === "Super Admin" ? <Col xl='3' lg='4' md='5'>
           <PlanCard selectedAdmin={store.selectedAdmin} />

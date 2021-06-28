@@ -2,25 +2,12 @@
 import { Link } from 'react-router-dom'
 
 // ** Custom Components
-import Avatar from '@components/avatar'
 import moment from 'moment'
 
 // ** Third Party Components
 import { Badge, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
-import { Slack, User, Settings, Database, Edit, MoreVertical, FileText, Trash2, Archive } from 'react-feather'
+import { MoreVertical, FileText, Trash2, Archive } from 'react-feather'
 
-// ** Renders Client Columns
-const renderClient = row => {
-  const stateNum = Math.floor(Math.random() * 6),
-    states = ['light-success', 'light-danger', 'light-warning', 'light-info', 'light-primary', 'light-secondary'],
-    color = states[stateNum]
-
-  if (row.avatar) {
-    return <Avatar className='mr-1' img={row.avatar} width='32' height='32' />
-  } else {
-    return <Avatar color={color || 'primary'} className='mr-1' content={`${row.name}` || 'John Doe'} initials />
-  }
-}
 
 const statusObj = {
   Pending: 'light-warning',

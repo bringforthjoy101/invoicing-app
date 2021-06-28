@@ -12,7 +12,6 @@ import { Row, Col, Alert } from 'reactstrap'
 // ** User View Components
 import PlanCard from './PlanCard'
 import UserInfoCard from './UserInfoCard'
-import UserTimeline from './UserTimeline'
 import TransactionList from './Transactions'
 import { isUserLoggedIn, apiRequest, swal } from '@utils'
 
@@ -30,7 +29,6 @@ const UserView = props => {
 
   // get users details
 const userDetails = async(id) => {
-  // return async dispatch => {
    const response = await apiRequest({url:`/admin/users/details/${id}`, method:'GET'}, dispatch)
     if (response && response.data.success) {
         await setDetail(response.data)
@@ -38,7 +36,6 @@ const userDetails = async(id) => {
       // console.log(response)
       swal('Oops!', 'Something went wrong.', 'error')
     }
-  // }
 }
 
   // ** Get user on mount

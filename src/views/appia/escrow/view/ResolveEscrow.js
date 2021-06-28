@@ -3,7 +3,8 @@ import { Button, Spinner, Modal, ModalHeader, ModalBody, ModalFooter, Label, For
 import { Formik, Field, Form, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 import { useDispatch, useSelector } from 'react-redux'
-import {escrowResolve} from '../store/action'
+import { escrowResolve } from '../store/action'
+import { useParams } from 'react-router-dom'
 
 
 const ResoveSchema = Yup.object().shape({
@@ -12,10 +13,11 @@ const ResoveSchema = Yup.object().shape({
   status: Yup.string().required("Status isrequired")
 })
 
-const ResolveEscrows = ({ code, userData }) => {
-  const dispatch = useDispatch()
+const ResolveEscrows = ({ code, status }) => {
+  const dispatch = useDispatch(),
+  { id } = useParams()
+const store = useSelector(state => state.appiaEscrow)
   const [formModal, setFormModal] = useState(false)
-
 
   return (
     <div>
@@ -27,7 +29,7 @@ const ResolveEscrows = ({ code, userData }) => {
         <Formik
           initialValues={{
             code,
-            status: '',
+            status,
             reason: ''
           }}
           validationSchema={ResoveSchema}
@@ -42,7 +44,7 @@ const ResolveEscrows = ({ code, userData }) => {
             <Form>
               <ModalBody>
                 <FormGroup>
-                  <label htmlFor='code'>Code</label>
+                  <label htmlFor='code'>Transaction Code</label>
                   <Field
                     type='text'
                     name='code'

@@ -1,22 +1,21 @@
 // ** React Imports
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 
 // ** Store & Actions
-import { getEscrow, getAllUserEscrowTransactions } from '../store/action'
+import { getAllUserEscrowTransactions } from '../store/action'
 import { useSelector, useDispatch } from 'react-redux'
 
 // ** Reactstrap
 import { Row, Col, Alert } from 'reactstrap'
 
 // ** User View Components
-import UserInfoCard from './UserInfoCard'
+import EscrowInfoCard from './EscrowInfoCard'
 import TransactionList from './Transactions'
-import { isUserLoggedIn, apiRequest, swal } from '@utils'
+import PlanCard from './PlanCard'
 
 // ** Styles
 import '@styles/react/apps/app-users.scss'
-import PlanCard from '../../escrow/view/PlanCard'
 
 const UserView = props => {
   // ** Vars
@@ -24,32 +23,21 @@ const UserView = props => {
     dispatch = useDispatch(),
     { id } = useParams()
 
-  const [userData, setUserData] = useState(null)
-  const [detail, setDetail] = useState(null)
-
-
-  // ** Get user on mount
+  // ** Get Escrow on mount
   useEffect(() => {
-    dispatch(getEscrow(store.allData, id))
     dispatch(getAllUserEscrowTransactions(id))
   }, [dispatch])
 
-
-  useEffect(() => {
-    if (isUserLoggedIn() !== null) {
-      setUserData(JSON.parse(localStorage.getItem('userData')))
-    }
-  }, [])
 
   return store.selectedEscrow !== null && store.selectedEscrow !== undefined ? (
     <div className='app-user-view'>
       <Row>
         <Col xl='9' lg='8' md='7'>
-          <UserInfoCard selectedEscrow={store.selectedEscrow} />
-        </Col> 
-        <Col xl='3' lg='4' md='5'>
+          <EscrowInfoCard selectedEscrow={store.selectedEscrow} />
+        </Col>
+        {store.selectedEscrow.status === "Pending" || store.selectedEscrow.status === "Contested" ? <Col xl='3' le='4' md='7'>
           <PlanCard selectedEscrow={store.selectedEscrow} />
-        </Col> 
+        </Col> : "" }
       </Row>
       <Row>
         <Col sm='12'>

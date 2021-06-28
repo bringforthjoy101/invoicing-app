@@ -74,7 +74,8 @@ const Login = props => {
       useJwt
         .login({ email, password })
         .then(res => {
-          if (res.data.success) {
+          console.log("res", res)
+          if (res.data.success && res.data.verified === true) {
             const data = { 
               ...res.data.data, 
               accessToken: res.data.token, 
@@ -91,6 +92,8 @@ const Login = props => {
               <ToastContent name={`${data.first_name} ${data.last_name}` || data.fullName || data.username || 'John Doe'} role={data.role || 'admin'} />,
               { transition: Slide, hideProgressBar: true, autoClose: 2000 }
             )
+          } else if (res.data.success && res.data.verified === false) {
+            history.push("/pages/account-settings")
           } else {
             toast.error(
               <InvalidLoginToastContent message={`${res.data.message}` || 'Invalid Login'} />,
@@ -213,29 +216,6 @@ const Login = props => {
                 <span className='ml-50'>Sign In</span>
               </Button.Ripple>
             </AvForm>
-            {/* <p className='text-center mt-2'>
-              <span className='mr-25'>New on our platform?</span>
-              <Link to='/register'>
-                <span>Create an account</span>
-              </Link>
-            </p>
-            <div className='divider my-2'>
-              <div className='divider-text'>or</div>
-            </div>
-            <div className='auth-footer-btn d-flex justify-content-center'>
-              <Button.Ripple color='facebook'>
-                <Facebook size={14} />
-              </Button.Ripple>
-              <Button.Ripple color='twitter'>
-                <Twitter size={14} />
-              </Button.Ripple>
-              <Button.Ripple color='google'>
-                <Mail size={14} />
-              </Button.Ripple>
-              <Button.Ripple className='mr-0' color='github'>
-                <GitHub size={14} />
-              </Button.Ripple>
-            </div> */}
           </Col>
         </Col>
       </Row>

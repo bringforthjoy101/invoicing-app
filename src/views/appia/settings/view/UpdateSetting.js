@@ -1,8 +1,8 @@
 import { useState } from 'react'
-import { Button, Spinner, Modal, ModalHeader, ModalBody, ModalFooter, Label, FormGroup, Input } from 'reactstrap'
-import { Formik, Field, Form, ErrorMessage, FieldArray } from 'formik'
+import { Button, Spinner, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup } from 'reactstrap'
+import { Formik, Field, Form, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 import { updateSetting } from '../store/action'
 

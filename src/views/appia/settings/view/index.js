@@ -4,7 +4,7 @@ import moment from 'moment'
 
 
 // ** Store & Actions
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 // ** Reactstrap
 import { Row, Col, Alert } from 'reactstrap'

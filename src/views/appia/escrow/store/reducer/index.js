@@ -5,7 +5,9 @@ const initialState = {
   total: 1,
   params: {},
   selectedEscrow: null,
-  selectedUserTransactions: []
+  selectedUserTransactions: [],
+  selectedEscrowTrans: null
+  
 }
 
 const users = (state = initialState, action) => {

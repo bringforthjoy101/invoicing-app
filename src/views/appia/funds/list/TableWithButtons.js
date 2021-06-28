@@ -63,6 +63,18 @@ const status = {
   5: { title: 'Applied', color: 'light-info' }
 }
 
+// console.log(userData)
+// const renderClient = (row, userD) => {
+//   const stateNum = Math.floor(Math.random() * 6),
+//     states = ['light-success', 'light-danger', 'light-warning', 'light-info', 'light-primary', 'light-secondary'],
+//     color = states[stateNum]
+
+//   if (row.avatar) {
+//     return <Avatar className='mr-1' img={row.avatar} width='32' height='32' />
+//   } else {
+//     return <Avatar color={color || 'primary'} className='mr-1' content={`${row.first_name} ${row.last_name}` || 'John Doe'} initials />
+//   }
+// }
 // ** Table Common Column
 const columns = [
   {
@@ -141,11 +153,10 @@ const columns = [
   {
     name: 'Actions',
     allowOverflow: true,
-    // minWidth: '100px',
-    selector: 'role_name',
+    selector: 'status',
     cell: row => {
       return (
-        // row.role_name === "Financial Admin" ? 
+        // userData.role_name === "Financial Admin" ?
         <div className='d-flex'>
           {row.status === 'Pending' ? (
             <div>
@@ -153,7 +164,8 @@ const columns = [
               <X size={30} className='text-danger' onClick={() => store.dispatch(reviewFunds(row.log_id, 'disapprove'))} />
             </div>
           ) : <Bookmark size={30} className='text-info' onClick={() => alert('Reviewed')} />}
-        </div> 
+        </div>  
+        // : ""
       )
     }
   }
@@ -178,7 +190,6 @@ const DataTableWithButtons = () => {
   const [searchValue, setSearchValue] = useState('')
   const [filteredData, setFilteredData] = useState([])
   const [userData, setUserData] = useState(null)
-
 
   // ** Get data on mount
   useEffect(() => {
@@ -407,7 +418,6 @@ const DataTableWithButtons = () => {
           selectableRowsComponent={BootstrapCheckbox}
         />
       </Card>
-      {/* <AddNewModal open={modal} handleModal={handleModal} /> */}
     </Fragment>
   )
 }

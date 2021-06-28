@@ -70,7 +70,7 @@ export const columns = [
           <Link
             to={`/appia/escrow/view/${row.user_id}`}
             className='user-name text-truncate mb-0'
-            onClick={() => store.dispatch(getEscrow(store.getState().appiaEscrow.allData, row.user_id))}
+            onClick={() => store.dispatch(getEscrow(store.getState().appiaEscrow.allData, row.id))}
           >
             <span className='font-weight-bold'>{row.user_id}</span>
           </Link>

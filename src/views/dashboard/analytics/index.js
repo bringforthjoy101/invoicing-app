@@ -30,9 +30,7 @@ const AnalyticsDashboard = () => {
 
   // ** Get all Dashboard Data
   const dashboardData = async () => {
-    // return  => {
     const response = await apiRequest({ url: '/admin/data', method: 'GET' })
-    console.log({ response })
     if (response) {
       if (response?.data?.data && response?.data?.success) {
         await setDashData(response.data.data)
@@ -43,7 +41,6 @@ const AnalyticsDashboard = () => {
       swal('Oops!', 'Somthing went wrong with your network.', 'error')
     }
 
-    // }
   }
 
   // ** Get admin activities

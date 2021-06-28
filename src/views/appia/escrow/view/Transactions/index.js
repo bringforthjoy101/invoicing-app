@@ -109,7 +109,6 @@ const TransactionList = ({selectedEscrow}) => {
     )
   }, [dispatch])
 
-  console.log("sttt", store.selectedEscrow)
 
   const handleFilter = val => {
     setValue(val)

@@ -1,4 +1,3 @@
-import axios from 'axios'
 import { paginateArray, sortCompare, apiRequest, swal } from '@utils'
 
 export const apiUrl = process.env.REACT_APP_API_ENDPOINT

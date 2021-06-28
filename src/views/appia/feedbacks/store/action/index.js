@@ -46,7 +46,6 @@ export const getFilteredData = (feedbacks, params) => {
 export const getFeedback = (feedbacks, id) => {
   return async dispatch => {
     const feedback = feedbacks.find(i => i.id === id)
-    console.log("feedback", feedback)
     dispatch({
       type: 'GET_FEEDBACK',
       selectedFeedback: feedback

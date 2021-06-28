@@ -160,7 +160,7 @@ const DataPlansPlist = () => {
   }
 
   const filteredData = store.allData.filter(
-    item => (item.network.toLowerCase() || item.validity.toLowerCase())
+    item => (item.network.toLowerCase() || item.validity.toLowerCase() || item.category || item.product_id)
   )
 
     // ** Custom Pagination

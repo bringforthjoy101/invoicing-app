@@ -1,12 +1,9 @@
-// ** React Imports
-import { Link } from 'react-router-dom'
-
 // ** Custom Components
 import Avatar from '@components/avatar'
 import moment from 'moment'
 
 // ** Third Party Components
-import { Card, CardBody, CardText, Button, Row, Col } from 'reactstrap'
+import { Card, CardBody, CardText, Row, Col } from 'reactstrap'
 // import { DollarSign, TrendingUp, User, Check, Star, Flag, Phone } from 'react-feather'
 
 const SettingInfo = ({ selectedSetting }) => {

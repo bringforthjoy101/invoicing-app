@@ -1,5 +1,4 @@
-import { paginateArray, sortCompare, apiRequest, swal } from '@utils'
-import { data } from 'jquery'
+import { paginateArray, apiRequest, swal } from '@utils'
 
 
 // ** Get all Data
@@ -31,7 +30,7 @@ export const getFilteredData = (dataPlans, params) => {
     const queryLowered = q.toLowerCase()
     const filteredData = dataPlans.filter(
       plan =>
-        (plan.network.toLowerCase().includes(queryLowered) || plan.category.toLowerCase().includes(queryLowered) || plan.validity.toLowerCase().includes(queryLowered)) &&
+        (plan.network.toLowerCase().includes(queryLowered) || plan.category.toLowerCase().includes(queryLowered) || plan.validity.toLowerCase().includes(queryLowered) || plan.product_id.toLowerCase().includes(queryLowered)) &&
         plan.category === (category || plan.category)
     )
     /* eslint-enable  */

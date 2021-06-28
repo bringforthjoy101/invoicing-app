@@ -7,7 +7,6 @@ export const apiUrl = process.env.REACT_APP_API_ENDPOINT
 export const getAllData = () => {
   return async dispatch => {
     const response = await apiRequest({url:'/admin/escrows', method:'GET'}, dispatch)
-    console.log({response})
     if (response && response.data.data && response.data.success) {
         await dispatch({
           type: 'GET_ALL_ESCROW',
@@ -46,8 +45,7 @@ export const getFilteredData = (escrows, params) => {
 //  Get Escrow
 export const getEscrow = (escrows, id) => {
   return async dispatch => {
-    const escrow = escrows.find(i => i.user_id === id)
-    console.log("esss", escrow)
+    const escrow = escrows.find(i => i.id === id)
     dispatch({
       type: 'GET_ESCROW',
       selectedEscrow: escrow
@@ -60,7 +58,6 @@ export const getAllUserEscrowTransactions = (user_id) => {
   return async dispatch => {
     const body = JSON.stringify({user_id})
     const response = await apiRequest({url:`/admin/escrows/${user_id}`, method:'GET'}, dispatch)
-    console.log({response})
     if (response && response.data.data && response.data.success) {
         await dispatch({
           type: 'GET__ALL_USER_ESCROW_TRANSACTIONS',
@@ -113,11 +110,11 @@ export const getFilteredUserTransactions = (userTransactions, params) => {
 export const escrowResolve = ({code, status, reason}) => {
   return async dispatch => {
     const body = JSON.stringify({code, status,  reason})
-    console.log({body})
+    console.log('bdy', body)
     const response = await apiRequest({url:`/admin/escrow/resolve`, method:'POST', body}, dispatch)
-    console.log({response})
     if (response && response.data.success) {
       swal('Good!', `${response.data.message}.`, 'success')
+      dispatch(getAllUserEscrowTransactions())
     } else {
       console.log(response)
       swal('Oops!', 'Somthing went wrong with your network.', 'error')

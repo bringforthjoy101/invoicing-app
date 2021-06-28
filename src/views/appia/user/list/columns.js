@@ -1,6 +1,5 @@
 // ** React Imports
 import { Link } from 'react-router-dom'
-import { useSelector } from 'react-redux'
 
 // ** Custom Components
 import Avatar from '@components/avatar'

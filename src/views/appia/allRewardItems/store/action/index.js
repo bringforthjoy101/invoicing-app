@@ -4,7 +4,7 @@ import { paginateArray, sortCompare, apiRequest, swal } from '@utils'
 export const getAllData = () => {
   return async dispatch => {
     const response = await apiRequest({ url: '/admin/rewards/get', method: 'GET' }, dispatch)
-      if (response) {
+    if (response) {
       if (response.data.data && response.data.success) {
         await dispatch({
           type: 'GET_ALL_REWARDS',
@@ -53,23 +53,22 @@ export const getReward = (rewards, id) => {
   }
 }
 
- // ** Get all service id
- export const getAllServiceId =  () => {
+// ** Get all service id
+export const getAllServiceId = () => {
   return async dispatch => {
     const response = await apiRequest({ url: '/admin/rewards/service-id/get', method: 'GET' }, dispatch)
-    console.log({response})
-  if (response) {
-    if (response.data.data && response.data.success) {
-      await dispatch({
-        type: 'GET_SERVICE_ID',
-        data: response.data.data
-      })
+    if (response) {
+      if (response.data.data && response.data.success) {
+        await dispatch({
+          type: 'GET_SERVICE_ID',
+          data: response.data.data
+        })
+      } else {
+        console.log(response.error)
+      }
     } else {
-      console.log(response.error)
+      swal('Oops!', 'Somthing went wrong with your network.', 'error')
     }
-  } else {
-    swal('Oops!', 'Somthing went wrong with your network.', 'error')
   }
-}
 
 }

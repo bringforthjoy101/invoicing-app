@@ -1,12 +1,10 @@
 // ** React Imports
-import { Link } from 'react-router-dom'
 import moment from 'moment'
 
 // ** Custom Components
 import Avatar from '@components/avatar'
 
 // ** Third Party Components
-import { Badge, UncontrolledDropdown, DropdownMenu, DropdownToggle, DropdownItem } from 'reactstrap'
 import {
   Eye,
   TrendingUp,
@@ -53,20 +51,7 @@ export const columns = [
     minWidth: '180px',
     selector: 'user_id',
     sortable: true,
-    cell: row => (
-      <div className='d-flex justify-content-left align-items-center'>
-        {renderClient(row)}
-        <div className='d-flex flex-column'>
-          <Link
-            to={`/appia/escrow/view/Transactions/${row.id}`}
-            className='user-name text-truncate mb-0'
-            onClick={() => store.dispatch(getEscrow(store.getState().appiaEscrow.allData, row.id))}
-          >
-            <span className='font-weight-bold'>{row.id}</span>
-          </Link>
-        </div>
-      </div>
-    )
+    cell: row => row.user_id
   },
   {
     name: 'Transaction Name',
@@ -94,7 +79,7 @@ export const columns = [
     minWidth: '200px',
     selector: 'decline_reason',
     sortable: true,
-    cell: row => <span>{row.decline_reason !== null ? row.decline_reason : "No Issue"}</span>
+    cell: row => <span>{row.decline_reason}</span>
   },
   {
     name: 'Details',

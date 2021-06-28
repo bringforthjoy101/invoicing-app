@@ -1,9 +1,8 @@
-import { useState } from 'react'
 // ** Reactstrap
-import { Card, CardHeader, CardBody, Badge, UncontrolledTooltip, Button } from 'reactstrap'
+import { Card, CardHeader, CardBody } from 'reactstrap'
 import UpdateSetting from './UpdateSetting'
 
-const PlanCard = ({ selectedSetting }) => {
+const PlanCard = ({ }) => {
 
   return (
     <Card className='plan-card border-primary'>
