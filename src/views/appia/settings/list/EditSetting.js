@@ -1,36 +1,37 @@
 import { useState } from 'react'
-import { Button, Spinner, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup } from 'reactstrap'
+import { Button, Spinner, Modal, ModalHeader, ModalBody, ModalFooter, Label, FormGroup, Input } from 'reactstrap'
+import { Edit } from 'react-feather'
 import { Formik, Field, Form, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { updateSetting } from '../store/action'
 
-const UpdateSettingSchema = Yup.object().shape({
-  id: Yup.number().required('Id is required'),
-  name: Yup.string().required('Name is required'),
-  value: Yup.string().required("Value isrequired"),
-  description: Yup.string().required("Description isrequired")
-})
 
-export const UpdateSetting = () => {
+const UpdateSettingSchema = Yup.object().shape({
+    id: Yup.number().required('Id is required'),
+    name: Yup.string().required('Name is required'),
+    value: Yup.string().required("Value isrequired"),
+    description: Yup.string().required("Description isrequired")
+  })
+export const EditSetting = ({ data}) => {
   const dispatch = useDispatch()
   const [formModal, setFormModal] = useState(false)
 
 
   return (
     <div>
-      <Button.Ripple className='text-center mb-1' color='primary' outline block onClick={() => setFormModal(!formModal)}>
-        Update Setting
+      <Button.Ripple className='text-center mb-1' color='primary' outline  onClick={() => setFormModal(!formModal)}>
+        <Edit /> Edit
       </Button.Ripple>
-      <Modal isOpen={formModal} toggle={() => setFormModal(!formModal)} className='modal-dialog-centered'>
-        <ModalHeader toggle={() => setFormModal(!formModal)}>Update Setting</ModalHeader>
+      <Modal isOpen={formModal} toggle={() => setFormModal(!formModal)} className='modal-dialog-left'>
+        <ModalHeader toggle={() => setFormModal(!formModal)}>Edit Setting</ModalHeader>
         <Formik
           initialValues={{
-                id: '',
-                name: '',
-                value: '',
-                description: ''
+            id: data.id,
+            name: data.name,
+            value: '',
+            description: ''
           }}
           validationSchema={UpdateSettingSchema}
           onSubmit={async (values, { setSubmitting }) => {
@@ -40,15 +41,15 @@ export const UpdateSetting = () => {
           }}
         >
 
-          {({ errors, touched, isSubmitting, values }) => (
+          {({ errors, touched, isSubmitting }) => (
             <Form>
               <ModalBody>
                 <FormGroup>
-                  <label htmlFor='id'>Setting Id</label>
+                  <label htmlFor='id'>Id</label>
                   <Field
-                    type='number'
+                    type='id'
                     name='id'
-                    placeholder='id'
+                    placeholder='Id'
                     className={`form-control ${errors.id && touched.id && 'is-invalid'}`}
                   />
                   <ErrorMessage name='id' component='div' className='field-error text-danger' />
@@ -68,7 +69,7 @@ export const UpdateSetting = () => {
                   <Field
                     type='text'
                     name='value'
-                    placeholder='Value'
+                    placeholder='value'
                     className={`form-control ${errors.value && touched.value && 'is-invalid'}`}
                   />
                   <ErrorMessage name='value' component='div' className='field-error text-danger' />
@@ -97,6 +98,4 @@ export const UpdateSetting = () => {
     </div>
   )
 }
-
-
-export default UpdateSetting
+export default EditSetting

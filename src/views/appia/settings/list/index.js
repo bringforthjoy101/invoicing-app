@@ -1,15 +1,27 @@
+import { Fragment, useState, useEffect } from 'react'
 // ** User List Component
-import Table from './Table'
+import Settings from './SettingsDetails'
 
 // ** Styles
 import '@styles/react/apps/app-users.scss'
 
-const FeedbacksList = () => {
+// ** Store & Actions
+import { getAllData } from '../store/action'
+import { useDispatch, useSelector } from 'react-redux'
+
+const SettingsLIst = () => {
+  const dispatch = useDispatch()
+  const store = useSelector(state => state.appiaSettings)
+
+  useEffect(() => {
+    dispatch(getAllData())
+  }, [dispatch])
+
   return (
     <div className='app-user-list'>
-      <Table />
+      <Settings allData={store.allData} />
     </div>
   )
 }
 
-export default FeedbacksList
+export default SettingsLIst

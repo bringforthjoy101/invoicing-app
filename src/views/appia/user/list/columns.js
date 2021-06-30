@@ -127,42 +127,5 @@ export const columns = [
         {row.status}
       </Badge>
     )
-  },
-  {
-    name: 'Actions',
-    minWidth: '100px',
-    selector: 'fullName',
-    sortable: true,
-    cell: row => (
-      <UncontrolledDropdown>
-        <DropdownToggle tag='div' className='btn btn-sm'>
-          <MoreVertical size={14} className='cursor-pointer' />
-        </DropdownToggle>
-        <DropdownMenu right>
-          <DropdownItem
-            tag={Link}
-            to={`/appia/user/view/${row.user_id}`}
-            className='w-100'
-            onClick={() => store.dispatch(getUser(store.getState().appiaUsers.allData, row.user_id))}
-          >
-            <FileText size={14} className='mr-50' />
-            <span className='align-middle'>Details</span>
-          </DropdownItem>
-          <DropdownItem
-            tag={Link}
-            to={`/appia/user/edit/${row.user_id}`}
-            className='w-100'
-            onClick={() => store.dispatch(getUser(row.user_id))}
-          >
-            <Archive size={14} className='mr-50' />
-            <span className='align-middle'>Edit</span>
-          </DropdownItem>
-          <DropdownItem className='w-100'>
-            <Trash2 size={14} className='mr-50' />
-            <span className='align-middle'>Delete</span>
-          </DropdownItem>
-        </DropdownMenu>
-      </UncontrolledDropdown>
-    )
   }
 ]

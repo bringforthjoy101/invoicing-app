@@ -183,18 +183,6 @@ const AppiaRoutes = [
     }
   },
   {
-    path: '/appia/settings/view',
-    exact: true,
-    component: () => <Redirect to='/appia/settings/view/1' />
-  },
-  {
-    path: '/appia/settings/view/:id',
-    component: lazy(() => import('../../views/appia/settings/view')),
-    meta: {
-      navLink: '/appia/settings/view'
-    }
-  },
-  {
     path: '/appia/settings/list',
     component: lazy(() => import('../../views/appia/settings/list'))
   },

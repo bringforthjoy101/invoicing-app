@@ -4,6 +4,7 @@ import { paginateArray, apiRequest, swal } from '@utils'
 export const getAllData = () => {
   return async dispatch => {
     const response = await apiRequest({ url: '/admin/settings', method: 'GET' }, dispatch)
+    console.log({response})
     if (response) {
       if (response.data.data && response.data.success) {
         await dispatch({
@@ -17,28 +18,6 @@ export const getAllData = () => {
       swal('Oops!', 'Somthing went wrong with your network.', 'error')
     }
 
-  }
-}
-
-// ** Get filtered data on page or row change
-export const getFilteredData = (settings, params) => {
-  return async dispatch => {
-    const { q = '', perPage = 10, page = 1, role = null} = params
-
-    /* eslint-disable  */
-    const queryLowered = q.toLowerCase()
-    const filteredData = settings.filter(
-      setting =>
-        (setting.name.toLowerCase().includes(queryLowered))
-    )
-    /* eslint-enable  */
-
-    dispatch({
-      type: 'GET_FILTERED_DATA',
-      data: paginateArray(filteredData, perPage, page),
-      totalPages: filteredData.length,
-      params
-    })
   }
 }
 
@@ -56,6 +35,7 @@ export const updateSetting = (values) => {
   return async dispatch => {
     const body = JSON.stringify(values)
     const response = await apiRequest({url:`/admin/settings/update`, method:'POST', body}, dispatch)
+    console.log({response})
     if (response && response.data.success) {
       swal('Good!', `${response.data.message}.`, 'success')
       dispatch(getAllData())

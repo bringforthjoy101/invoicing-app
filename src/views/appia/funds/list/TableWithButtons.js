@@ -63,20 +63,8 @@ const status = {
   5: { title: 'Applied', color: 'light-info' }
 }
 
-// console.log(userData)
-// const renderClient = (row, userD) => {
-//   const stateNum = Math.floor(Math.random() * 6),
-//     states = ['light-success', 'light-danger', 'light-warning', 'light-info', 'light-primary', 'light-secondary'],
-//     color = states[stateNum]
-
-//   if (row.avatar) {
-//     return <Avatar className='mr-1' img={row.avatar} width='32' height='32' />
-//   } else {
-//     return <Avatar color={color || 'primary'} className='mr-1' content={`${row.first_name} ${row.last_name}` || 'John Doe'} initials />
-//   }
-// }
 // ** Table Common Column
-const columns = [
+  const columns = [
   {
     name: 'User',
     selector: 'user_details',
@@ -155,17 +143,18 @@ const columns = [
     allowOverflow: true,
     selector: 'status',
     cell: row => {
+      console.log("rowww", row.userData)
       return (
-        // userData.role_name === "Financial Admin" ?
-        <div className='d-flex'>
+       <div>
+          {row.userData.role_name === "Super Admin" ?  <div className='d-flex'>
           {row.status === 'Pending' ? (
             <div>
               <Check size={30} className='text-success' onClick={() => store.dispatch(reviewFunds(row.log_id, 'approve'))} />
               <X size={30} className='text-danger' onClick={() => store.dispatch(reviewFunds(row.log_id, 'disapprove'))} />
             </div>
           ) : <Bookmark size={30} className='text-info' onClick={() => alert('Reviewed')} />}
-        </div>  
-        // : ""
+        </div>   : ""}
+       </div>
       )
     }
   }
@@ -201,7 +190,6 @@ const DataTableWithButtons = () => {
       setUserData(JSON.parse(localStorage.getItem('userData')))
     }
   }, [])
-
 
   // ** Function to handle filter
   const handleFilter = e => {
@@ -416,6 +404,7 @@ const DataTableWithButtons = () => {
           paginationComponent={CustomPagination}
           data={searchValue.length ? filteredData : store.allData}
           selectableRowsComponent={BootstrapCheckbox}
+          props={userData}
         />
       </Card>
     </Fragment>

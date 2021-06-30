@@ -110,11 +110,12 @@ export const getFilteredUserTransactions = (userTransactions, params) => {
 export const escrowResolve = ({code, status, reason}) => {
   return async dispatch => {
     const body = JSON.stringify({code, status,  reason})
-    console.log('bdy', body)
     const response = await apiRequest({url:`/admin/escrow/resolve`, method:'POST', body}, dispatch)
-    if (response && response.data.success) {
+    if (response && response.data.success === true) {
       swal('Good!', `${response.data.message}.`, 'success')
       dispatch(getAllUserEscrowTransactions())
+    } else if (response.data.success === false) {
+      swal('Oops!', `${response.data.message}.`, 'error')
     } else {
       console.log(response)
       swal('Oops!', 'Somthing went wrong with your network.', 'error')
