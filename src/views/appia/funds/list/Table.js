@@ -62,7 +62,7 @@ const status = {
 }
 
 // ** Table Common Column
-  const columns = [
+const columns = [
   {
     name: 'User',
     selector: 'user_details',
@@ -138,20 +138,30 @@ const status = {
   },
   {
     name: 'Actions',
-    allowOverflow: true,
-    selector: 'status',
-    cell: row => {
-      return (
-          <div className='d-flex'>
-          {row.status === 'Pending' ? (
-            <div>
-              <Check size={30} className='text-success' onClick={() => store.dispatch(reviewFunds(row.log_id, 'approve'))} />
-              <X size={30} className='text-danger' onClick={() => store.dispatch(reviewFunds(row.log_id, 'disapprove'))} />
-            </div>
-          ) : <Bookmark size={30} className='text-info' onClick={() => alert('Reviewed')} />}
-        </div> 
-      )
-    }
+    minWidth: '100px',
+    selector: 'fullName',
+    sortable: true,
+    cell: row => (
+      <UncontrolledDropdown>
+        <DropdownToggle tag='div' className='btn btn-sm'>
+          <MoreVertical size={14} className='cursor-pointer' />
+        </DropdownToggle>
+        <DropdownMenu right>
+          <DropdownItem>
+            <FileText size={14} className='mr-50' />
+            <span className='align-middle'>Details</span>
+          </DropdownItem>
+          <DropdownItem>
+            <Archive size={14} className='mr-50' />
+            <span className='align-middle'>Edit</span>
+          </DropdownItem>
+          <DropdownItem className='w-100'>
+            <Trash2 size={14} className='mr-50' />
+            <span className='align-middle'>Delete</span>
+          </DropdownItem>
+        </DropdownMenu>
+      </UncontrolledDropdown>
+    )
   }
 ]
 
