@@ -139,8 +139,7 @@ export const apiRequest = ({url, method, body}, dispatch) => {
         headers: {
             Authorization: `Bearer ${accessToken}`,
             Accept: 'application/json',
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*'
+            'Content-Type': 'application/json'
         },
         responseType: 'json',
         validateStatus: (status) => {
