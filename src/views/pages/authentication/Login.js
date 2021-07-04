@@ -74,8 +74,7 @@ const Login = props => {
       useJwt
         .login({ email, password })
         .then(res => {
-          console.log("res", res)
-          if (res.data.success && res.data.verified === true) {
+          if (res.data.success) {
             const data = { 
               ...res.data.data, 
               accessToken: res.data.token, 
@@ -92,8 +91,6 @@ const Login = props => {
               <ToastContent name={`${data.first_name} ${data.last_name}` || data.fullName || data.username || 'John Doe'} role={data.role || 'admin'} />,
               { transition: Slide, hideProgressBar: true, autoClose: 2000 }
             )
-          } else if (res.data.success && res.data.verified === false) {
-            history.push("/pages/account-settings")
           } else {
             toast.error(
               <InvalidLoginToastContent message={`${res.data.message}` || 'Invalid Login'} />,
@@ -224,3 +221,8 @@ const Login = props => {
 }
 
 export default Login
+
+
+// else if (res.data.success && res.data.verified === false) {
+//   history.push("/pages/account-settings")
+// } 
