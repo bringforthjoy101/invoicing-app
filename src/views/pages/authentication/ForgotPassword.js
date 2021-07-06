@@ -8,7 +8,6 @@ import { Row, Col, CardTitle, CardText, Form, FormGroup, Spinner, Label, Input, 
 import '@styles/base/pages/page-auth.scss'
 
 import { useDispatch } from 'react-redux'
-import InputEmailToggle from '@components/input-email-toggle'
 import { AvForm, AvInput } from 'availity-reactstrap-validation-safe'
 
 
@@ -23,9 +22,8 @@ const ForgotPassword = () => {
     event?.preventDefault()
     if (errors && !errors.length) {
       setIsSubmitting(true)
-      const body = JSON.stringify({email: ''})
       try {
-        const response = await axios.post('https://appia-app-api.herokuapp.com/admin/reset_password', {email})
+        const response = await axios.post('https://api.appiawave.com/admin/reset_password', {email})
         if (response.data.success) {
           swal('Great job!', response.data.message, 'success')
         setIsSubmitting(false)
