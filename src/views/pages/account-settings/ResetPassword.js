@@ -13,12 +13,10 @@ const PasswordTabContent = () => {
 
   const onSubmit = async (event, errors) => {
     event.preventDefault()
-    console.log({errors})
     if (errors && !errors.length) {
       const body = JSON.stringify(userData)
       try {
         const response = await apiRequest({url:'/admin/reset_password', method:'POST', body}, dispatch)
-        console.log({response})
         if (response.data.success) {
             swal('Great job!', response.data.message, 'success')
         } else {
@@ -29,6 +27,7 @@ const PasswordTabContent = () => {
       }
     }
   }
+  
   return (
     <AvForm onSubmit={onSubmit}>
       <Row>

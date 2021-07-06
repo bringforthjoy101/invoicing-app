@@ -26,9 +26,8 @@ import {
 } from 'reactstrap'
 
 import '@styles/base/pages/page-auth.scss'
-import { data } from 'jquery'
 
-const ToastContent = ({ name, role }) => (
+const ToastContentValid = ({ name, role }) => (
   <Fragment>
     <div className='toastify-header'>
       <div className='title-wrapper'>
@@ -42,7 +41,8 @@ const ToastContent = ({ name, role }) => (
   </Fragment>
 )
 
-const InvalidLoginToastContent = ({ message }) => (
+
+const ToastContentInvalid = ({ message }) => (
   <Fragment>
     <div className='toastify-header'>
       <div className='title-wrapper'>
@@ -51,10 +51,11 @@ const InvalidLoginToastContent = ({ message }) => (
       </div>
     </div>
     <div className='toastify-body'>
-      <span>Invalid Login!</span>
+      <span>invalid</span>
     </div>
   </Fragment>
 )
+
 
 const Login = props => {
   const [skin, setSkin] = useSkin()
@@ -68,40 +69,39 @@ const Login = props => {
   const illustration = skin === 'dark' ? 'login-v2-dark.svg' : 'login-v2.svg',
     source = require(`@src/assets/images/pages/${illustration}`).default
 
-  const handleSubmit = (event, errors) => {
-    if (errors && !errors.length) {
-      setIsSubmitting(true)
-      useJwt
-        .login({ email, password })
-        .then(res => {
-          if (res.data.success) {
-            const data = { 
-              ...res.data.data, 
-              accessToken: res.data.token, 
-              refreshToken: res.data.token,
-              ability: [{action: "manage", subject: "all"}],
-              avatar: "/demo/Appia-react-admin-dashboard-template/demo-1/static/media/avatar-s-11.1d46cc62.jpg",
-              extras: {eCommerceCartItemsCount: 5}
+    const handleSubmit = (event, errors) => {
+      if (errors && !errors.length) {
+        setIsSubmitting(true)
+        useJwt
+          .login({ email, password })
+          .then(res => {
+            if (res.data.success) {
+              const data = { 
+                ...res.data.data, 
+                accessToken: res.data.token, 
+                refreshToken: res.data.token,
+                ability: [{action: "manage", subject: "all"}],
+                avatar: "/demo/Appia-react-admin-dashboard-template/demo-1/static/media/avatar-s-11.1d46cc62.jpg",
+                extras: {eCommerceCartItemsCount: 5}
+              }
+              dispatch(handleLogin(data))
+              ability.update(data.ability)
+              history.push(getHomeRouteForLoggedInUser(data.role_name))
+              toast.success(
+                <ToastContentValid name={`${data.first_name} ${data.last_name}` || data.fullName || data.username || 'John Doe'} role={data.role || 'admin'} />,
+                { transition: Slide, hideProgressBar: true, autoClose: 2000 }
+              )
+            } else {
+              toast.error(
+                <ToastContentInvalid message={`${res.data.message}` || 'admin'} />,
+                { transition: Slide, hideProgressBar: true, autoClose: 2000 }
+              )
+              setIsSubmitting(false)
             }
-
-            dispatch(handleLogin(data))
-            ability.update(data.ability)
-            history.push(getHomeRouteForLoggedInUser(data.role_name))
-            toast.success(
-              <ToastContent name={`${data.first_name} ${data.last_name}` || data.fullName || data.username || 'John Doe'} role={data.role || 'admin'} />,
-              { transition: Slide, hideProgressBar: true, autoClose: 2000 }
-            )
-          } else {
-            toast.error(
-              <InvalidLoginToastContent message={`${res.data.message}` || 'Invalid Login'} />,
-              { transition: Slide, hideProgressBar: true, autoClose: 2000 }
-            )
-            setIsSubmitting(false)
-          }
-        })
-        .catch(err => console.log(err))
+          })
+          .catch(err => console.log(err))
+      }
     }
-  }
 
 
   return (
@@ -169,7 +169,6 @@ const Login = props => {
               Welcome to Appia! 👋
             </CardTitle>
             <CardText className='mb-2'>Please sign-in to your account and start the adventure</CardText>
-            
             <AvForm className='auth-login-form mt-2' onSubmit={handleSubmit}>
               <FormGroup>
                 <Label className='form-label' for='login-email'>
@@ -201,6 +200,7 @@ const Login = props => {
                   value={password}
                   id='login-password'
                   name='login-password'
+                  autoComplete= 'on'
                   className='input-group-merge'
                   onChange={e => setPassword(e.target.value)}
                 />
@@ -221,8 +221,3 @@ const Login = props => {
 }
 
 export default Login
-
-
-// else if (res.data.success && res.data.verified === false) {
-//   history.push("/pages/account-settings")
-// } 
