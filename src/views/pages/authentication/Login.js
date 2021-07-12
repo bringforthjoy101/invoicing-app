@@ -69,31 +69,32 @@ const Login = props => {
   const illustration = skin === 'dark' ? 'login-v2-dark.svg' : 'login-v2.svg',
     source = require(`@src/assets/images/pages/${illustration}`).default
 
-    const handleSubmit = (event, errors) => {
+  const handleSubmit = async (event, errors) => {
       if (errors && !errors.length) {
         setIsSubmitting(true)
-        useJwt
+        await useJwt
           .login({ email, password })
           .then(res => {
-            if (res.data.success) {
-              const data = { 
-                ...res.data.data, 
-                accessToken: res.data.token, 
+            console.log("ress", res)
+            if (res?.data.success) {
+              const data = {
+                ...res.data.data,
+                accessToken: res.data.token,
                 refreshToken: res.data.token,
-                ability: [{action: "manage", subject: "all"}],
+                ability: [{ action: "manage", subject: "all" }],
                 avatar: "/demo/Appia-react-admin-dashboard-template/demo-1/static/media/avatar-s-11.1d46cc62.jpg",
-                extras: {eCommerceCartItemsCount: 5}
+                extras: { eCommerceCartItemsCount: 5 }
               }
               dispatch(handleLogin(data))
               ability.update(data.ability)
               history.push(getHomeRouteForLoggedInUser(data.role_name))
-              toast.success(
+              toast.error(
                 <ToastContentValid name={`${data.first_name} ${data.last_name}` || data.fullName || data.username || 'John Doe'} role={data.role || 'admin'} />,
                 { transition: Slide, hideProgressBar: true, autoClose: 2000 }
               )
             } else {
               toast.error(
-                <ToastContentInvalid message={`${res.data.message}` || 'admin'} />,
+                <InvalidLoginToastContent message={`${res.data.message}` || 'Invalid Login'} />,
                 { transition: Slide, hideProgressBar: true, autoClose: 2000 }
               )
               setIsSubmitting(false)
@@ -101,7 +102,7 @@ const Login = props => {
           })
           .catch(err => console.log(err))
       }
-    }
+  }
 
 
   return (
@@ -200,7 +201,7 @@ const Login = props => {
                   value={password}
                   id='login-password'
                   name='login-password'
-                  autoComplete= 'on'
+                  autoComplete='on'
                   className='input-group-merge'
                   onChange={e => setPassword(e.target.value)}
                 />
