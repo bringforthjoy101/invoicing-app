@@ -42,7 +42,7 @@ const ToastContentValid = ({ name, role }) => (
 )
 
 
-const ToastContentInvalid = ({ message }) => (
+const InvalidLoginToastContent = ({ message }) => (
   <Fragment>
     <div className='toastify-header'>
       <div className='title-wrapper'>
@@ -51,7 +51,7 @@ const ToastContentInvalid = ({ message }) => (
       </div>
     </div>
     <div className='toastify-body'>
-      <span>invalid</span>
+      <span>Pls, reconfirm login credentials</span>
     </div>
   </Fragment>
 )
@@ -62,21 +62,24 @@ const Login = props => {
   const ability = useContext(AbilityContext)
   const dispatch = useDispatch()
   const history = useHistory()
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [email, setEmail] = useState('tosinolugbenga@gmail.com')
+  const [password, setPassword] = useState('kfxHdSCqM')
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const illustration = skin === 'dark' ? 'login-v2-dark.svg' : 'login-v2.svg',
     source = require(`@src/assets/images/pages/${illustration}`).default
 
   const handleSubmit = async (event, errors) => {
+    console.log(event, errors)
       if (errors && !errors.length) {
         setIsSubmitting(true)
+        // const isLogin = await useJwt.login({ email, password })
+        // console.log('hi', isLogin)
         await useJwt
           .login({ email, password })
           .then(res => {
-            console.log("ress", res)
-            if (res?.data.success) {
+            console.log({res})
+            if (res.data.success) {
               const data = {
                 ...res.data.data,
                 accessToken: res.data.token,
@@ -100,7 +103,7 @@ const Login = props => {
               setIsSubmitting(false)
             }
           })
-          .catch(err => console.log(err))
+          .catch(err => { console.log(err); setIsSubmitting(false) })
       }
   }
 
