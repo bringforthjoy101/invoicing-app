@@ -42,7 +42,7 @@ const ToastContentValid = ({ name, role }) => (
 )
 
 
-const ToastContentInvalid = ({ message }) => (
+const InvalidLoginToastContent = ({ message }) => (
   <Fragment>
     <div className='toastify-header'>
       <div className='title-wrapper'>
@@ -75,7 +75,6 @@ const Login = props => {
         await useJwt
           .login({ email, password })
           .then(res => {
-            console.log("ress", res)
             if (res?.data.success) {
               const data = {
                 ...res.data.data,
