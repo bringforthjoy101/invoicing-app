@@ -16,6 +16,7 @@ import { ChevronDown } from 'react-feather'
 import DataTable from 'react-data-table-component'
 import { selectThemeColors } from '@utils'
 import { Card, CardHeader, CardTitle, CardBody, Input, Row, Col, Label, CustomInput, Button } from 'reactstrap'
+import FormGroup from 'reactstrap/lib/FormGroup'
 
 // ** Styles
 import '@styles/react/libs/react-select/_react-select.scss'
@@ -25,13 +26,13 @@ import '@styles/react/libs/tables/react-dataTable-component.scss'
 const FeedbacksList = () => {
   // ** Store Vars
   const dispatch = useDispatch()
-  const store = useSelector(state => state.appiaFeedbacks)
+  const store = useSelector(state => state.appiaTransfers)
 
   // ** States
   const [searchTerm, setSearchTerm] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
   const [rowsPerPage, setRowsPerPage] = useState(10)
-
+  const [currentStatus, setCurrentStatus] = useState({ value: '', label: 'Select Status', number: 0 })
 
   // ** Get data on mount
   useEffect(() => {
@@ -44,6 +45,12 @@ const FeedbacksList = () => {
       })
     )
   }, [dispatch])
+
+  const statusOptions = [
+    { value: '', label: 'Select Status', number: 0 },
+    { value: 'Pending', label: 'Pending', number: 1 },
+    { value: 'Successful', label: 'Successful', number: 2 }
+  ]
 
   // ** Function in get data on page change
   const handlePagination = page => {
@@ -83,7 +90,7 @@ const FeedbacksList = () => {
   }
 
   const filteredData = store.allData.filter(
-    item => (item.email.toLowerCase() || item.name.toLowerCase())
+    item => (item.receiver_name.toLowerCase() || sender_.name.toLowerCase())
   )
 
   // ** Custom Pagination
@@ -137,18 +144,44 @@ const FeedbacksList = () => {
         </CardHeader>
         <CardBody>
           <Row>
-            <Col md="4" className="d-flex">
-              <Label className='mb-0 mt-1' for='search-invoice'>
-                Search:
-            </Label>
-              <Input
-                id='search-invoice'
-                className='ml-50 w-100'
-                type='text'
-                value={searchTerm}
-                placeholder='Name and Email Search'
-                onChange={e => handleFilter(e.target.value)}
-              />
+          <Col lg="4" md="6">
+              <FormGroup>
+                <Label className='mb-0' for='search-invoice'>
+                  Search:
+              </Label>
+                <Input
+                  id='search-invoice'
+                  type="text"
+                  value={searchTerm}
+                  placeholder='Name & Bank Search'
+                  onChange={e => handleFilter(e.target.value)}
+                />
+              </FormGroup>
+            </Col>
+            <Col lg='4' md='6'>
+              <FormGroup>
+                <Label for='select'>Select Status:</Label>
+                <Select
+                  theme={selectThemeColors}
+                  isClearable={false}
+                  className='react-select'
+                  classNamePrefix='select'
+                  id='select'
+                  options={statusOptions}
+                  value={currentStatus}
+                  onChange={data => {
+                    setCurrentStatus(data)
+                    dispatch(
+                      getFilteredData(store.allData, {
+                        page: currentPage,
+                        perPage: rowsPerPage,
+                        status: data.value,
+                        q: searchTerm
+                      })
+                    )
+                  }}
+                />
+              </FormGroup>
             </Col>
           </Row>
         </CardBody>

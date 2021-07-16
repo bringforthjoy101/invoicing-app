@@ -120,19 +120,6 @@ const DataPlanInfo = ({ selectedReward }) => {
                 </div>
                 <img src={selectedReward?.image} width="80px" style={{ borderRadius: '50px' }} />
               </div>
-              {/* <div className='d-flex flex-wrap align-items-center mb-1'>
-                <div className='d-flex align-items-center'>
-                  <div className='color-box bg-light-secoundary'>
-                    <Clock className='text-secoundary' />
-                  </div>
-                  <CardText tag='span' className='user-info-title font-weight-bold mb-0 ml-1'>
-                    Date Created
-                  </CardText>
-                </div>
-                <CardText className='text-capitalize mb-0'>
-                  {moment(selectedReward?.created_at).format('lll')}
-                </CardText>
-              </div> */}
             </div>
           </Col>
         </Row>
