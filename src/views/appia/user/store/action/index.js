@@ -89,7 +89,6 @@ export const getFilteredUserTransactions = (userTransactions, params) => {
       /* eslint-enable */
 
       const queryLowered = q.toLowerCase()
-      // console.log({userTransactions}, typeof userTransactions)
       const filteredData = userTransactions.filter(
           transaction => {
             let found = false

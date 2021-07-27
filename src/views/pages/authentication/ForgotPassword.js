@@ -23,7 +23,7 @@ const ForgotPassword = () => {
     if (errors && !errors.length) {
       setIsSubmitting(true)
       try {
-        const response = await axios.post('https://api.appiawave.com/admin/reset_password', {email})
+        const response = await axios.post('https://appia-app-api.herokuapp.com/admin/reset_password', {email})
         if (response.data.success) {
           swal('Great job!', response.data.message, 'success')
         setIsSubmitting(false)

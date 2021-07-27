@@ -104,13 +104,6 @@ export const columns = [
     cell: row => <span className="text-capitalize">{row?.balance?.toLocaleString('en-US', {style: 'currency', currency: 'NGN'})}</span>
   },
   {
-    name: 'Savings',
-    minWidth: '150px',
-    selector: 'naira_wallet',
-    sortable: true,
-    cell: row => <span className='text-capitalize'>{row?.naira_wallet?.toLocaleString('en-US', { style: 'currency', currency: 'NGN' })}</span>
-  },
-  {
     name: 'Refferal Code',
     minWidth: '80px',
     selector: 'referral_code',

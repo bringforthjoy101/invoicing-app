@@ -37,11 +37,14 @@ const ContactsList = () => {
   const [currentPage, setCurrentPage] = useState(1)
   const [rowsPerPage, setRowsPerPage] = useState(10)
   const [currentStatus, setCurrentStatus] = useState({ value: '', label: 'Select Status', number: 0 })
-  const [picker, setPicker] = useState("")
+  const [picker, setPicker] = useState(null)
 
 
   const start = picker && Date.parse(picker[0])
   const end = picker && Date.parse(picker[1])
+
+  console.log("start", start)
+  console.log("end", end)
 
   // ** Get data on mount
   useEffect(() => {
@@ -161,6 +164,8 @@ const ContactsList = () => {
       }
     })
 
+    console.log("flttt", dateFilter)
+
     const isFiltered = Object.keys(filters).some(function (k) {
       return filters[k].length > 0
     })
@@ -223,7 +228,7 @@ const ContactsList = () => {
                 />
               </FormGroup>
             </Col>
-            {/* <Col md='4' className="d-flex mt-2">
+            <Col md='4' className="d-flex mt-2">
               <Label className='mb-0 mt-1' for='range-picker'>Range: </Label>
               <Flatpickr
                 value={picker}
@@ -235,7 +240,7 @@ const ContactsList = () => {
                   mode: 'range'
                 }}
               />
-            </Col> */}
+            </Col>
           </Row>
         </CardBody>
       </Card>

@@ -63,8 +63,8 @@ const UserInfoCard = ({ selectedUser, detail }) => {
                   <Pocket className='text-primary' />
                 </div>
                 <div className='ml-1'>
-                  <h5 className='mb-0'>{selectedUser.naira_wallet.toLocaleString('en-US', { style: 'currency', currency: 'NGN' })}</h5>
-                  <small>Naira Wallet</small>
+                  <h5 className='mb-0'>{selectedUser.balance.toLocaleString('en-US', { style: 'currency', currency: 'NGN' })}</h5>
+                  <small>Naira Balance</small>
                 </div>
               </div>
               <div className='d-flex align-items-center'>
@@ -72,8 +72,8 @@ const UserInfoCard = ({ selectedUser, detail }) => {
                   <Pocket className='text-success' />
                 </div>
                 <div className='ml-1'>
-                  <h5 className='mb-0'>{selectedUser.commission_wallet.toLocaleString('en-US', { style: 'currency', currency: 'NGN' })}</h5>
-                  <small>Commision Wallet</small>
+                  <h5 className='mb-0'>{selectedUser.appia_coins}</h5>
+                  <small>Appia Coin</small>
                 </div>
               </div>
             </div>
@@ -98,17 +98,6 @@ const UserInfoCard = ({ selectedUser, detail }) => {
                 </div>
                 <CardText className='text-capitalize mb-0'>
                   {selectedUser !== null ? selectedUser.status || 'Active' : 'Active'}
-                </CardText>
-              </div>
-              <div className='d-flex flex-wrap justify-content-between align-items-center my-50'>
-                <div className='user-info-title'>
-                  <Star className='mr-1' size={14} />
-                  <CardText tag='span' className='user-info-title text-capitalize font-weight-bold mb-0'>
-                    Coin Balance
-                  </CardText>
-                </div>
-                <CardText className='text-capitalize mb-0'>
-                  {selectedUser !== null ? selectedUser?.appia_coins.toLocaleString() || 'User' : 'User'}
                 </CardText>
               </div>
             </div>

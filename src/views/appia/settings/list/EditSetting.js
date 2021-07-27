@@ -30,8 +30,8 @@ export const EditSetting = ({ data}) => {
           initialValues={{
             id: data.id,
             name: data.name,
-            value: '',
-            description: ''
+            value: data.value,
+            description: data.description
           }}
           validationSchema={UpdateSettingSchema}
           onSubmit={async (values, { setSubmitting }) => {

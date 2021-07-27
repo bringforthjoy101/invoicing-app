@@ -31,6 +31,13 @@ export const columns = [
     cell: row => row.trans_type
   },
   {
+    name: 'Description',
+    minWidth: '300px',
+    selector: 'narration',
+    sortable: true,
+    cell: row => row.narration
+  },
+  {
     name: 'Amount',
     selector: 'trans_amount',
     sortable: true,
