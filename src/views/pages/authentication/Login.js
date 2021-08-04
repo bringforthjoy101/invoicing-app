@@ -88,7 +88,7 @@ const Login = props => {
               dispatch(handleLogin(data))
               ability.update(data.ability)
               history.push(getHomeRouteForLoggedInUser(data.role_name))
-              toast.error(
+              toast.success(
                 <ToastContentValid name={`${data.first_name} ${data.last_name}` || data.fullName || data.username || 'John Doe'} role={data.role || 'admin'} />,
                 { transition: Slide, hideProgressBar: true, autoClose: 2000 }
               )

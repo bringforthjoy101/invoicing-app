@@ -27,7 +27,7 @@ export const getFilteredData = (escrows, params) => {
     const queryLowered = q.toLowerCase()
     const filteredData = escrows.filter(
       escrow =>
-        ( escrow.user_id.toLowerCase().includes(queryLowered)) &&
+        ( escrow.escrow_id.toLowerCase().includes(queryLowered)) &&
         escrow.role === (role || escrow.role) &&
         escrow.status === (status || escrow.status)
     )
@@ -45,7 +45,7 @@ export const getFilteredData = (escrows, params) => {
 //  Get Escrow
 export const getEscrow = (escrows, id) => {
   return async dispatch => {
-    const escrow = escrows.find(i => i.id === id)
+    const escrow = escrows.find(i => i.escrow_id === id)
     dispatch({
       type: 'GET_ESCROW',
       selectedEscrow: escrow
@@ -54,10 +54,10 @@ export const getEscrow = (escrows, id) => {
 }
 
 // Get Transactions
-export const getAllUserEscrowTransactions = (user_id) => {
+export const getAllUserEscrowTransactions = (escrow_id) => {
   return async dispatch => {
-    const body = JSON.stringify({user_id})
-    const response = await apiRequest({url:`/admin/escrows/${user_id}`, method:'GET'}, dispatch)
+    const body = JSON.stringify({escrow_id})
+    const response = await apiRequest({url:`/admin/escrows/${escrow_id}`, method:'GET'}, dispatch)
     if (response && response.data.data && response.data.success) {
         await dispatch({
           type: 'GET__ALL_USER_ESCROW_TRANSACTIONS',

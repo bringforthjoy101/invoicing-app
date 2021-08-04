@@ -61,9 +61,9 @@ const store = useSelector(state => state.appiaEscrow)
                     placeholder='select an option'
                     className={`form-control ${errors.status && touched.status && 'is-invalid'}`}
                   >
-                    <option value="Pending">Pending</option>
-                    <option value="Contested">Contested</option>
-                    <option value="Completed">Completed</option>
+                    <option value="pending">Pending</option>
+                    <option value="contested">Contested</option>
+                    <option value="completed">Completed</option>
                   </Field>
                   <ErrorMessage name='reason' component='div' className='field-error text-danger' />
                 </FormGroup>

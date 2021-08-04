@@ -23,7 +23,7 @@ const renderClient = row => {
   if (row.avatar) {
     return <Avatar className='mr-1' img={row.avatar} width='32' height='32' />
   } else {
-    return <Avatar color={color || 'primary'} className='mr-1' content={`${row.user_id}` || 'John Doe'} initials />
+    return <Avatar color={color || 'primary'} className='mr-1' content={`${row.escrow_id}` || 'John Doe'} initials />
   }
 }
 
@@ -52,63 +52,63 @@ const renderRole = row => {
 }
 
 const statusObj = {
-  Pending: 'light-warning',
-  Contested: 'light-danger',
-  Completed: 'light-success'
+  pending: 'light-warning',
+  contested: 'light-danger',
+  completed: 'light-success'
 }
 const {users} = store.getState()
 export const columns = [
   {
-    name: 'User Id',
+    name: 'Escrow Id',
     minWidth: '180px',
-    selector: 'user_id',
+    selector: 'escrow_id',
     sortable: true,
     cell: row => (
       <div className='d-flex justify-content-left align-items-center'>
         {renderClient(row)}
         <div className='d-flex flex-column'>
           <Link
-            to={`/appia/escrow/view/${row.user_id}`}
+            to={`/appia/escrow/view/${row.escrow_id}`}
             className='user-name text-truncate mb-0'
-            onClick={() => store.dispatch(getEscrow(store.getState().appiaEscrow.allData, row.id))}
+            onClick={() => store.dispatch(getEscrow(store.getState().appiaEscrow.allData, row.escrow_id))}
           >
-            <span className='font-weight-bold'>{row.user_id}</span>
+            <span className='font-weight-bold'>{row.escrow_id}</span>
           </Link>
         </div>
       </div>
     )
   },
   {
-    name: 'Code',
-    minWidth: '150px',
-    selector: 'code',
+    name: 'Sender',
+    minWidth: '200px',
+    selector: 'sender',
     sortable: true,
-    cell: row => row.code
+    cell: row => row.sender.names
   },
   {
-    name: 'Transaction Amount',
-    minWidth: '250px',
-    selector: 'trans_amount',
+    name: 'Receiver',
+    minWidth: '200px',
+    selector: 'receiver',
     sortable: true,
-    cell: row => <span className="text-capitalize">{row?.trans_amount?.toLocaleString('en-US', {style: 'currency', currency: 'NGN'})}</span>
+    cell: row => row.receiver.names
   },
   {
     name: 'Transaction Name',
-    minWidth: '200px',
-    selector: 'trans_name',
+    minWidth: '220px',
+    selector: 'subject',
     sortable: true,
-    cell: row => row.trans_name
+    cell: row => row.subject
   },
   {
-    name: 'Role',
-    minWidth: '100px',
-    selector: 'role',
+    name: 'Transaction Amount',
+    minWidth: '220px',
+    selector: 'amount',
     sortable: true,
-    cell: row => renderRole(row)
+    cell: row => <span className="text-capitalize">{row?.amount?.toLocaleString('en-US', {style: 'currency', currency: 'NGN'})}</span>
   },
   {
-    name: 'Status',
-    minWidth: '100px',
+    name: 'Transaction Status',
+    minWidth: '220px',
     selector: 'status',
     sortable: true,
     cell: row => (
@@ -120,9 +120,9 @@ export const columns = [
   {
     name: 'Date',
     minWidth: '200px',
-    selector: 'date_created',
+    selector: 'updated_at',
     sortable: true,
-    cell: row => moment(row.date_created).format('lll')
+    cell: row => moment(row.updated_at).format('lll')
   },
   {
     name: 'Actions',

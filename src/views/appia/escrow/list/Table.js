@@ -118,7 +118,7 @@ const UsersList = () => {
 
 
   const filteredData = store.allData.filter(
-    item => (item.user_id.toLowerCase())
+    item => (item.escrow_id.toLowerCase())
   )
 
   // ** Custom Pagination

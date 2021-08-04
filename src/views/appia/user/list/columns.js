@@ -62,9 +62,9 @@ const renderRole = row => {
 }
 
 const statusObj = {
-  Pending: 'light-warning',
-  Active: 'light-success',
-  Inactive: 'light-danger'
+  pending: 'light-warning',
+  active: 'light-success',
+  inactive: 'light-danger'
 }
 const {users} = store.getState()
 export const columns = [

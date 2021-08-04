@@ -97,8 +97,7 @@ const TransactionList = ({selectedEscrow}) => {
   const [rowsPerPage, setRowsPerPage] = useState(10)
 
   useEffect(() => {
-    dispatch(getAllData())
-    dispatch(getAllUserEscrowTransactions(store.selectedEscrow.user_id))
+    dispatch(getAllUserEscrowTransactions())
     dispatch(
       getFilteredUserTransactions(store.selectedUserTransactions, {
         page: currentPage,
