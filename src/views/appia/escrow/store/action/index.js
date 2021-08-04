@@ -7,6 +7,7 @@ export const apiUrl = process.env.REACT_APP_API_ENDPOINT
 export const getAllData = () => {
   return async dispatch => {
     const response = await apiRequest({url:'/admin/escrows', method:'GET'}, dispatch)
+    console.log({response})
     if (response && response.data.data && response.data.success) {
         await dispatch({
           type: 'GET_ALL_ESCROW',
@@ -56,8 +57,9 @@ export const getEscrow = (escrows, id) => {
 // Get Transactions
 export const getAllUserEscrowTransactions = (escrow_id) => {
   return async dispatch => {
-    const body = JSON.stringify({escrow_id})
+    console.log(escrow_id)
     const response = await apiRequest({url:`/admin/escrows/${escrow_id}`, method:'GET'}, dispatch)
+    console.log({response})
     if (response && response.data.data && response.data.success) {
         await dispatch({
           type: 'GET__ALL_USER_ESCROW_TRANSACTIONS',
@@ -69,6 +71,17 @@ export const getAllUserEscrowTransactions = (escrow_id) => {
     }
   }
 }
+
+//  Get Escrow
+// export const getUserEscrow = (escrows, id) => {
+//   return async dispatch => {
+//     const userEscrow = escrows.find(i => i.sender.id === id)
+//     dispatch({
+//       type: 'GET_USER_ESCROW',
+//       selectedUserEscrow: userEscrow
+//     })
+//   }
+// }
 
 // Filter Transaction
 export const getFilteredUserTransactions = (userTransactions, params) => {

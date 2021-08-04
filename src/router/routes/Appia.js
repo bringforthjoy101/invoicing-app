@@ -214,6 +214,18 @@ const AppiaRoutes = [
       navLink: '/appia/escrow/view'
     }
   },
+  // {
+  //   path: '/appia/escrow/view',
+  //   exact: true,
+  //   component: () => <Redirect to='/appia/escrow/view/1' />
+  // },
+  // {
+  //   path: '/appia/escrow/view/:id/id',
+  //   component: lazy(() => import('../../views/appia/escrow/view')),
+  //   meta: {
+  //     navLink: '/appia/escrow/view'
+  //   }
+  // },
   {
     path: '/appia/transfers/list',
     component: lazy(() => import('../../views/appia/transfers/list'))

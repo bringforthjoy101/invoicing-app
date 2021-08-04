@@ -6,7 +6,7 @@ const initialState = {
   params: {},
   selectedEscrow: null,
   selectedUserTransactions: [],
-  selectedEscrowTrans: null
+  selectedUserEscrow: null
   
 }
 
@@ -28,6 +28,8 @@ const users = (state = initialState, action) => {
         ...state, 
         selectedUserTransactions: action.data
       }
+    case 'GET_USER_ESCROW':
+      return { ...state, selectedUserEscrow: action.selectedUserEscrow }
     default:
       return { ...state }
   }

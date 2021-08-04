@@ -100,6 +100,17 @@ const UserInfoCard = ({ selectedUser, detail }) => {
                   {selectedUser !== null ? selectedUser.status || 'Active' : 'Active'}
                 </CardText>
               </div>
+              <div className='d-flex flex-wrap justify-content-between align-items-center my-50'>
+                <div className='user-info-title'>
+                  <Phone className='mr-1' size={14} />
+                  <CardText tag='span' className='user-info-title font-weight-bold mb-0'>
+                    Phone No
+                  </CardText>
+                </div>
+                <CardText className='text-capitalize mb-0'>
+                  {selectedUser.phone}
+                </CardText>
+              </div>
             </div>
           </Col>
           <Col xl='6' lg='12' className='mt-2 mt-xl-0'>

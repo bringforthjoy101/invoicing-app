@@ -6,6 +6,7 @@ export const apiUrl = process.env.REACT_APP_API_ENDPOINT
 export const getAllData = () => {
   return async dispatch => {
     const response = await apiRequest({url:'/admin/users', method:'GET'}, dispatch)
+    console.log({response})
     if (response && response.data.data && response.data.success) {
         await dispatch({
           type: 'GET_ALL_DATA',
@@ -58,6 +59,7 @@ export const getData = params => {
 export const getUser = (users, id) => {
   return async dispatch => {
     const user = users.find(i => i.user_id === id)
+    console.log(user)
     dispatch({
       type: 'GET_USER',
       selectedUser: user
@@ -71,6 +73,7 @@ export const getUserAllTransactions = (user_id) => {
   return async dispatch => {
     const body = JSON.stringify({user_id})
     const response = await apiRequest({url:'/admin/users/transactions/all', method:'POST', body}, dispatch)
+    console.log({response})
     if (response && response.data.data && response.data.success) {
         await dispatch({
           type: 'GET_USER_ALL_TRANSACTIONS',
@@ -124,9 +127,7 @@ export const getFilteredUserTransactions = (userTransactions, params) => {
 export const addFunds = ({user_id, reason, amount}) => {
   return async dispatch => {
     const body = JSON.stringify({user_id, reason, amount})
-    console.log({body})
     const response = await apiRequest({url:`/admin/users/add`, method:'POST', body}, dispatch)
-    console.log({response})
     if (response && response.data.success) {
       swal('Good!', `Funds of ${amount} was successfully added and is pending aproval!.`, 'success')
     } else {
@@ -140,7 +141,6 @@ export const deductFunds = ({user_id, reason, amount}) => {
   return async dispatch => {
     const body = JSON.stringify({user_id, reason, amount})
     const response = await apiRequest({url:`/admin/users/deduct`, method:'POST', body}, dispatch)
-    // console.log({response})
     if (response && response.data.success) {
       swal('Good!', `Funds of ${amount} was successfully deducted and is pending aproval!.`, 'success')
     } else {
@@ -198,14 +198,41 @@ export const deactivateUser = (users, id) => {
 
 //  Reset User Password
 export const passwordReset = ({user_id}) => {
-  console.log("iuss", user_id)
   return async dispatch => {
     const body = JSON.stringify({user_id})
-    console.log(user_id)
     const response = await apiRequest({url:`/admin/users/reset/`, method:'POST', body}, dispatch)
-    console.log("resss", {response})
     if (response && response.data.success) {
       swal('Good!', `User password reset Sucessfully.`, 'success')
+    } else {
+      console.log(response)
+      swal('Oops!', 'Somthing went wrong with your network.', 'error')
+    }
+  }
+}
+
+// Blacklist A User
+export const blacklistUser = ({user_id, reason}) => {
+  return async dispatch => {
+    const body = JSON.stringify({user_id, reason})
+    const response = await apiRequest({url:`/admin/users/blacklist/${user_id}`, method:'GET', body}, dispatch)
+    if (response && response.data.success) {
+      swal('Good!', `${response.data.message}.`, 'success')
+    } else {
+      console.log(response)
+      swal('Oops!', 'Somthing went wrong with your network.', 'error')
+    }
+  }
+}
+
+// Blacklist A User Asset
+export const blacklistUserAsset = ({user_id, reason}, phone) => {
+  return async dispatch => {
+    const body = JSON.stringify({user_id, reason})
+    console.log(phone)
+    const response = await apiRequest({url:`/admin/users/blacklist/${phone}`, method:'GET', body}, dispatch)
+    console.log({response})
+    if (response && response.data.success) {
+      swal('Good!', `${response.data.message}.`, 'success')
     } else {
       console.log(response)
       swal('Oops!', 'Somthing went wrong with your network.', 'error')

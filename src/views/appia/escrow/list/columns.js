@@ -56,7 +56,6 @@ const statusObj = {
   contested: 'light-danger',
   completed: 'light-success'
 }
-const {users} = store.getState()
 export const columns = [
   {
     name: 'Escrow Id',

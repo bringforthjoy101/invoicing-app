@@ -3,8 +3,12 @@ import moment from 'moment'
 
 // ** Custom Components
 import Avatar from '@components/avatar'
+import { Link } from 'react-router-dom'
+import { getUserEscrow } from '../../store/action'
+import { store } from '@store/storeConfig/store'
 
 // ** Third Party Components
+import { Badge } from 'reactstrap'
 import {
   Eye,
   TrendingUp,
@@ -40,59 +44,83 @@ const renderClient = row => {
   if (row.avatar) {
     return <Avatar className='mr-50' img={row.avatar} width='32' height='32' />
   } else {
-    return <Avatar color={color} className='mr-50' content={row.client ? row.client.name : 'John Doe'} initials />
+    return <Avatar color={color} className='mr-50' content={row.sender.id ? row.sender.id : 'John Doe'} initials />
   }
+}
+
+const statusObj = {
+  pending: 'light-warning',
+  contested: 'light-danger',
+  completed: 'light-success'
 }
 
 // ** Table columns
 export const columns = [
   {
-    name: '#User Id',
+    name: 'User',
     minWidth: '180px',
-    selector: 'user_id',
+    selector: 'escrow_id',
     sortable: true,
-    cell: row => row.user_id
+    cell: row => (
+      <div className='d-flex justify-content-left align-items-center'>
+        {renderClient(row)}
+        <div className='d-flex flex-column'>
+          {/* <Link
+            to={`/appia/escrow/view/${row.escrow_id}/${row.sender.id}`}
+            className='user-name text-truncate mb-0'
+            onClick={() => store.dispatch(getUserEscrow(store.getState().appiaEscrow.allData, row.sender.d))}
+          > */}
+            <span className='font-weight-bold'>{row.sender.username}</span>
+          {/* </Link> */}
+          <small className='text-truncate text-muted mb-0'>{row.sender.id}</small>
+        </div>
+      </div>
+    )
   },
   {
     name: 'Transaction Name',
-    minWidth: '200px',
-    selector: 'trans_name',
+    minWidth: '220px',
+    selector: 'subject',
     sortable: true,
-    cell: row => row.trans_name
+    cell: row => row.subject
   },
   {
     name: 'Transaction Amount',
-    selector: 'trans_amount',
+    selector: 'amount',
     sortable: true,
     minWidth: '220px',
-    cell: row => <span>{(row.trans_amount || 0).toLocaleString('en-US', { style: 'currency', currency: 'NGN' })}</span>
+    cell: row => <span>{(row.amount || 0).toLocaleString('en-US', { style: 'currency', currency: 'NGN' })}</span>
   },
   {
-    name: 'Transaction Code',
-    minWidth: '200px',
-    selector: 'code',
+    name: 'Status',
+    minWidth: '120px',
+    selector: 'status',
     sortable: true,
-    cell: row => row.code
+    cell: row => (
+      <Badge className='text-capitalize' color={statusObj[row.status]} pill>
+        {row.status}
+      </Badge>
+    )
   },
   {
-    name: 'Decline Reason',
+    name: 'Complain',
     minWidth: '200px',
-    selector: 'decline_reason',
+    selector: 'complain',
     sortable: true,
-    cell: row => <span>{row.decline_reason}</span>
+    cell: row => <span>{row.complain === null ? "No Complain" : row.complain}</span>
   },
   {
     name: 'Details',
     minWidth: '200px',
-    selector: 'details',
+    selector: 'description',
     sortable: true,
-    cell: row => row.details
+    cell: row => row.description
   },
   {
     name: 'Date',
-    selector: 'date_created',
+    selector: 'updated_at',
     sortable: true,
     minWidth: '200px',
-    cell: row => moment(row.date_created).format('lll')
+    cell: row => moment(row.updated_at).format('lll')
   }
 ]

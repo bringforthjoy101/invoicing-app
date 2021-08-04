@@ -35,7 +35,7 @@ export const columns = [
     minWidth: '300px',
     selector: 'narration',
     sortable: true,
-    cell: row => row.narration
+    cell: row => <span>{row.narration === "" ? "No Narration" : row.narration}</span>
   },
   {
     name: 'Amount',
