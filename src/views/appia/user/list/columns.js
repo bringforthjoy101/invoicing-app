@@ -62,9 +62,9 @@ const renderRole = row => {
 }
 
 const statusObj = {
-  pending: 'light-warning',
+  blacklisted: 'light-danger',
   active: 'light-success',
-  inactive: 'light-danger'
+  inactive: 'light-warning'
 }
 const {users} = store.getState()
 export const columns = [
@@ -95,6 +95,13 @@ export const columns = [
     selector: 'email',
     sortable: true,
     cell: row => row.email
+  },
+  {
+    name: 'Phone',
+    minWidth: '300px',
+    selector: 'phone',
+    sortable: true,
+    cell: row => <span>{row.phone === null ? "No Number" : row.phone}</span>
   },
   {
     name: 'Balance',
