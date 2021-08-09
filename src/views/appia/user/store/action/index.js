@@ -6,7 +6,6 @@ export const apiUrl = process.env.REACT_APP_API_ENDPOINT
 export const getAllData = () => {
   return async dispatch => {
     const response = await apiRequest({url:'/admin/users', method:'GET'}, dispatch)
-    console.log({response})
     if (response && response.data.data && response.data.success) {
         await dispatch({
           type: 'GET_ALL_DATA',
@@ -19,21 +18,21 @@ export const getAllData = () => {
   }
 }
 
-// ** Get filtered data on page or row change
 export const getFilteredData = (users, params) => {
   return async dispatch => {
     const { q = '', perPage = 10, page = 1, status = null } = params
+
     /* eslint-disable  */
     const queryLowered = q.toLowerCase()
-    const filteredData = users?.filter(
+    const filteredData = users.filter(
       user =>
-        (user.email.toLowerCase().includes(queryLowered) || user.names.toLowerCase().includes(queryLowered) || user.user_id.toLowerCase().includes(queryLowered) || user.referral_code.toLowerCase().includes(queryLowered)) &&
+        (user.email.toLowerCase().includes(queryLowered) || user.names.toLowerCase().includes(queryLowered) || user.referral_code.toLowerCase().includes(queryLowered)) &&
         user.status === (status || user.status)
     )
     /* eslint-enable  */
 
     dispatch({
-      type: 'GET_DATA',
+      type: 'GET_FILTERED_USER_DATA',
       data: paginateArray(filteredData, perPage, page),
       totalPages: filteredData.length,
       params
@@ -42,24 +41,23 @@ export const getFilteredData = (users, params) => {
 }
 
 // ** Get data on page or row change
-export const getData = params => {
-  return async dispatch => {
-    await axios.get('/api/users/list/data', params).then(response => {
-      dispatch({
-        type: 'GET_DATA',
-        data: response.data.users,
-        totalPages: response.data.total,
-        params
-      })
-    })
-  }
-}
+// export const getData = params => {
+//   return async dispatch => {
+//     await axios.get('/api/users/list/data', params).then(response => {
+//       dispatch({
+//         type: 'GET_DATA',
+//         data: response.data.users,
+//         totalPages: response.data.total,
+//         params
+//       })
+//     })
+//   }
+// }
 
 //  Get User
 export const getUser = (users, id) => {
   return async dispatch => {
     const user = users.find(i => i.user_id === id)
-    console.log(user)
     dispatch({
       type: 'GET_USER',
       selectedUser: user
@@ -73,7 +71,6 @@ export const getUserAllTransactions = (user_id) => {
   return async dispatch => {
     const body = JSON.stringify({user_id})
     const response = await apiRequest({url:'/admin/users/transactions/all', method:'POST', body}, dispatch)
-    console.log({response})
     if (response && response.data.data && response.data.success) {
         await dispatch({
           type: 'GET_USER_ALL_TRANSACTIONS',
@@ -88,32 +85,12 @@ export const getUserAllTransactions = (user_id) => {
 
 export const getFilteredUserTransactions = (userTransactions, params) => {
   return async dispatch => {
-      const { q = '', perPage = 10, page = 1, status = null } = params
+      const { q = '', perPage = 10, page = 1 } = params
       /* eslint-enable */
 
-      const queryLowered = q.toLowerCase()
-      const filteredData = userTransactions.filter(
-          transaction => {
-            let found = false
-            
-              if ((transaction.trans_id || '').toLowerCase().includes(queryLowered)) {
-                found = true
-              }
-
-            
-              if ((transaction.trans_type || '').toLowerCase().includes(queryLowered)) {
-                found = true
-              }
-            return found
-          }
-            /* eslint-disable operator-linebreak, implicit-arrow-linebreak */
-            // (transaction.trans_id.toLowerCase().includes(queryLowered) ||
-            // transaction.trans_type.toLowerCase().includes(queryLowered)) 
-            // && transaction.invoiceStatus.toLowerCase() === (status.toLowerCase() || transaction.invoiceStatus.toLowerCase())
-          
-        )
-        .sort(sortCompare('trans_id'))
-        .reverse()
+    const queryLowered = q.toLowerCase()
+    const filteredData = userTransactions.filter(
+      transaction => (transaction.trans_id.toLowerCase().includes(queryLowered) || transaction.trans_type.toLowerCase().includes(queryLowered)))
       /* eslint-enable  */
         await dispatch({
           type: 'GET_USER_TRANSACTIONS',
@@ -228,8 +205,7 @@ export const blacklistUser = ({user_id, reason}) => {
 export const blacklistUserAsset = ({user_id, reason}, phone) => {
   return async dispatch => {
     const body = JSON.stringify({user_id, reason})
-    console.log(phone)
-    const response = await apiRequest({url:`/admin/users/blacklist/${phone}`, method:'GET', body}, dispatch)
+    const response = await apiRequest({url:`/admin/blacklist-asset/${phone}`, method:'GET', body}, dispatch)
     console.log({response})
     if (response && response.data.success) {
       swal('Good!', `${response.data.message}.`, 'success')

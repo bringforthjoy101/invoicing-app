@@ -48,29 +48,11 @@ const UsersList = () => {
     )
   }, [dispatch])
 
-  // ** User filter options
-  const roleOptions = [
-    { value: '', label: 'Select Role' },
-    { value: 'admin', label: 'Admin' },
-    { value: 'author', label: 'Author' },
-    { value: 'editor', label: 'Editor' },
-    { value: 'maintainer', label: 'Maintainer' },
-    { value: 'subscriber', label: 'Subscriber' }
-  ]
-
-  const planOptions = [
-    { value: '', label: 'Select Plan' },
-    { value: 'basic', label: 'Basic' },
-    { value: 'company', label: 'Company' },
-    { value: 'enterprise', label: 'Enterprise' },
-    { value: 'team', label: 'Team' }
-  ]
-
   const statusOptions = [
     { value: '', label: 'Select Status', number: 0 },
-    { value: 'Pending', label: 'Pending', number: 1 },
-    { value: 'Active', label: 'Active', number: 2 },
-    { value: 'Inactive', label: 'Inactive', number: 3 }
+    { value: 'blacklisted', label: 'Blacklisted', number: 1 },
+    { value: 'active', label: 'Active', number: 2 },
+    { value: 'inactive', label: 'Inactive', number: 3 }
   ]
 
   // ** Function in get data on page change
@@ -114,8 +96,9 @@ const UsersList = () => {
   }
 
   const filteredData = store.allData.filter(
-    item => (item.email?.toLowerCase() || item.names?.toLowerCase() || item?.referral_code?.dataToRender())
+    item => (item.names?.toLowerCase() || item.email?.toLowerCase() || item.phone || item?.referral_code?.dataToRender())
   )
+
 
   // ** Custom Pagination
   const CustomPagination = () => {

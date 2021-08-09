@@ -71,7 +71,7 @@ export const columns = [
   {
     name: 'User',
     minWidth: '297px',
-    selector: 'fullName',
+    selector: 'names',
     sortable: true,
     cell: row => (
       <div className='d-flex justify-content-left align-items-center'>
@@ -84,7 +84,7 @@ export const columns = [
           >
             <span className='font-weight-bold'>{row.names}</span>
           </Link>
-          <small className='text-truncate text-muted mb-0'>{row.email}</small>
+          <small className='text-truncate text-muted mb-0'>{row.user_id}</small>
         </div>
       </div>
     )

@@ -91,9 +91,8 @@ const TransactionList = () => {
   const dispatch = useDispatch()
   const store = useSelector(state => state.appiaUsers)
 
-  const [value, setValue] = useState('')
+  const [searchTerm, setSearchTerm] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
-  const [statusValue, setStatusValue] = useState('')
   const [rowsPerPage, setRowsPerPage] = useState(10)
 
   useEffect(() => {
@@ -102,82 +101,79 @@ const TransactionList = () => {
       getFilteredUserTransactions(store.selectedUserAllTransactions, {
         page: currentPage,
         perPage: rowsPerPage,
-        status: statusValue,
-        q: value
+        q: searchTerm
       })
     )
   }, [dispatch])
 
   const handleFilter = val => {
-    setValue(val)
+    setSearchTerm(val)
     dispatch(
       getFilteredUserTransactions(store.selectedUserAllTransactions, {
         page: currentPage,
         perPage: rowsPerPage,
-        status: statusValue,
         q: val
       })
     )
   }
 
   const handlePerPage = e => {
+    const value = parseInt(e.currentTarget.value)
     dispatch(
       getFilteredUserTransactions(store.selectedUserAllTransactions, {
         page: currentPage,
-        perPage: parseInt(e.target.value),
-        status: statusValue,
-        q: value
+        perPage: value,
+        q: searchTerm
       })
     )
-    setRowsPerPage(parseInt(e.target.value))
+    setRowsPerPage(value)
   }
 
-  const handleStatusValue = e => {
-    setStatusValue(e.target.value)
-    dispatch(
-      getFilteredUserTransactions(store.selectedUserAllTransactions, {
-        page: currentPage,
-        perPage: rowsPerPage,
-        status: e.target.value,
-        q: value
-      })
-    )
-  }
+  // const handleStatusValue = e => {
+  //   setStatusValue(e.target.value)
+  //   dispatch(
+  //     getFilteredUserTransactions(store.selectedUserAllTransactions, {
+  //       page: currentPage,
+  //       perPage: rowsPerPage,
+  //       q: value
+  //     })
+  //   )
+  // }
 
   const handlePagination = page => {
     dispatch(
       getFilteredUserTransactions(store.selectedUserAllTransactions, {
         page: page.selected + 1,
         perPage: rowsPerPage,
-        status: statusValue,
-        q: value
+        q: searchTerm
       })
     )
     setCurrentPage(page.selected + 1)
   }
 
+  const filteredData = store?.selectedUserAllTransactions?.filter(
+    item => (item?.trans_id?.toLowerCase() || item?.trans_type?.toLowerCase())
+  )
+
   const CustomPagination = () => {
-    const count = Number((store.selectedUserTotalTransactions / rowsPerPage).toFixed(0))
+    const count = Math.ceil(filteredData.length / rowsPerPage)
 
     return (
       <ReactPaginate
-        pageCount={count || 1}
-        nextLabel=''
-        breakLabel='...'
-        previousLabel=''
-        activeClassName='active'
-        breakClassName='page-item'
-        breakLinkClassName='page-link'
-        forcePage={currentPage !== 0 ? currentPage - 1 : 0}
-        onPageChange={page => handlePagination(page)}
-        pageClassName={'page-item'}
-        nextLinkClassName={'page-link'}
-        nextClassName={'page-item next'}
-        previousClassName={'page-item prev'}
-        previousLinkClassName={'page-link'}
-        pageLinkClassName={'page-link'}
-        containerClassName={'pagination react-paginate justify-content-end p-1'}
-      />
+      previousLabel={''}
+      nextLabel={''}
+      pageCount={count || 1}
+      activeClassName='active'
+      forcePage={currentPage !== 0 ? currentPage - 1 : 0}
+      onPageChange={page => handlePagination(page)}
+      pageClassName={'page-item'}
+      nextLinkClassName={'page-link'}
+      nextClassName={'page-item next'}
+      previousClassName={'page-item prev'}
+      previousLinkClassName={'page-link'}
+      pageLinkClassName={'page-link'}
+      containerClassName={'pagination react-paginate justify-content-end my-2 pr-1'}
+    />
     )
   }
 
@@ -264,23 +260,18 @@ const TransactionList = () => {
   // Data to Render
   const dataToRender = () => {
     const filters = {
-      status: statusValue,
-      q: value
+      q: searchTerm
     }
 
     const isFiltered = Object.keys(filters).some(function (k) {
       return filters[k].length > 0
     })
-    if (store.selectedUserAllTransactions.length > 0 && !isFiltered) {
-      return store.selectedUserAllTransactions
+    if (store.selectedUserTransactions.length > 0) {
+      return store.selectedUserTransactions
     } else if (store.selectedUserTransactions.length === 0 && isFiltered) {
       return []
-    } else if (store.selectedUserAllTransactions.length === 0) {
-      return []
-    } else if (store.selectedUserTransactions.length > 0) {
-      return store.selectedUserTransactions
     } else {
-      return store.selectedUserTransactons.slice(0, rowsPerPage)
+      return store.selectedUserAllTransactions.slice(0, rowsPerPage)
     }
   }
 
@@ -306,7 +297,6 @@ const TransactionList = () => {
                 rowsPerPage={rowsPerPage}
                 handleFilter={handleFilter}
                 handlePerPage={handlePerPage}
-                handleStatusValue={handleStatusValue}
                 downloadCSV={downloadCSV}
                 storeData={store.selectedUserAllTransactions}
                 downloadPDF={downloadPDF}

@@ -52,6 +52,7 @@ const userDetails = async(id) => {
     }
   }, [])
 
+
   return store.selectedUser !== null && store.selectedUser !== undefined ? (
     <div className='app-user-view'>
       <Row>
