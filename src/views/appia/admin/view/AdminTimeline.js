@@ -46,19 +46,21 @@ const data = [
   }
 ]
 
-const UserTimeline = ({data, selectedAdmin}) => {
+const UserTimeline = ({ data, selectedAdmin }) => {
   const activityData = []
   data.forEach(activity => {
     activityData.push({
       title: activity.admin_id,
       content: activity.activity,
-      meta: moment(activity.date).fromNow(),
+      meta: moment(activity.date).format('lll'),
       customContent: (
         <Media className='align-items-center'>
-          <Avatar color={'primary'} className='mr-1' content={`${selectedAdmin.first_name} ${selectedAdmin.last_name}`  || 'Appia Admin'} initials />
+          <h6>
+            <Avatar color={'primary'} className='mr-1' content={`${selectedAdmin.first_name} ${selectedAdmin.last_name}` || 'Appia Admin'} initials />
+            <span>{`${selectedAdmin.first_name} ${selectedAdmin.last_name}`}</span>
+          </h6>
           <Media className='ml-50' body>
             <h6 className='mb-0'>{activity.name}</h6>
-            {/* <span>CEO of Infibeam</span> */}
           </Media>
         </Media>
       )

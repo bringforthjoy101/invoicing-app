@@ -15,8 +15,6 @@ import { Row, Col, Alert } from 'reactstrap'
 import PlanCard from './PlanCard'
 import AdminInfoCard from './AdminInfoCard'
 import AdminTimeline from './AdminTimeline'
-// import InvoiceList from '../../invoice/list'
-import PermissionsTable from './PermissionsTable'
 
 // ** Styles
 import '@styles/react/apps/app-users.scss'
@@ -28,13 +26,6 @@ const UserView = props => {
     { id } = useParams()
 
   const [userData, setUserData] = useState(null)
-
-
-  // useEffect(() => {
-  //   localStorage.setItem("userData", JSON.stringify(userData))
-  //   setUserData(JSON.parse(localStorage.getItem("userData")))
-   
-  // }, [])
 
   useEffect(() => {
      if (isUserLoggedIn() !== null) {
@@ -59,11 +50,8 @@ const UserView = props => {
         </Col> : ""}
       </Row>
       {userData?.role_name === "Super Admin" ? <Row>
-        <Col md='6'>
+        <Col md='12'>
           <AdminTimeline selectedAdmin={store.selectedAdmin} data={store.adminActivities.sort((a, b) => moment(b.date).format('YYYYMMDD') - moment(a.date).format('YYYYMMDD'))} />
-        </Col>
-        <Col md='6'>
-          <PermissionsTable />
         </Col>
       </Row> : ""}
     </div>

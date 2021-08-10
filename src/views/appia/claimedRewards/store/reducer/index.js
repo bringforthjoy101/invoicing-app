@@ -8,7 +8,7 @@ const initialState = {
   claimHistory: []
 }
 
-const admins = (state = initialState, action) => {
+const ClaimedRewards = (state = initialState, action) => {
   switch (action.type) {
     case 'GET_ALL_CLAIMED_REWARDS':
       return { ...state, allData: action.data }
@@ -27,4 +27,4 @@ const admins = (state = initialState, action) => {
       return { ...state }
   }
 }
-export default admins
+export default ClaimedRewards

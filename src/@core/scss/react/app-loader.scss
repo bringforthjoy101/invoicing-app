@@ -49,8 +49,9 @@
 }
 .fallback-logo {
   position: absolute;
-  left: calc(50% - 45px);
-  top: 40%;
+  left: calc(50% - 20px);
+  top: 50%;
+  width: 40px;
 }
 
 @keyframes rotate {

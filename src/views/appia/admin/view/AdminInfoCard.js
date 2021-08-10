@@ -54,14 +54,6 @@ const UserInfoCard = ({ selectedAdmin }) => {
                       {selectedAdmin !== null ? selectedAdmin.email : 'appia.admin@appiawave.com'}
                     </CardText>
                   </div>
-                  {/* <div className='d-flex flex-wrap align-items-center'>
-                    <Button.Ripple tag={Link} to={`/apps/user/edit/${selectedAdmin.id}`} color='primary'>
-                      Edit
-                    </Button.Ripple>
-                    <Button.Ripple className='ml-1' color='danger' outline>
-                      Delete
-                    </Button.Ripple>
-                  </div> */}
                 </div>
               </div>
             </div>

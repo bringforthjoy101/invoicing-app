@@ -162,6 +162,7 @@ export const BlacklistUserAsset = ({ userId, phone }) => {
                     placeholder='UserId'
                     className={`form-control ${errors.user_id && touched.user_id && 'is-invalid'}`}
                   />
+                  <ErrorMessage name='user_id' component='div' className='field-error text-danger' />
                 </FormGroup>
                 <FormGroup>
                   <label htmlFor='user_id'>Reason</label>
@@ -171,6 +172,7 @@ export const BlacklistUserAsset = ({ userId, phone }) => {
                     placeholder='Reason'
                     className={`form-control ${errors.reason && touched.reason && 'is-invalid'}`}
                   />
+                  <ErrorMessage name='reason' component='div' className='field-error text-danger' />
                 </FormGroup>
               </ModalBody>
               <ModalFooter>
@@ -186,4 +188,3 @@ export const BlacklistUserAsset = ({ userId, phone }) => {
     </div>
   )
 }
-// export default AddFunds

@@ -7,7 +7,7 @@ const initialState = {
   selectedContact: null
 }
 
-const admins = (state = initialState, action) => {
+const Contacts = (state = initialState, action) => {
   switch (action.type) {
     case 'GET_ALL_CONTACTS':
       return { ...state, allData: action.data }
@@ -24,4 +24,4 @@ const admins = (state = initialState, action) => {
       return { ...state }
   }
 }
-export default admins
+export default Contacts

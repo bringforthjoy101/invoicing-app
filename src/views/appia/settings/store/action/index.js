@@ -4,6 +4,7 @@ import { paginateArray, apiRequest, swal } from '@utils'
 export const getAllData = () => {
   return async dispatch => {
     const response = await apiRequest({ url: '/admin/settings', method: 'GET' }, dispatch)
+    console.log({response})
     if (response) {
       if (response.data.data && response.data.success) {
         await dispatch({
@@ -20,9 +21,34 @@ export const getAllData = () => {
   }
 }
 
+// ** Get filtered data on page or row change
+export const getFilteredData = (settings, params) => {
+  console.log('setting', settings)
+  return async dispatch => {
+    const { q = '', perPage = 10, page = 1 } = params
+
+    /* eslint-disable  */
+    const queryLowered = q?.toLowerCase()
+    const filteredData = settings?.filter(
+      setting =>
+        ( setting?.name?.toLowerCase()?.includes(queryLowered) || setting?.value?.toString()?.toLowerCase()?.includes(queryLowered) || setting?.description?.toLowerCase()?.includes(queryLowered))
+    )
+    /* eslint-enable  */
+
+    dispatch({
+      type: 'GET_FILTERED_DATA',
+      data: paginateArray(filteredData, perPage, page),
+      totalPages: filteredData.length,
+      params
+    })
+  }
+}
+
+
 export const getSetting = (settings, id) => {
   return async dispatch => {
     const setting = settings.find(i => i.id === id)
+    console.log("sett", setting)
     dispatch({
       type: 'GET_SETTING',
       selectedSetting: setting

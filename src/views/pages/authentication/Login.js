@@ -42,6 +42,20 @@ const ToastContentValid = ({ name, role }) => (
   </Fragment>
 )
 
+const ToastContentNotVerified = ({ name, role }) => (
+  <Fragment>
+    <div className='toastify-header'>
+      <div className='title-wrapper'>
+        <Avatar size='sm' color='success' icon={<Coffee size={12} />} />
+        <h6 className='toast-title font-weight-bold'>Welcome, {name}</h6>
+      </div>
+    </div>
+    <div className='toastify-body'>
+      <span>You have successfully logged in as an {role} user to Appia. Kindly change your password to continue. Thank you!</span>
+    </div>
+  </Fragment>
+)
+
 
 const InvalidLoginToastContent = ({ message }) => (
   <Fragment>
@@ -71,38 +85,54 @@ const Login = props => {
     source = require(`@src/assets/images/pages/${illustration}`).default
 
   const handleSubmit = async (event, errors) => {
-      if (errors && !errors.length) {
-        setIsSubmitting(true)
-        await useJwt
-          .login({ email, password })
-          .then(res => {
-            console.log({res})
-            if (res.data.success) {
-              const data = {
-                ...res.data.data,
-                accessToken: res.data.token,
-                refreshToken: res.data.token,
-                ability: [{ action: "manage", subject: "all" }],
-                avatar: "/demo/Appia-react-admin-dashboard-template/demo-1/static/media/avatar-s-11.1d46cc62.jpg",
-                extras: { eCommerceCartItemsCount: 5 }
-              }
-              dispatch(handleLogin(data))
-              ability.update(data.ability)
-              history.push(getHomeRouteForLoggedInUser(data.role_name))
-              toast.success(
-                <ToastContentValid name={`${data.first_name} ${data.last_name}` || data.fullName || data.username || 'John Doe'} role={data.role || 'admin'} />,
-                { transition: Slide, hideProgressBar: true, autoClose: 2000 }
-              )
-            } else {
-              toast.error(
-                <InvalidLoginToastContent message={`${res.data.message}` || 'Invalid Login'} />,
-                { transition: Slide, hideProgressBar: true, autoClose: 2000 }
-              )
-              setIsSubmitting(false)
+    if (errors && !errors.length) {
+      setIsSubmitting(true)
+      await useJwt
+        .login({ email, password })
+        .then(res => {
+          console.log(res.data.verified)
+          if (res.data.success && res.data.verified === true) {
+            const data = {
+              ...res.data.data,
+              accessToken: res.data.token,
+              refreshToken: res.data.token,
+              ability: [{ action: "manage", subject: "all" }],
+              avatar: "/demo/Appia-react-admin-dashboard-template/demo-1/static/media/avatar-s-11.1d46cc62.jpg",
+              extras: { eCommerceCartItemsCount: 5 }
             }
-          })
-          .catch(err => { console.log(err); setIsSubmitting(false) })
-      }
+            dispatch(handleLogin(data))
+            ability.update(data.ability)
+            history.push(getHomeRouteForLoggedInUser(data.role_name))
+            toast.success(
+              <ToastContentValid name={`${data.first_name} ${data.last_name}` || data.fullName || data.username || 'John Doe'} role={data.role || 'admin'} />,
+              { transition: Slide, hideProgressBar: true, autoClose: 2000 }
+            )
+          } else if (res.data.success && res.data.verified === false) {
+            const data = {
+              ...res.data.data,
+              accessToken: res.data.token,
+              refreshToken: res.data.token,
+              ability: [{ action: "manage", subject: "all" }],
+              avatar: "/demo/Appia-react-admin-dashboard-template/demo-1/static/media/avatar-s-11.1d46cc62.jpg",
+              extras: { eCommerceCartItemsCount: 5 }
+            }
+            dispatch(handleLogin(data))
+            ability.update(data.ability)
+            history.push("pages/account-settings")
+            toast.success(
+              <ToastContentNotVerified name={`${data.first_name} ${data.last_name}` || data.fullName || data.username || 'John Doe'} role={data.role || 'admin'} />,
+              { transition: Slide, hideProgressBar: true, autoClose: 2000 }
+            )
+          } else {
+            toast.error(
+              <InvalidLoginToastContent message={`${res.data.message}` || 'Invalid Login'} />,
+              { transition: Slide, hideProgressBar: true, autoClose: 2000 }
+            )
+            setIsSubmitting(false)
+          }
+        })
+        .catch(err => { console.log(err); setIsSubmitting(false) })
+    }
   }
 
 
@@ -110,7 +140,7 @@ const Login = props => {
     <div className='auth-wrapper auth-v2'>
       <Row className='auth-inner m-0'>
         <Link className='brand-logo' to='/' onClick={e => e.preventDefault()}>
-          <img src={Logo} width="30px" alt=""/>
+          <img src={Logo} width="30px" alt="" />
           <h2 className='brand-text text-primary ml-1'>Appia</h2>
         </Link>
         <Col className='d-none d-lg-flex align-items-center p-5' lg='8' sm='12'>

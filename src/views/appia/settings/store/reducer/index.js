@@ -1,15 +1,27 @@
 // ** Initial State
 const initialState = {
   allData: [],
-  data: []
+  data: [],
+  total: 1,
+  params: {},
+  selectedSetting: null
 }
 
-const admins = (state = initialState, action) => {
+const Settings = (state = initialState, action) => {
   switch (action.type) {
     case 'GET_ALL_SETTINGS':
       return { ...state, allData: action.data }
-    default:
-      return { ...state }
+      case 'GET_FILTERED_DATA':
+        return {
+          ...state,
+          data: action.data,
+          total: action.totalPages,
+          params: action.params
+        }
+      case 'GET_SETTING':
+        return { ...state, selectedSetting: action.selectedSetting }
+      default:
+        return { ...state }
   }
 }
-export default admins
+export default Settings

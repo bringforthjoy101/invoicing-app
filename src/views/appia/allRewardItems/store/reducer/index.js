@@ -8,7 +8,7 @@ const initialState = {
   allServiceId: []
 }
 
-const admins = (state = initialState, action) => {
+const AllRewards = (state = initialState, action) => {
   switch (action.type) {
     case 'GET_ALL_REWARDS':
       return { ...state, allData: action.data }
@@ -27,4 +27,4 @@ const admins = (state = initialState, action) => {
       return { ...state }
   }
 }
-export default admins
+export default AllRewards

@@ -6,7 +6,7 @@ const initialState = {
   params: {}
 }
 
-const admins = (state = initialState, action) => {
+const Subscribers = (state = initialState, action) => {
   switch (action.type) {
     case 'GET_ALL_SUBSCRIBERS':
       return { ...state, allData: action.data }
@@ -21,4 +21,4 @@ const admins = (state = initialState, action) => {
       return { ...state }
   }
 }
-export default admins
+export default Subscribers

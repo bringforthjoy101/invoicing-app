@@ -12,7 +12,7 @@ const initialState = {
   
 }
 
-const users = (state = initialState, action) => {
+const Escrow = (state = initialState, action) => {
   switch (action.type) {
     case 'GET_ALL_ESCROW':
       return { ...state, allData: action.data }
@@ -41,4 +41,4 @@ const users = (state = initialState, action) => {
       return { ...state }
   }
 }
-export default users
+export default Escrow

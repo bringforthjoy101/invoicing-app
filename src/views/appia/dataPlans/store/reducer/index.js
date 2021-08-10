@@ -7,7 +7,7 @@ const initialState = {
   selectedPlan: null
 }
 
-const admins = (state = initialState, action) => {
+const Dataplan = (state = initialState, action) => {
   switch (action.type) {
     case 'GET_ALL_DATA_PLANS':
       return { ...state, allData: action.data }
@@ -24,4 +24,4 @@ const admins = (state = initialState, action) => {
       return { ...state }
   }
 }
-export default admins
+export default Dataplan
