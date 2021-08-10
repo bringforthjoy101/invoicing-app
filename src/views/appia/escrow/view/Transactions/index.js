@@ -158,8 +158,8 @@ const TransactionList = () => {
     
   }
 
-  const filteredData = store?.selectedUserEscrowTransactions?.filter(
-    item => (item.escrow_id?.toLowerCase())
+  const filteredData = store.selectedUserEscrowTransactions.filter(
+    item => (item.escrow_id.toLowerCase())
   )
 
   const CustomPagination = () => {
@@ -193,7 +193,7 @@ const TransactionList = () => {
 
     const columnDelimiter = ','
     const lineDelimiter = '\n'
-    const keys = Object.keys(store.selectedUserTransactions[0])
+    const keys = Object.keys(store.selectedUserEscrowTransactions[0])
     console.log("keyss", keys)
 
     result = ''
@@ -250,7 +250,7 @@ const TransactionList = () => {
         },
         head: [['Id', 'Type', 'Amount', 'Balance', 'Date']]
     })
-    store.selectedUserTransactions.map(arr => {
+    store.selectedUserEscrowTransactions.map(arr => {
       doc.autoTable({
         styles: { halign: 'left' },
         columnStyles: {
@@ -277,9 +277,9 @@ const TransactionList = () => {
     const isFiltered = Object.keys(filters).some(function (k) {
       return filters[k].length > 0
     })
-    if (store.escrowData.length > 0 && !isFiltered) {
+    if (store.escrowData.length > 0) {
       return store.escrowData
-    }  else if (store.escrowData.length === 0) {
+    }  else if (store.escrowData.length === 0 && isFiltered) {
       return []
     } else {
       return store.selectedUserEscrowTransactions.slice(0, rowsPerPage)
