@@ -8,7 +8,15 @@ const initialState = {
   selectedUserAllTransactions: [],
   selectedUserTransactions: [],
   selectedUserTotalTransactions: 1,
-  selectedUserTransactionParams: {}
+  selectedUserTransactionParams: {},
+  selectedUserUtilitiesTransactions: [],
+  selectedUserUtilityTransactions: [],
+  selectedUserTotalUtilityTransactions: 1,
+  selectedUserUtilityTransactionParams: {},
+  selectedUserBanksTransactions: [],
+  selectedUserBankTransactions: [],
+  selectedUserTotalBankTransactions: 1,
+  selectedUserBankTransactionParams: {}
 }
 
 const users = (state = initialState, action) => {
@@ -36,6 +44,30 @@ const users = (state = initialState, action) => {
         selectedUserTotalTransactions: action.totalPages,
         selectedUserTransactionParams: action.params
       }
+      case 'GET_USER_ALL_UTILITIES_TRANSACTIONS':
+        return { 
+          ...state, 
+          selectedUserUtilitiesTransactions: action.data
+        }
+      case 'GET_USER_UTILITY_TRANSACTIONS':
+        return {
+          ...state,
+          selectedUserUtilityTransactions: action.data,
+          selectedUserTotalUtilityTransactions: action.totalPages,
+          selectedUserUtilityTransactionParams: action.params
+        }
+        case 'GET_USER_ALL_BANK_TRANSACTIONS':
+          return { 
+            ...state, 
+            selectedUserBanksTransactions: action.data
+          }
+        case 'GET_USER_BANK_TRANSACTIONS':
+          return {
+            ...state,
+            selectedUserBankTransactions: action.data,
+            selectedUserTotalBankTransactions: action.totalPages,
+            selectedUserBankTransactionParams: action.params
+          }
     default:
       return { ...state }
   }

@@ -5,8 +5,10 @@ const initialState = {
   total: 1,
   params: {},
   selectedEscrow: null,
-  selectedUserTransactions: [],
-  selectedUserEscrow: null
+  selectedUserEscrowTransactions: [],
+  escrowData: [],
+  escrowTotal: 1,
+  escrowParams: {}
   
 }
 
@@ -23,13 +25,18 @@ const users = (state = initialState, action) => {
       }
     case 'GET_ESCROW':
       return { ...state, selectedEscrow: action.selectedEscrow }
-    case 'GET__ALL_USER_ESCROW_TRANSACTIONS':
+    case 'GET_USER_ESCROWS_TRANSACTIONS':
       return { 
         ...state, 
-        selectedUserTransactions: action.data
+        selectedUserEscrowTransactions: action.data
       }
-    case 'GET_USER_ESCROW':
-      return { ...state, selectedUserEscrow: action.selectedUserEscrow }
+      case 'GET_USER_ESCROW_TRANSACTIONS':
+        return {
+          ...state,
+          escrowData: action.data,
+          escrowTotal: action.totalPages,
+          escrowParams: action.params
+        }
     default:
       return { ...state }
   }

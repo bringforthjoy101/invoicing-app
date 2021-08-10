@@ -43,9 +43,6 @@ const ContactsList = () => {
   const start = picker && Date.parse(picker[0])
   const end = picker && Date.parse(picker[1])
 
-  console.log("start", start)
-  console.log("end", end)
-
   // ** Get data on mount
   useEffect(() => {
     dispatch(getAllData())
@@ -163,8 +160,6 @@ const ContactsList = () => {
         return contact
       }
     })
-
-    console.log("flttt", dateFilter)
 
     const isFiltered = Object.keys(filters).some(function (k) {
       return filters[k].length > 0

@@ -2,7 +2,7 @@
 import { Card, CardHeader, CardBody, Badge, UncontrolledTooltip, Button } from 'reactstrap'
 
 import { activateUser, deactivateUser } from '../store/action'
-import {AddFunds, DeductFunds, PasswordReset, BlacklistUser, BlacklistUserAsset} from './AddFunds'
+import { PasswordReset, BlacklistUser, BlacklistUserAsset} from './AddFunds'
 import { store } from '@store/storeConfig/store'
 
 
@@ -11,13 +11,6 @@ const PlanCard = ({ selectedUser, userData }) => {
   return (
     <Card className='plan-card border-primary'>
       <CardHeader className='d-flex justify-content-between align-items-center pt-75 pb-1'>
-        <h5 className='mb-0'>Current Plan</h5>
-        <Badge id='plan-expiry-date' color='light-secondary'>
-          July 22, {new Date().getFullYear()}
-        </Badge>
-        <UncontrolledTooltip placement='top' target='plan-expiry-date'>
-          Expiry Date
-        </UncontrolledTooltip>
       </CardHeader>
       <CardBody>
         {selectedUser.status === "Active" ? <Button.Ripple className='text-center mb-1' color= 'danger' outline  block onClick={() => { store.dispatch(deactivateUser(store.getState().appiaUsers.allData, selectedUser.user_id)) }}> Deactivate User</Button.Ripple> : <Button.Ripple 
@@ -30,8 +23,6 @@ const PlanCard = ({ selectedUser, userData }) => {
          Activate User
        </Button.Ripple>
         }
-        <AddFunds userId={selectedUser.user_id} userData={userData} />
-        <DeductFunds userId={selectedUser.user_id} userData={userData} />
         <PasswordReset userId={selectedUser.user_id} userData={userData} />
         <BlacklistUser userId={selectedUser.user_id} userData={userData} />
         <BlacklistUserAsset userId={selectedUser.user_id} phone={selectedUser.phone} />

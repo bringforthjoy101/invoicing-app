@@ -59,8 +59,36 @@ const AppiaRoutes = [
     }
   },
   {
-    path: '/appia/funds',
+    path: '/appia/funds/list',
     component: lazy(() => import('../../views/appia/funds/list'))
+  },
+  {
+    path: '/appia/funds/edit',
+    exact: true,
+    component: () => <Redirect to='/appia/funds/edit/1' />
+  },
+  {
+    path: '/appia/funds/edit/:id',
+    component: lazy(() => import('../../views/appia/funds/edit')),
+    meta: {
+      navLink: '/appia/user/edit'
+    }
+  },
+  {
+    path: '//appia/funds/view/',
+    exact: true,
+    component: () => <Redirect to='//appia/funds/view//1' />
+  },
+  {
+    path: '/appia/funds/view/:id',
+    component: lazy(() => import('../../views//appia/funds/view/')),
+    meta: {
+      navLink: '/appia/funds/view'
+    }
+  },
+  {
+    path: '/appia/withdrawal',
+    component: lazy(() => import('../../views/appia/withdrawal/list'))
   },
   {
     path: '/appia/contact/list',
@@ -214,18 +242,6 @@ const AppiaRoutes = [
       navLink: '/appia/escrow/view'
     }
   },
-  // {
-  //   path: '/appia/escrow/view',
-  //   exact: true,
-  //   component: () => <Redirect to='/appia/escrow/view/1' />
-  // },
-  // {
-  //   path: '/appia/escrow/view/:id/id',
-  //   component: lazy(() => import('../../views/appia/escrow/view')),
-  //   meta: {
-  //     navLink: '/appia/escrow/view'
-  //   }
-  // },
   {
     path: '/appia/transfers/list',
     component: lazy(() => import('../../views/appia/transfers/list'))

@@ -87,7 +87,7 @@ const CustomHeader = ({ handleFilter, value, handlePerPage, rowsPerPage, downloa
   )
 }
 
-const TransactionList = ({selectedEscrow}) => {
+const TransactionList = () => {
   const dispatch = useDispatch()
   const store = useSelector(state => state.appiaEscrow)
 
@@ -97,9 +97,9 @@ const TransactionList = ({selectedEscrow}) => {
   const [rowsPerPage, setRowsPerPage] = useState(10)
 
   useEffect(() => {
-    dispatch(getAllUserEscrowTransactions(store.selectedEscrow?.sender?.id))
+    dispatch(getAllUserEscrowTransactions(store.selectedEscrow.sender.id))
     dispatch(
-      getFilteredUserTransactions(store.selectedUserTransactions, {
+      getFilteredUserTransactions(store.selectedUserEscrowTransactions, {
         page: currentPage,
         perPage: rowsPerPage,
         status: statusValue,
@@ -112,7 +112,7 @@ const TransactionList = ({selectedEscrow}) => {
   const handleFilter = val => {
     setValue(val)
     dispatch(
-      getFilteredUserTransactions(store.selectedUserTransactions, {
+      getFilteredUserTransactions(store.selectedUserEscrowTransactions, {
         page: currentPage,
         perPage: rowsPerPage,
         status: statusValue,
@@ -123,7 +123,7 @@ const TransactionList = ({selectedEscrow}) => {
 
   const handlePerPage = e => {
     dispatch(
-      getFilteredUserTransactions(store.selectedUserTransactions, {
+      getFilteredUserTransactions(store.selectedUserEscrowTransactions, {
         page: currentPage,
         perPage: parseInt(e.target.value),
         status: statusValue,
@@ -136,7 +136,7 @@ const TransactionList = ({selectedEscrow}) => {
   const handleStatusValue = e => {
     setStatusValue(e.target.value)
     dispatch(
-      getFilteredUserTransactions(store.selectedUserTransactions, {
+      getFilteredUserTransactions(store.selectedUserEscrowTransactions, {
         page: currentPage,
         perPage: rowsPerPage,
         status: e.target.value,
@@ -147,7 +147,7 @@ const TransactionList = ({selectedEscrow}) => {
 
   const handlePagination = page => {
     dispatch(
-      getFilteredUserTransactions(store.selectedUserTransactions, {
+      getFilteredUserTransactions(store.selectedUserEscrowTransactions, {
         page: page.selected + 1,
         perPage: rowsPerPage,
         status: statusValue,
@@ -155,10 +155,15 @@ const TransactionList = ({selectedEscrow}) => {
       })
     )
     setCurrentPage(page.selected + 1)
+    
   }
 
+  const filteredData = store?.selectedUserEscrowTransactions?.filter(
+    item => (item.escrow_id?.toLowerCase())
+  )
+
   const CustomPagination = () => {
-    const count = Number((store.selectedUserTotalTransactions / rowsPerPage).toFixed(0))
+    const count = Math.ceil(filteredData.length / rowsPerPage)
 
     return (
       <ReactPaginate
@@ -272,12 +277,12 @@ const TransactionList = ({selectedEscrow}) => {
     const isFiltered = Object.keys(filters).some(function (k) {
       return filters[k].length > 0
     })
-    if (store.selectedUserTransactions.length > 0 && !isFiltered) {
-      return store.selectedUserTransactions
-    }  else if (store.selectedUserTransactions.length === 0) {
+    if (store.escrowData.length > 0 && !isFiltered) {
+      return store.escrowData
+    }  else if (store.escrowData.length === 0) {
       return []
     } else {
-      return store.selectedUserTransactons.slice(0, rowsPerPage)
+      return store.selectedUserEscrowTransactions.slice(0, rowsPerPage)
     }
   }
 

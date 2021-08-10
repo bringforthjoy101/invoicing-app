@@ -1,6 +1,5 @@
 // ** React Imports
 import { Link } from 'react-router-dom'
-import { useSelector } from 'react-redux'
 
 // ** Custom Components
 import Avatar from '@components/avatar'
@@ -22,7 +21,7 @@ const renderClient = row => {
   if (row.avatar) {
     return <Avatar className='mr-1' img={row.avatar} width='32' height='32' />
   } else {
-    return <Avatar color={color || 'primary'} className='mr-1' content={`${row.email}` || 'John Doe'} initials />
+    return <Avatar color={color || 'primary'} className='mr-1' content={`${row.names}` || 'John Doe'} initials />
   }
 }
 
@@ -56,60 +55,67 @@ const renderRole = row => {
 
   return (
     <span className='text-truncate text-capitalize align-middle'>
-      <Icon size={18} className={`${roleObj[row.role] ? roleObj[row.role].class : ''} mr-50`} />
+      <Icon size={18} className={`${roleObj[row.role] ? roleObj[row.role].class : 'text-primary'} mr-50`} />
       {row.role_name || 'User'}
     </span>
   )
 }
 
 const statusObj = {
-  pending: 'light-warning',
+  blacklisted: 'light-danger',
   active: 'light-success',
-  inactive: 'light-secondary'
+  inactive: 'light-warning'
 }
 const {users} = store.getState()
 export const columns = [
   {
     name: 'User',
     minWidth: '297px',
-    selector: 'fullName',
+    selector: 'names',
     sortable: true,
     cell: row => (
       <div className='d-flex justify-content-left align-items-center'>
         {renderClient(row)}
         <div className='d-flex flex-column'>
           <Link
-            to={`/appia/user/view/${row.user_id}`}
+            to={`/appia/funds/view/${row.user_id}`}
             className='user-name text-truncate mb-0'
-            onClick={() => store.dispatch(getUser(row.user_id))}
+            onClick={() => store.dispatch(getUser(store.getState().appiaFunds.allData, row.user_id))}
           >
-            <span className='font-weight-bold'>{row.user_id}</span>
+            <span className='font-weight-bold'>{row.names}</span>
           </Link>
-          <small className='text-truncate text-muted mb-0'>{row.email}</small>
+          <small className='text-truncate text-muted mb-0'>{row.user_id}</small>
         </div>
       </div>
     )
   },
   {
     name: 'Email',
-    minWidth: '320px',
+    minWidth: '300px',
     selector: 'email',
     sortable: true,
     cell: row => row.email
   },
   {
-    name: 'Role',
-    minWidth: '172px',
-    selector: 'role',
+    name: 'Phone',
+    minWidth: '300px',
+    selector: 'phone',
     sortable: true,
-    cell: row => renderRole(row)
+    cell: row => <span>{row.phone === null ? "No Number" : row.phone}</span>
   },
   {
-    name: 'Savings',
-    minWidth: '138px',
-    selector: 'savings_naira_wallet',
+    name: 'Balance',
+    minWidth: '150px',
+    selector: 'balance',
     sortable: true,
-    cell: row => <span className='text-capitalize'>{row.savings_naira_wallet}</span>
+    cell: row => <span className="text-capitalize">{row?.balance?.toLocaleString('en-US', {style: 'currency', currency: 'NGN'})}</span>
+  },
+  {
+    name: 'Refferal Code',
+    minWidth: '80px',
+    selector: 'referral_code',
+    sortable: true,
+    cell: row => row.referral_code
   },
   {
     name: 'Status',
@@ -117,46 +123,9 @@ export const columns = [
     selector: 'status',
     sortable: true,
     cell: row => (
-      <Badge className='text-capitalize' color={statusObj[row.status] || 'light-success'} pill>
-        {row.status || 'Active'}
+      <Badge className='text-capitalize' color={statusObj[row.status]} pill>
+        {row.status}
       </Badge>
-    )
-  },
-  {
-    name: 'Actions',
-    minWidth: '100px',
-    selector: 'fullName',
-    sortable: true,
-    cell: row => (
-      <UncontrolledDropdown>
-        <DropdownToggle tag='div' className='btn btn-sm'>
-          <MoreVertical size={14} className='cursor-pointer' />
-        </DropdownToggle>
-        <DropdownMenu right>
-          <DropdownItem
-            tag={Link}
-            to={`/appia/user/view/${row.user_id}`}
-            className='w-100'
-            onClick={() => store.dispatch(getUser(row.user_id))}
-          >
-            <FileText size={14} className='mr-50' />
-            <span className='align-middle'>Details</span>
-          </DropdownItem>
-          <DropdownItem
-            tag={Link}
-            to={`/appia/user/edit/${row.user_id}`}
-            className='w-100'
-            onClick={() => store.dispatch(getUser(row.user_id))}
-          >
-            <Archive size={14} className='mr-50' />
-            <span className='align-middle'>Edit</span>
-          </DropdownItem>
-          <DropdownItem className='w-100'>
-            <Trash2 size={14} className='mr-50' />
-            <span className='align-middle'>Delete</span>
-          </DropdownItem>
-        </DropdownMenu>
-      </UncontrolledDropdown>
     )
   }
 ]

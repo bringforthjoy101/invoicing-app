@@ -7,7 +7,6 @@ export const apiUrl = process.env.REACT_APP_API_ENDPOINT
 export const getAllData = () => {
   return async dispatch => {
     const response = await apiRequest({url:'/admin/escrows', method:'GET'}, dispatch)
-    console.log({response})
     if (response && response.data.data && response.data.success) {
         await dispatch({
           type: 'GET_ALL_ESCROW',
@@ -55,14 +54,12 @@ export const getEscrow = (escrows, id) => {
 }
 
 // Get Transactions
-export const getAllUserEscrowTransactions = (escrow_id) => {
+export const getAllUserEscrowTransactions = (sender_id) => {
   return async dispatch => {
-    console.log(escrow_id)
-    const response = await apiRequest({url:`/admin/escrows/${escrow_id}`, method:'GET'}, dispatch)
-    console.log({response})
+    const response = await apiRequest({url:`/admin/escrows/${sender_id}`, method:'GET'}, dispatch)
     if (response && response.data.data && response.data.success) {
         await dispatch({
-          type: 'GET__ALL_USER_ESCROW_TRANSACTIONS',
+          type: 'GET_USER_ESCROWS_TRANSACTIONS',
           data: response.data.data
         })
     } else {
@@ -72,17 +69,6 @@ export const getAllUserEscrowTransactions = (escrow_id) => {
   }
 }
 
-//  Get Escrow
-// export const getUserEscrow = (escrows, id) => {
-//   return async dispatch => {
-//     const userEscrow = escrows.find(i => i.sender.id === id)
-//     dispatch({
-//       type: 'GET_USER_ESCROW',
-//       selectedUserEscrow: userEscrow
-//     })
-//   }
-// }
-
 // Filter Transaction
 export const getFilteredUserTransactions = (userTransactions, params) => {
   return async dispatch => {
@@ -91,7 +77,7 @@ export const getFilteredUserTransactions = (userTransactions, params) => {
 
       const queryLowered = q.toLowerCase()
       // console.log({userTransactions}, typeof userTransactions)
-      const filteredData = userTransactions.filter(
+      const filteredData = userTransactions?.filter(
           transaction => {
             let found = false
             
@@ -100,7 +86,7 @@ export const getFilteredUserTransactions = (userTransactions, params) => {
               }
 
             
-              if ((transaction.trans_type || '').toLowerCase().includes(queryLowered)) {
+              if ((transaction?.trans_type || '').toLowerCase().includes(queryLowered)) {
                 found = true
               }
             return found
@@ -111,9 +97,9 @@ export const getFilteredUserTransactions = (userTransactions, params) => {
         .reverse()
       /* eslint-enable  */
         await dispatch({
-          type: 'GET_USER_TRANSACTIONS',
+          type: 'GET_USER_ESCROW_TRANSACTIONS',
           data: paginateArray(filteredData, perPage, page),
-          totalPages: filteredData.length,
+          totalPages: filteredData?.length,
           params
         })
   }

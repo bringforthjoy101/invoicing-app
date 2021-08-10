@@ -3,7 +3,7 @@ import { useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 
 // ** Store & Actions
-import { getAllUserEscrowTransactions, getEscrow } from '../store/action'
+import { getEscrow } from '../store/action'
 import { useSelector, useDispatch } from 'react-redux'
 
 // ** Reactstrap
@@ -26,7 +26,6 @@ const UserView = props => {
   // ** Get Escrow on mount
   useEffect(() => {
     dispatch(getEscrow(store.allData, id))
-    dispatch(getAllUserEscrowTransactions(id))
   }, [dispatch])
 
   return store.selectedEscrow !== null && store.selectedEscrow !== undefined ? (

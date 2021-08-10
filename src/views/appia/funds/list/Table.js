@@ -1,280 +1,131 @@
 // ** React Imports
-import React, { Fragment, useState, useEffect, forwardRef, useRef } from 'react'
+import { Fragment, useState, useEffect } from 'react'
+
+// ** Columns
+import { columns } from './columns'
+
+// ** Store & Actions
+import { getAllData, getFilteredData } from '../store/action'
 import { useDispatch, useSelector } from 'react-redux'
-import moment from 'moment'
-
-// ** Custom Components
-import Avatar from '@components/avatar'
-
-// ** Table Data & Columns
-// import { data, columns } from '../data'
-import { getAllFundsData, reviewFunds } from '../store/action'
-import { store } from '@store/storeConfig/store'
-
-// ** Add New Modal Component
-// import AddNewModal from './AddNewModal'
 
 // ** Third Party Components
+import Select from 'react-select'
 import ReactPaginate from 'react-paginate'
+import { ChevronDown, Share, Printer, FileText } from 'react-feather'
 import DataTable from 'react-data-table-component'
-import {
-  ChevronDown,
-  Share,
-  Printer,
-  File,
-  Grid,
-  Copy,
-  Plus,
-  MoreVertical,
-  Edit,
-  FileText,
-  Archive,
-  Trash, X, Check, Bookmark, Trash2
-} from 'react-feather'
+import { selectThemeColors } from '@utils'
+import { Card, CardHeader, CardTitle, CardBody, UncontrolledButtonDropdown, DropdownMenu, DropdownItem, DropdownToggle, Input, Row, Col, Label, CustomInput, Button } from 'reactstrap'
 
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  Button,
-  UncontrolledButtonDropdown,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-  Input,
-  Label,
-  Row,
-  Col,
-  Badge
-} from 'reactstrap'
+// ** Styles
+import '@styles/react/libs/react-select/_react-select.scss'
+import '@styles/react/libs/tables/react-dataTable-component.scss'
 import jsPDF from 'jspdf'
 import 'jspdf-autotable'
+import FormGroup from 'reactstrap/lib/FormGroup'
 
-const states = ['success', 'danger', 'warning', 'info', 'dark', 'primary', 'secondary']
 
-const status = {
-  Approved: { title: 'Approved', color: 'light-success' },
-  Pending: { title: 'Pending', color: 'light-warning' },
-  Disapproved: { title: 'Disapproved', color: 'light-danger' },
-  Rejected: { title: 'Rejected', color: 'light-danger' },
-  5: { title: 'Applied', color: 'light-info' }
-}
-
-// ** Table Common Column
-const columns = [
-  {
-    name: 'User',
-    selector: 'user_details',
-    sortable: true,
-    minWidth: '280px',
-    cell: row => (
-      <div className='d-flex align-items-center'>
-        {!row.avatar ? (
-          <Avatar color={`light-${states[3]}`} content={row.user_details.user_name} initials />
-        ) : (
-          <Avatar img={require(`@src/assets/images/portrait/small/avatar-s-${row.avatar}`).default} />
-        )}
-        <div className='user-info text-truncate ml-1'>
-          <span className='d-block font-weight-bold text-truncate'>{row.user_details.user_name}</span>
-          <small>{row.user_details.email}</small>
-        </div>
-      </div>
-    )
-  },
-  {
-    name: 'Email',
-    selector: 'user_details',
-    sortable: true,
-    minWidth: '240px',
-    cell: row => row.user_details.email
-  },
-  {
-    name: 'Purpose',
-    selector: 'purpose',
-    sortable: true,
-    minWidth: '150px'
-  },
-  {
-    name: 'Description',
-    selector: 'description',
-    sortable: true,
-    minWidth: '100px'
-  },
-  {
-    name: 'Status',
-    selector: 'status',
-    sortable: true,
-    minWidth: '100px',
-    cell: row => {
-      return (
-        <Badge color={status[row.status].color} pill>
-          {status[row.status].title}
-        </Badge>
-      )
-    }
-  },
-  {
-    name: 'Date',
-    selector: 'posted_date',
-    sortable: true,
-    minWidth: '200px',
-    cell: row => moment(row.posted_date).format('lll')
-  },
-  {
-    name: 'Posted By',
-    selector: 'posted_by',
-    sortable: true,
-    minWidth: '170px',
-    cell: row => (
-      <div className='d-flex align-items-center'>
-        <Avatar color={`light-${states[3]}`} content={row.posted_by} initials />
-        <div className='user-info text-truncate ml-1'>
-          <span className='d-block font-weight-bold text-truncate'>{row.posted_by}</span>
-          <small>{'Admin'}</small>
-        </div>
-      </div>
-    )
-  },
-  {
-    name: 'Actions',
-    minWidth: '100px',
-    selector: 'fullName',
-    sortable: true,
-    cell: row => (
-      <UncontrolledDropdown>
-        <DropdownToggle tag='div' className='btn btn-sm'>
-          <MoreVertical size={14} className='cursor-pointer' />
-        </DropdownToggle>
-        <DropdownMenu right>
-          <DropdownItem>
-            <FileText size={14} className='mr-50' />
-            <span className='align-middle'>Details</span>
-          </DropdownItem>
-          <DropdownItem>
-            <Archive size={14} className='mr-50' />
-            <span className='align-middle'>Edit</span>
-          </DropdownItem>
-          <DropdownItem className='w-100'>
-            <Trash2 size={14} className='mr-50' />
-            <span className='align-middle'>Delete</span>
-          </DropdownItem>
-        </DropdownMenu>
-      </UncontrolledDropdown>
-    )
-  }
-]
-
-// ** Bootstrap Checkbox Component
-const BootstrapCheckbox = forwardRef(({ onClick, ...rest }, ref) => (
-  <div className='custom-control custom-checkbox'>
-    <input type='checkbox' className='custom-control-input' ref={ref} {...rest} />
-    <label className='custom-control-label' onClick={onClick} />
-  </div>
-))
-
-const DataTableWithButtons = () => {
+const UsersList = () => {
   // ** Store Vars
   const dispatch = useDispatch()
   const store = useSelector(state => state.appiaFunds)
 
   // ** States
-  const [modal, setModal] = useState(false)
-  const [currentPage, setCurrentPage] = useState(0)
-  const [searchValue, setSearchValue] = useState('')
-  const [filteredData, setFilteredData] = useState([])
+  const [searchTerm, setSearchTerm] = useState('')
+  const [currentPage, setCurrentPage] = useState(1)
+  const [rowsPerPage, setRowsPerPage] = useState(10)
+  const [currentStatus, setCurrentStatus] = useState({ value: '', label: 'Select Status', number: 0 })
 
   // ** Get data on mount
   useEffect(() => {
-    dispatch(getAllFundsData())
+    dispatch(getAllData())
+    dispatch(
+      getFilteredData(store.allData, {
+        page: currentPage,
+        perPage: rowsPerPage,
+        status: currentStatus.value,
+        q: searchTerm
+      })
+    )
   }, [dispatch])
 
-  // ** Function to handle filter
-  const handleFilter = e => {
-    const value = e.target.value
-    let updatedData = []
-    setSearchValue(value)
+  const statusOptions = [
+    { value: '', label: 'Select Status', number: 0 },
+    { value: 'blacklisted', label: 'Blacklisted', number: 1 },
+    { value: 'active', label: 'Active', number: 2 },
+    { value: 'inactive', label: 'Inactive', number: 3 }
+  ]
 
-    const status = {
-      1: { title: 'Current', color: 'light-primary' },
-      2: { title: 'Professional', color: 'light-success' },
-      3: { title: 'Rejected', color: 'light-danger' },
-      4: { title: 'Resigned', color: 'light-warning' },
-      5: { title: 'Applied', color: 'light-info' }
-    }
-
-    if (value.length) {
-      updatedData = store.allData.filter(item => {
-        const startsWith =
-          item.user_details.user_name.toLowerCase().startsWith(value.toLowerCase()) ||
-          item.user_details.email.toLowerCase().startsWith(value.toLowerCase()) ||
-          item.purpose.toLowerCase().startsWith(value.toLowerCase()) ||
-          item.description.toLowerCase().startsWith(value.toLowerCase()) ||
-          item.status.toLowerCase().startsWith(value.toLowerCase()) ||
-          item.posted_date.toLowerCase().startsWith(value.toLowerCase())
-        // status[item.status].title.toLowerCase().startsWith(value.toLowerCase())
-
-        const includes =
-          item.user_details.user_name.toLowerCase().startsWith(value.toLowerCase()) ||
-          item.user_details.email.toLowerCase().startsWith(value.toLowerCase()) ||
-          item.purpose.toLowerCase().startsWith(value.toLowerCase()) ||
-          item.description.toLowerCase().startsWith(value.toLowerCase()) ||
-          item.status.toLowerCase().startsWith(value.toLowerCase()) ||
-          item.posted_date.toLowerCase().startsWith(value.toLowerCase())
-        // status[item.status].title.toLowerCase().includes(value.toLowerCase())
-
-        if (startsWith) {
-          return startsWith
-        } else if (!startsWith && includes) {
-          return includes
-        } else return null
-      })
-      setFilteredData(updatedData)
-      setSearchValue(value)
-    }
-  }
-
-  // ** Function to handle Pagination
+  // ** Function in get data on page change
   const handlePagination = page => {
-    setCurrentPage(page.selected)
+    dispatch(
+      getFilteredData(store.allData, {
+        page: page.selected + 1,
+        perPage: rowsPerPage,
+        status: currentStatus.value,
+        q: searchTerm
+      })
+    )
+    setCurrentPage(page.selected + 1)
   }
 
-  // ** Custom Pagination
-  const CustomPagination = () => (
-    <ReactPaginate
-      previousLabel=''
-      nextLabel=''
-      forcePage={currentPage}
-      onPageChange={page => handlePagination(page)}
-      pageCount={searchValue.length ? filteredData.length / 10 : store.allData.length / 10 || 1}
-      breakLabel='...'
-      pageRangeDisplayed={2}
-      marginPagesDisplayed={2}
-      activeClassName='active'
-      pageClassName='page-item'
-      breakClassName='page-item'
-      breakLinkClassName='page-link'
-      nextLinkClassName='page-link'
-      nextClassName='page-item next'
-      previousClassName='page-item prev'
-      previousLinkClassName='page-link'
-      pageLinkClassName='page-link'
-      breakClassName='page-item'
-      breakLinkClassName='page-link'
-      containerClassName='pagination react-paginate separated-pagination pagination-sm justify-content-end pr-1 mt-1'
-    />
+  // ** Function in get data on rows per page
+  const handlePerPage = e => {
+    const value = parseInt(e.currentTarget.value)
+    dispatch(
+      getFilteredData(store.allData, {
+        page: currentPage,
+        perPage: value,
+        status: currentStatus.value,
+        q: searchTerm
+      })
+    )
+    setRowsPerPage(value)
+  }
+
+  // ** Function in get data on search query change
+  const handleFilter = val => {
+    setSearchTerm(val)
+    dispatch(
+      getFilteredData(store.allData, {
+        page: currentPage,
+        perPage: rowsPerPage,
+        status: currentStatus.value,
+        q: val
+      })
+    )
+  }
+
+  const filteredData = store.allData.filter(
+    item => (item.names?.toLowerCase() || item.email?.toLowerCase() || item.phone || item?.referral_code?.dataToRender())
   )
 
-  const printOrder = () => {
-    const orderHtml = document.getElementById('printme')
-    const oldPage = document.body.innerHTML
-    document.body.innerHTML = oldPage
-    window.print()
-    document.body.innerHTML = oldPage
+
+  // ** Custom Pagination
+  const CustomPagination = () => {
+    const count = Math.ceil(filteredData.length / rowsPerPage)
+
+    return (
+      <ReactPaginate
+        previousLabel={''}
+        nextLabel={''}
+        pageCount={count || 1}
+        activeClassName='active'
+        forcePage={currentPage !== 0 ? currentPage - 1 : 0}
+        onPageChange={page => handlePagination(page)}
+        pageClassName={'page-item'}
+        nextLinkClassName={'page-link'}
+        nextClassName={'page-item next'}
+        previousClassName={'page-item prev'}
+        previousLinkClassName={'page-link'}
+        pageLinkClassName={'page-link'}
+        containerClassName={'pagination react-paginate justify-content-end my-2 pr-1'}
+      />
+    )
   }
 
-  // ** Converts table to CSV
-  function convertArrayOfObjectsToCSV(array) {
+
+   // ** Converts table to CSV
+   function convertArrayOfObjectsToCSV(array) {
     let result
 
     const columnDelimiter = ','
@@ -296,6 +147,7 @@ const DataTableWithButtons = () => {
         ctr++
       })
       result += lineDelimiter
+      console.log('esults', result)
     })
 
     return result
@@ -325,37 +177,126 @@ const DataTableWithButtons = () => {
     })
 
     doc.autoTable({
-      styles: { halign: 'center' },
-      head: [['User', 'Purpose', 'Description', 'Status', 'Date', 'Posted by']]
+        styles: { halign: 'center'},
+        head: [['User', 'Email', 'Balance', 'Naira Wallet', 'Status']]
     })
     store.allData.map(arr => {
       doc.autoTable({
         styles: { halign: 'left' },
         columnStyles: {
-          0: { cellWidth: 45 },
-          1: { cellWidth: 55 },
-          2: { cellWidth: 50 },
-          3: { cellWidth: 40 },
-          4: { cellWidth: 70 },
-          5: { cellWidth: 40 }
+          0: {cellWidth: 40},
+          1: {cellWidth: 70},
+          2: {cellWidth: 70},
+          3: {cellWidth: 60},
+          4: {cellWidth: 30}
         },
-        body: [[(arr.user_details.user_name), (arr.purpose), (arr.description), (arr.status), (arr.posted_date), (arr.posted_by)]]
+        body: [[(arr.names), (arr.email), (arr.balance), (arr.naira_wallet), (arr.status)]]
       })
     })
     doc.save("export.pdf")
   }
 
+  // ** Table data to render
+  const dataToRender = () => {
+    const filters = {
+      status: currentStatus.value,
+      q: searchTerm
+    }
+
+    const isFiltered = Object.keys(filters).some(function (k) {
+      return filters[k].length > 0
+    })
+
+    if (store.data.length > 0) {
+      return store.data
+    } else if (store.data.length === 0 && isFiltered) {
+      return []
+    } else {
+      return store.allData.slice(0, rowsPerPage)
+    }
+  }
 
   return (
     <Fragment>
       <Card>
-        <CardHeader className='flex-md-row flex-column align-md-items-center align-items-start border-bottom'>
-          <CardTitle tag='h4'>All Funds</CardTitle>
-          <div className='d-flex mt-md-0 mt-1'>
-            <UncontrolledButtonDropdown>
-              <DropdownToggle color='secondary' caret outline>
+        <CardHeader>
+          <CardTitle tag='h4'>Search Filter</CardTitle>
+        </CardHeader>
+        <CardBody>
+        <Row  form className='mt-1 mb-50'>
+            <Col lg='4' md='6'>
+              <FormGroup>
+                <Label for='select'>Select Status:</Label>
+                <Select
+                  theme={selectThemeColors}
+                  isClearable={false}
+                  className='react-select'
+                  classNamePrefix='select'
+                  id='select'
+                  options={statusOptions}
+                  value={currentStatus}
+                  onChange={data => {
+                    setCurrentStatus(data)
+                    dispatch(
+                      getFilteredData(store.allData, {
+                        page: currentPage,
+                        perPage: rowsPerPage,
+                        status: data.value,
+                        q: searchTerm
+                      })
+                    )
+                  }}
+                />
+              </FormGroup>
+            </Col>
+            <Col lg='4' md='6'>
+              <FormGroup>
+                <Label for='select'>Select Table:</Label>
+                <Input
+                id='search-invoice'
+                className='ml-50 w-100'
+                type='text'
+                value={searchTerm}
+                placeholder='Name and Email Search'
+                onChange={e => handleFilter(e.target.value)}
+              />
+              </FormGroup>
+            </Col>
+          </Row>
+        </CardBody>
+      </Card>
+      <Card>
+      <Row className='mx-0 mt-3'>
+      <Col xl='6' sm="12" className='d-flex align-items-center pl-3'>
+          <div className='d-flex align-items-center w-100'>
+            <Label for='rows-per-page'>Show</Label>
+            <CustomInput
+              className='form-control mx-50'
+              type='select'
+              id='rows-per-page'
+              value={rowsPerPage}
+              onChange={handlePerPage}
+              style={{
+                width: '10rem',
+                padding: '0 0.8rem',
+                backgroundPosition: 'calc(100% - 3px) 11px, calc(100% - 20px) 13px, 100% 0'
+              }}
+            >
+              <option value='10'>10</option>
+              <option value='25'>25</option>
+              <option value='50'>50</option>
+            </CustomInput>
+            <Label for='rows-per-page'>Entries</Label>
+          </div>
+        </Col>
+        <Col
+          xl='6' sm='12'
+          className='d-flex align-items-sm-center justify-content-lg-end justify-content-center pr-lg-3 p-0 mt-lg-0 mt-1'
+        >
+         <UncontrolledButtonDropdown>
+              <DropdownToggle className="mr-lg-0 mr-5" color='secondary' caret outline>
                 <Share size={15} />
-                <span className='align-middle ml-50'>Export</span>
+                <span className='align-middle ml-lg-50'>Download Table</span>
               </DropdownToggle>
               <DropdownMenu right>
                 <DropdownItem className='w-100' onClick={() => downloadCSV(store.allData)}>
@@ -372,40 +313,23 @@ const DataTableWithButtons = () => {
                 </DropdownItem>
               </DropdownMenu>
             </UncontrolledButtonDropdown>
-          </div>
-        </CardHeader>
-        <Row className='justify-content-end mx-0'>
-          <Col className='d-flex align-items-center justify-content-end mt-1' md='3' sm='12'>
-            <Label className='mr-1' for='search-input'>
-              Search
-            </Label>
-            <Input
-              className='dataTable-filter mb-50'
-              type='text'
-              bsSize='sm'
-              id='search-input'
-              value={searchValue}
-              onChange={handleFilter}
-            />
-          </Col>
-        </Row>
+        </Col>
+      </Row>
         <DataTable
-          printableId="printme"
           noHeader
           pagination
-          selectableRows
+          subHeader
+          responsive
+          paginationServer
           columns={columns}
-          paginationPerPage={10}
+          sortIcon={<ChevronDown />}
           className='react-dataTable'
-          sortIcon={<ChevronDown size={10} />}
-          paginationDefaultPage={currentPage + 1}
           paginationComponent={CustomPagination}
-          data={searchValue.length ? filteredData : store.allData}
-          selectableRowsComponent={BootstrapCheckbox}
+          data={dataToRender()}
         />
       </Card>
     </Fragment>
   )
 }
 
-export default DataTableWithButtons
+export default UsersList

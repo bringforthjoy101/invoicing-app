@@ -95,10 +95,9 @@ const UsersList = () => {
     )
   }
 
-  const filteredData = store.allData.filter(
-    item => (item.names?.toLowerCase() || item.email?.toLowerCase() || item.phone || item?.referral_code?.dataToRender())
+  const filteredData = store.allData.filter( 
+    item => (item.names?.toLowerCase() || item.email?.toLowerCase() || item.phone.toString() || item?.referral_code?.dataToRender())
   )
-
 
   // ** Custom Pagination
   const CustomPagination = () => {
@@ -249,18 +248,18 @@ const UsersList = () => {
                 />
               </FormGroup>
             </Col>
-            <Col md="4" className="d-flex mt-2">
-              <Label className='mb-0 mt-1' for='search-invoice'>
-                Search:
-            </Label>
-              <Input
+            <Col lg='4' md='6'>
+              <FormGroup>
+                <Label for='select'>Select Table:</Label>
+                <Input
                 id='search-invoice'
                 className='ml-50 w-100'
                 type='text'
                 value={searchTerm}
-                placeholder='Name and Email Search'
+                placeholder='Name Email Search & Phone Search'
                 onChange={e => handleFilter(e.target.value)}
               />
+              </FormGroup>
             </Col>
           </Row>
         </CardBody>

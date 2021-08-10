@@ -21,7 +21,7 @@ import '@styles/react/apps/app-users.scss'
 const UserEdit = () => {
   // ** States & Vars
   const [activeTab, setActiveTab] = useState('1'),
-    store = useSelector(state => state.users),
+    store = useSelector(state => state.appiaUsers),
     dispatch = useDispatch(),
     { id } = useParams()
 

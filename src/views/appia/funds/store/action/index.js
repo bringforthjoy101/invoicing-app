@@ -1,22 +1,15 @@
-import moment from 'moment'
 import { paginateArray, sortCompare, apiRequest, swal } from '@utils'
-
-
-import Swal from 'sweetalert2'
-import withReactContent from 'sweetalert2-react-content'
-
-const MySwal = withReactContent(Swal)
 
 export const apiUrl = process.env.REACT_APP_API_ENDPOINT
 
-// ** Get all Data
-export const getAllFundsData = () => {
+// ** Get all User Data
+export const getAllData = () => {
   return async dispatch => {
-    const response = await apiRequest({url:'/admin/fund', method:'GET'}, dispatch)
+    const response = await apiRequest({url:'/admin/users', method:'GET'}, dispatch)
     if (response && response.data.data && response.data.success) {
         await dispatch({
-          type: 'GET_ALL_FUND_DATA',
-          data: response.data.data.sort((a, b) => b.log_id - a.log_id)
+          type: 'GET_ALL_DATA',
+          data: response.data.data
         })
     } else {
       console.log(response)
@@ -25,32 +18,66 @@ export const getAllFundsData = () => {
   }
 }
 
-export const reviewFunds = (log_id, action, admins) => {
-  const status = action === 'approve' ? 'approved' : 'disapproved'
+// All Users Filtered Data
+export const getFilteredData = (users, params) => {
   return async dispatch => {
-    return MySwal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this action!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: `Yes, ${action} it!`,
-      customClass: {
-        confirmButton: 'btn btn-primary',
-        cancelButton: 'btn btn-outline-danger ml-1'
-      },
-      buttonsStyling: false
-    }).then(async function (result) {
-      if (result.value) {
-        const body = JSON.stringify({log_id})
-        const response = await apiRequest({url:`/admin/fund/${action}`, method:'POST', body}, dispatch)
-        if (response && response.data.success) {
-          dispatch(getAllFundsData())
-          swal('Good!', `Fund was successfully ${status}`, 'success')
-        } else {
-          swal('Oops!', 'Somthing went wrong with your network.', 'error')
-          console.log(response)
-        }
-      }
+    const { q = '', perPage = 10, page = 1, status = null } = params
+
+    /* eslint-disable  */
+    const queryLowered = q.toLowerCase()
+    const filteredData = users.filter(
+      user =>
+        (user.email.toLowerCase().includes(queryLowered) || user.names.toLowerCase().includes(queryLowered) || user.referral_code.toLowerCase().includes(queryLowered)) &&
+        user.status === (status || user.status)
+    )
+    /* eslint-enable  */
+
+    dispatch({
+      type: 'GET_FILTERED_USER_DATA',
+      data: paginateArray(filteredData, perPage, page),
+      totalPages: filteredData.length,
+      params
     })
   }
 }
+
+//  Get User
+export const getUser = (users, id) => {
+  return async dispatch => {
+    const user = users.find(i => i.user_id === id)
+    dispatch({
+      type: 'GET_USER',
+      selectedUser: user
+    })
+  }
+}
+
+
+// Add Funds
+export const addFunds = ({user_id, reason, amount}) => {
+  return async dispatch => {
+    const body = JSON.stringify({user_id, reason, amount})
+    const response = await apiRequest({url:`/admin/users/add`, method:'POST', body}, dispatch)
+    if (response && response.data.success) {
+      swal('Good!', `Funds of ${amount} was successfully added and is pending aproval!.`, 'success')
+    } else {
+      console.log(response)
+      swal('Oops!', 'Somthing went wrong with your network.', 'error')
+    }
+  }
+}
+
+// Deduct Funds
+export const deductFunds = ({user_id, reason, amount}) => {
+  return async dispatch => {
+    const body = JSON.stringify({user_id, reason, amount})
+    const response = await apiRequest({url:`/admin/users/deduct`, method:'POST', body}, dispatch)
+    if (response && response.data.success) {
+      swal('Good!', `Funds of ${amount} was successfully deducted and is pending aproval!.`, 'success')
+    } else {
+      console.log(response)
+      swal('Oops!', 'Somthing went wrong with your network.', 'error')
+    }
+  }
+}
+

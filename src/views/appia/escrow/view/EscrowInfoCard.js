@@ -199,6 +199,7 @@ const UserInfoCard = ({ selectedEscrow, detail }) => {
         <Col xl='6' lg='12' className='d-flex flex-column justify-content-center mx-auto'>
           <h3><span>Transaction Amount: </span>{selectedEscrow.amount}</h3>
           <p><span>Transaction Date: </span>{moment(selectedEscrow.updated_at).format('lll')}</p>
+          <p><span>Transaction status: </span>{selectedEscrow.status}</p>
           </Col>
         </Row>
       </CardBody>
