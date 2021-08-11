@@ -121,6 +121,7 @@ const TransactionList = () => {
     )
   }
 
+
   const handlePerPage = e => {
     dispatch(
       getFilteredUserTransactions(store.selectedUserEscrowTransactions, {
@@ -161,6 +162,7 @@ const TransactionList = () => {
   const filteredData = store.selectedUserEscrowTransactions.filter(
     item => (item.escrow_id.toLowerCase())
   )
+
 
   const CustomPagination = () => {
     const count = Math.ceil(filteredData.length / rowsPerPage)

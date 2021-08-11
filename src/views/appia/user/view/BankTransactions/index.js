@@ -41,7 +41,7 @@ const CustomHeader = ({ handleFilter, value, handlePerPage, rowsPerPage, downloa
               <option value='50'>50</option>
             </CustomInput>
           </div>
-          <h3 className="d-none d-lg-block">User's Utilities Transactions</h3>
+          <h3 className="d-none d-lg-block">User's Bank Transactions</h3>
         </Col>
         <Col
           lg='3' sm="6"
@@ -109,7 +109,7 @@ const TransactionList = () => {
   const handleFilter = val => {
     setSearchTerm(val)
     dispatch(
-      getFilteredUserUtilityTransactions(store.selectedUserBanksTransactions, {
+      getFilteredUserBankTransactions(store.selectedUserBanksTransactions, {
         page: currentPage,
         perPage: rowsPerPage,
         q: val
@@ -120,7 +120,7 @@ const TransactionList = () => {
   const handlePerPage = e => {
     const value = parseInt(e.currentTarget.value)
     dispatch(
-      getFilteredUserUtilityTransactions(store.selectedUserBanksTransactions, {
+      getFilteredUserBankTransactions(store.selectedUserBanksTransactions, {
         page: currentPage,
         perPage: value,
         q: searchTerm
@@ -131,7 +131,7 @@ const TransactionList = () => {
 
   const handlePagination = page => {
     dispatch(
-      getFilteredUserUtilityTransactions(store.selectedUserBanksTransactions, {
+      getFilteredUserBankTransactions(store.selectedUserBanksTransactions, {
         page: page.selected + 1,
         perPage: rowsPerPage,
         q: searchTerm
@@ -140,8 +140,8 @@ const TransactionList = () => {
     setCurrentPage(page.selected + 1)
   }
 
-  const filteredData = store?.selectedUserBanksTransactions?.filter(
-    item => (item?.trans_id?.toLowerCase() || item?.trans_type?.toLowerCase())
+  const filteredData = store.selectedUserBanksTransactions.filter(
+    item => (item.trans_id.toLowerCase() || item.trans_type.toLowerCase())
   )
 
   const CustomPagination = () => {
@@ -229,7 +229,7 @@ const TransactionList = () => {
         },
         head: [['Id', 'Type', 'Amount', 'Balance', 'Date']]
     })
-    store.selectedUserAllTransactions.map(arr => {
+    store.getFilteredUserBankTransactions.map(arr => {
       doc.autoTable({
         styles: { halign: 'left' },
         columnStyles: {
@@ -256,7 +256,7 @@ const TransactionList = () => {
       return filters[k].length > 0
     })
     if (store.selectedUserBankTransactions.length > 0) {
-      return store.selectedUserBankTransactionss
+      return store.selectedUserBankTransactions
     } else if (store.selectedUserBankTransactions.length === 0 && isFiltered) {
       return []
     } else {

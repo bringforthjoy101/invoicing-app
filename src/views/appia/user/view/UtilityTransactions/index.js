@@ -41,7 +41,7 @@ const CustomHeader = ({ handleFilter, value, handlePerPage, rowsPerPage, downloa
               <option value='50'>50</option>
             </CustomInput>
           </div>
-          <h3 className="d-none d-lg-block">User's Bank Transactions</h3>
+          <h3 className="d-none d-lg-block">User's Utilities Transactions</h3>
         </Col>
         <Col
           lg='3' sm="6"
@@ -229,7 +229,7 @@ const TransactionList = () => {
         },
         head: [['Id', 'Type', 'Amount', 'Balance', 'Date']]
     })
-    store.selectedUserAllTransactions.map(arr => {
+    store.selectedUserUtilitiesTransactions.map(arr => {
       doc.autoTable({
         styles: { halign: 'left' },
         columnStyles: {

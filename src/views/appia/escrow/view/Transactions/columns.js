@@ -65,13 +65,7 @@ export const columns = [
       <div className='d-flex justify-content-left align-items-center'>
         {renderClient(row)}
         <div className='d-flex flex-column'>
-          {/* <Link
-            to={`/appia/escrow/view/${row.escrow_id}/${row.sender.id}`}
-            className='user-name text-truncate mb-0'
-            onClick={() => store.dispatch(getUserEscrow(store.getState().appiaEscrow.allData, row.sender.d))}
-          > */}
             <span className='font-weight-bold'>{row.sender.username}</span>
-          {/* </Link> */}
           <small className='text-truncate text-muted mb-0'>{row.sender.id}</small>
         </div>
       </div>
