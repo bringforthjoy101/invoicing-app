@@ -1,225 +1,62 @@
 // ** React Imports
 import { Fragment, useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
-
-// ** Third Party Components
-import * as Icon from 'react-feather'
-import classnames from 'classnames'
-import Autocomplete from '@components/autocomplete'
-import {
-  NavItem,
-  NavLink,
-  UncontrolledTooltip,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem
-} from 'reactstrap'
-
-// ** Store & Actions
-import { useDispatch, useSelector } from 'react-redux'
-import { getBookmarks, updateBookmarked, handleSearchQuery } from '@store/actions/navbar'
+import { Link, useRouteMatch } from 'react-router-dom'
 
 const NavbarBookmarks = props => {
-  // ** Props
-  const { setMenuVisibility } = props
-
-  // ** State
-  const [value, setValue] = useState('')
-  const [openSearch, setOpenSearch] = useState(false)
-
-  // ** Store Vars
-  const dispatch = useDispatch()
-  const store = useSelector(state => state.navbar)
-
-  // ** ComponentDidMount
-  useEffect(() => {
-    dispatch(getBookmarks())
-  }, [])
-
-  // ** Loops through Bookmarks Array to return Bookmarks
-  const renderBookmarks = () => {
-    if (store.bookmarks.length) {
-      return store.bookmarks
-        .map(item => {
-          const IconTag = Icon[item.icon]
-          return (
-            <NavItem key={item.target} className='d-none d-lg-block'>
-              <NavLink tag={Link} to={item.link} id={item.target}>
-                <IconTag className='ficon' />
-                <UncontrolledTooltip target={item.target}>{item.title}</UncontrolledTooltip>
-              </NavLink>
-            </NavItem>
-          )
-        })
-        .slice(0, 10)
-    } else {
-      return null
-    }
-  }
-
-  // ** If user has more than 10 bookmarks then add the extra Bookmarks to a dropdown
-  const renderExtraBookmarksDropdown = () => {
-    if (store.bookmarks.length && store.bookmarks.length >= 11) {
-      return (
-        <NavItem className='d-none d-lg-block'>
-          <NavLink tag='span'>
-            <UncontrolledDropdown>
-              <DropdownToggle tag='span'>
-                <Icon.ChevronDown className='ficon' />
-              </DropdownToggle>
-              <DropdownMenu right>
-                {store.bookmarks
-                  .map(item => {
-                    const IconTag = Icon[item.icon]
-                    return (
-                      <DropdownItem tag={Link} to={item.link} key={item.id}>
-                        <IconTag className='mr-50' size={14} />
-                        <span className='align-middle'>{item.title}</span>
-                      </DropdownItem>
-                    )
-                  })
-                  .slice(10)}
-              </DropdownMenu>
-            </UncontrolledDropdown>
-          </NavLink>
-        </NavItem>
-      )
-    } else {
-      return null
-    }
-  }
-
-  // ** Removes query in store
-  const handleClearQueryInStore = () => dispatch(handleSearchQuery(''))
-
-  // ** Loops through Bookmarks Array to return Bookmarks
-  const onKeyDown = e => {
-    if (e.keyCode === 27 || e.keyCode === 13) {
-      setTimeout(() => {
-        setOpenSearch(false)
-        handleClearQueryInStore()
-      }, 1)
-    }
-  }
-
-  // ** Function to toggle Bookmarks
-  const handleBookmarkUpdate = id => dispatch(updateBookmarked(id))
-
-  // ** Function to handle Bookmarks visibility
-  const handleBookmarkVisibility = () => {
-    setOpenSearch(!openSearch)
-    setValue('')
-    handleClearQueryInStore()
-  }
-
-  // ** Function to handle Input change
-  const handleInputChange = e => {
-    setValue(e.target.value)
-    dispatch(handleSearchQuery(e.target.value))
-  }
-
-  // ** Function to handle external Input click
-  const handleExternalClick = () => {
-    if (openSearch === true) {
-      setOpenSearch(false)
-      handleClearQueryInStore()
-    }
-  }
-
-  // ** Function to clear input value
-  const handleClearInput = setUserInput => {
-    if (!openSearch) {
-      setUserInput('')
-      handleClearQueryInStore()
-    }
-  }
+  const route = useRouteMatch()
 
   return (
     <Fragment>
-      <ul className='navbar-nav d-xl-none'>
-        <NavItem className='mobile-menu mr-auto'>
-          <NavLink className='nav-menu-main menu-toggle hidden-xs is-active' onClick={() => setMenuVisibility(true)}>
-            <Icon.Menu className='ficon' />
-          </NavLink>
-        </NavItem>
-      </ul>
-      <ul className='nav navbar-nav bookmark-icons'>
-        {renderBookmarks()}
-        {renderExtraBookmarksDropdown()}
-        <NavItem className='nav-item d-none d-lg-block'>
-          <NavLink className='bookmark-star' onClick={handleBookmarkVisibility}>
-            <Icon.Star className='ficon text-warning' />
-          </NavLink>
-          <div className={classnames('bookmark-input search-input', { show: openSearch })}>
-            <div className='bookmark-input-icon'>
-              <Icon.Search size={14} />
-            </div>
-            {openSearch && store.suggestions.length ? (
-              <Autocomplete
-                wrapperClass={classnames('search-list search-list-bookmark', {
-                  show: openSearch
-                })}
-                className='form-control'
-                suggestions={!value.length ? store.bookmarks : store.suggestions}
-                filterKey='title'
-                autoFocus={true}
-                defaultSuggestions
-                suggestionLimit={!value.length ? store.bookmarks.length : 6}
-                placeholder='Search...'
-                externalClick={handleExternalClick}
-                clearInput={(userInput, setUserInput) => handleClearInput(setUserInput)}
-                onKeyDown={onKeyDown}
-                value={value}
-                onChange={handleInputChange}
-                customRender={(
-                  item,
-                  i,
-                  filteredData,
-                  activeSuggestion,
-                  onSuggestionItemClick,
-                  onSuggestionItemHover
-                ) => {
-                  const IconTag = Icon[item.icon ? item.icon : 'X']
-                  return (
-                    <li
-                      key={i}
-                      onMouseEnter={() => onSuggestionItemHover(filteredData.indexOf(item))}
-                      className={classnames('suggestion-item d-flex align-items-center justify-content-between', {
-                        active: filteredData.indexOf(item) === activeSuggestion
-                      })}
-                    >
-                      <Link
-                        to={item.link}
-                        className='d-flex align-items-center justify-content-between p-0'
-                        onClick={() => {
-                          setOpenSearch(false)
-                          handleClearQueryInStore()
-                        }}
-                        style={{
-                          width: 'calc(90%)'
-                        }}
-                      >
-                        <div className='d-flex justify-content-start align-items-center overflow-hidden'>
-                          <IconTag size={17.5} className='mr-75' />
-                          <span className='text-truncate'>{item.title}</span>
-                        </div>
-                      </Link>
-                      <Icon.Star
-                        size={17.5}
-                        className={classnames('bookmark-icon float-right', {
-                          'text-warning': item.isBookmarked
-                        })}
-                        onClick={() => handleBookmarkUpdate(item.id)}
-                      />
-                    </li>
-                  )
-                }}
-              />
-            ) : null}
-          </div>
-        </NavItem>
-      </ul>
+      {" "}
+      {route && route.url === "/appia/admin/list" ? (
+        <h2>Admin List</h2>
+      ) : route && route.url === "/appia/admin/view" ? (
+        <h2>Admin Activites Details</h2>
+      )  : route && route.url === "/appia/user/list" ? (
+        <h2>Users List</h2>
+      ) : route && route.url === "/appia/user/view" ? (
+        <h2>User Activites Details</h2>
+      ) : route && route.url === "/appia/dataPlans/list" ? (
+        <h2>Data Plan List</h2>
+      ) : route && route.url === "/appia/dataPlans/view" ? (
+        <h2>Data Plan Details</h2>
+      )  : route && route.url === "/appia/allRewardItems/list" ? (
+        <h2>All Reward Items List</h2>
+      )  : route && route.url === "/appia/allRewardItems/view" ? (
+        <h2>All Reward Items Details</h2>
+      )  : route && route.url === "/appia/claimedRewards/list" ? (
+        <h2>Claimed Rewards List</h2>
+      ) : route && route.url === "/appia/claimedRewards/view" ? (
+        <h2>User Claimed Rewards Details</h2>
+      )  : route && route.url === "/appia/contact/list" ? (
+        <h2>Contact Us List</h2>
+      ) : route && route.url === "/appia/contacts/view" ? (
+        <h2>Contact Us Details</h2>
+      ) : route && route.url === "/appia/feedbacks/list" ? (
+        <h2>Users Feedbacks List</h2>
+      ) : route && route.url === "/appia/feedbacks/view" ? (
+        <h2>Users Feedbacks Details</h2>
+      ) : route && route.url === "/appia/subscribers/list" ? (
+        <h2>Subscribers List</h2>
+      ) : route && route.url === "/appia/funds/list" ? (
+        <h2>Funds List</h2>
+      ) : route && route.url === "/appia/funds/view" ? (
+        <h2>Funds Details</h2>
+      )  : route && route.url === "/appia/withdrawal/list" ? (
+        <h2>Withdrawal List</h2>
+      )  : route && route.url === "/appia/transfers/list" ? (
+        <h2>Users Bank Transfers List</h2>
+      ) : route && route.url === "/appia/transfers/view" ? (
+        <h2>User Bank Transfer Details</h2>
+      )  : route && route.url === "/appia/escrow/list" ? (
+        <h2>Users Escrows List</h2>
+      )  : route && route.url === "/appia/escrow/view" ? (
+        <h2>User Escrows Activities Details</h2>
+      ) : route && route.url === "/appia/settings/list" ? (
+        <h2>Settings List</h2>
+      ) : (
+        <h2>Dashboard Analytics</h2>
+      )}
     </Fragment>
   )
 }

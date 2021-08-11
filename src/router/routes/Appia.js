@@ -75,7 +75,7 @@ const AppiaRoutes = [
     }
   },
   {
-    path: '//appia/funds/view/',
+    path: '/appia/funds/view/',
     exact: true,
     component: () => <Redirect to='//appia/funds/view//1' />
   },
@@ -87,7 +87,7 @@ const AppiaRoutes = [
     }
   },
   {
-    path: '/appia/withdrawal',
+    path: '/appia/withdrawal/list',
     component: lazy(() => import('../../views/appia/withdrawal/list'))
   },
   {

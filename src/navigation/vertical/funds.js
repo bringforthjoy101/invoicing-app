@@ -18,7 +18,7 @@ export default [
                 id: 'withdrawals',
                 title: 'Withdrawls',
                 icon: <ThumbsUp size={20} />,
-                navLink: '/appia/withdrawal/'
+                navLink: '/appia/withdrawal/list'
             },
             {
                 id: 'transfers',
