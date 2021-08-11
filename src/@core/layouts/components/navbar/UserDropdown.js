@@ -11,13 +11,12 @@ import { isUserLoggedIn } from '@utils'
 // ** Store & Actions
 import { useDispatch } from 'react-redux'
 import { handleLogout } from '@store/actions/auth'
+import Logo from '../../../../assets/images/logo/Appia.png'
 
 // ** Third Party Components
 import { UncontrolledDropdown, DropdownMenu, DropdownToggle, DropdownItem } from 'reactstrap'
-import { User, Mail, CheckSquare, MessageSquare, Settings, CreditCard, HelpCircle, Power } from 'react-feather'
+import { Settings, Power } from 'react-feather'
 
-// ** Default Avatar Image
-import defaultAvatar from '@src/assets/images/portrait/small/avatar-s-11.jpg'
 
 const UserDropdown = () => {
   // ** Store Vars
@@ -33,8 +32,6 @@ const UserDropdown = () => {
     }
   }, [])
 
-  //** Vars
-  const userAvatar = (userData && userData.avatars) || defaultAvatar
 
   return (
     <UncontrolledDropdown tag='li' className='dropdown-user nav-item'>
@@ -43,7 +40,7 @@ const UserDropdown = () => {
           <span className='user-name font-weight-bold'>{(userData && userData['first_name']) || 'John Doe'}</span>
           <span className='user-status'>{(userData && userData.role_name) || 'Admin'}</span>
         </div>
-        <Avatar img={userAvatar} imgHeight='40' imgWidth='40' status='online' />
+        <Avatar img={Logo} imgHeight='40' imgWidth='40' status='online' />
       </DropdownToggle>
       <DropdownMenu right>
         <DropdownItem divider />
