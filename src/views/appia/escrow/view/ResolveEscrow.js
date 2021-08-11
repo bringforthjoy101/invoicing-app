@@ -8,8 +8,8 @@ import { useParams } from 'react-router-dom'
 
 
 const ResoveSchema = Yup.object().shape({
-  code: Yup.string().required('Transaction Code is required'),
-  reason: Yup.string().required('Reason is required'),
+  escrow_id: Yup.string().required('Escrow id is required'),
+  resolution: Yup.string().required('Reason is required'),
   status: Yup.string().required("Status isrequired")
 })
 
@@ -18,6 +18,8 @@ const ResolveEscrows = ({ code, status }) => {
   { id } = useParams()
 const store = useSelector(state => state.appiaEscrow)
   const [formModal, setFormModal] = useState(false)
+
+  console.log("status", status)
 
   return (
     <div>
@@ -28,10 +30,10 @@ const store = useSelector(state => state.appiaEscrow)
         <ModalHeader toggle={() => setFormModal(!formModal)}>Resolve Escrow</ModalHeader>
         <Formik
           initialValues={{
-            code,
+            escrow_id: code,
             status,
-            reason: ''
-          }}
+            resolution: ""
+        }}
           validationSchema={ResoveSchema}
           onSubmit={async (values, { setSubmitting }) => {
             await dispatch(escrowResolve(values))
@@ -44,14 +46,14 @@ const store = useSelector(state => state.appiaEscrow)
             <Form>
               <ModalBody>
                 <FormGroup>
-                  <label htmlFor='code'>Transaction Code</label>
+                  <label htmlFor='escrow_id'>Escrow_id</label>
                   <Field
                     type='text'
-                    name='code'
-                    placeholder='code'
-                    className={`form-control ${errors.code && touched.code && 'is-invalid'}`}
+                    name='escrow_id'
+                    placeholder='escrow_id'
+                    className={`form-control ${errors.escrow_id && touched.escrow_id && 'is-invalid'}`}
                   />
-                  <ErrorMessage name='code' component='div' className='field-error text-danger' />
+                  <ErrorMessage name='escrow_id' component='div' className='field-error text-danger' />
                 </FormGroup>
                 <FormGroup>
                   <label htmlFor="status">Status</label>
@@ -61,21 +63,20 @@ const store = useSelector(state => state.appiaEscrow)
                     placeholder='select an option'
                     className={`form-control ${errors.status && touched.status && 'is-invalid'}`}
                   >
-                    <option value="pending">Pending</option>
-                    <option value="contested">Contested</option>
-                    <option value="completed">Completed</option>
+                    <option value="contest">Contest</option>
+                    <option value="complete">Complete</option>
                   </Field>
-                  <ErrorMessage name='reason' component='div' className='field-error text-danger' />
+                  <ErrorMessage name='status' component='div' className='field-error text-danger' />
                 </FormGroup>
                 <FormGroup>
-                  <label htmlFor='reason'>Reason</label>
+                  <label htmlFor='resolution'>Resolution</label>
                   <Field
                     type='text'
-                    name='reason'
-                    placeholder='Reason'
-                    className={`form-control ${errors.reason && touched.reason && 'is-invalid'}`}
+                    name='resolution'
+                    placeholder='Resolution'
+                    className={`form-control ${errors.resolution && touched.resolution && 'is-invalid'}`}
                   />
-                  <ErrorMessage name='reason' component='div' className='field-error text-danger' />
+                  <ErrorMessage name='resolution' component='div' className='field-error text-danger' />
                 </FormGroup>
               </ModalBody>
               <ModalFooter>

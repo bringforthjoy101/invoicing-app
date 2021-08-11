@@ -163,34 +163,6 @@ export const getFilteredUserBankTransactions = (userBanks, params) => {
   }
 }
 
-// Add Funds
-export const addFunds = ({user_id, reason, amount}) => {
-  return async dispatch => {
-    const body = JSON.stringify({user_id, reason, amount})
-    const response = await apiRequest({url:`/admin/users/add`, method:'POST', body}, dispatch)
-    if (response && response.data.success) {
-      swal('Good!', `Funds of ${amount} was successfully added and is pending aproval!.`, 'success')
-    } else {
-      console.log(response)
-      swal('Oops!', 'Somthing went wrong with your network.', 'error')
-    }
-  }
-}
-
-// Deduct Funds
-export const deductFunds = ({user_id, reason, amount}) => {
-  return async dispatch => {
-    const body = JSON.stringify({user_id, reason, amount})
-    const response = await apiRequest({url:`/admin/users/deduct`, method:'POST', body}, dispatch)
-    if (response && response.data.success) {
-      swal('Good!', `Funds of ${amount} was successfully deducted and is pending aproval!.`, 'success')
-    } else {
-      console.log(response)
-      swal('Oops!', 'Somthing went wrong with your network.', 'error')
-    }
-  }
-}
-
 // ACtivate  User account
 export const activateUser = (users, id) => {
   const user = users.find(i => i.user_id === id)
@@ -270,7 +242,6 @@ export const blacklistUserAsset = ({user_id, reason}, phone) => {
   return async dispatch => {
     const body = JSON.stringify({user_id, reason})
     const response = await apiRequest({url:`/admin/blacklist-asset/${phone}`, method:'GET', body}, dispatch)
-    console.log({response})
     if (response && response.data.success) {
       swal('Good!', `${response.data.message}.`, 'success')
     } else {

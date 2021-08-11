@@ -20,7 +20,7 @@ const Funds = () => {
   
   return (
     <div className='app-user-list'>
-      {userData?.role_name === 'Financial Admin' ? <TableWithButtons /> : <Table /> }
+      {userData?.role_name === 'Financial Admin' || userData?.role_name === "Super Admin"  ? <TableWithButtons /> : <Table /> }
     </div>
   )
 }

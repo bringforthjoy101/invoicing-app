@@ -3,12 +3,14 @@ import { Card, CardHeader, CardBody, Badge, UncontrolledTooltip, Button } from '
 import ResolveEscrow from './ResolveEscrow'
 
 
-const PlanCard = ({ selectedEscrow, userData }) => {
+const PlanCard = ({ selectedEscrow }) => {
+
+console.log("sele", selectedEscrow.status)
 
   return (
     <Card className='plan-card border-primary'>
       <CardBody>
-        <ResolveEscrow code={selectedEscrow.code} status={selectedEscrow.status} />
+        <ResolveEscrow code={selectedEscrow.escrow_id} status={selectedEscrow.status} />
       </CardBody>
     </Card>
   )
