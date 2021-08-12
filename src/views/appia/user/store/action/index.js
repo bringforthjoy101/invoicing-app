@@ -25,11 +25,10 @@ export const getFilteredData = (users, params) => {
 
     /* eslint-disable  */
     const queryLowered = q.toLowerCase()
-    const filteredData = users?.filter(
+    const filteredData = users.filter(
       user => 
         (user.email.toLowerCase().includes(queryLowered) || user.names.toLowerCase().includes(queryLowered) || user.phone?.toString().toLowerCase().includes(queryLowered) || user.referral_code.toLowerCase().includes(queryLowered)) &&
-        user.status === (status || user.status) &&
-        user.phone === (number || user.phone)
+        user.status === (status || user.status)
       )
   
     /* eslint-enable  */
@@ -156,6 +155,43 @@ export const getFilteredUserBankTransactions = (userBanks, params) => {
       /* eslint-enable  */
         await dispatch({
           type: 'GET_USER_BANK_TRANSACTIONS',
+          data: paginateArray(filteredData, perPage, page),
+          totalPages: filteredData.length,
+          params
+        })
+  }
+}
+
+// Escrow Transactions
+export const getUserEscrowTransactions = (user_id) => {
+  return async dispatch => {
+    const body = JSON.stringify({user_id})
+    const response = await apiRequest({url:`/admin/escrows/${user_id}`, method:'GET'}, dispatch)
+    console.log({response})
+    if (response && response.data.data && response.data.success) {
+        await dispatch({
+          type: 'GET_USER_ALL_ESCROW_TRANSACTIONS',
+          data: response.data.data
+        })
+    } else {
+      console.log(response)
+      swal('Oops!', 'Somthing went wrong with your network.', 'error')
+    }
+  }
+}
+
+// Filtered Bank Transactions
+export const getFilteredUserEscrowTransactions = (escrows, params) => {
+  return async dispatch => {
+      const { q = '', perPage = 10, page = 1 } = params
+      /* eslint-enable */
+
+    const queryLowered = q.toLowerCase()
+    const filteredData = escrows.filter(
+      transaction => (transaction.trans_id.toLowerCase().includes(queryLowered) || transaction.trans_type.toLowerCase().includes(queryLowered)))
+      /* eslint-enable  */
+        await dispatch({
+          type: 'GET_USER_ESCROW_TRANSACTIONS',
           data: paginateArray(filteredData, perPage, page),
           totalPages: filteredData.length,
           params

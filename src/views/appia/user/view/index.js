@@ -15,6 +15,7 @@ import UserInfoCard from './UserInfoCard'
 import AllTransactionList from './AllTransactions'
 import UtilitiesTransactionList from './UtilityTransactions'
 import BankTransactionList from './BankTransactions'
+import EscrowTransactionList from './EscrowTransactions'
 import { isUserLoggedIn, apiRequest, swal } from '@utils'
 
 // ** Styles
@@ -63,11 +64,9 @@ const UserView = props => {
         <Col xl='9' lg='8' md='7'>
           <UserInfoCard selectedUser={store.selectedUser} detail={detail} />
         </Col>
-        {/* {userData?.role_name === " Control Admin" ? */}
-        <Col xl='3' lg='4' md='5'>
+        {userData?.role_name === "Control Admin" || userData?.role_name === "Super Admin"  ? <Col xl='3' lg='4' md='5'>
           <PlanCard selectedUser={store.selectedUser} userData={userData} />
-        </Col>
-        {/* // : "" } */}
+        </Col> : "" }
       </Row>
       <Row className="mb-3 d-flex justify-content-around">
         <Col xl='3'>
@@ -85,6 +84,11 @@ const UserView = props => {
             All User Bank Transactions
           </Button.Ripple>
         </Col>
+        <Col xl='3'>
+          <Button.Ripple color='primary' onClick={() => setActiveTransaction('escrow')}>
+            All User Escrow Transactions
+          </Button.Ripple>
+        </Col>
       </Row>
       <Row>
         {activeTransaction === "all" ? <Col sm='12'>
@@ -93,7 +97,10 @@ const UserView = props => {
         <UtilitiesTransactionList />
         </Col> : activeTransaction === "bank" ? <Col sm='12'>
         <BankTransactionList />
-        </Col> : ""}
+        </Col> :  ""}
+        {/* : activeTransaction === "escrow" ? <Col sm='12'>
+        <EscrowTransactionList />
+        </Col> : ""} */}
       </Row>
     </div>
   ) : (

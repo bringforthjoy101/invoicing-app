@@ -52,6 +52,10 @@ const NavbarBookmarks = props => {
         <h2>Users Escrows List</h2>
       )  : route && route.url === "/appia/escrow/view" ? (
         <h2>User Escrows Activities Details</h2>
+      )  : route && route.url === "/appia/transaction/list" ? (
+        <h2>All Transaction List</h2>
+      )  : route && route.url === "/appia/transaction/view" ? (
+        <h2> Transaction Details</h2>
       ) : route && route.url === "/appia/settings/list" ? (
         <h2>Settings List</h2>
       ) : (

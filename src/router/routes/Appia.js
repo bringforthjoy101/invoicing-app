@@ -59,6 +59,34 @@ const AppiaRoutes = [
     }
   },
   {
+    path: '/appia/transaction/list',
+    component: lazy(() => import('../../views/appia/transaction/list'))
+  },
+  {
+    path: '/appia/transaction/edit',
+    exact: true,
+    component: () => <Redirect to='/appia/transaction/edit/1' />
+  },
+  {
+    path: '/appia/transaction/edit/:id',
+    component: lazy(() => import('../../views/appia/transaction/edit')),
+    meta: {
+      navLink: '/appia/user/edit'
+    }
+  },
+  {
+    path: '/appia/transaction/view',
+    exact: true,
+    component: () => <Redirect to='/appia/transaction/view/1' />
+  },
+  {
+    path: '/appia/transaction/view/:id',
+    component: lazy(() => import('../../views/appia/transaction/view')),
+    meta: {
+      navLink: '/appia/transaction/view'
+    }
+  },
+  {
     path: '/appia/funds/list',
     component: lazy(() => import('../../views/appia/funds/list'))
   },

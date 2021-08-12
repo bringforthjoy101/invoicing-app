@@ -96,7 +96,7 @@ const UsersList = () => {
   }
 
   const filteredData = store.allData.filter( 
-    item => (item.names?.toLowerCase() || item.email?.toLowerCase() || item.phone.toString() || item?.referral_code?.dataToRender())
+    item => (item.names?.toLowerCase() || item.email?.toLowerCase() || item?.phone?.toString() || item?.referral_code?.dataToRender())
   )
 
   // ** Custom Pagination

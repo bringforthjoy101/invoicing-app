@@ -17,7 +17,7 @@ import escrow from './escrow'
 // import chartsAndMaps from './charts-maps'
 
 // ** Merge & Export
-export default [...dashboards, ...admins, ...users, ...rewards, ...customerSupport, ...funds, ...escrow, ...settings]
+export default [...dashboards, ...admins, ...users, ...rewards, ...customerSupport, ...funds, ...escrow, ...transaction, ...settings]
     // ...transaction, 
     // ...escrow, ...settings]
     // ...pages, ...uiElements, ...forms, ...tables, ...chartsAndMaps, ...others]

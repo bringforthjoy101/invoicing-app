@@ -22,6 +22,7 @@ import appiaClaimedRewards from '@src/views/appia/claimedRewards/store/reducer'
 import appiaSettings from '@src/views/appia/settings/store/reducer'
 import appiaEscrow from '@src/views/appia/escrow/store/reducer'
 import appiaTransfers from '@src/views/appia/transfers/store/reducer'
+import appiaTransaction from '@src/views/appia/transaction/store/reducer'
 import email from '@src/views/apps/email/store/reducer'
 import invoice from '@src/views/apps/invoice/store/reducer'
 import calendar from '@src/views/apps/calendar/store/reducer'
@@ -48,6 +49,7 @@ const rootReducer = combineReducers({
   appiaSettings,
   appiaEscrow,
   appiaTransfers,
+  appiaTransaction,
   navbar,
   layout,
   invoice,
