@@ -29,7 +29,7 @@ const CustomHeader = ({ toggleSidebar, handlePerPage, rowsPerPage, userData }) =
   return (
     <div className='invoice-list-table-header w-100 mr-1 ml-50 mt-2 mb-75'>
       <Row>
-        <Col xl='6'className='d-flex align-items-center p-0'>
+        <Col xl='6' className='d-flex align-items-center p-0'>
           <div className='d-flex align-items-center w-100'>
             <Label for='rows-per-page'>Show</Label>
             <CustomInput
@@ -51,23 +51,23 @@ const CustomHeader = ({ toggleSidebar, handlePerPage, rowsPerPage, userData }) =
             <Label for='rows-per-page'>Entries</Label>
           </div>
         </Col>
-        {userData?.role_name === "Super Admin" ?  <Col
+        {userData?.role_name === "Super Admin" ? <Col
           xl='6'
           className='d-flex align-items-sm-left justify-content-lg-end justify-sm-content-center flex-lg-nowrap flex-wrap flex-sm-row flex-column pr-lg-1 p-0 mt-lg-0 mt-1'
         >
-          
-          <Button.Ripple color='primary'  onClick={toggleSidebar}>
+
+          <Button.Ripple color='primary' onClick={toggleSidebar}>
             Add New Admin
           </Button.Ripple>
-          </Col> : <Col
+        </Col> : <Col
           xl='6'
           className='d-flex align-items-sm-center justify-content-lg-end justify-content-start flex-lg-nowrap flex-wrap flex-sm-row flex-column pr-lg-1 p-0 mt-lg-0 mt-1'
         >
-          
-          <Button.Ripple color='primary'disabled onClick={toggleSidebar}>
+
+          <Button.Ripple color='primary' disabled onClick={toggleSidebar}>
             Add New Admin
             </Button.Ripple>
-        </Col> }
+        </Col>}
       </Row>
     </div>
   )
@@ -83,7 +83,7 @@ const AdminsList = () => {
   const [currentPage, setCurrentPage] = useState(1)
   const [rowsPerPage, setRowsPerPage] = useState(10)
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const [currentRole, setCurrentRole] = useState({ value: '', label: 'Select Role', number: 0})
+  const [currentRole, setCurrentRole] = useState({ value: '', label: 'Select Role', number: 0 })
   const [currentStatus, setCurrentStatus] = useState({ value: '', label: 'Select Status', number: 0 })
   const [userData, setUserData] = useState(null)
 
@@ -111,7 +111,7 @@ const AdminsList = () => {
     }
   }, [])
 
-  
+
   // ** User filter options
   const roleOptions = [
     { value: '', label: 'Select Role', number: 0 },
@@ -174,26 +174,26 @@ const AdminsList = () => {
     item => (item.email.toLowerCase() || item.first_name.toLowerCase() || item.last_name.toLowerCase())
   )
 
-    // ** Custom Pagination
+  // ** Custom Pagination
   const CustomPagination = () => {
     const count = Math.ceil(filteredData.length / rowsPerPage)
 
     return (
-      <ReactPaginate
-        previousLabel={''}
-        nextLabel={''}
-        pageCount={count || 1}
-        activeClassName='active'
-        forcePage={currentPage !== 0 ? currentPage - 1 : 0}
-        onPageChange={page => handlePagination(page)}
-        pageClassName={'page-item'}
-        nextLinkClassName={'page-link'}
-        nextClassName={'page-item next'}
-        previousClassName={'page-item prev'}
-        previousLinkClassName={'page-link'}
-        pageLinkClassName={'page-link'}
-        containerClassName={'pagination react-paginate justify-content-end my-2 pr-1'}
-      />
+        <ReactPaginate
+          previousLabel={''}
+          nextLabel={''}
+          pageCount={count || 1}
+          activeClassName='active'
+          forcePage={currentPage !== 0 ? currentPage - 1 : 0}
+          onPageChange={page => handlePagination(page)}
+          pageClassName={'page-item'}
+          nextLinkClassName={'page-link'}
+          nextClassName={'page-item next'}
+          previousClassName={'page-item prev'}
+          previousLinkClassName={'page-link'}
+          pageLinkClassName={'page-link'}
+          containerClassName={'pagination react-paginate justify-content-end my-2 pr-1'}
+        />
     )
   }
 
@@ -227,30 +227,30 @@ const AdminsList = () => {
         </CardHeader>
         <CardBody>
           <Row>
-          <Col lg='4' md='6'>
+            <Col lg='4' md='6'>
               <FormGroup>
                 <Label for='select'>Select Role:</Label>
-              <Select
-                 theme={selectThemeColors}
-                 isClearable={false}
-                 className='react-select'
-                 classNamePrefix='select'
-                 id='select'
-                 options={roleOptions}
-                 value={currentRole}
-                 onChange={data => {
-                   setCurrentRole(data)
-                   dispatch(
-                     getFilteredData(store.allData, {
-                       page: currentPage,
-                       perPage: rowsPerPage,
-                       role: data.value,
-                       status: currentStatus.value,
-                       q: searchTerm
-                     })
-                   )
-                 }}
-              />
+                <Select
+                  theme={selectThemeColors}
+                  isClearable={false}
+                  className='react-select'
+                  classNamePrefix='select'
+                  id='select'
+                  options={roleOptions}
+                  value={currentRole}
+                  onChange={data => {
+                    setCurrentRole(data)
+                    dispatch(
+                      getFilteredData(store.allData, {
+                        page: currentPage,
+                        perPage: rowsPerPage,
+                        role: data.value,
+                        status: currentStatus.value,
+                        q: searchTerm
+                      })
+                    )
+                  }}
+                />
               </FormGroup>
             </Col>
             <Col lg='4' md='6'>

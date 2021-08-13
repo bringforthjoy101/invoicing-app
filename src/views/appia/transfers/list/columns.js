@@ -26,6 +26,11 @@ const renderClient = row => {
   }
 }
 
+const statusObj = {
+  successful: 'light-success',
+  pending: 'light-warning'
+}
+
 export const columns = [
   {
     name: 'Transaction Id',
@@ -84,10 +89,14 @@ export const columns = [
   },
   {
     name: 'Status',
-    minWidth: '172px',
+    minWidth: '138px',
     selector: 'status',
     sortable: true,
-    cell: row => row.status
+    cell: row => (
+      <Badge className='text-capitalize' color={statusObj[row.status]} pill>
+        {row.status}
+      </Badge>
+    )
   },
   {
     name: 'Date',

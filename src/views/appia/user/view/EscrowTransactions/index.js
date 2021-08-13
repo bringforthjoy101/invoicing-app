@@ -41,7 +41,7 @@ const CustomHeader = ({ handleFilter, value, handlePerPage, rowsPerPage, downloa
               <option value='50'>50</option>
             </CustomInput>
           </div>
-          <h3 className="d-none d-lg-block">User's Bank Transactions</h3>
+          <h3 className="d-none d-lg-block">User's Escrow Transactions</h3>
         </Col>
         <Col
           lg='3' sm="6"
@@ -98,7 +98,7 @@ const TransactionList = () => {
   useEffect(() => {
     dispatch(getUserEscrowTransactions(store.selectedUser.user_id))
     dispatch(
-      getFilteredUserEscrowTransactions(store.selectedUserEscrowsTransaction, {
+      getFilteredUserEscrowTransactions(store.selectedUserEscrowsTransactions, {
         page: currentPage,
         perPage: rowsPerPage,
         q: searchTerm
@@ -106,12 +106,11 @@ const TransactionList = () => {
     )
   }, [dispatch])
 
-  console.log("nvnf", store.selectedUserEscrowsTransaction)
 
   const handleFilter = val => {
     setSearchTerm(val)
     dispatch(
-      getFilteredUserEscrowTransactions(store.selectedUserEscrowsTransaction, {
+      getFilteredUserEscrowTransactions(store.selectedUsselectedUserEscrowsTransactionserEscrowsTransaction, {
         page: currentPage,
         perPage: rowsPerPage,
         q: val
@@ -122,7 +121,7 @@ const TransactionList = () => {
   const handlePerPage = e => {
     const value = parseInt(e.currentTarget.value)
     dispatch(
-      getFilteredUserEscrowTransactions(store.selectedUserEscrowsTransaction, {
+      getFilteredUserEscrowTransactions(store.selectedUserEscrowsTransactions, {
         page: currentPage,
         perPage: value,
         q: searchTerm
@@ -133,7 +132,7 @@ const TransactionList = () => {
 
   const handlePagination = page => {
     dispatch(
-      getFilteredUserEscrowTransactions(store.selectedUserEscrowsTransaction, {
+      getFilteredUserEscrowTransactions(store.selectedUserEscrowsTransactions, {
         page: page.selected + 1,
         perPage: rowsPerPage,
         q: searchTerm
@@ -142,8 +141,8 @@ const TransactionList = () => {
     setCurrentPage(page.selected + 1)
   }
 
-  const filteredData = store.selectedUserEscrowsTransaction.filter(
-    item => (item.trans_id.toLowerCase() || item.trans_type.toLowerCase())
+  const filteredData = store?.selectedUserEscrowsTransactions?.filter(
+    item => (item?.trans_id?.toLowerCase() || item?.trans_type?.toLowerCase())
   )
 
   const CustomPagination = () => {
@@ -174,7 +173,7 @@ const TransactionList = () => {
 
     const columnDelimiter = ','
     const lineDelimiter = '\n'
-    const keys = Object.keys(store.selectedUserEscrowsTransaction[0])
+    const keys = Object.keys(store.selectedUserEscrowsTransactions[0])
     console.log("keyss", keys)
 
     result = ''
@@ -257,17 +256,14 @@ const TransactionList = () => {
     const isFiltered = Object.keys(filters).some(function (k) {
       return filters[k].length > 0
     })
-    if (store.selectedUserEscrowTransactions.length > 0) {
-      return store.selectedUserEscrowTransactions
-    } else if (store.selectedUserEscrowTransactions.length === 0 && isFiltered) {
+    if (store?.selectedUserEscrowTransactions?.length > 0) {
+      return store?.selectedUserEscrowTransactions
+    } else if (store?.selectedUserEscrowTransactions?.length === 0 && isFiltered) {
       return []
     } else {
-      return store.selectedUserEscrowsTransaction.slice(0, rowsPerPage)
+      return store?.selectedUserEscrowsTransactions?.slice(0, rowsPerPage)
     }
   }
-
-  console.log("bbbb", store.selectedUserEscrowsTransaction)
-  console.log("ccc", store.selectedUserEscrowTransactions)
 
   return (
     <div className='invoice-list-wrapper'>

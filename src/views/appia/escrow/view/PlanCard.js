@@ -5,8 +5,6 @@ import ResolveEscrow from './ResolveEscrow'
 
 const PlanCard = ({ selectedEscrow }) => {
 
-console.log("sele", selectedEscrow.status)
-
   return (
     <Card className='plan-card border-primary'>
       <CardBody>

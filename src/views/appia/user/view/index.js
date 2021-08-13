@@ -7,7 +7,7 @@ import { getUser, getUserAllTransactions } from '../store/action'
 import { useSelector, useDispatch } from 'react-redux'
 
 // ** Reactstrap
-import { Row, Col, Alert, Button } from 'reactstrap'
+import { Row, Col, Alert, Card, Nav, NavItem, NavLink } from 'reactstrap'
 
 // ** User View Components
 import PlanCard from './PlanCard'
@@ -64,43 +64,41 @@ const UserView = props => {
         <Col xl='9' lg='8' md='7'>
           <UserInfoCard selectedUser={store.selectedUser} detail={detail} />
         </Col>
-        {userData?.role_name === "Control Admin" || userData?.role_name === "Super Admin"  ? <Col xl='3' lg='4' md='5'>
+        {userData?.role_name === "Control Admin" || userData?.role_name === "Super Admin" ? <Col xl='3' lg='4' md='5'>
           <PlanCard selectedUser={store.selectedUser} userData={userData} />
-        </Col> : "" }
+        </Col> : ""}
       </Row>
-      <Row className="mb-3 d-flex justify-content-around">
-        <Col xl='3'>
-          <Button.Ripple color='primary' onClick={() => setActiveTransaction('all')}>
-            All User Transactions
-          </Button.Ripple>
-        </Col>
-        <Col xl='3'>
-          <Button.Ripple color='primary' onClick={() => setActiveTransaction('utilities')}>
-            All User Utilities Transactions
-          </Button.Ripple>
-        </Col>
-        <Col xl='3'>
-          <Button.Ripple color='primary' onClick={() => setActiveTransaction('bank')}>
-            All User Bank Transactions
-          </Button.Ripple>
-        </Col>
-        <Col xl='3'>
-          <Button.Ripple color='primary' onClick={() => setActiveTransaction('escrow')}>
-            All User Escrow Transactions
-          </Button.Ripple>
-        </Col>
-      </Row>
+      <Card className="mb-3 d-flex justify-content-around">
+        <Row className="d-sm-block d-lg-flex justify-content-center">
+          <Nav pills className='nav-pill-primary my-2'>
+            <NavItem>
+              <NavLink onClick={() => setActiveTransaction('all')} active={activeTransaction === "all"}>User Transactions</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink onClick={() => setActiveTransaction('utilities')} active={activeTransaction === "utilities"}>Utilities</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink onClick={() => setActiveTransaction('bank')} active={activeTransaction === "bank"}>Banks</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink onClick={() => setActiveTransaction('escrow')} active={activeTransaction === "escrow"}>Escrow History</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink onClick={() => setActiveTransaction('reward')} active={activeTransaction === "reward"}>Reward History</NavLink>
+            </NavItem>
+          </Nav>
+        </Row>
+      </Card>
       <Row>
         {activeTransaction === "all" ? <Col sm='12'>
           <AllTransactionList />
         </Col> : activeTransaction === "utilities" ? <Col sm='12'>
-        <UtilitiesTransactionList />
+          <UtilitiesTransactionList />
         </Col> : activeTransaction === "bank" ? <Col sm='12'>
-        <BankTransactionList />
-        </Col> :  ""}
-        {/* : activeTransaction === "escrow" ? <Col sm='12'>
-        <EscrowTransactionList />
-        </Col> : ""} */}
+          <BankTransactionList />
+        </Col> : activeTransaction === "escrow" ? <Col sm='12'>
+          <EscrowTransactionList />
+        </Col> : ""}
       </Row>
     </div>
   ) : (

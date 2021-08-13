@@ -97,13 +97,6 @@ export const columns = [
     )
   },
   {
-    name: 'Complain',
-    minWidth: '200px',
-    selector: 'complain',
-    sortable: true,
-    cell: row => <span>{row.complain === null ? "No Complain" : row.complain}</span>
-  },
-  {
     name: 'Details',
     minWidth: '200px',
     selector: 'description',

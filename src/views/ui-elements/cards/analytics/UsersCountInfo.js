@@ -24,7 +24,7 @@ const usersCount = props => {
     axios.get('/card/card-analytics/support-tracker').then(res => setData(res.data))
   }, [])
 
-  const unverified = Math.ceil(dashData?.users?.unverified_users / dashData?.users?.registered_users * 100)
+  const unverified = Math.ceil(dashData?.users?.unverified_users / dashData?.users?.registered_users * 100) || 0
   
   const options = {
       plotOptions: {

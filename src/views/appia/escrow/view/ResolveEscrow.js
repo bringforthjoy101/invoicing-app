@@ -19,8 +19,6 @@ const ResolveEscrows = ({ code, status }) => {
 const store = useSelector(state => state.appiaEscrow)
   const [formModal, setFormModal] = useState(false)
 
-  console.log("status", status)
-
   return (
     <div>
       <Button.Ripple className='text-center mb-1' color='primary' outline block onClick={() => setFormModal(!formModal)}>
@@ -63,7 +61,7 @@ const store = useSelector(state => state.appiaEscrow)
                     placeholder='select an option'
                     className={`form-control ${errors.status && touched.status && 'is-invalid'}`}
                   >
-                    <option value="contest">Contest</option>
+                    <option value="conteste">Contest</option>
                     <option value="complete">Complete</option>
                   </Field>
                   <ErrorMessage name='status' component='div' className='field-error text-danger' />

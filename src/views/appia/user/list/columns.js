@@ -66,7 +66,7 @@ const statusObj = {
   active: 'light-success',
   inactive: 'light-warning'
 }
-const {users} = store.getState()
+
 export const columns = [
   {
     name: 'User',

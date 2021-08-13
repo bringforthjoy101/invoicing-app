@@ -21,7 +21,7 @@ export const getAllData = () => {
 // All Users Filtered Data
 export const getFilteredData = (transactions, params) => {
   return async dispatch => {
-    const { q = '', perPage = 10,  page = 1 } = params
+    const { q = '', perPage = 100,  page = 1 } = params
 
     /* eslint-disable  */
     const queryLowered = q?.toLowerCase()

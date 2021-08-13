@@ -12,7 +12,7 @@ export const handleLogin = data => {
 export const handleLogout = () => {
   return dispatch => {
     dispatch({ type: 'LOGOUT' })
-
+    history.push('/login')
     // ** Remove user from localStorage
     localStorage.removeItem('userData')
   }

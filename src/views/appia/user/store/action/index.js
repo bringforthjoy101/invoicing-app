@@ -77,9 +77,9 @@ export const getFilteredUserTransactions = (userTransactions, params) => {
       const { q = '', perPage = 10, page = 1 } = params
       /* eslint-enable */
 
-    const queryLowered = q.toLowerCase()
-    const filteredData = userTransactions.filter(
-      transaction => (transaction.trans_id.toLowerCase().includes(queryLowered) || transaction.trans_type.toLowerCase().includes(queryLowered)))
+    const queryLowered = q?.toLowerCase()
+    const filteredData = userTransactions?.filter(
+      transaction => (transaction?.trans_id?.toLowerCase()?.includes(queryLowered) || transaction?.trans_type?.toLowerCase()?.includes(queryLowered)))
       /* eslint-enable  */
         await dispatch({
           type: 'GET_USER_TRANSACTIONS',
@@ -167,7 +167,6 @@ export const getUserEscrowTransactions = (user_id) => {
   return async dispatch => {
     const body = JSON.stringify({user_id})
     const response = await apiRequest({url:`/admin/escrows/${user_id}`, method:'GET'}, dispatch)
-    console.log({response})
     if (response && response.data.data && response.data.success) {
         await dispatch({
           type: 'GET_USER_ALL_ESCROW_TRANSACTIONS',
@@ -186,14 +185,14 @@ export const getFilteredUserEscrowTransactions = (escrows, params) => {
       const { q = '', perPage = 10, page = 1 } = params
       /* eslint-enable */
 
-    const queryLowered = q.toLowerCase()
-    const filteredData = escrows.filter(
-      transaction => (transaction.trans_id.toLowerCase().includes(queryLowered) || transaction.trans_type.toLowerCase().includes(queryLowered)))
+    const queryLowered = q?.toLowerCase()
+    const filteredData = escrows?.filter(
+      transaction => (transaction?.trans_id?.toLowerCase()?.includes(queryLowered) || transaction?.trans_type?.toLowerCase()?.includes(queryLowered)))
       /* eslint-enable  */
         await dispatch({
           type: 'GET_USER_ESCROW_TRANSACTIONS',
           data: paginateArray(filteredData, perPage, page),
-          totalPages: filteredData.length,
+          totalPages: filteredData?.length,
           params
         })
   }

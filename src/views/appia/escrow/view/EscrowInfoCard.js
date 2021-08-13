@@ -71,6 +71,17 @@ const UserInfoCard = ({ selectedEscrow, detail }) => {
   return (
     <Card>
       <CardBody>
+        <Row className="mb-2">
+        <Col xl='6' lg='12' className='d-flex flex-column justify-content-center mx-auto'>
+          <h1>Transaction Details</h1>
+          <p><span>Transaction Amount: </span>{selectedEscrow.amount}</p>
+          <p><span>Transaction Date: </span>{moment(selectedEscrow.updated_at).format('lll')}</p>
+          <p><span>Transaction status: </span>{selectedEscrow.status}</p>
+          {selectedEscrow.complain !== null ? <div>
+          <p><span>Complain Subject: </span>{selectedEscrow.complain.subject}</p>
+          <p><span>Complain Comment: </span>{selectedEscrow.complain.comment}</p></div> : ""}
+          </Col>
+        </Row>
         <Row>
           <Col xl='6' lg='12' className='d-flex flex-column justify-content-between border-container-lg'>
             <div className='user-avatar-section'>
@@ -154,7 +165,7 @@ const UserInfoCard = ({ selectedEscrow, detail }) => {
           </Col>
         </Row>
         {selectedEscrow.beneficiary !== null ? <Row className="mt-3">
-        <Col xl='12' lg='12' className='mt-2 mt-xl-0'>
+        <Col xl='6' lg='12' className='d-flex flex-column justify-content-center mx-auto'>
           <div className='user-avatar-section'>
               <h3>Beneficiary Details</h3>
               <div className='d-flex justify-content-start'>
@@ -195,13 +206,6 @@ const UserInfoCard = ({ selectedEscrow, detail }) => {
             </div>
           </Col>
         </Row> : ""}
-        <Row className="mt-2">
-        <Col xl='6' lg='12' className='d-flex flex-column justify-content-center mx-auto'>
-          <h3><span>Transaction Amount: </span>{selectedEscrow.amount}</h3>
-          <p><span>Transaction Date: </span>{moment(selectedEscrow.updated_at).format('lll')}</p>
-          <p><span>Transaction status: </span>{selectedEscrow.status}</p>
-          </Col>
-        </Row>
       </CardBody>
     </Card>
   )

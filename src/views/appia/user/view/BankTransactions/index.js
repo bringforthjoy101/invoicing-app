@@ -106,6 +106,7 @@ const TransactionList = () => {
     )
   }, [dispatch])
 
+
   const handleFilter = val => {
     setSearchTerm(val)
     dispatch(

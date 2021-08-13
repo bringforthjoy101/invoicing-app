@@ -1,10 +1,10 @@
-import { Users, ThumbsUp, Mail } from 'react-feather'
+import { Users, ThumbsUp, Mail, HelpCircle } from 'react-feather'
 
 export default [
     {
         id: 'customer_support',
-        title: 'Customer Support',
-        icon: <Users size={20} />,
+        title: 'Support / Help',
+        icon: <HelpCircle size={20} />,
         badge: 'light-warning',
         badgeText: '3',
         children: [

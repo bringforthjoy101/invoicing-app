@@ -18,52 +18,37 @@ import {
 // ** Table columns
 export const columns = [
   {
-    name: '#',
+    name: 'Transaction Id',
     minWidth: '180px',
-    selector: 'trans_id',
-    cell: row => <span>{ `#${row.trans_id}` }</span>
+    selector: 'escrow_id',
+    cell: row => <span>{ `#${row.escrow_id}` }</span>
   },
   {
-    name: 'Type',
+    name: 'Transaction Type',
     minWidth: '300px',
-    selector: 'trans_type',
+    selector: 'type',
     sortable: true,
-    cell: row => row.trans_type
+    cell: row => row.type
   },
   {
     name: 'Description',
     minWidth: '300px',
-    selector: 'narration',
+    selector: 'description',
     sortable: true,
-    cell: row => <span>{row.narration === "" ? "No Narration" : row.narration}</span>
+    cell: row => <span>{row.description === "" ? "No Narration" : row.description}</span>
   },
   {
     name: 'Amount',
-    selector: 'trans_amount',
+    selector: 'amount',
     sortable: true,
     minWidth: '150px',
-    cell: row => <span>{(row.trans_amount || 0).toLocaleString('en-US', { style: 'currency', currency: 'NGN' })}</span>
-  },
-  {
-    name: 'Balance',
-    selector: 'balance',
-    sortable: true,
-    minWidth: '164px',
-    cell: row => {
-      return row.balance !== 0 ? (
-        <span>{(row.balance || 0).toLocaleString('en-US', { style: 'currency', currency: 'NGN' })}</span>
-      ) : (
-        <Badge color='light-success' pill>
-          Paid
-        </Badge>
-      )
-    }
+    cell: row => <span>{(row.amount || 0).toLocaleString('en-US', { style: 'currency', currency: 'NGN' })}</span>
   },
   {
     name: 'Date',
-    selector: 'trans_date',
+    selector: 'updated_at',
     sortable: true,
     minWidth: '200px',
-    cell: row => moment(row.trans_date).format('lll')
+    cell: row => moment(row.updated_at).format('lll')
   }
 ]

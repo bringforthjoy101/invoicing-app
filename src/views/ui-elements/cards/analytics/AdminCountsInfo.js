@@ -24,7 +24,7 @@ const adminsCount = props => {
     axios.get('/card/card-analytics/support-tracker').then(res => setData(res.data))
   }, [])
 
-  const unverified = Math.ceil(dashData?.admins?.inactive_admins / dashData?.admins?.registered_admins * 100)
+  const unverified = Math.floor(dashData?.admins?.inactive_admins / dashData?.admins?.registered_admins * 100) || 0
   
   const options = {
       plotOptions: {
@@ -100,10 +100,6 @@ const adminsCount = props => {
             <CardText className='mb-50'>Inactive admins</CardText>
             <span className='font-large-1 font-weight-bold'>{dashData?.admins?.inactive_admins}</span>
           </div>
-          {/* <div className='text-center'>
-            <CardText className='mb-50'>Pending admins</CardText>
-            <span className='font-large-1 font-weight-bold'>{dashData?.admins?.pending_admins}</span>
-          </div> */}
         </div>
       </CardBody>
     </Card>

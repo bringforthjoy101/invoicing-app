@@ -27,7 +27,7 @@ export const getFilteredData = (escrows, params) => {
     const queryLowered = q.toLowerCase()
     const filteredData = escrows.filter(
       escrow =>
-        (escrow.escrow_id.toLowerCase().includes(queryLowered)) &&
+        (escrow.escrow_id.toLowerCase().includes(queryLowered) || escrow.receiver.names.toLowerCase().includes(queryLowered) || escrow.sender.names.toLowerCase().includes(queryLowered)) &&
         escrow.role === (role || escrow.role) &&
         escrow.status === (status || escrow.status)
     )
@@ -57,7 +57,6 @@ export const getEscrow = (escrows, id) => {
 export const getAllUserEscrowTransactions = (sender_id) => {
   return async dispatch => {
     const response = await apiRequest({ url: `/admin/escrows/${sender_id}`, method: 'GET' }, dispatch)
-    console.log({ response })
     if (response && response.data.data && response.data.success) {
       await dispatch({
         type: 'GET_USER_ESCROWS_TRANSACTIONS',
@@ -86,8 +85,7 @@ export const getFilteredUserTransactions = (userTransactions, params) => {
           found = true
         }
 
-
-        if ((transaction?.trans_type || '').toLowerCase().includes(queryLowered)) {
+        if ((transaction?.receiver.names || '').toLowerCase().includes(queryLowered)) {
           found = true
         }
         return found
@@ -110,9 +108,12 @@ export const getFilteredUserTransactions = (userTransactions, params) => {
 export const escrowResolve = ({escrow_id, status, resolution}) => {
   return async dispatch => {
     const body = JSON.stringify({escrow_id, status, resolution})
+    console.log("body", body)
     const response = await apiRequest({url:`/admin/escrow/resolve`, method:'POST', body}, dispatch)
+    console.log({response})
     if (response && response.data.success) {
       swal('Good!', `${response.data.message}.`, 'success')
+      dispatch(getAllData())
     } else {
       console.log(response)
       swal('Oops!', 'Somthing went wrong with your network.', 'error')

@@ -4,7 +4,6 @@ import { paginateArray, apiRequest, swal } from '@utils'
 export const getAllData = () => {
   return async dispatch => {
     const response = await apiRequest({ url: '/admin/settings', method: 'GET' }, dispatch)
-    console.log({response})
     if (response) {
       if (response.data.data && response.data.success) {
         await dispatch({
@@ -23,7 +22,6 @@ export const getAllData = () => {
 
 // ** Get filtered data on page or row change
 export const getFilteredData = (settings, params) => {
-  console.log('setting', settings)
   return async dispatch => {
     const { q = '', perPage = 10, page = 1 } = params
 

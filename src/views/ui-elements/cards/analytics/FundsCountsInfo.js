@@ -23,7 +23,7 @@ const fundCount = props => {
     axios.get('/card/card-analytics/support-tracker').then(res => setData(res.data))
   }, [])
 
-  const unverified = Math.ceil(dashData?.fund_requests?.pending_fund_requests / dashData?.fund_requests?.fund_requests * 100)
+  const unverified = Math.ceil(dashData?.fund_requests?.pending_fund_requests / dashData?.fund_requests?.fund_requests * 100) || 0
   
   const options = {
       plotOptions: {

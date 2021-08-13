@@ -1,7 +1,6 @@
 import { useContext, useState, useEffect } from 'react'
-import { paginateArray, sortCompare, apiRequest, swal, kFormatter, isUserLoggedIn } from '@utils'
+import { apiRequest, swal, kFormatter, isUserLoggedIn } from '@utils'
 import { ThemeColors } from '@src/utility/context/ThemeColors'
-import AvgSessions from '@src/views/ui-elements/cards/analytics/AvgSessions'
 import UsersCountInfo from '@src/views/ui-elements/cards/analytics/UsersCountInfo'
 import AdminCountsInfo from '@src/views/ui-elements/cards/analytics/AdminCountsInfo'
 import FundsCountsInfo from '@src/views/ui-elements/cards/analytics/FundsCountsInfo'

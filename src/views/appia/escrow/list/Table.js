@@ -118,7 +118,7 @@ const UsersList = () => {
 
 
   const filteredData = store.allData.filter(
-    item => (item.escrow_id.toLowerCase())
+    item => (item.escrow_id.toLowerCase() || item.receiver.names.toLowerCase() || item.sender.names.toLowerCase())
   )
 
   // ** Custom Pagination
@@ -306,7 +306,7 @@ const UsersList = () => {
                 className='ml-50 w-100'
                 type='text'
                 value={searchTerm}
-                placeholder='User Id'
+                placeholder='Names & id Search'
                 onChange={e => handleFilter(e.target.value)}
               />
             </Col>
