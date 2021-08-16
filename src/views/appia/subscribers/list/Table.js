@@ -27,7 +27,7 @@ import '@styles/react/libs/tables/react-dataTable-component.scss'
 import FormGroup from 'reactstrap/lib/FormGroup'
 
 
-const ContactsList = () => {
+const SubscribersTable = () => {
   // ** Store Vars
   const dispatch = useDispatch()
   const store = useSelector(state => state.appiaSubscribers)
@@ -282,4 +282,4 @@ const ContactsList = () => {
   )
 }
 
-export default ContactsList
+export default SubscribersTable

@@ -73,7 +73,7 @@ const CustomHeader = ({ toggleSidebar, handlePerPage, rowsPerPage, userData }) =
   )
 }
 
-const AdminsList = () => {
+const AdminsTable = () => {
   // ** Store Vars
   const dispatch = useDispatch()
   const store = useSelector(state => state.appiaAdmins)
@@ -324,4 +324,4 @@ const AdminsList = () => {
   )
 }
 
-export default AdminsList
+export default AdminsTable

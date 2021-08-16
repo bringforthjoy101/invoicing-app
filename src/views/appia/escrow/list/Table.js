@@ -24,7 +24,7 @@ import 'jspdf-autotable'
 import FormGroup from 'reactstrap/lib/FormGroup'
 
 
-const UsersList = () => {
+const EscrowTable = () => {
   // ** Store Vars
   const dispatch = useDispatch()
   const store = useSelector(state => state.appiaEscrow)
@@ -380,4 +380,4 @@ const UsersList = () => {
   )
 }
 
-export default UsersList
+export default EscrowTable

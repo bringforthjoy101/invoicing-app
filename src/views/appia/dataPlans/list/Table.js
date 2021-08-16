@@ -76,7 +76,7 @@ const CustomHeader = ({ toggleSidebar, handlePerPage, rowsPerPage, userData }) =
   )
 }
 
-const DataPlansPlist = () => {
+const DataPlansTable = () => {
   // ** Store Vars
   const dispatch = useDispatch()
   const store = useSelector(state => state.appiaDataPlans)
@@ -283,4 +283,4 @@ const DataPlansPlist = () => {
   )
 }
 
-export default DataPlansPlist
+export default DataPlansTable

@@ -17,7 +17,7 @@ import DataPlanInfo from './DataPlanInfo'
 // ** Styles
 import '@styles/react/apps/app-users.scss'
 
-const UserView = props => {
+const DataPlanView = props => {
   // ** Vars
   const store = useSelector(state => state.appiaDataPlans),
     dispatch = useDispatch(),
@@ -58,4 +58,4 @@ const UserView = props => {
     </Alert>
   )
 }
-export default UserView
+export default DataPlanView

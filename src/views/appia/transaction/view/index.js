@@ -16,7 +16,7 @@ import { isUserLoggedIn, apiRequest, swal } from '@utils'
 // ** Styles
 import '@styles/react/apps/app-users.scss'
 
-const UserView = props => {
+const TransactionView = props => {
   // ** Vars
   const store = useSelector(state => state.appiaTransaction),
     dispatch = useDispatch(),
@@ -55,4 +55,4 @@ const UserView = props => {
     </Alert>
   )
 }
-export default UserView
+export default TransactionView

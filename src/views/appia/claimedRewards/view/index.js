@@ -20,7 +20,7 @@ import UserClaimedHistory from './UserClaimHistory/index'
 // ** Styles
 import '@styles/react/apps/app-users.scss'
 
-const UserView = props => {
+const ClaimedView = props => {
   // ** Vars
   const store = useSelector(state => state.appiaClaimedRewards),
     dispatch = useDispatch(),
@@ -67,4 +67,4 @@ const UserView = props => {
     </Alert>
   )
 }
-export default UserView
+export default ClaimedView

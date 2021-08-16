@@ -24,7 +24,7 @@ import 'jspdf-autotable'
 import FormGroup from 'reactstrap/lib/FormGroup'
 
 
-const UsersList = () => {
+const TransactionTable = () => {
   // ** Store Vars
   const dispatch = useDispatch()
   const store = useSelector(state => state.appiaTransaction)
@@ -292,4 +292,4 @@ const UsersList = () => {
   )
 }
 
-export default UsersList
+export default TransactionTable

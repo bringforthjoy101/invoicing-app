@@ -18,7 +18,7 @@ import HistoryList from './HistoryList'
 // ** Styles
 import '@styles/react/apps/app-users.scss'
 
-const UserView = props => {
+const RewardView = props => {
   // ** Vars
   const store = useSelector(state => state.appiaAllRewards),
     dispatch = useDispatch(),
@@ -54,4 +54,4 @@ const UserView = props => {
     </Alert>
   )
 }
-export default UserView
+export default RewardView
