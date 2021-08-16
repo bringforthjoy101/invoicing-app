@@ -96,7 +96,7 @@ const TransactionList = () => {
   const [rowsPerPage, setRowsPerPage] = useState(10)
 
   useEffect(() => {
-    dispatch(getUserAllBankTransactions(store.selectedUser.user_id))
+    dispatch(getUserAllBankTransactions(store.userDetails.user_details.user_id))
     dispatch(
       getFilteredUserBankTransactions(store.selectedUserBanksTransactions, {
         page: currentPage,

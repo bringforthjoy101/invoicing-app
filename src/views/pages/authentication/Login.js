@@ -90,7 +90,6 @@ const Login = props => {
       await useJwt
         .login({ email, password })
         .then(res => {
-          console.log(res.data.verified)
           if (res.data.success && res.data.verified === true) {
             const data = {
               ...res.data.data,

@@ -96,7 +96,7 @@ const TransactionList = () => {
   const [rowsPerPage, setRowsPerPage] = useState(10)
 
   useEffect(() => {
-    dispatch(getUserAllTransactions(store.selectedUser.user_id))
+    dispatch(getUserAllTransactions(store.userDetails.user_details.user_id))
     dispatch(
       getFilteredUserTransactions(store.selectedUserAllTransactions, {
         page: currentPage,
@@ -141,7 +141,7 @@ const TransactionList = () => {
     setCurrentPage(page.selected + 1)
   }
 
-  const filteredData = store?.selectedUserAllTransactions?.filter(
+  const filteredData = store?.selectedUserAllTransactions.filter(
     item => (item?.trans_id?.toLowerCase() || item?.trans_type?.toLowerCase())
   )
 

@@ -96,7 +96,7 @@ const TransactionList = () => {
   const [rowsPerPage, setRowsPerPage] = useState(10)
 
   useEffect(() => {
-    dispatch(getUserEscrowTransactions(store.selectedUser.user_id))
+    dispatch(getUserEscrowTransactions(store.userDetails.user_details.user_id))
     dispatch(
       getFilteredUserEscrowTransactions(store.selectedUserEscrowsTransactions, {
         page: currentPage,
@@ -110,7 +110,7 @@ const TransactionList = () => {
   const handleFilter = val => {
     setSearchTerm(val)
     dispatch(
-      getFilteredUserEscrowTransactions(store.selectedUsselectedUserEscrowsTransactionserEscrowsTransaction, {
+      getFilteredUserEscrowTransactions(store.selectedUserEscrowsTransactions, {
         page: currentPage,
         perPage: rowsPerPage,
         q: val
@@ -288,7 +288,7 @@ const TransactionList = () => {
                 handleFilter={handleFilter}
                 handlePerPage={handlePerPage}
                 downloadCSV={downloadCSV}
-                storeData={store.selectedUserAllTransactions}
+                storeData={store.selectedUserEscrowsTransactions}
                 downloadPDF={downloadPDF}
               />
             }

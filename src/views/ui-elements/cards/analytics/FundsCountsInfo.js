@@ -77,7 +77,7 @@ const fundCount = props => {
   return dashData !== "" ? (
     <Card>
       <CardHeader className='pb-0'>
-        <CardTitle tag='h4'>Fund Requests</CardTitle>\
+        <CardTitle tag='h4'>Fund Requests</CardTitle>
         <List size={20} />
       </CardHeader>
       <CardBody>

@@ -35,11 +35,9 @@ const UserView = props => {
         <Col xl='9' lg='8' md='7'>
           <EscrowInfoCard selectedEscrow={store.selectedEscrow} />
         </Col>
-        {/* {store.selectedEscrow.status === "contested" ?  */}
-        <Col xl='3' le='4' md='7'>
+        {store.selectedEscrow.status === "contested" ? <Col xl='3' le='4' md='7'>
           <PlanCard selectedEscrow={store.selectedEscrow} />
-        </Col> 
-        {/* : "" } */}
+        </Col> : "" }
       </Row>
       <Row>
         <Col sm='12'>

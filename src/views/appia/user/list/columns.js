@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import Avatar from '@components/avatar'
 
 // ** Store & Actions
-import { getUser } from '../store/action'
+import { UserDetails } from '../store/action'
 import { store } from '@store/storeConfig/store'
 
 // ** Third Party Components
@@ -80,7 +80,7 @@ export const columns = [
           <Link
             to={`/appia/user/view/${row.user_id}`}
             className='user-name text-truncate mb-0'
-            onClick={() => store.dispatch(getUser(store.getState().appiaUsers.allData, row.user_id))}
+            onClick={() => store.dispatch(UserDetails(store.getState().appiaUsers.allData, row.user_id))}
           >
             <span className='font-weight-bold'>{row.names}</span>
           </Link>
