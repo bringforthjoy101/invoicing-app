@@ -5,7 +5,7 @@ import { data } from 'jquery'
 // ** Get all Data
 export const getAllData = () => {
   return async dispatch => {
-    const response = await apiRequest({ url: '/admin/rewards/claims', method: 'GET' }, dispatch)
+    const response = await apiRequest({ url: '/admin/rewards/claims', method: 'POST' }, dispatch)
     if (response) {
       if (response.data.data && response.data.success) {
         await dispatch({
@@ -31,7 +31,7 @@ export const getFilteredData = (claimedRewards, params) => {
     const queryLowered = q.toLowerCase()
     const filteredData = claimedRewards.filter(
       claimed =>
-        (claimed.user_id.toLowerCase().includes(queryLowered) || claimed.transaction_id.toLowerCase().includes(queryLowered))
+        (claimed.user_id.toLowerCase().includes(queryLowered) || claimed.names.toLowerCase().includes(queryLowered) || claimed.email.toLowerCase().includes(queryLowered) || claimed.username.toLowerCase().includes(queryLowered) || claimed.phone.toString().toLowerCase().includes(queryLowered))
     )
     /* eslint-enable  */
 
@@ -55,13 +55,12 @@ export const getClaim = (claimedRewards, id) => {
 }
 
 export const getUserClaimHistory = (reward_id) => {
-
   return async dispatch => {
     const response = await apiRequest({ url: `/admin/rewards/claims/${reward_id}`, method: 'GET' }, dispatch)
     if (response) {
       if (response.data.data && response.data.success) {
         await dispatch({
-          type: 'GET_USER_CLAIM_HISTORY',
+          type: 'GET_USER_CLAIM_HISTORYS',
           data: response.data.data
         })
       } else {
@@ -71,5 +70,23 @@ export const getUserClaimHistory = (reward_id) => {
       swal('Oops!', 'Something went wrong with your network.', 'error')
     }
 
+  }
+}
+
+export const getFilteredUserClaims = (claims, params) => {
+  return async dispatch => {
+    const { q = '', perPage = 10, page = 1 } = params
+    /* eslint-enable */
+
+    const queryLowered = q?.toLowerCase()
+    const filteredData = claims?.filter(
+      claim => (claim?.names?.toLowerCase()?.includes(queryLowered) || claim?.email?.toLowerCase()?.includes(queryLowered) || claim?.username?.toLowerCase()?.includes(queryLowered)) || claim?.user_id?.toLowerCase()?.includes(queryLowered))
+    /* eslint-enable  */
+    await dispatch({
+      type: 'GET_USER_CLAIM',
+      data: paginateArray(filteredData, perPage, page),
+      totalPages: filteredData?.length,
+      params
+    })
   }
 }

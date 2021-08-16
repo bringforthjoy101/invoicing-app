@@ -16,6 +16,7 @@ import AllTransactionList from './AllTransactions'
 import UtilitiesTransactionList from './UtilityTransactions'
 import BankTransactionList from './BankTransactions'
 import EscrowTransactionList from './EscrowTransactions'
+import UserRewardsHistory from './UserRewards'
 import { isUserLoggedIn, apiRequest, swal } from '@utils'
 
 // ** Styles
@@ -31,17 +32,6 @@ const UserView = props => {
   const [detail, setDetail] = useState(null)
 
   const [activeTransaction, setActiveTransaction] = useState("all")
-
-  // get users details
-  // const UserDetails = async (id) => {
-  //   const response = await apiRequest({ url: `/admin/users/details/${id}`, method: 'GET' }, dispatch)
-  //   if (response && response.data.success) {
-  //     await setDetail(response.data)
-  //   } else {
-  //     // console.log(response)
-  //     swal('Oops!', 'Something went wrong.', 'error')
-  //   }
-  // }
 
   // ** Get user on mount
   useEffect(() => {
@@ -97,7 +87,7 @@ const UserView = props => {
           <BankTransactionList />
         </Col> : activeTransaction === "escrow" ? <Col sm='12'>
           <EscrowTransactionList />
-        </Col> : ""}
+        </Col>  : ""}
       </Row>
     </div>
   ) : ""

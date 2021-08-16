@@ -1,7 +1,7 @@
 import { paginateArray, sortCompare, apiRequest, swal } from '@utils'
 
 
-// ** Get all Data
+// ** Get all Admin
 export const getAllData = () => {
   return async dispatch => {
     const response = await apiRequest({ url: '/admin/get_admins', method: 'GET' }, dispatch)
@@ -21,7 +21,7 @@ export const getAllData = () => {
   }
 }
 
-// ** Get filtered data on page or row change
+// ** Get filtered admins on page or row change
 export const getFilteredData = (admins, params) => {
   return async dispatch => {
     const { q = '', perPage = 10, page = 1, role = null, status = null } = params
@@ -45,6 +45,7 @@ export const getFilteredData = (admins, params) => {
   }
 }
 
+// Get admin details
 export const getAdmin = (admins, id) => {
   return async dispatch => {
     const admin = admins.find(i => i.admin_id === id)
@@ -55,6 +56,7 @@ export const getAdmin = (admins, id) => {
   }
 }
 
+// get admin activity log
 export const getAdminActivity = (id) => {
   return async dispatch => {
     const response = await apiRequest({ url: `/admin/activity/${id}`, method: 'GET' }, dispatch)
@@ -120,27 +122,7 @@ export const deactivateAdmin = (admins, id) => {
   }
 }
 
-// Get all roles
-export const getAllRoles = (admins) => {
-  return async dispatch => {
-    const response = await apiRequest({ url: '/admin/admin_role', method: 'GET' }, dispatch)
-    if (response) {
-      if (response.data.data && response.data.success) {
-        await dispatch({
-          type: 'GET_ALL_ROLES',
-          data: response.data.data
-        })
-      } else {
-        console.log(response.error)
-      }
-    } else {
-      swal('Oops!', 'Somthing went wrong with your network.', 'error')
-    }
-
-  }
-}
-
-// Get all roles
+// Change admin role
 export const changeAdminRole = (admin_id, new_role_id) => {
   return async dispatch => {
     const body = JSON.stringify({admin_id, new_role_id})
@@ -153,7 +135,7 @@ export const changeAdminRole = (admin_id, new_role_id) => {
         swal('Oops!', `${response.data.message}.`, 'error')
       }
     } else {
-      // console.log(response.error)
+      console.log(response.error)
       swal('Oops!', 'Somthing went wrong with your network.', 'error')
     }
 

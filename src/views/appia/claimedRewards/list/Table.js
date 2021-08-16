@@ -90,7 +90,7 @@ const DataPlansPlist = () => {
   }
 
   const filteredData = store.allData.filter(
-    item => (item.user_id.toLowerCase() || item.transaction_id.toLowerCase())
+    item => (item.user_id.toLowerCase() || item.names.toLowerCase() || item.email.toLowerCase() || item.username.toLowerCase() || item.phone.toString().toLowerCase())
   )
 
   // ** Custom Pagination

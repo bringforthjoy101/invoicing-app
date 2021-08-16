@@ -15,7 +15,7 @@ import { Row, Col, Alert } from 'reactstrap'
 // ** User View Components
 import PlanCard from './PlanCard'
 import ClaimedHistory from './Claimed'
-import UserClaimedHistory from './UserClaimHistory'
+import UserClaimedHistory from './UserClaimHistory/index'
 
 // ** Styles
 import '@styles/react/apps/app-users.scss'
@@ -36,6 +36,7 @@ const UserView = props => {
 
   const reward_id = store.selectedClaim.reward_id
 
+
   useEffect(() => {
     dispatch(getUserClaimHistory(reward_id))
   }, [dispatch])
@@ -51,9 +52,9 @@ const UserView = props => {
           <PlanCard selectedClaim={store.selectedClaim} />
         </Col> 
       </Row>
-      <Row xl='9' lg='8' md='7'>
-        <Col md='6'>
-        <UserClaimedHistory claimHistory={store.claimHistory} />
+      <Row>
+        <Col sm='12'>
+        <UserClaimedHistory reward_id={reward_id} />
         </Col>
       </Row>
     </div>

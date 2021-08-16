@@ -1,7 +1,7 @@
 import { useState } from 'react'
 // ** Reactstrap
 import { Card, CardHeader, CardBody, Badge, UncontrolledTooltip, Button } from 'reactstrap'
-import ApproveTransfer from './ApproveTransfer'
+import { ApproveTransfer, DisapproveTransfer } from './ApproveTransfer'
 
 const PlanCard = ({ selectedTransfer }) => {
         
@@ -13,6 +13,7 @@ const PlanCard = ({ selectedTransfer }) => {
       </CardHeader>
       <CardBody>
         <ApproveTransfer trans_id={selectedTransfer.trans_id} />
+        <DisapproveTransfer trans_id={selectedTransfer.trans_id} />
       </CardBody>
     </Card>
   ) 

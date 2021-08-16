@@ -214,6 +214,43 @@ export const getFilteredUserEscrowTransactions = (escrows, params) => {
   }
 }
 
+// User Rewards 
+export const getUserRewards = (user_id) => {
+  return async dispatch => {
+    const body = JSON.stringify({ user_id })
+    const response = await apiRequest({ url: `/admin/rewards/claims/${user_id}`, method: 'GET' }, dispatch)
+    console.log({response})
+    if (response && response.data.data && response.data.success) {
+      await dispatch({
+        type: 'GET_USER_ALL_REWARDS',
+        data: response.data.data
+      })
+    } else {
+      console.log(response)
+      swal('Oops!', 'Somthing went wrong with your network.', 'error')
+    }
+  }
+}
+
+// Filtered Bank Transactions
+export const getFilteredUserReward = (claims, params) => {
+  return async dispatch => {
+    const { q = '', perPage = 10, page = 1 } = params
+    /* eslint-enable */
+
+    const queryLowered = q?.toLowerCase()
+    const filteredData = claims?.filter(
+      claim => (claim?.names?.toLowerCase()?.includes(queryLowered) || claim?.email?.toLowerCase()?.includes(queryLowered) || claim?.username?.toLowerCase()?.includes(queryLowered)) || claim?.user_id?.toLowerCase()?.includes(queryLowered))
+    /* eslint-enable  */
+    await dispatch({
+      type: 'GET_USER_CLAIM',
+      data: paginateArray(filteredData, perPage, page),
+      totalPages: filteredData?.length,
+      params
+    })
+  }
+}
+
 // ACtivate  User account
 export const activateUser = (users, id) => {
   const user = users.find(i => i.user_id === id)

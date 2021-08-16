@@ -5,7 +5,10 @@ const initialState = {
   total: 1,
   params: {},
   selectedClaim: null,
-  claimHistory: []
+  selectedUserClaimedHistory: [],
+  selectedUserClaimHistory: [],
+  selectedUserTotalClaim: 1,
+  selectedUserClaimParams: {}
 }
 
 const ClaimedRewards = (state = initialState, action) => {
@@ -21,8 +24,18 @@ const ClaimedRewards = (state = initialState, action) => {
       }
     case 'GET_CLAIM':
       return { ...state, selectedClaim: action.selectedClaim }
-      case 'GET_USER_CLAIM_HISTORY':
-      return {...state, claimHistory: action.data}
+      case 'GET_USER_CLAIM_HISTORYS':
+        return { 
+          ...state, 
+          selectedUserClaimedHistory: action.data
+        }
+      case 'GET_USER_CLAIM':
+        return {
+          ...state,
+          selectedUserClaimHistory: action.data,
+          selectedUserTotalClaim: action.totalPages,
+          selectedUserClaimParams: action.params
+        }
     default:
       return { ...state }
   }

@@ -21,7 +21,11 @@ const initialState = {
   selectedUserEscrowsTransactions: [],
   selectedUserEscrowTransactions: [],
   selectedUserTotalEscrowTransactions: 1,
-  selectedUserEscrowTransactionParams: {}
+  selectedUserEscrowTransactionParams: {},
+  selectedUserRewardTransactions: [],
+  selectedUserRewardTransaction: [],
+  selectedUserTotalReward: 1,
+  selectedUserRewardParams: {}
 }
 
 const users = (state = initialState, action) => {
@@ -87,6 +91,18 @@ const users = (state = initialState, action) => {
               selectedUserTotalEscrowTransactions: action.totalPages,
               selectedUserEscrowTransactionParams: action.params
             }
+            case 'GET_USER_ALL_REWARDS':
+              return { 
+                ...state, 
+                selectedUserRewardTransactions: action.data
+              }
+            case 'GET_USER_CLAIM':
+              return {
+                ...state,
+                selectedUserRewardTransaction: action.data,
+                selectedUserTotalReward: action.totalPages,
+                selectedUserRewardParams: action.params
+              }
     default:
       return { ...state }
   }

@@ -5,6 +5,7 @@ import { paginateArray, sortCompare, apiRequest, swal } from '@utils'
 export const getAllData = () => {
   return async dispatch => {
     const response = await apiRequest({ url: '/admin/transfers', method: 'GET' }, dispatch)
+    console.log({response})
     if (response) {
       if (response.data.data && response.data.success) {
         await dispatch({
@@ -54,10 +55,26 @@ export const getTransfer = (transfers, id) => {
   }
 }
 
+// Transfer Approval
 export const TransferApproval = ({trans_id}) => {
   return async dispatch => {
     const body = JSON.stringify({trans_id})
     const response = await apiRequest({url:`/admin/transfer/approve`, method:'POST', body}, dispatch)
+    if (response && response.data.success) {
+      swal('Good!', `${response.data.message}`, 'success')
+    } else {
+      console.log(response)
+      swal('Oops!', 'Somthing went wrong with your network.', 'error')
+    }
+  }
+}
+
+// Transfer Disapproval
+export const TransferDisapproval = ({trans_id, remark}) => {
+  return async dispatch => {
+    const body = JSON.stringify({trans_id, remark})
+    const response = await apiRequest({url:`/admin/transfer/decline`, method:'POST', body}, dispatch)
+    console.log({response})
     if (response && response.data.success) {
       swal('Good!', `${response.data.message}`, 'success')
     } else {

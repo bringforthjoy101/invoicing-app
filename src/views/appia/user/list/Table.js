@@ -306,10 +306,6 @@ const UsersList = () => {
                   <FileText size={15} />
                   <span className='align-middle ml-50'>PDF</span>
                 </DropdownItem>
-                <DropdownItem className='w-100' onClick={() => printOrder(filteredData)}>
-                  <Printer size={15} />
-                  <span className='align-middle ml-50'>Print</span>
-                </DropdownItem>
               </DropdownMenu>
             </UncontrolledButtonDropdown>
         </Col>

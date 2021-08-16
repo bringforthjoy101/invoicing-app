@@ -27,8 +27,9 @@ const renderClient = row => {
 }
 
 const statusObj = {
-  successful: 'light-success',
-  pending: 'light-warning'
+  success: 'light-success',
+  pending: 'light-warning',
+  failed: 'light-danger'
 }
 
 export const columns = [

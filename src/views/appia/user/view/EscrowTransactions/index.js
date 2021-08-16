@@ -22,7 +22,7 @@ import jsPDF from 'jspdf'
 import 'jspdf-autotable'
 
 // custom Header
-const CustomHeader = ({ handleFilter, value, handlePerPage, rowsPerPage, downloadCSV, storeData, downloadPDF }) => {
+const CustomHeader = ({ handleFilter, searchTerm, handlePerPage, rowsPerPage, downloadCSV, storeData, downloadPDF }) => {
   return (
     <div className='invoice-list-table-header w-100 py-2'>
       <Row>
@@ -53,9 +53,9 @@ const CustomHeader = ({ handleFilter, value, handlePerPage, rowsPerPage, downloa
               id='search-invoice'
               className='ml-50 mr-2 w-100'
               type='text'
-              value={value}
+              value={searchTerm}
               onChange={e => handleFilter(e.target.value)}
-              placeholder='Search Invoice'
+              placeholder='Search'
             />
           </div>
           
@@ -74,10 +74,6 @@ const CustomHeader = ({ handleFilter, value, handlePerPage, rowsPerPage, downloa
               <DropdownItem className='w-100' onClick={() => downloadPDF()}>
                 <FileText size={15} />
                 <span className='align-middle ml-50'>PDF</span>
-              </DropdownItem>
-              <DropdownItem className='w-100' onClick={() => printOrder(filteredData)}>
-                <Printer size={15} />
-                <span className='align-middle ml-50'>Print</span>
               </DropdownItem>
             </DropdownMenu>
           </UncontrolledButtonDropdown>
@@ -228,9 +224,9 @@ const TransactionList = () => {
           3: {cellWidth: 30},
           4: {cellWidth: 60}
         },
-        head: [['Id', 'Type', 'Amount', 'Balance', 'Date']]
+        head: [['Id', 'Type', 'Description', 'Amount', 'Balance', 'Date']]
     })
-    store.getFilteredUserEscrowTransactions.map(arr => {
+    store.selectedUserEscrowsTransactions.map(arr => {
       doc.autoTable({
         styles: { halign: 'left' },
         columnStyles: {
@@ -290,6 +286,7 @@ const TransactionList = () => {
                 downloadCSV={downloadCSV}
                 storeData={store.selectedUserEscrowsTransactions}
                 downloadPDF={downloadPDF}
+                searchTerm={searchTerm}
               />
             }
           />
