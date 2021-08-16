@@ -17,7 +17,7 @@ import ContactInfoCard from './ContactInfoCard'
 // ** Styles
 import '@styles/react/apps/app-users.scss'
 
-const FeedbackView = props => {
+const ContactsView = props => {
   // ** Vars
   const store = useSelector(state => state.appiaContacts),
     { id } = useParams()
@@ -39,4 +39,4 @@ const FeedbackView = props => {
     </Alert>
   )
 }
-export default FeedbackView
+export default ContactsView

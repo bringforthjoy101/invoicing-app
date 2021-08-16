@@ -86,7 +86,7 @@ export const selectThemeColors = theme => ({
   }
 })
 
-export const paginateArray = (array, perPage, page) => array?.slice((page - 1) * perPage, page * perPage)  
+export const paginateArray = (array, perPage, page) => array?.slice((page - 1) * perPage, page * perPage)
 
 export const sortCompare = key => (a, b) => {
   const fieldA = a[key]
@@ -128,34 +128,35 @@ export const Storage = {
   }
 }
 
-export const apiRequest = ({url, method, body}, dispatch) => {
-    const userData = Storage.getItem('userData')
-    const {accessToken} = userData
-    return axios.request({
-        url, 
-        method, 
-        baseURL: apiUrl, 
-        data: body, 
-        headers: {
-            Authorization: `Bearer ${accessToken}`,
-            Accept: 'application/json',
-            'Content-Type': 'application/json'
-        },
-        responseType: 'json',
-        validateStatus: (status) => {
-          return status >= 200 && status < 500 // default
-        }
-    }).then((response) => {
-        if (response.status === 401) {
-          history.push('/login')
-            dispatch({
-                type: 'LOGOUT'
-            })
-        }
-        return response
-    }).catch((error) => {
-        console.log('error', error)
-    })
+export const apiRequest = ({ url, method, body }, dispatch) => {
+  const userData = Storage.getItem('userData')
+  const { accessToken } = userData
+  return axios.request({
+    url,
+    method,
+    baseURL: apiUrl,
+    data: body,
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    },
+    responseType: 'json',
+    validateStatus: (status) => {
+      return status >= 200 && status < 500 // default
+    }
+  }).then((response) => {
+    if (response.status === 401) {
+      dispatch({
+        type: 'LOGOUT'
+      })
+      // ** Remove user from localStorage
+      localStorage.removeItem('userData')
+    }
+    return response
+  }).catch((error) => {
+    console.log('error', error)
+  })
 }
 
 export const swal = (title, text = "", icon = "") => {

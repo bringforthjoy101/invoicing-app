@@ -17,7 +17,7 @@ import PlanCard from './PlanCard'
 // ** Styles
 import '@styles/react/apps/app-users.scss'
 
-const UserView = props => {
+const EscrowView = props => {
   // ** Vars
   const store = useSelector(state => state.appiaEscrow),
     dispatch = useDispatch(),
@@ -54,4 +54,4 @@ const UserView = props => {
     </Alert>
   )
 }
-export default UserView
+export default EscrowView

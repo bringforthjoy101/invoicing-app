@@ -19,7 +19,7 @@ import AdminTimeline from './AdminTimeline'
 // ** Styles
 import '@styles/react/apps/app-users.scss'
 
-const UserView = props => {
+const AdminView = props => {
   // ** Vars
   const store = useSelector(state => state.appiaAdmins),
     dispatch = useDispatch(),
@@ -64,4 +64,4 @@ const UserView = props => {
     </Alert>
   )
 }
-export default UserView
+export default AdminView

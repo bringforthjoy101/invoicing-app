@@ -4,7 +4,7 @@ import Table from './Table'
 // ** Styles
 import '@styles/react/apps/app-users.scss'
 
-const FeedbacksList = () => {
+const ContactsList = () => {
   return (
     <div className='app-user-list'>
       <Table />
@@ -12,4 +12,4 @@ const FeedbacksList = () => {
   )
 }
 
-export default FeedbacksList
+export default ContactsList

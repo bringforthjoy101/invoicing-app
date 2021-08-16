@@ -22,7 +22,7 @@ import '@styles/react/libs/react-select/_react-select.scss'
 import '@styles/react/libs/tables/react-dataTable-component.scss'
 
 
-const FeedbacksList = () => {
+const ContactsTable = () => {
   // ** Store Vars
   const dispatch = useDispatch()
   const store = useSelector(state => state.appiaContacts)
@@ -194,4 +194,4 @@ const FeedbacksList = () => {
   )
 }
 
-export default FeedbacksList
+export default ContactsTable
