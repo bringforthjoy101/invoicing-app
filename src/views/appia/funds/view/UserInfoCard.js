@@ -9,7 +9,7 @@ import { Card, CardBody, CardText, Button, Row, Col } from 'reactstrap'
 import { Pocket, DollarSign, TrendingUp, User, Check, Star, Flag, Phone } from 'react-feather'
 import CardTitle from 'reactstrap/lib/CardTitle'
 
-const UserInfoCard = ({ selectedUser, detail }) => {
+const UserInfoCard = ({ selectedUser }) => {
   // ** render user img
   const renderUserImg = () => {
     if (selectedUser !== null && selectedUser.avatar) {
@@ -23,7 +23,7 @@ const UserInfoCard = ({ selectedUser, detail }) => {
           initials
           color={color}
           className='rounded'
-          content={selectedUser.names}
+          content={selectedUser.user_details.names}
           contentStyles={{
             borderRadius: 0,
             fontSize: 'calc(36px)',
@@ -49,9 +49,9 @@ const UserInfoCard = ({ selectedUser, detail }) => {
                 {renderUserImg()}
                 <div className='d-flex flex-column ml-1'>
                   <div className='user-info mt-2'>
-                    <h4 className='mb-0'>{selectedUser !== null ? selectedUser.names : 'Eleanor Aguilar'}</h4>
+                    <h4 className='mb-0'>{selectedUser !== null ? selectedUser.user_details.names : 'Eleanor Aguilar'}</h4>
                     <CardText tag='span'>
-                      {selectedUser !== null ? selectedUser.email : 'eleanor.aguilar@gmail.com'}
+                      {selectedUser !== null ? selectedUser.user_details.email : 'eleanor.aguilar@gmail.com'}
                     </CardText>
                   </div>
                 </div>
@@ -63,7 +63,7 @@ const UserInfoCard = ({ selectedUser, detail }) => {
                   <Pocket className='text-primary' />
                 </div>
                 <div className='ml-1'>
-                  <h5 className='mb-0'>{selectedUser.balance.toLocaleString('en-US', { style: 'currency', currency: 'NGN' })}</h5>
+                  <h5 className='mb-0'>{selectedUser.user_details.naira_wallet.toLocaleString('en-US', { style: 'currency', currency: 'NGN' })}</h5>
                   <small>Naira Balance</small>
                 </div>
               </div>
@@ -72,7 +72,7 @@ const UserInfoCard = ({ selectedUser, detail }) => {
                   <Pocket className='text-success' />
                 </div>
                 <div className='ml-1'>
-                  <h5 className='mb-0'>{selectedUser.appia_coins}</h5>
+                  <h5 className='mb-0'>{selectedUser.user_details.appia_coins}</h5>
                   <small>Appia Coin</small>
                 </div>
               </div>
@@ -86,7 +86,7 @@ const UserInfoCard = ({ selectedUser, detail }) => {
                   </CardText>
                 </div>
                 <CardText className='mb-0'>
-                  {selectedUser !== null ? selectedUser.user_id : 'eleanor.aguilar'}
+                  {selectedUser !== null ? selectedUser.user_details.user_id : 'eleanor.aguilar'}
                 </CardText>
               </div>
               <div className='d-flex flex-wrap justify-content-between align-items-center my-50'>
@@ -97,7 +97,7 @@ const UserInfoCard = ({ selectedUser, detail }) => {
                   </CardText>
                 </div>
                 <CardText className='text-capitalize mb-0'>
-                  {selectedUser !== null ? selectedUser.status || 'Active' : 'Active'}
+                  {selectedUser !== null ? selectedUser.user_details.status || 'Active' : 'Active'}
                 </CardText>
               </div>
               <div className='d-flex flex-wrap justify-content-between align-items-center my-50'>
@@ -108,14 +108,14 @@ const UserInfoCard = ({ selectedUser, detail }) => {
                   </CardText>
                 </div>
                 <CardText className='text-capitalize mb-0'>
-                  {selectedUser.phone}
+                  {selectedUser.user_details.phone}
                 </CardText>
               </div>
             </div>
           </Col>
           <Col xl='6' lg='12' className='mt-2 mt-xl-0'>
             <div className='user-info-wrapper'>
-              {detail?.user_bank_details !== null ? <div className="mt-2">
+              {selectedUser?.user_bank_details !== null ? <div className="mt-2">
                 <div className='user-info-title'>
                   <CardTitle> Bank Details: </CardTitle>
                 </div>
@@ -126,7 +126,7 @@ const UserInfoCard = ({ selectedUser, detail }) => {
                       Account Name
                 </CardText>
                   </div>
-                  <CardText className='mb-0'>{detail?.user_bank_details?.account_name}</CardText>
+                  <CardText className='mb-0'>{selectedUser?.user_bank_details?.account_name}</CardText>
                 </div>
                 <div className='d-flex flex-wrap align-items-center mt-1'>
                   <div className='user-info-title'>
@@ -135,7 +135,7 @@ const UserInfoCard = ({ selectedUser, detail }) => {
                       Account Number
                 </CardText>
                   </div>
-                  <CardText className='mb-0'>{detail?.user_bank_details?.account_number}</CardText>
+                  <CardText className='mb-0'>{selectedUser?.user_bank_details?.account_number}</CardText>
                 </div>
                 <div className='d-flex flex-wrap align-items-center mt-1'>
                   <div className='user-info-title'>
@@ -144,7 +144,7 @@ const UserInfoCard = ({ selectedUser, detail }) => {
                       Bank Name
                 </CardText>
                   </div>
-                  <CardText className='mb-0'>{detail?.user_bank_details?.bank_name}</CardText>
+                  <CardText className='mb-0'>{selectedUser?.user_bank_details?.bank_name}</CardText>
                 </div>
               </div> : ""}
               <div className="mt-2">
@@ -158,7 +158,7 @@ const UserInfoCard = ({ selectedUser, detail }) => {
                       Account Name
                   </CardText>
                   </div>
-                  <CardText className='mb-0'>{detail?.user_providus_details?.account_name}</CardText>
+                  <CardText className='mb-0'>{selectedUser?.user_providus_details?.account_name}</CardText>
                 </div>
                 <div className='d-flex flex-wrap align-items-center mt-1'>
                   <div className='user-info-title'>
@@ -167,7 +167,7 @@ const UserInfoCard = ({ selectedUser, detail }) => {
                       Account Number
                   </CardText>
                   </div>
-                  <CardText className='mb-0'>{detail?.user_providus_details?.account_number}</CardText>
+                  <CardText className='mb-0'>{selectedUser?.user_providus_details?.account_number}</CardText>
                 </div>
                 <div className='d-flex flex-wrap align-items-center mt-1'>
                   <div className='user-info-title'>
@@ -176,7 +176,7 @@ const UserInfoCard = ({ selectedUser, detail }) => {
                       Bank Name
                   </CardText>
                   </div>
-                  <CardText className='mb-0'>{detail?.user_providus_details?.bank_name}</CardText>
+                  <CardText className='mb-0'>{selectedUser?.user_providus_details?.bank_name}</CardText>
                 </div>
               </div>
             </div>

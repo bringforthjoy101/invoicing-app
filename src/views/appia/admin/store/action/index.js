@@ -45,14 +45,23 @@ export const getFilteredData = (admins, params) => {
   }
 }
 
-// Get admin details
-export const getAdmin = (admins, id) => {
+// get Admin Details
+export const getAdmin = (admin_id) => {
   return async dispatch => {
-    const admin = admins.find(i => i.admin_id === id)
-    dispatch({
-      type: 'GET_ADMIN',
-      selectedAdmin: admin
-    })
+    const response = await apiRequest({ url: `/admin/an_admin/${admin_id}`, method: 'GET' }, dispatch)
+    if (response) {
+      if (response.data.data && response.data.success) {
+        await dispatch({
+          type: 'GET_ADMIN',
+          selectedAdmin: response.data.data
+        })
+      } else {
+        console.log(response.error)
+      }
+    } else {
+      swal('Oops!', 'Somthing went wrong with your network.', 'error')
+    }
+
   }
 }
 

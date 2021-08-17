@@ -13,7 +13,6 @@ import { isUserLoggedIn } from '@utils'
 import { Row, Col, Alert } from 'reactstrap'
 
 // ** User View Components
-import PlanCard from './PlanCard'
 import ClaimedHistory from './Claimed'
 import UserClaimedHistory from './UserClaimHistory/index'
 
@@ -45,12 +44,9 @@ const ClaimedView = props => {
   return store.selectedClaim !== null && store.selectedClaim !== undefined ? (
     <div className='app-user-view'>
       <Row>
-        <Col xl='9' lg='8' md='7'>
+        <Col xl='12' lg='12' md='12'>
           <ClaimedHistory selectedClaim={store.selectedClaim} />
         </Col>
-        <Col xl='3' lg='4' md='5'>
-          <PlanCard selectedClaim={store.selectedClaim} />
-        </Col> 
       </Row>
       <Row>
         <Col sm='12'>

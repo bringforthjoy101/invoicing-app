@@ -41,14 +41,19 @@ export const getFilteredData = (users, params) => {
   }
 }
 
-//  Get User
-export const getUser = (users, id) => {
+// get user details
+export const getUser =  (user_id) => {
   return async dispatch => {
-    const user = users.find(i => i.user_id === id)
-    dispatch({
-      type: 'GET_USER',
-      selectedUser: user
-    })
+    const response = await apiRequest({ url: `/admin/users/details/${user_id}`, method: 'GET' }, dispatch)
+    if (response && response.data && response.data.success) {
+      await dispatch({
+        type: 'GET_USER',
+        selectedUser: response.data
+      })
+    } else {
+      console.log(response)
+      swal('Oops!', 'Something went wrong.', 'error')
+    }
   }
 }
 

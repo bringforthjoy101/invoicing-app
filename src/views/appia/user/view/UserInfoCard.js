@@ -9,35 +9,7 @@ import { Card, CardBody, CardText, Button, Row, Col } from 'reactstrap'
 import { Pocket, DollarSign, TrendingUp, User, Check, Star, Flag, Phone } from 'react-feather'
 import CardTitle from 'reactstrap/lib/CardTitle'
 
-const UserInfoCard = ({ selectedUser, userDetails }) => {
-  // ** render user img
-  // const renderUserImg = () => {
-  //   if (userDetails !== null && userDetails.avatar) {
-  //     return <img src={userDetails.avatar} alt='user-avatar' className='img-fluid rounded' height='104' width='104' />
-  //   } else {
-  //     const stateNum = Math.floor(Math.random() * 6),
-  //       states = ['light-success', 'light-danger', 'light-warning', 'light-info', 'light-primary', 'light-secondary'],
-  //       color = states[stateNum]
-  //     return (
-  //       <Avatar
-  //         initials
-  //         color={color}
-  //         className='rounded'
-  //         content={userDetails.names}
-  //         contentStyles={{
-  //           borderRadius: 0,
-  //           fontSize: 'calc(36px)',
-  //           width: '100%',
-  //           height: '100%'
-  //         }}
-  //         style={{
-  //           height: '90px',
-  //           width: '90px'
-  //         }}
-  //       />
-  //     )
-  //   }
-  // }
+const UserInfoCard = ({ userDetails }) => {
 
   return (
     <Card>
@@ -46,7 +18,6 @@ const UserInfoCard = ({ selectedUser, userDetails }) => {
           <Col xl='6' lg='12' className='d-flex flex-column justify-content-between border-container-lg'>
             <div className='user-avatar-section'>
               <div className='d-flex justify-content-start'>
-                {/* {renderUserImg()} */}
                 <div className='d-flex flex-column ml-1'>
                   <div className='user-info mt-2'>
                     <h4 className='mb-0'>{userDetails !== null ? userDetails.user_details.names : 'Eleanor Aguilar'}</h4>
@@ -97,7 +68,7 @@ const UserInfoCard = ({ selectedUser, userDetails }) => {
                   </CardText>
                 </div>
                 <CardText className='text-capitalize mb-0'>
-                  {selectedUser?.status}
+                  {userDetails.user_details.status}
                 </CardText>
               </div>
               <div className='d-flex flex-wrap justify-content-between align-items-center my-50'>

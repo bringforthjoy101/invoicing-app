@@ -108,7 +108,6 @@ export const getFilteredUserTransactions = (userTransactions, params) => {
 export const escrowResolve = ({escrow_id, status, resolution}) => {
   return async dispatch => {
     const body = JSON.stringify({escrow_id, status, resolution})
-    console.log("body", body)
     const response = await apiRequest({url:`/admin/escrow/resolve`, method:'POST', body}, dispatch)
     console.log({response})
     if (response && response.data.success) {

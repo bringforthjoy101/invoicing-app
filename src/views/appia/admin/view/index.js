@@ -35,7 +35,7 @@ const AdminView = props => {
  
   // ** Get Admin on mount
   useEffect(() => {
-    dispatch(getAdmin(store.allData, id))
+    dispatch(getAdmin(id))
     dispatch(getAdminActivity(id))
   }, [dispatch])
 
@@ -55,13 +55,6 @@ const AdminView = props => {
         </Col>
       </Row> : ""}
     </div>
-  ) : (
-    <Alert color='danger'>
-      <h4 className='alert-heading'>Users not found</h4>
-      <div className='alert-body'>
-        Users with id: {id} doesn't exist. Check list of all Users: <Link to='/app/user/list'>Users List</Link>
-      </div>
-    </Alert>
-  )
+  ) : ""
 }
 export default AdminView

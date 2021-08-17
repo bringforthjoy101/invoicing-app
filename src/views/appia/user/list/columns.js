@@ -4,13 +4,10 @@ import { Link } from 'react-router-dom'
 // ** Custom Components
 import Avatar from '@components/avatar'
 
-// ** Store & Actions
-import { UserDetails } from '../store/action'
-import { store } from '@store/storeConfig/store'
 
 // ** Third Party Components
-import { Badge, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
-import { Slack, User, Settings, Database, Edit, MoreVertical, FileText, Trash2, Archive } from 'react-feather'
+import { Badge } from 'reactstrap'
+import { Slack, User, Settings } from 'react-feather'
 
 // ** Renders Client Columns
 const renderClient = row => {
@@ -80,7 +77,6 @@ export const columns = [
           <Link
             to={`/appia/user/view/${row.user_id}`}
             className='user-name text-truncate mb-0'
-            onClick={() => store.dispatch(UserDetails(store.getState().appiaUsers.allData, row.user_id))}
           >
             <span className='font-weight-bold'>{row.names}</span>
           </Link>

@@ -22,7 +22,7 @@ const UserInfoCard = ({ selectedTransaction }) => {
           initials
           color={color}
           className='rounded'
-          content={selectedTransaction.user.names}
+          content={selectedTransaction.user_id}
           contentStyles={{
             borderRadius: 0,
             fontSize: 'calc(36px)',
@@ -49,9 +49,9 @@ const UserInfoCard = ({ selectedTransaction }) => {
                 {renderImg()}
                 <div className='d-flex flex-column ml-1'>
                   <div className='user-info mt-2'>
-                    <h4 className='mb-0'>{selectedTransaction !== null ? selectedTransaction.user.names : 'Eleanor Aguilar'}</h4>
+                    <h4 className='mb-0'>{selectedTransaction !== null ? selectedTransaction.user_id : 'Eleanor Aguilar'}</h4>
                     <CardText tag='span'>
-                      {selectedTransaction !== null ? selectedTransaction.user.email : 'eleanor.aguilar@gmail.com'}
+                      {selectedTransaction !== null ? selectedTransaction.trans_id : 'eleanor.aguilar@gmail.com'}
                     </CardText>
                   </div>
                 </div>
@@ -61,15 +61,23 @@ const UserInfoCard = ({ selectedTransaction }) => {
                   <span>Username: </span>
                 </div>
                 <div className='ml-1'>
-                  <h6 className='mb-0'>{selectedTransaction.user.username !== null ? selectedTransaction.user.username : 'No Username'}</h6>
+                  <h6 className='mb-0'>{selectedTransaction.user_id !== null ? selectedTransaction.user_id : 'No Username'}</h6>
                 </div>
               </div>
               <div className='d-flex align-items-center mr-2 mt-1'>
                 <div className='color-box'>
-                  <span>Phone:</span>
+                  <span>Status:</span>
                 </div>
                 <div className='ml-1'>
-                  <h6 className='mb-0'>{selectedTransaction.user.phone}</h6>
+                  <h6 className='mb-0'>{selectedTransaction.status}</h6>
+                </div>
+              </div>
+              <div className='d-flex align-items-center mr-2 mt-1'>
+                <div className='color-box'>
+                  <span>Tracking Id:</span>
+                </div>
+                <div className='ml-1'>
+                  <h6 className='mb-0'>{selectedTransaction.tracking_id}</h6>
                 </div>
               </div>
             </div>
@@ -83,6 +91,14 @@ const UserInfoCard = ({ selectedTransaction }) => {
                 </div>
                 <div className='ml-1'>
                   <h6 className='mb-0'>{selectedTransaction.trans_id}</h6>
+                </div>
+              </div>
+              <div className='d-flex align-items-center mr-2 mt-1'>
+                <div className='color-box'>
+                  <span>Type:</span>
+                </div>
+                <div className='ml-1'>
+                  <h6 className='mb-0'>{selectedTransaction.type}</h6>
                 </div>
               </div>
               <div className='d-flex align-items-center mr-2 mt-1'>
@@ -114,6 +130,22 @@ const UserInfoCard = ({ selectedTransaction }) => {
                 </div>
                 <div className='ml-1'>
                   <h6 className='mb-0'>{selectedTransaction.narration}</h6>
+                </div>
+              </div>
+              <div className='d-flex align-items-center mr-2 mt-1'>
+                <div className='color-box'>
+                  <span>Reference:</span>
+                </div>
+                <div className='ml-1'>
+                  <h6 className='mb-0'>{selectedTransaction.ref}</h6>
+                </div>
+              </div>
+              <div className='d-flex align-items-center mr-2 mt-1'>
+                <div className='color-box'>
+                  <span>Remark:</span>
+                </div>
+                <div className='ml-1'>
+                  <h6 className='mb-0'>{selectedTransaction.remark}</h6>
                 </div>
               </div>
               <div className='d-flex align-items-center mr-2 mt-1'>

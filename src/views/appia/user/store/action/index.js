@@ -42,17 +42,6 @@ export const getFilteredData = (users, params) => {
   }
 }
 
-//  Get User
-export const getUser = (users, id) => {
-  return async dispatch => {
-    const user = users?.find(i => i.user_id === id)
-    dispatch({
-      type: 'GET_USER',
-      selectedUser: user
-    })
-  }
-}
-
 // get user details
 export const UserDetails =  (user_id) => {
   return async dispatch => {
@@ -218,8 +207,7 @@ export const getFilteredUserEscrowTransactions = (escrows, params) => {
 export const getUserRewards = (user_id) => {
   return async dispatch => {
     const body = JSON.stringify({ user_id })
-    const response = await apiRequest({ url: `/admin/rewards/claims/${user_id}`, method: 'GET' }, dispatch)
-    console.log({response})
+    const response = await apiRequest({ url: '/admin/rewards/claims/', method: 'POST', body  }, dispatch)
     if (response && response.data.data && response.data.success) {
       await dispatch({
         type: 'GET_USER_ALL_REWARDS',
@@ -326,10 +314,10 @@ export const blacklistUser = ({ user_id, reason }) => {
 }
 
 // Blacklist A User Asset
-export const blacklistUserAsset = ({ user_id, reason }, phone) => {
+export const blacklistUserAsset = (phone) => {
+  console.log("pohne", phone)
   return async dispatch => {
-    const body = JSON.stringify({ user_id, reason })
-    const response = await apiRequest({ url: `/admin/blacklist-asset/${phone}`, method: 'GET', body }, dispatch)
+    const response = await apiRequest({ url: `/admin/blacklist-asset/${phone}`, method: 'GET'}, dispatch)
     if (response && response.data.success) {
       swal('Good!', `${response.data.message}.`, 'success')
     } else {

@@ -6,6 +6,7 @@ export const apiUrl = process.env.REACT_APP_API_ENDPOINT
 export const getAllData = () => {
   return async dispatch => {
     const response = await apiRequest({url:'/admin/users/transactions/all', method:'POST'}, dispatch)
+    console.log({response})
     if (response && response.data.data && response.data.success) {
         await dispatch({
           type: 'GET_ALL_TRANSACTIONS_DATA',
@@ -42,13 +43,18 @@ export const getFilteredData = (transactions, params) => {
 }
 
 //  Get User
-export const getTransaction = (transactions, id) => {
+export const getTransaction = (trans_id) => {
   return async dispatch => {
-    const transaction = transactions.find(i => i.trans_id === id)
-    dispatch({
-      type: 'GET_TRANSACTION',
-      selectedTransaction: transaction
-    })
+    const response = await apiRequest({url:`/admin/users/transaction/${trans_id}`, method:'GET'}, dispatch)
+    if (response && response.data.data && response.data.success) {
+        await dispatch({
+          type: 'GET_TRANSACTION',
+          selectedTransaction: response.data.data
+        })
+    } else {
+      console.log(response)
+      swal('Oops!', 'Something went wrong.', 'error')
+    }
   }
 }
 

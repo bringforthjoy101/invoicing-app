@@ -5,12 +5,8 @@ import { Link } from 'react-router-dom'
 import Avatar from '@components/avatar'
 import moment from 'moment'
 
-// ** Store & Actions
-import { getTransaction } from '../store/action'
-import { store } from '@store/storeConfig/store'
 
 // ** Third Party Components
-import { Slack, User, Settings, Database, Edit } from 'react-feather'
 
 // ** Renders Client Columns
 const renderClient = row => {
@@ -38,7 +34,6 @@ export const columns = [
           <Link
             to={`/appia/transaction/view/${row.trans_id}`}
             className='user-name text-truncate mb-0'
-            onClick={() => store.dispatch(getTransaction(store.getState().appiaTransaction.allData, row.trans_id))}
           >
             <span className='font-weight-bold'>{row.trans_id}</span>
           </Link>

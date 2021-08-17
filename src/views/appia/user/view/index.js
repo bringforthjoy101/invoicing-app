@@ -17,7 +17,7 @@ import UtilitiesTransactionList from './UtilityTransactions'
 import BankTransactionList from './BankTransactions'
 import EscrowTransactionList from './EscrowTransactions'
 import UserRewardsHistory from './UserRewards'
-import { isUserLoggedIn, apiRequest, swal } from '@utils'
+import { isUserLoggedIn } from '@utils'
 
 // ** Styles
 import '@styles/react/apps/app-users.scss'
@@ -29,14 +29,12 @@ const UserView = props => {
     { id } = useParams()
 
   const [userData, setUserData] = useState(null)
-  const [detail, setDetail] = useState(null)
 
   const [activeTransaction, setActiveTransaction] = useState("all")
 
   // ** Get user on mount
   useEffect(() => {
-    dispatch(getUser(store.allData, id))
-    dispatch(UserDetails(id))
+  dispatch(UserDetails(id))
     dispatch(getUserAllTransactions(id))
   }, [dispatch])
 
@@ -51,7 +49,7 @@ const UserView = props => {
     <div className='app-user-view'>
       <Row>
         <Col xl='9' lg='8' md='7'>
-          <UserInfoCard userDetails={store.userDetails} selectedUser={store.selectedUser} />
+          <UserInfoCard userDetails={store.userDetails} />
         </Col>
         {userData?.role_name === "Control Admin" || userData?.role_name === "Super Admin" ? <Col xl='3' lg='4' md='5'>
           <PlanCard userDetails={store.userDetails} userData={userData} selectedUser={store.selectedUser} />
@@ -87,6 +85,8 @@ const UserView = props => {
           <BankTransactionList />
         </Col> : activeTransaction === "escrow" ? <Col sm='12'>
           <EscrowTransactionList />
+        </Col> : activeTransaction === "reward" ? <Col sm='12'>
+          <UserRewardsHistory />
         </Col>  : ""}
       </Row>
     </div>

@@ -27,7 +27,7 @@ const TransactionView = props => {
 
   // ** Get user on mount
   useEffect(() => {
-    dispatch(getTransaction(store.allData, id))
+    dispatch(getTransaction(id))
   }, [dispatch])
 
 
@@ -41,18 +41,11 @@ const TransactionView = props => {
   return store.selectedTransaction !== null && store.selectedTransaction !== undefined ? (
     <div className='app-user-view'>
       <Row>
-        <Col xl='9' lg='8' md='7'>
+        <Col xl='12' lg='12' md='12'>
           <UserInfoCard selectedTransaction={store.selectedTransaction} detail={detail} />
         </Col>
       </Row>
     </div>
-  ) : (
-    <Alert color='danger'>
-      <h4 className='alert-heading'>Users not found</h4>
-      <div className='alert-body'>
-        Users with id: {id} doesn't exist. Check list of all Users: <Link to='/appia/user/list'>Users List</Link>
-      </div>
-    </Alert>
-  )
+  ) : ""
 }
 export default TransactionView

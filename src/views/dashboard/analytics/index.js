@@ -22,7 +22,7 @@ const AnalyticsDashboard = () => {
   const [dashData, setDashData] = useState({})
 
   useEffect(() => {
-    if (isUserLoggedIn()) {
+    if (isUserLoggedIn) {
       setUserData(JSON.parse(localStorage.getItem('userData')))
     }
   }, [])
