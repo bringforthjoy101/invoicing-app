@@ -49,9 +49,9 @@ const UserInfoCard = ({ selectedTransaction }) => {
                 {renderImg()}
                 <div className='d-flex flex-column ml-1'>
                   <div className='user-info mt-2'>
-                    <h4 className='mb-0'>{selectedTransaction !== null ? selectedTransaction.user_id : 'Eleanor Aguilar'}</h4>
+                    <h4 className='mb-0'>{selectedTransaction.user_id}</h4>
                     <CardText tag='span'>
-                      {selectedTransaction !== null ? selectedTransaction.trans_id : 'eleanor.aguilar@gmail.com'}
+                      {selectedTransaction.trans_id}
                     </CardText>
                   </div>
                 </div>
@@ -70,14 +70,6 @@ const UserInfoCard = ({ selectedTransaction }) => {
                 </div>
                 <div className='ml-1'>
                   <h6 className='mb-0'>{selectedTransaction.status}</h6>
-                </div>
-              </div>
-              <div className='d-flex align-items-center mr-2 mt-1'>
-                <div className='color-box'>
-                  <span>Tracking Id:</span>
-                </div>
-                <div className='ml-1'>
-                  <h6 className='mb-0'>{selectedTransaction.tracking_id}</h6>
                 </div>
               </div>
             </div>

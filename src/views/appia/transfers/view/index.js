@@ -1,10 +1,11 @@
 // ** React Imports
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import moment from 'moment'
 
 // ** Store & Actions
 import { useSelector, useDispatch } from 'react-redux'
+import { isUserLoggedIn } from '@utils'
 
 // ** Reactstrap
 import { Row, Col, Alert } from 'reactstrap'
@@ -22,6 +23,16 @@ const TransferView = props => {
   const store = useSelector(state => state.appiaTransfers),
     { id } = useParams()
 
+
+  const [userData, setUserData] = useState(null)
+
+  useEffect(() => {
+    if (isUserLoggedIn() !== null) {
+      setUserData(JSON.parse(localStorage.getItem('userData')))
+    }
+  }, [])
+
+
   return store.selectedTransfer !== null && store.selectedTransfer !== undefined ? (
     <div className='app-user-view'>
       <Row>
@@ -29,11 +40,11 @@ const TransferView = props => {
           <TransferInfo selectedTransfer={store.selectedTransfer} />
         </Col>
       </Row>
-      {store.selectedTransfer.status === 'Pending' ?  <Row>
-        <Col xl='3' lg='4' md='5'>
-          <PlanCard selectedTransfer={store.selectedTransfer} />
-        </Col>
-      </Row> : ""}
+      {userData?.role_name === 'Financial Admin' || userData?.role_name === 'Super Admin' ? <Row>
+         <Col xl='3' lg='4' md='5'> 
+        {store.selectedTransfer.status === 'pending' ? <PlanCard selectedTransfer={store.selectedTransfer} /> : ""}
+          </Col> 
+        </Row>  : ""}
     </div>
   ) : (
     <Alert color='danger'>

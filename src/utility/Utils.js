@@ -55,6 +55,7 @@ export const formatDateToMonthShort = (value, toTimeForCurrentDay = true) => {
  *  ? e.g. If you are using cookies to store the application please update this function
  */
 export const isUserLoggedIn = () =>  JSON.parse(localStorage.getItem('userData'))
+export const isUserLoggedOut = () =>  JSON.parse(localStorage.removeItem('userData'))
 console.log(isUserLoggedIn())
 
 /**
@@ -146,12 +147,8 @@ export const apiRequest = ({ url, method, body }, dispatch) => {
     }
   }).then((response) => {
     if (response.status === 401) {
-      dispatch({
-        type: 'LOGOUT'
-      })
-      // ** Remove user from localStorage
-      Storage.removeItem('userData')
-    }
+      localStorage.removeItem('userData')
+}
     return response
   }).catch((error) => {
     console.log('error', error)

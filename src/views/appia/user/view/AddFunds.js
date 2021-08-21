@@ -4,11 +4,16 @@ import { Formik, Field, Form, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { passwordReset, blacklistUser, blacklistUserAsset } from '../store/action'
+import { passwordReset, blacklistUser, blacklistUserAsset, trackUser } from '../store/action'
 
 
 const PasswordResetSchema = Yup.object().shape({
   user_id: Yup.string().required("required")
+})
+
+
+const TrackingSchema = Yup.object().shape({
+  token: Yup.string().required("required")
 })
 
 const BlacklistSchema = Yup.object().shape({
@@ -67,6 +72,7 @@ export const PasswordReset = ({ userId }) => {
   )
 }
 
+// Blacklist User
 export const BlacklistUser = ({ userId }) => {
   const dispatch = useDispatch()
   const [formModal, setFormModal] = useState(false)
@@ -128,6 +134,7 @@ export const BlacklistUser = ({ userId }) => {
   )
 }
 
+// Blacklist Asset
 export const BlacklistUserAsset = ({ userId, phone }) => {
   const dispatch = useDispatch()
   const [formModal, setFormModal] = useState(false)
@@ -179,6 +186,58 @@ export const BlacklistUserAsset = ({ userId, phone }) => {
                 <Button.Ripple color='primary' type='submit' disabled={isSubmitting}>
                   {isSubmitting && <Spinner color='white' size='sm' />}
                   <span className='ml-50'>Blacklist Asset</span>
+                </Button.Ripple>
+              </ModalFooter>
+            </Form>
+          )}
+          </Formik>
+        </Modal>
+    </div>
+  )
+}
+
+
+// Decode Jwt
+export const TrackingDetails = ({ tracking_id }) => {
+  const dispatch = useDispatch()
+  const [formModal, setFormModal] = useState(false)
+
+  return (
+    <div>
+      <Button.Ripple className='text-center mb-1' color='secondary' outline block onClick={() => setFormModal(!formModal)}>
+        Tracking Details
+      </Button.Ripple>
+      <Modal isOpen={formModal} toggle={() => setFormModal(!formModal)} className='modal-dialog-centered'>
+        <ModalHeader toggle={() => setFormModal(!formModal)}>Tracking Details</ModalHeader>
+        <Formik
+          initialValues={{
+            token: tracking_id
+          }}
+          validationSchema={TrackingSchema}
+          onSubmit={async (values, { setSubmitting }) => {
+            await dispatch(trackUser(values))
+            setSubmitting(false)
+            setFormModal(!formModal)
+          }}
+        >
+          {({ errors, touched, isSubmitting }) => (
+            <Form>
+              <ModalBody>
+                <FormGroup>
+                  <label htmlFor='token'>Tracking Id</label>
+                  <Field
+                    type='text'
+                    name='token'
+                    placeholder='Token..'
+                    className={`form-control ${errors.token && touched.token && 'is-invalid'}`}
+                  />
+                  <ErrorMessage name='token' component='div' className='field-error text-danger' />
+                </FormGroup>
+              </ModalBody>
+              <ModalFooter>
+                <Button.Ripple color='primary' type='submit' disabled={isSubmitting}>
+                  {isSubmitting && <Spinner color='white' size='sm' />}
+                  <span className='ml-50'>Track</span>
                 </Button.Ripple>
               </ModalFooter>
             </Form>

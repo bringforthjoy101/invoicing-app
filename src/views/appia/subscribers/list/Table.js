@@ -5,6 +5,7 @@ import { Fragment, useState, useEffect } from 'react'
 // ** Columns
 import { columns } from './columns'
 import Flatpickr from 'react-flatpickr'
+import moment from 'moment'
 
 // ** Store & Actions
 import { getAllData, getFilteredData } from '../store/action'
@@ -37,11 +38,14 @@ const SubscribersTable = () => {
   const [currentPage, setCurrentPage] = useState(1)
   const [rowsPerPage, setRowsPerPage] = useState(10)
   const [currentStatus, setCurrentStatus] = useState({ value: '', label: 'Select Status', number: 0 })
-  const [picker, setPicker] = useState(null)
+  const [picker, setPicker] = useState('')
 
 
-  const start = picker && Date.parse(picker[0])
-  const end = picker && Date.parse(picker[1])
+  const start = picker && picker[0]
+  const end = picker && picker[1]
+
+  console.log("start", start)
+  console.log("end", end)
 
   // ** Get data on mount
   useEffect(() => {
@@ -160,6 +164,8 @@ const SubscribersTable = () => {
         return contact
       }
     })
+
+    console.log("datefilter", dateFilter)
 
     const isFiltered = Object.keys(filters).some(function (k) {
       return filters[k].length > 0

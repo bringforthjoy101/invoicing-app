@@ -45,11 +45,12 @@ const UserView = props => {
     }
   }, [])
 
+
   return store.userDetails !== null && store.userDetails !== undefined ? (
     <div className='app-user-view'>
       <Row>
         <Col xl='9' lg='8' md='7'>
-          <UserInfoCard userDetails={store.userDetails} />
+          <UserInfoCard userDetails={store.userDetails} trackDetails={store.trackUser} />
         </Col>
         {userData?.role_name === "Control Admin" || userData?.role_name === "Super Admin" ? <Col xl='3' lg='4' md='5'>
           <PlanCard userDetails={store.userDetails} userData={userData} selectedUser={store.selectedUser} />

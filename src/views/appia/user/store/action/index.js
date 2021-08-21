@@ -315,10 +315,27 @@ export const blacklistUser = ({ user_id, reason }) => {
 
 // Blacklist A User Asset
 export const blacklistUserAsset = (phone) => {
-  console.log("pohne", phone)
   return async dispatch => {
     const response = await apiRequest({ url: `/admin/blacklist-asset/${phone}`, method: 'GET'}, dispatch)
+    if (response && response.data.status) {
+      swal('Good!', `${response.data.message}.`, 'success')
+    } else {
+      console.log(response)
+      swal('Oops!', 'Somthing went wrong with your network.', 'error')
+    }
+  }
+}
+
+// Track A user
+export const trackUser = ({ token }) => {
+  return async dispatch => {
+    const body = JSON.stringify({ token })
+  const response = await apiRequest({ url: `/misc/decode-jwt-token`, method: 'POST', body }, dispatch)
     if (response && response.data.success) {
+      dispatch({
+        type: 'TRACK_USER',
+        trackUser: response.data
+      })
       swal('Good!', `${response.data.message}.`, 'success')
     } else {
       console.log(response)

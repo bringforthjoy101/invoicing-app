@@ -156,19 +156,6 @@ const TransferInfo = ({ selectedTransfer }) => {
               </div>
               <div className='d-flex flex-wrap align-items-center mb-1'>
                 <div className='d-flex align-items-center'>
-                  <div className='color-box bg-light-secoundary'>
-                    <Key className='text-secoundary' />
-                  </div>
-                  <CardText tag='span' className='user-info-title font-weight-bold mb-0 ml-1'>
-                    Tracking Id
-                  </CardText>
-                </div>
-                <CardText className='text-capitalize mb-0'>
-                  {selectedTransfer.tracking_id !== null ? selectedTransfer.tracking_id : "No Tracking Id" }
-                </CardText>
-              </div>
-              <div className='d-flex flex-wrap align-items-center mb-1'>
-                <div className='d-flex align-items-center'>
                   {selectedTransfer.status === 'Successful' ? <div className='color-box bg-light-secoundary'>
                     <Check className='text-secoundary' />
                   </div> : <div className='color-box bg-light-secoundary'>

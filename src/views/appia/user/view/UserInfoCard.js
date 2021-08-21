@@ -9,7 +9,7 @@ import { Card, CardBody, CardText, Button, Row, Col } from 'reactstrap'
 import { Pocket, DollarSign, TrendingUp, User, Check, Star, Flag, Phone } from 'react-feather'
 import CardTitle from 'reactstrap/lib/CardTitle'
 
-const UserInfoCard = ({ userDetails }) => {
+const UserInfoCard = ({ userDetails, trackDetails }) => {
 
   return (
     <Card>
@@ -153,6 +153,52 @@ const UserInfoCard = ({ userDetails }) => {
             </div>
           </Col>
         </Row>
+        {userDetails.user_details.tracking_id !== null ? <Row>
+          <Col>
+            <div className='user-info-wrapper'>
+              <div className="mt-2">
+                <div className='user-info-title'>
+                  <CardTitle> Tracking  Details: </CardTitle>
+                </div>
+                <div className='d-flex flex-wrap align-items-center mt-0'>
+                  <div className='user-info-title'>
+                    <User className='mr-1' size={14} />
+                    <CardText tag='span' className='user-info-title font-weight-bold mb-0'>
+                      Full Name
+                </CardText>
+                  </div>
+                  <CardText className='mb-0'>{trackDetails.data.user?.names}</CardText>
+                </div>
+                <div className='d-flex flex-wrap align-items-center mt-1'>
+                  <div className='user-info-title'>
+                    <Flag className='mr-1' size={14} />
+                    <CardText tag='span' className='user-info-title font-weight-bold mb-0'>
+                      Email
+                </CardText>
+                  </div>
+                  <CardText className='mb-0'>{trackDetails.data.user?.email}</CardText>
+                </div>
+                <div className='d-flex flex-wrap align-items-center mt-1'>
+                  <div className='user-info-title'>
+                    <Phone className='mr-1' size={14} />
+                    <CardText tag='span' className='user-info-title font-weight-bold mb-0'>
+                      Username
+                </CardText>
+                  </div>
+                  <CardText className='mb-0'>{trackDetails.data.user?.username}</CardText>
+                </div>
+                <div className='d-flex flex-wrap align-items-center mt-1'>
+                  <div className='user-info-title'>
+                    <Phone className='mr-1' size={14} />
+                    <CardText tag='span' className='user-info-title font-weight-bold mb-0'>
+                      Phone
+                </CardText>
+                  </div>
+                  <CardText className='mb-0'>{trackDetails.data.user?.phone}</CardText>
+                </div>
+              </div> 
+            </div></Col>
+        </Row> : ""}
       </CardBody>
     </Card>
   )

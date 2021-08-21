@@ -1,6 +1,3 @@
-// ** React Imports
-import { Link } from 'react-router-dom'
-
 // ** Custom Components
 import moment from 'moment'
 
