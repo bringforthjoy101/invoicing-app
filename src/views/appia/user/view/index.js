@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 
 // ** Store & Actions
-import { getUser, getUserAllTransactions, UserDetails } from '../store/action'
+import { getUser, getUserAllTransactions, UserDetails, trackUser } from '../store/action'
 import { useSelector, useDispatch } from 'react-redux'
 
 // ** Reactstrap
@@ -53,7 +53,7 @@ const UserView = props => {
           <UserInfoCard userDetails={store.userDetails} trackDetails={store.trackUser} />
         </Col>
         {userData?.role_name === "Control Admin" || userData?.role_name === "Super Admin" ? <Col xl='3' lg='4' md='5'>
-          <PlanCard userDetails={store.userDetails} userData={userData} selectedUser={store.selectedUser} />
+          <PlanCard  userDetails={store.userDetails} track={store.track} userData={userData} selectedUser={store.selectedUser} />
         </Col> : ""}
       </Row>
       <Card className="mb-3 d-flex justify-content-around">

@@ -153,7 +153,8 @@ const UserInfoCard = ({ userDetails, trackDetails }) => {
             </div>
           </Col>
         </Row>
-        {userDetails.user_details.tracking_id !== null ? <Row>
+        {/* {userDetails.user_details.tracking_id !== null ? */}
+        {/* <Row>
           <Col>
             <div className='user-info-wrapper'>
               <div className="mt-2">
@@ -196,9 +197,11 @@ const UserInfoCard = ({ userDetails, trackDetails }) => {
                   </div>
                   <CardText className='mb-0'>{trackDetails.data.user?.phone}</CardText>
                 </div>
-              </div> 
-            </div></Col>
-        </Row> : ""}
+              </div>
+            </div>
+          </Col>
+        </Row> */}
+        {/* : ""} */}
       </CardBody>
     </Card>
   )

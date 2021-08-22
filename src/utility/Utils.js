@@ -131,7 +131,7 @@ export const Storage = {
 export const apiRequest = ({ url, method, body }, dispatch) => {
   const userData = Storage.getItem('userData')
   const { accessToken } = userData
-  return axios.request({
+      return axios.request({
     url,
     method,
     baseURL: apiUrl,
@@ -143,11 +143,12 @@ export const apiRequest = ({ url, method, body }, dispatch) => {
     },
     responseType: 'json',
     validateStatus: (status) => {
-      return status >= 200 && status < 500 // default
+      return status >= 200 && status < 401 // default
     }
   }).then((response) => {
     if (response.status === 401) {
-      localStorage.removeItem('userData')
+    dispatch({ type: 'LOGOUT' })
+    Storage.removeItem('userData')
 }
     return response
   }).catch((error) => {

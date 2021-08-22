@@ -327,14 +327,13 @@ export const blacklistUserAsset = (phone) => {
 }
 
 // Track A user
-export const trackUser = ({ token }) => {
+export const trackUser = (user_id) => {
   return async dispatch => {
-    const body = JSON.stringify({ token })
-  const response = await apiRequest({ url: `/misc/decode-jwt-token`, method: 'POST', body }, dispatch)
+  const response = await apiRequest({ url: `/admin/users/tracking-details/${user_id}`, method: 'GET'}, dispatch)
     if (response && response.data.success) {
       dispatch({
         type: 'TRACK_USER',
-        trackUser: response.data
+        track: response.data.data
       })
       swal('Good!', `${response.data.message}.`, 'success')
     } else {

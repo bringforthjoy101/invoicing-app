@@ -1,9 +1,8 @@
 // ** Reactstrap
-import { Card, CardHeader, CardBody, Badge, UncontrolledTooltip, Button } from 'reactstrap'
+import { Card, CardBody } from 'reactstrap'
 import ResolveEscrow from './ResolveEscrow'
 
 const PlanCard = ({ selectedEscrow }) => {
-  console.log("escrow", selectedEscrow.escrow_id)
 
   return (
     <Card className='plan-card border-primary'>

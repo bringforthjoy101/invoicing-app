@@ -6,7 +6,7 @@ const initialState = {
   params: {},
   selectedUser: null,
   userDetails: null,
-  trackUser: null,
+  track: null,
   selectedUserAllTransactions: [],
   selectedUserTransactions: [],
   selectedUserTotalTransactions: 1,
@@ -43,7 +43,7 @@ const users = (state = initialState, action) => {
     case 'GET_USER':
       return { ...state, selectedUser: action.selectedUser }
       case 'TRACK_USER':
-        return { ...state, trackUser: action.trackUser }
+        return { ...state, track: action.track }
       case 'GET_USER_DETAILS':
         return { ...state, userDetails: action.userDetails }
     case 'GET_USER_ALL_TRANSACTIONS':

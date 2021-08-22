@@ -1,10 +1,11 @@
 import { useState } from 'react'
-import { Button, Spinner, Modal, ModalHeader, ModalBody, ModalFooter, Label, FormGroup, Input } from 'reactstrap'
+import { Button, Spinner, Modal, ModalHeader, ModalBody, ModalFooter, Label, FormGroup, Row, Col } from 'reactstrap'
 import { Formik, Field, Form, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 import { useDispatch, useSelector } from 'react-redux'
+import { store } from '@store/storeConfig/store'
 
-import { passwordReset, blacklistUser, blacklistUserAsset, trackUser } from '../store/action'
+import { passwordReset, blacklistUser, blacklistUserAsset, trackUser, UserDetails } from '../store/action'
 
 
 const PasswordResetSchema = Yup.object().shape({
@@ -66,8 +67,8 @@ export const PasswordReset = ({ userId }) => {
               </ModalFooter>
             </Form>
           )}
-          </Formik>
-        </Modal>
+        </Formik>
+      </Modal>
     </div>
   )
 }
@@ -128,8 +129,8 @@ export const BlacklistUser = ({ userId }) => {
               </ModalFooter>
             </Form>
           )}
-          </Formik>
-        </Modal>
+        </Formik>
+      </Modal>
     </div>
   )
 }
@@ -190,60 +191,58 @@ export const BlacklistUserAsset = ({ userId, phone }) => {
               </ModalFooter>
             </Form>
           )}
-          </Formik>
-        </Modal>
+        </Formik>
+      </Modal>
     </div>
   )
 }
 
 
 // Decode Jwt
-export const TrackingDetails = ({ tracking_id }) => {
-  const dispatch = useDispatch()
+export const TrackingDetails = ({ userDetails, trackingDetail }) => {
   const [formModal, setFormModal] = useState(false)
-
   return (
     <div>
-      <Button.Ripple className='text-center mb-1' color='secondary' outline block onClick={() => setFormModal(!formModal)}>
-        Tracking Details
+      <Button.Ripple className='text-center mb-1' color='secondary' outline block onClick={() => { setFormModal(!formModal); store.dispatch(trackUser(userDetails.user_details?.user_id)) }}>
+        User Tracking Details
       </Button.Ripple>
       <Modal isOpen={formModal} toggle={() => setFormModal(!formModal)} className='modal-dialog-centered'>
         <ModalHeader toggle={() => setFormModal(!formModal)}>Tracking Details</ModalHeader>
-        <Formik
-          initialValues={{
-            token: tracking_id
-          }}
-          validationSchema={TrackingSchema}
-          onSubmit={async (values, { setSubmitting }) => {
-            await dispatch(trackUser(values))
-            setSubmitting(false)
-            setFormModal(!formModal)
-          }}
-        >
-          {({ errors, touched, isSubmitting }) => (
-            <Form>
-              <ModalBody>
-                <FormGroup>
-                  <label htmlFor='token'>Tracking Id</label>
-                  <Field
-                    type='text'
-                    name='token'
-                    placeholder='Token..'
-                    className={`form-control ${errors.token && touched.token && 'is-invalid'}`}
-                  />
-                  <ErrorMessage name='token' component='div' className='field-error text-danger' />
-                </FormGroup>
-              </ModalBody>
-              <ModalFooter>
-                <Button.Ripple color='primary' type='submit' disabled={isSubmitting}>
-                  {isSubmitting && <Spinner color='white' size='sm' />}
-                  <span className='ml-50'>Track</span>
-                </Button.Ripple>
-              </ModalFooter>
-            </Form>
-          )}
-          </Formik>
-        </Modal>
+        {trackingDetail !== null ?  <ModalBody>
+          <Row>
+            <Col>
+              <h2>Personal Details</h2>
+              <div>
+                <h6><span>User Name:</span> {trackingDetail.user.names}</h6>
+                <p><span>Email:</span> {trackingDetail.user.email}</p>
+                <p><span>UserName:</span> {trackingDetail.user.username}</p>
+                <p><span>User Id:</span> {trackingDetail.user.user_id}</p>
+                <p><span>Phone:</span> {trackingDetail.user.phone}</p>
+              </div>
+            </Col>
+            <Col>
+              <h2>Device Details</h2>
+              <div>
+                <p><span>Device Id:</span> {trackingDetail.deviceInfo.device.id}</p>
+                <p><span>Device Brand:</span> {trackingDetail.deviceInfo.device.brand}</p>
+                <p><span>Device Model:</span> {trackingDetail.deviceInfo.device.model}</p>
+                <p><span>DEvice Type:</span> {trackingDetail.deviceInfo.device.type}</p>
+              </div>
+            </Col>
+          </Row>
+          <Row>
+          <Col>
+              <h2>IP Details</h2>
+              <div>
+                <p><span>Region:</span> {trackingDetail.ipInfo.region}</p>
+                <p><span>Time Zone:</span> {trackingDetail.ipInfo.timezone}</p>
+                <p><span>City:</span> {trackingDetail.ipInfo.city}</p>
+                <p><span>Country:</span> {trackingDetail.ipInfo.country}</p>
+              </div>
+            </Col>
+          </Row>
+        </ModalBody> : ""}
+      </Modal>
     </div>
   )
 }

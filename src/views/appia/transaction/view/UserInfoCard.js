@@ -22,7 +22,7 @@ const UserInfoCard = ({ selectedTransaction }) => {
           initials
           color={color}
           className='rounded'
-          content={selectedTransaction.user_id}
+          content={selectedTransaction.user.names}
           contentStyles={{
             borderRadius: 0,
             fontSize: 'calc(36px)',
@@ -49,9 +49,9 @@ const UserInfoCard = ({ selectedTransaction }) => {
                 {renderImg()}
                 <div className='d-flex flex-column ml-1'>
                   <div className='user-info mt-2'>
-                    <h4 className='mb-0'>{selectedTransaction.user_id}</h4>
+                    <h4 className='mb-0'>{selectedTransaction.user.names}</h4>
                     <CardText tag='span'>
-                      {selectedTransaction.trans_id}
+                      {selectedTransaction.user.email}
                     </CardText>
                   </div>
                 </div>
@@ -61,7 +61,23 @@ const UserInfoCard = ({ selectedTransaction }) => {
                   <span>Username: </span>
                 </div>
                 <div className='ml-1'>
-                  <h6 className='mb-0'>{selectedTransaction.user_id !== null ? selectedTransaction.user_id : 'No Username'}</h6>
+                  <h6 className='mb-0'>{selectedTransaction.user.username}</h6>
+                </div>
+              </div>
+              <div className='d-flex align-items-center mr-2 mt-1'>
+                <div className='color-box'>
+                  <span>User Id: </span>
+                </div>
+                <div className='ml-1'>
+                  <h6 className='mb-0'>{selectedTransaction.user_id}</h6>
+                </div>
+              </div>
+              <div className='d-flex align-items-center mr-2 mt-1'>
+                <div className='color-box'>
+                  <span>Phone: </span>
+                </div>
+                <div className='ml-1'>
+                  <h6 className='mb-0'>{selectedTransaction.user.phone}</h6>
                 </div>
               </div>
               <div className='d-flex align-items-center mr-2 mt-1'>
@@ -137,7 +153,7 @@ const UserInfoCard = ({ selectedTransaction }) => {
                   <span>Remark:</span>
                 </div>
                 <div className='ml-1'>
-                  <h6 className='mb-0'>{selectedTransaction.remark}</h6>
+                  <h6 className='mb-0'>{selectedTransaction.remark !== null ? selectedTransaction.remark : "No Remark"}</h6>
                 </div>
               </div>
               <div className='d-flex align-items-center mr-2 mt-1'>

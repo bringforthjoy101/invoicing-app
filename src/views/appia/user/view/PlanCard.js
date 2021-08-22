@@ -1,12 +1,12 @@
 // ** Reactstrap
 import { Card, CardHeader, CardBody, Badge, UncontrolledTooltip, Button } from 'reactstrap'
 
-import { activateUser, deactivateUser, blacklistUserAsset } from '../store/action'
+import { activateUser, deactivateUser, blacklistUserAsset, trackUser, UserDetails  } from '../store/action'
 import { PasswordReset, BlacklistUser, TrackingDetails } from './AddFunds'
 import { store } from '@store/storeConfig/store'
 
 
-const PlanCard = ({ userData, userDetails }) => {
+const PlanCard = ({ userData, userDetails, track }) => {
 
 
   return (
@@ -27,7 +27,7 @@ const PlanCard = ({ userData, userDetails }) => {
         <PasswordReset userId={userDetails.user_details.user_id} userData={userData} />
         <BlacklistUser userId={userDetails.user_details.user_id} userData={userData} />
         <Button.Ripple className='text-center mb-1' color= 'danger' outline  block onClick={() => { store.dispatch(blacklistUserAsset(userDetails.user_details.phone)) }}> Blacklist Asset</Button.Ripple>
-        <TrackingDetails tracking_id={userDetails.user_details.tracking_id} />
+        <TrackingDetails userDetails={userDetails} trackingDetail={track} />
       </CardBody>
     </Card>
   )
