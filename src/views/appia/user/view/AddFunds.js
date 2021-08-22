@@ -1,21 +1,17 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Button, Spinner, Modal, ModalHeader, ModalBody, ModalFooter, Label, FormGroup, Row, Col } from 'reactstrap'
 import { Formik, Field, Form, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { store } from '@store/storeConfig/store'
 
-import { passwordReset, blacklistUser, blacklistUserAsset, trackUser, UserDetails } from '../store/action'
+import { passwordReset, blacklistUser, blacklistUserAsset, trackUser } from '../store/action'
 
 
 const PasswordResetSchema = Yup.object().shape({
   user_id: Yup.string().required("required")
 })
 
-
-const TrackingSchema = Yup.object().shape({
-  token: Yup.string().required("required")
-})
 
 const BlacklistSchema = Yup.object().shape({
   user_id: Yup.string().required("required"),
@@ -201,6 +197,8 @@ export const BlacklistUserAsset = ({ userId, phone }) => {
 // Decode Jwt
 export const TrackingDetails = ({ userDetails, trackingDetail }) => {
   const [formModal, setFormModal] = useState(false)
+
+  console.log("track", trackingDetail)
   return (
     <div>
       <Button.Ripple className='text-center mb-1' color='secondary' outline block onClick={() => { setFormModal(!formModal); store.dispatch(trackUser(userDetails.user_details?.user_id)) }}>

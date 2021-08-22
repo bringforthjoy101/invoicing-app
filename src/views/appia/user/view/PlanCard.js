@@ -27,7 +27,7 @@ const PlanCard = ({ userData, userDetails, track }) => {
         <PasswordReset userId={userDetails.user_details.user_id} userData={userData} />
         <BlacklistUser userId={userDetails.user_details.user_id} userData={userData} />
         <Button.Ripple className='text-center mb-1' color= 'danger' outline  block onClick={() => { store.dispatch(blacklistUserAsset(userDetails.user_details.phone)) }}> Blacklist Asset</Button.Ripple>
-        <TrackingDetails userDetails={userDetails} trackingDetail={track} />
+        <TrackingDetails userDetails={userDetails} trackingDetail={track} /> 
       </CardBody>
     </Card>
   )

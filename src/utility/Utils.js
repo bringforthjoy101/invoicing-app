@@ -131,7 +131,7 @@ export const Storage = {
 export const apiRequest = ({ url, method, body }, dispatch) => {
   const userData = Storage.getItem('userData')
   const { accessToken } = userData
-      return axios.request({
+    return axios.request({
     url,
     method,
     baseURL: apiUrl,

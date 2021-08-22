@@ -208,6 +208,7 @@ export const getUserRewards = (user_id) => {
   return async dispatch => {
     const body = JSON.stringify({ user_id })
     const response = await apiRequest({ url: '/admin/rewards/claims/', method: 'POST', body  }, dispatch)
+    console.log({response})
     if (response && response.data.data && response.data.success) {
       await dispatch({
         type: 'GET_USER_ALL_REWARDS',
@@ -330,11 +331,15 @@ export const blacklistUserAsset = (phone) => {
 export const trackUser = (user_id) => {
   return async dispatch => {
   const response = await apiRequest({ url: `/admin/users/tracking-details/${user_id}`, method: 'GET'}, dispatch)
-    if (response && response.data.success) {
+  console.log({response})
+    if (response && response.data.success === true) {
       dispatch({
         type: 'TRACK_USER',
         track: response.data.data
       })
+      swal('Good!', `${response.data.message}.`, 'success')
+      dispatch(getAllData())
+    } else if (response && response.data.success === false) {
       swal('Good!', `${response.data.message}.`, 'success')
     } else {
       console.log(response)
