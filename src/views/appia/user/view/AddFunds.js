@@ -198,7 +198,6 @@ export const BlacklistUserAsset = ({ userId, phone }) => {
 export const TrackingDetails = ({ userDetails, trackingDetail }) => {
   const [formModal, setFormModal] = useState(false)
 
-  console.log("track", trackingDetail)
   return (
     <div>
       <Button.Ripple className='text-center mb-1' color='secondary' outline block onClick={() => { setFormModal(!formModal); store.dispatch(trackUser(userDetails.user_details?.user_id)) }}>
@@ -206,12 +205,12 @@ export const TrackingDetails = ({ userDetails, trackingDetail }) => {
       </Button.Ripple>
       <Modal isOpen={formModal} toggle={() => setFormModal(!formModal)} className='modal-dialog-centered'>
         <ModalHeader toggle={() => setFormModal(!formModal)}>Tracking Details</ModalHeader>
-        {trackingDetail !== null ?  <ModalBody>
+        {trackingDetail !== null ? <ModalBody>
           <Row>
             <Col>
               <h2>Personal Details</h2>
               <div>
-                <h6><span>User Name:</span> {trackingDetail.user.names}</h6>
+                <h6><span>Full Name:</span> {trackingDetail.user.names}</h6>
                 <p><span>Email:</span> {trackingDetail.user.email}</p>
                 <p><span>UserName:</span> {trackingDetail.user.username}</p>
                 <p><span>User Id:</span> {trackingDetail.user.user_id}</p>
@@ -224,12 +223,12 @@ export const TrackingDetails = ({ userDetails, trackingDetail }) => {
                 <p><span>Device Id:</span> {trackingDetail.deviceInfo.device.id}</p>
                 <p><span>Device Brand:</span> {trackingDetail.deviceInfo.device.brand}</p>
                 <p><span>Device Model:</span> {trackingDetail.deviceInfo.device.model}</p>
-                <p><span>DEvice Type:</span> {trackingDetail.deviceInfo.device.type}</p>
+                <p><span>Device Type:</span> {trackingDetail.deviceInfo.device.type}</p>
               </div>
             </Col>
           </Row>
           <Row>
-          <Col>
+            <Col>
               <h2>IP Details</h2>
               <div>
                 <p><span>Region:</span> {trackingDetail.ipInfo.region}</p>
@@ -239,7 +238,13 @@ export const TrackingDetails = ({ userDetails, trackingDetail }) => {
               </div>
             </Col>
           </Row>
-        </ModalBody> : ""}
+        </ModalBody> : <ModalBody>
+          <Row>
+            <Col className="mx-auto">
+              <h4>Tracking details not found for this User !</h4>
+            </Col>
+          </Row>
+        </ModalBody>}
       </Modal>
     </div>
   )

@@ -331,16 +331,18 @@ export const blacklistUserAsset = (phone) => {
 export const trackUser = (user_id) => {
   return async dispatch => {
   const response = await apiRequest({ url: `/admin/users/tracking-details/${user_id}`, method: 'GET'}, dispatch)
-  console.log({response})
     if (response && response.data.success === true) {
       dispatch({
         type: 'TRACK_USER',
         track: response.data.data
       })
       swal('Good!', `${response.data.message}.`, 'success')
-      dispatch(getAllData())
-    } else if (response && response.data.success === false) {
-      swal('Good!', `${response.data.message}.`, 'success')
+    } else if (response && response?.data?.success === false) {
+      dispatch({
+        type: 'TRACK_USER',
+        track: null
+      })
+      swal('Oops!', `${response.data.message}.`, 'error')
     } else {
       console.log(response)
       swal('Oops!', 'Somthing went wrong with your network.', 'error')

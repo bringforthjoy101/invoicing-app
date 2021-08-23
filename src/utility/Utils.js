@@ -143,12 +143,13 @@ export const apiRequest = ({ url, method, body }, dispatch) => {
     },
     responseType: 'json',
     validateStatus: (status) => {
-      return status >= 200 && status < 401 // default
+      return status >= 200 && status < 500 // default
     }
   }).then((response) => {
     if (response.status === 401) {
     dispatch({ type: 'LOGOUT' })
     Storage.removeItem('userData')
+    window.location = '/login'
 }
     return response
   }).catch((error) => {
