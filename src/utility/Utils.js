@@ -148,6 +148,8 @@ export const apiRequest = ({ url, method, body }, dispatch) => {
   }).then((response) => {
     if (response.status === 401) {
     dispatch({ type: 'LOGOUT' })
+
+    // remove admin from local storage
     Storage.removeItem('userData')
     window.location = '/login'
 }
