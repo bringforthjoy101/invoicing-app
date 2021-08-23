@@ -147,12 +147,11 @@ export const apiRequest = ({ url, method, body }, dispatch) => {
       return status >= 200 && status < 500 // default
     }
   }).then((response) => {
-    if (response.message === 'Auth Failed') {
-      dispatch({ type: 'LOGOUT' })
+    if (response.status === 401 && response.data.message === "Auth Failed") {
 
       // remove admin from local storage
       localStorage.removeItem('userData')
-      window.location.href = '/login'
+      window.location = '/login'
     }
     return response
   }).catch((error) => {
