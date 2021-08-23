@@ -54,7 +54,7 @@ export const formatDateToMonthShort = (value, toTimeForCurrentDay = true) => {
  ** This is completely up to you and how you want to store the token in your frontend application
  *  ? e.g. If you are using cookies to store the application please update this function
  */
-export const isUserLoggedIn = () =>  JSON.parse(localStorage.getItem('userData'))
+export const isUserLoggedIn = () => JSON.parse(localStorage.getItem('userData'))
 // export const isUserLoggedOut = () =>  JSON.parse(localStorage.removeItem('userData'))
 console.log(isUserLoggedIn())
 
@@ -131,7 +131,8 @@ export const Storage = {
 export const apiRequest = ({ url, method, body }, dispatch) => {
   const userData = Storage.getItem('userData')
   const { accessToken } = userData
-    return axios.request({
+  // console.log("storeee", localStorage.removeItem('userData'))
+  return axios.request({
     url,
     method,
     baseURL: apiUrl,
@@ -146,16 +147,16 @@ export const apiRequest = ({ url, method, body }, dispatch) => {
       return status >= 200 && status < 500 // default
     }
   }).then((response) => {
-    if (response.status === 401) {
-    dispatch({ type: 'LOGOUT' })
+    if (response.message === 'Auth Failed') {
+      dispatch({ type: 'LOGOUT' })
 
-    // remove admin from local storage
-    Storage.removeItem('userData')
-    window.location = '/login'
-}
+      // remove admin from local storage
+      localStorage.removeItem('userData')
+      window.location.href = '/login'
+    }
     return response
   }).catch((error) => {
-    console.log('error', error)
+      console.log('error', error)
   })
 }
 
