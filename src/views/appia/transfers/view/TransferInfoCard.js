@@ -36,11 +36,15 @@ const TransferInfo = ({ selectedTransfer }) => {
                 <div className='color-box bg-light-secoundary'>
                   <Hash />
                 </div>
-                <div className='d-flex align-items-center'>
+                {selectedTransfer.bank === 'Appia' ?  <div className='d-flex align-items-center'>
+                  <CardText tag='span' className='user-info-title font-weight-bold mb-0 ml-1'>
+                    Phone Number
+                  </CardText>
+                </div> :  <div className='d-flex align-items-center'>
                   <CardText tag='span' className='user-info-title font-weight-bold mb-0 ml-1'>
                     Account Number
                   </CardText>
-                </div>
+                </div>}
                 <CardText className='text-capitalize mb-0'>
                   {selectedTransfer?.account_number}
                 </CardText>
