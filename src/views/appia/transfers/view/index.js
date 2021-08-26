@@ -10,10 +10,8 @@ import { isUserLoggedIn } from '@utils'
 // ** Reactstrap
 import { Row, Col, Alert } from 'reactstrap'
 
-// ** User View Components
 import PlanCard from './PlanCard'
 import TransferInfo from './TransferInfoCard'
-// import InvoiceList from '../../invoice/list'
 
 // ** Styles
 import '@styles/react/apps/app-users.scss'
