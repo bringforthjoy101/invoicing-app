@@ -51,7 +51,7 @@ const ContactInfo = ({ selectedContact }) => {
           </Col>
           <div className='d-flex flex-column ml-1'>
             <Col>
-            <h4>Full Name: { selectedContact !== null ? `${selectedContact.name}` : 'Appia Admin'}</h4>
+            <h4>Full Name: { selectedContact !== null ? `${selectedContact.name}` : 'Invoice Admin'}</h4>
               <CardText className="mt-1">
                 Email: { selectedContact !== null ? selectedContact.email : 'appia.admin@appiawave.com'}
               </CardText>

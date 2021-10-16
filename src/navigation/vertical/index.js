@@ -1,5 +1,5 @@
 // ** Navigation sections imports
-// import apps from './apps'
+import invoice from './invoice'
 import admins from './admins'
 import users from './users'
 // import pages from './pages'
@@ -17,7 +17,7 @@ import escrow from './escrow'
 // import chartsAndMaps from './charts-maps'
 
 // ** Merge & Export
-export default [...dashboards, ...admins, ...users, ...rewards, ...customerSupport, ...funds, ...escrow, ...transaction, ...settings]
+export default [...dashboards, ...invoice, ...admins, ...users, ...rewards, ...customerSupport, ...funds, ...escrow, ...transaction, ...settings]
     // ...transaction, 
     // ...escrow, ...settings]
     // ...pages, ...uiElements, ...forms, ...tables, ...chartsAndMaps, ...others]

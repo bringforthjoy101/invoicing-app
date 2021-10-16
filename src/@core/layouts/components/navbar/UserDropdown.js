@@ -11,7 +11,7 @@ import { isUserLoggedIn } from '@utils'
 // ** Store & Actions
 import { useDispatch } from 'react-redux'
 import { handleLogout } from '@store/actions/auth'
-import Logo from '../../../../assets/images/logo/Appia.png'
+import Logo from '../../../../assets/images/avatars/avatar-blank.png'
 
 // ** Third Party Components
 import { UncontrolledDropdown, DropdownMenu, DropdownToggle, DropdownItem } from 'reactstrap'
@@ -37,7 +37,7 @@ const UserDropdown = () => {
     <UncontrolledDropdown tag='li' className='dropdown-user nav-item'>
       <DropdownToggle href='/' tag='a' className='nav-link dropdown-user-link' onClick={e => e.preventDefault()}>
         <div className='user-nav d-sm-flex d-none'>
-          <span className='user-name font-weight-bold'>{(userData && userData['first_name']) || 'John Doe'}</span>
+          <span className='user-name font-weight-bold'>{(userData && userData.firstName) || 'John Doe'}</span>
           <span className='user-status'>{(userData && userData.role_name) || 'Admin'}</span>
         </div>
         <Avatar img={Logo} imgHeight='40' imgWidth='40' status='online' />

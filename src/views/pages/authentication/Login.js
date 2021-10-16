@@ -1,6 +1,6 @@
 import { useState, useContext, Fragment } from 'react'
 import Avatar from '@components/avatar'
-import Logo from '../../../assets/images/logo/Appia.png'
+import Logo from '../../../assets/images/logo/favicon.png'
 import { useSkin } from '@hooks/useSkin'
 import useJwt from '@src/auth/jwt/useJwt'
 import { useDispatch } from 'react-redux'
@@ -77,8 +77,8 @@ const Login = props => {
   const ability = useContext(AbilityContext)
   const dispatch = useDispatch()
   const history = useHistory()
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [email, setEmail] = useState('adelugba.emma@gmail.com')
+  const [password, setPassword] = useState('000000')
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const illustration = skin === 'dark' ? 'login-v2-dark.svg' : 'login-v2.svg',
@@ -90,9 +90,9 @@ const Login = props => {
       await useJwt
         .login({ email, password })
         .then(res => {
-          if (res.data.success && res.data.verified === true) {
+          if (res.data.success) {
             const data = {
-              ...res.data.data,
+              ...res.data.user,
               accessToken: res.data.token,
               refreshToken: res.data.token,
               ability: [{ action: "manage", subject: "all" }],
@@ -103,23 +103,7 @@ const Login = props => {
             ability.update(data.ability)
             history.push(getHomeRouteForLoggedInUser(data.role_name))
             toast.success(
-              <ToastContentValid name={`${data.first_name} ${data.last_name}` || data.fullName || data.username || 'John Doe'} role={data.role || 'admin'} />,
-              { transition: Slide, hideProgressBar: true, autoClose: 2000 }
-            )
-          } else if (res.data.success && res.data.verified === false) {
-            const data = {
-              ...res.data.data,
-              accessToken: res.data.token,
-              refreshToken: res.data.token,
-              ability: [{ action: "manage", subject: "all" }],
-              avatar: "/demo/Appia-react-admin-dashboard-template/demo-1/static/media/avatar-s-11.1d46cc62.jpg",
-              extras: { eCommerceCartItemsCount: 5 }
-            }
-            dispatch(handleLogin(data))
-            ability.update(data.ability)
-            history.push("pages/account-settings")
-            toast.success(
-              <ToastContentNotVerified name={`${data.first_name} ${data.last_name}` || data.fullName || data.username || 'John Doe'} role={data.role || 'admin'} />,
+              <ToastContentValid name={`${data.firstName} ${data.lastName}` || data.fullName || data.username || 'John Doe'} role={data.role || 'admin'} />,
               { transition: Slide, hideProgressBar: true, autoClose: 2000 }
             )
           } else {
@@ -139,8 +123,8 @@ const Login = props => {
     <div className='auth-wrapper auth-v2'>
       <Row className='auth-inner m-0'>
         <Link className='brand-logo' to='/' onClick={e => e.preventDefault()}>
-          <img src={Logo} width="30px" alt="" />
-          <h2 className='brand-text text-primary ml-1'>Appia</h2>
+          <img src={Logo} />
+          <h2 className='brand-text text-primary ml-1'>InvoiceApp</h2>
         </Link>
         <Col className='d-none d-lg-flex align-items-center p-5' lg='8' sm='12'>
           <div className='w-100 d-lg-flex align-items-center justify-content-center px-5'>
@@ -150,7 +134,7 @@ const Login = props => {
         <Col className='d-flex align-items-center auth-bg px-2 p-lg-5' lg='4' sm='12'>
           <Col className='px-xl-2 mx-auto' sm='8' md='6' lg='12'>
             <CardTitle tag='h2' className='font-weight-bold mb-1'>
-              Welcome to Appia! 👋
+              Welcome to InvoiceApp 👋
             </CardTitle>
             <CardText className='mb-2'>Please sign-in to your account and start the adventure</CardText>
             <AvForm className='auth-login-form mt-2' onSubmit={handleSubmit}>

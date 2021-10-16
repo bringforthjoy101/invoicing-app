@@ -97,7 +97,7 @@ export default class JwtService {
   // }
 
   login(...args) {
-    return axios.post(this.jwtConfig.appiaLoginEndpoint, ...args)
+    return axios.post(this.jwtConfig.invoiceAppLoginEndpoint, ...args)
   }
 
   register(...args) {

@@ -1,6 +1,7 @@
 // ** Routes Imports
 import AppRoutes from './Apps'
 import AppiaRoutes from './Appia'
+import InvoiceAppRoutes from './InvoiceApp'
 import FormRoutes from './Forms'
 import PagesRoutes from './Pages'
 import TablesRoutes from './Tables'
@@ -11,7 +12,7 @@ import ExtensionsRoutes from './Extensions'
 import PageLayoutsRoutes from './PageLayouts'
 
 // ** Document title
-const TemplateTitle = '%s - Appia React Admin Template'
+const TemplateTitle = '%s - Invoice App'
 
 // ** Default Route
 const DefaultRoute = '/dashboard/analytics'
@@ -20,6 +21,7 @@ const DefaultRoute = '/dashboard/analytics'
 const Routes = [
   ...DashboardRoutes,
   ...AppiaRoutes,
+  ...InvoiceAppRoutes,
   ...AppRoutes,
   ...PagesRoutes,
   ...UiElementRoutes,

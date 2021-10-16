@@ -56,7 +56,7 @@ const UserTimeline = ({ data, selectedAdmin }) => {
       customContent: (
         <Media className='align-items-center'>
           <h6>
-            <Avatar color={'primary'} className='mr-1' content={`${selectedAdmin.first_name} ${selectedAdmin.last_name}` || 'Appia Admin'} initials />
+            <Avatar color={'primary'} className='mr-1' content={`${selectedAdmin.first_name} ${selectedAdmin.last_name}` || 'Invoice Admin'} initials />
             <span>{`${selectedAdmin.first_name} ${selectedAdmin.last_name}`}</span>
           </h6>
           <Media className='ml-50' body>

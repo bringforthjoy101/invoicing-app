@@ -52,7 +52,7 @@ const FeedbackInfoCard = ({ selectedFeedback }) => {
           </Col>
           <div className='d-flex flex-column ml-1'>
             <Col>
-            <h4>Full Name: { selectedFeedback !== null ? `${selectedFeedback.name}` : 'Appia Admin'}</h4>
+            <h4>Full Name: { selectedFeedback !== null ? `${selectedFeedback.name}` : 'Invoice Admin'}</h4>
               <CardText className="mt-1">
                 Email: { selectedFeedback !== null ? selectedFeedback.email : 'appia.admin@appiawave.com'}
               </CardText>

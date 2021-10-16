@@ -3,8 +3,8 @@
 //Template config options
 const themeConfig = {
   app: {
-    appName: 'Appia',
-    appLogoImage: require('@src/assets/images/logo/logo.svg').default
+    appName: 'InvoiceApp',
+    appLogoImage: require('@src/assets/images/logo/favicon.png').default
   },
   layout: {
     isRTL: false,
